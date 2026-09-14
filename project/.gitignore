@@ -1,0 +1,65 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ---------- 运行时数据 ----------
+backend/data/
+data/
+*.db
+*.sqlite3
+chroma_db/
+
+# ---------- 环境变量与密钥（绝不入库） ----------
+.env
+.env.*
+!.env.example
+!.env.*.example
+提示.txt
+*.pem
+id_rsa
+id_rsa.pub
+
+# 本地补丁与一次性联调脚本
+*.patch
+backend/tests/e2e_final.py
+backend/tests/e2e_smalltalk.py
+
+# ---------- Node / 前端 ----------
+node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- 编辑器与系统 ----------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+
+# TypeScript 增量构建缓存
+*.tsbuildinfo
+
+# E2E 截图产物
+frontend/e2e/shots/
+
+# 演示视频中间产物（脚本可复现，成品不入库）
+docs/video/audio/
+docs/video/raw*/
+docs/video/work/
+docs/video/check/
+docs/video/probe_frames/
+docs/video/*.mp4
+docs/video/*.webm
+docs/video/durations.json
+docs/video/timeline_*.json
+docs/video/node_modules

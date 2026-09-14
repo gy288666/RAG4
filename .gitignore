@@ -1,0 +1,16 @@
+# Python
+project/backend/.venv/
+project/backend/__pycache__/
+project/backend/**/__pycache__/
+project/backend/.pytest_cache/
+*.py[cod]
+
+# Frontend
+project/frontend/node_modules/
+project/frontend/dist/
+
+# Local runtime data and secrets
+project/backend/.env
+project/backend/data/
+project/backend/uploads/
+project/backend/chroma_data/

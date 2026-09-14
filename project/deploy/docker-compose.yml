@@ -1,0 +1,76 @@
+# RAG 学术知识引擎 —— 生产部署编排
+# 用法见 DEPLOY.md；所有密钥来自同目录 .env.production（勿提交）。
+name: rag3
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: rag_high
+      MYSQL_USER: rag
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # 不对外暴露端口；仅容器网络内可访问
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile.backend
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      # 容器网络内的数据库地址覆盖 .env 中的本机地址
+      DATABASE_URL: mysql+pymysql://rag:${MYSQL_PASSWORD}@mysql:3306/rag_high?charset=utf8mb4
+      CORS_ORIGINS: ""            # 前端与 API 同源（经 nginx），无需跨域
+      DEV_MOCK_AI: "false"
+      TZ: Asia/Shanghai           # 运行监控的"每日趋势"按本地日期统计，必须设时区
+    volumes:
+      # uploads + chroma 向量库统一持久化
+      - backend-data:/app/data
+    depends_on:
+      mysql:
+        condition: service_healthy
+    expose:
+      - "8000"
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot-www:/var/www/certbot:ro
+      - certbot-etc:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+
+  # 手动运行签发/续期证书：
+  #   docker compose run --rm certbot certonly --webroot -w /var/www/certbot \
+  #     -d rag.example.com --email you@example.com --agree-tos
+  #   docker compose exec nginx nginx -s reload
+  # 续期 crontab：0 3 * * 1 docker compose -f /path/deploy/docker-compose.yml run --rm certbot renew && docker compose -f /path/deploy/docker-compose.yml exec -T nginx nginx -s reload
+  certbot:
+    image: certbot/certbot
+    profiles: ["tools"]        # 不随 compose up 启动
+    volumes:
+      - certbot-www:/var/www/certbot
+      - certbot-etc:/etc/letsencrypt
+
+volumes:
+  mysql-data:
+  backend-data:
+  certbot-www:
+  certbot-etc:

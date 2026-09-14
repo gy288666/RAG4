@@ -1,0 +1,22 @@
+# 后端镜像：FastAPI + Chroma + tesseract OCR 兜底
+FROM python:3.10-slim
+
+# tesseract + 中文语言包：扫描版 PDF 的 OCR 回退方案（PaddleOCR 过重，生产不装）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        tesseract-ocr tesseract-ocr-chi-sim \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app ./app
+
+# 运行时数据（uploads + chroma）统一在 /app/data，由 compose 挂载持久卷
+ENV PYTHONUNBUFFERED=1
+EXPOSE 8000
+
+# --workers 2：SSE 是长连接，worker 数不必等于 CPU 核数；
+# 首次启动自动建表并创建 INIT_ADMIN_EMAIL 管理员
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

@@ -1,0 +1,39 @@
+# ===== Web 框架 =====
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# ===== 数据库 =====
+SQLAlchemy==2.0.36
+PyMySQL==1.1.1
+cryptography==44.0.0          # PyMySQL sha256 认证 + AES-256 配置加密
+
+# ===== 安全 =====
+bcrypt==4.2.1
+PyJWT==2.10.1
+
+# ===== HTTP 客户端（LLM / Rerank / Embedding） =====
+httpx==0.28.1
+
+# ===== 向量库 =====
+chromadb==0.5.23
+
+# ===== 文档解析 =====
+PyMuPDF==1.25.1               # PDF 文本提取 + 页面渲染为图像（OCR 前置）
+pdfplumber==0.11.4            # PDF 表格/复杂版式兜底解析
+python-docx==1.1.2            # DOCX 解析
+mistune==3.0.2                # Markdown 解析
+charset-normalizer==3.4.1     # TXT 字符集自动识别（UTF-8 / GBK）
+
+# ===== 测试 =====
+pytest==8.3.4
+pytest-asyncio==0.25.0
+
+# ===== 可选：OCR 引擎（扫描版 PDF） =====
+# 二者任选其一即可，未安装时系统自动降级并给出明确提示。
+# paddleocr>=2.9.0
+# paddlepaddle>=2.6.0
+# pytesseract>=0.3.13          # 需另行安装系统级 tesseract-ocr 与中文语言包
+# Pillow>=10.0.0

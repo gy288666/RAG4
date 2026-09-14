@@ -1,0 +1,1581 @@
+{
+ "chunk400_ov60": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 10.3,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- "
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 10.2,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时 [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 9.6,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 **12.4 平方厘米每伏秒** [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 29.5,
+    "answer_head": "根据背景资料，量子点面板的量产良率达到 91.3% [1]。  --- 参考来源： [1] 《量子点显示技术报告.pdf"
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 14.5,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到 3.1% [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 14.5,
+    "answer_head": "MoE-X 的路由器从 64 个候选专家中为每个 token 选择 top-2 个专家 [1]。  --- 参考来源： "
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.6,
+    "answer_head": "根据背景资料，MoE-X 在匹配质量下相对稠密基线的每查询能耗降低了 **41%** [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 19.5,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 11.7,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]。薄膜在 105 摄氏度下退火 23 分钟 [2]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 9.9,
+    "answer_head": "根据背景资料，信息检索课程期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： [1"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 9.5,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 18.9,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 B 组 [1]。该组在法律咨询案例集上的一轮解决率为 71.2%"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 14.2
+ },
+ "chunk600_ov60": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 13.7,
+    "answer_head": "根据背景资料，ZnSe-77 器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- 参考"
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 11.1,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时，满足电视整机五年的亮度维持要求 [1]。  -"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 9.9,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 **12.4 平方厘米每伏秒** [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 11.0,
+    "answer_head": "根据背景资料，2026年第二季度中试线完成1500片6代基板的喷墨打印验证，量产良率达到91.3% [1]。  --- "
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 11.8,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到 3.1% [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 11.2,
+    "answer_head": "根据背景资料，MoE-X 的路由器从 64 个候选专家中为每个 token 选择 top-2 专家 [1]。  --- "
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 19.0,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行生产部署中，相对稠密基线在匹配质量下每查询能耗降低了 **41%**[1"
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 16.0,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 16.2,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]。薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 19.3,
+    "answer_head": "根据背景资料，信息检索课程期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： [1"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 17.0,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 46.1,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 B 组 [1]。该组在法律咨询案例集上的一轮解决率为 71.2%"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 16.9
+ },
+ "chunk900_ov60": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 19.2,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- "
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 19.8,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时 [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "钙钛矿薄膜实验记录.docx#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 24.7,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 **12.4 平方厘米每伏秒** [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 17.0,
+    "answer_head": "根据背景资料，量子点面板的量产良率达到 91.3% [1]。  --- 参考来源： [1] 《量子点显示技术报告.pdf"
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 9.6,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到 3.1% [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 23.6,
+    "answer_head": "根据背景资料，MoE-X 的路由器为每个 token 从 **64 个候选专家**中选择 **top-2 专家** [1"
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.0,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行生产部署中，相对稠密基线在匹配质量下每查询能耗降低了 **41%** ["
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 10.9,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 **1.32 : 1**[1]。  --- "
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 13.7,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]；薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 24.0,
+    "answer_head": "根据背景资料，信息检索课程期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： [1"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 17.7,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 39.1,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 **B 组**；其案例集（法律咨询）的一轮解决率为 **71.2"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 19.3
+ },
+ "chunk600_ov0": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 12.9,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- "
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 13.0,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时，满足电视整机五年的亮度维持要求 [1]。  -"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 21.9,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 12.4 平方厘米每伏秒 [1]。  --- 参考来源： [1] 《量子点显示技"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 20.9,
+    "answer_head": "根据背景资料，量子点面板的量产良率达到 91.3% [1]。  --- 参考来源： [1] 《量子点显示技术报告.pdf"
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.5,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到 3.1% [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 15.1,
+    "answer_head": "根据背景资料，MoE-X 路由器为每个 token 从 64 个候选专家中选择 top-2 专家 [1]。  --- 参",
+    "warnings": [
+     "rerank_timeout"
+    ]
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.8,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行生产部署中，相对稠密基线在匹配质量下，每查询能耗降低了 **41%** "
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "量子点显示技术报告.pdf#2",
+     "钙钛矿薄膜实验记录.docx#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 14.6,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "量子点显示技术报告.pdf#2",
+     "钙钛矿薄膜实验记录.docx#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 10.2,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]；薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "TeamB_评测报告.md#4",
+     "TeamA_评测报告.md#5"
+    ],
+    "elapsed": 24.7,
+    "answer_head": "根据背景资料，信息检索课程的期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： ["
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 11.4,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 18.1,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 B 组 [1]。该组在法律咨询案例集上的一轮解决率为 71.2%"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 15.7
+ },
+ "chunk600_ov120": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 12.7,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- "
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 12.3,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时 [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 30.4,
+    "answer_head": "空穴传输层的迁移率提升至 12.4 平方厘米每伏秒 [1]。  --- 参考来源： [1] 《量子点显示技术报告.pdf"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 11.1,
+    "answer_head": "根据背景资料，2026年第二季度中试线完成1500片6代基板的喷墨打印验证，量产良率达到91.3% [1]。  --- "
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 13.3,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 基准上将与稠密参考模型的准确率差距缩小到了 **3.1%** [1]。  ---"
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 14.4,
+    "answer_head": "根据背景资料，MoE-X 的路由器从 64 个候选专家中为每个 token 选择 top-2 专家 [1]。  --- "
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 14.1,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行部署下，相对稠密基线在匹配质量时每查询能耗降低了 **41%** [1]"
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 9.8,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 10.8,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]；薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 13.3,
+    "answer_head": "根据课程考核说明，信息检索课程期末考试占综合成绩的 **40%**；平时作业共布置 **3 次**，每次占 15%。[1"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 41.8,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 15.6,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 B 组 [1]。该组在法律咨询案例集上的一轮解决率为 71.2%"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 16.6
+ },
+ "topn10": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 10.3,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- "
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 42.9,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时，满足电视整机五年的亮度维持要求 [1]。  -"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 10.5,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 12.4 平方厘米每伏秒 [1]。  --- 参考来源： [1] 《量子点显示技"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 10.5,
+    "answer_head": "根据现有资料，量子点面板的量产良率达到 91.3% [1]。  --- 参考来源： [1] 《量子点显示技术报告.pdf"
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 30.6,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 基准上将与稠密参考模型的准确率差距缩小至 **3.1%** [1]。  --- "
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 27.4,
+    "answer_head": "根据背景资料，MoE-X 的路由器从 64 个候选专家中为每个 token 选择 top-2 专家 [1]。  --- "
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.8,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行部署下，相对稠密基线在同等质量下每查询能耗降低了 **41%** [1]"
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 17.0,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 12.7,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]。薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "MoE_Survey_2026.tx#2",
+     "TeamB_评测报告.md#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 10.7,
+    "answer_head": "根据背景资料，信息检索课程期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： [1"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 41.0,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 32.6,
+    "answer_head": "根据背景资料，在 GSM8K 测试集上报告 84.9 分的是 **B 组**；其法律咨询案例集的一轮解决率为 **71."
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 21.6
+ },
+ "topn50": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 26.4,
+    "answer_head": "根据背景资料，ZnSe-77 蓝光器件在 1000 尼特初始亮度条件下的外量子效率达到 23.7% [1]。  --- ",
+    "warnings": [
+     "rerank_timeout"
+    ]
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 15.1,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时 [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 19.7,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 12.4 平方厘米每伏秒 [1]。  --- 参考来源： [1] 《量子点显示技"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 15.9,
+    "answer_head": "根据背景资料，2026年第二季度中试线完成1500片6代基板的喷墨打印验证，量产良率达到91.3% [1]。  --- "
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 19.3,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 基准上将与稠密参考模型的准确率差距缩小到了 3.1% [1]。  --- 参考来"
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 20.3,
+    "answer_head": "MoE-X 路由器为每个 token 从 64 个候选专家中选择 top-2 专家。[1]  --- 参考来源： [1]"
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 22.4,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行部署下，相对稠密基线在匹配质量时每查询能耗降低了 **41%** [1]"
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 14.8,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 12.3,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]；薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 17.8,
+    "answer_head": "根据课程考核说明，信息检索课程期末闭卷考试占综合成绩的 **40%**；平时作业共布置 **3 次**，每次占综合成绩的"
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 18.2,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 13.2,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 B 组 [1]。该组在法律咨询案例集上的一轮解决率为 71.2%"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 17.9
+ },
+ "topn20": {
+  "rows": [
+   {
+    "q": "量子点蓝光材料 ZnSe-77 器件的外量子效率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "钙钛矿薄膜实验记录.docx#5"
+    ],
+    "elapsed": 11.8,
+    "answer_head": "根据背景资料，ZnSe-77 器件的外量子效率达到 23.7% [1]。  --- 参考来源： [1] 《量子点显示技术"
+   },
+   {
+    "q": "ZnSe-77 器件的 T95 寿命是多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 15.7,
+    "answer_head": "根据背景资料，ZnSe-77 器件的 T95 寿命达到 41000 小时 [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "空穴传输层的迁移率提升到了多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 11.6,
+    "answer_head": "根据背景资料，空穴传输层的迁移率提升至 **12.4 平方厘米每伏秒** [1]。  --- 参考来源： [1] 《量子"
+   },
+   {
+    "q": "量子点面板的量产良率达到多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "量子点显示技术报告.pdf#1",
+     "量子点显示技术报告.pdf#2",
+     "量子点显示技术报告.pdf#3",
+     "钙钛矿薄膜实验记录.docx#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 14.3,
+    "answer_head": "根据背景资料，2026年第二季度中试线完成1500片6代基板的喷墨打印验证，量产良率达到91.3% [1]。  --- "
+   },
+   {
+    "q": "MoE-X 在 MMLU 上与稠密参考模型的准确率差距缩小到百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 11.9,
+    "answer_head": "根据背景资料，MoE-X 在 MMLU 基准上将与稠密参考模型的准确率差距缩小到了 **3.1%** [1]。  ---"
+   },
+   {
+    "q": "MoE-X 的路由器从多少个候选专家中为每个 token 选择几个？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 17.0,
+    "answer_head": "根据背景资料，MoE-X 的路由器从 64 个候选专家中为每个 token 选择 top-2 专家 [1]。  --- "
+   },
+   {
+    "q": "MoE-X 相对稠密基线的每查询能耗降低了百分之多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "MoE_Survey_2026.tx#1",
+     "MoE_Survey_2026.tx#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 37.3,
+    "answer_head": "根据背景资料，MoE-X 在 16 节点专家并行部署下，每查询能耗相对稠密基线降低了 **41%** [1]。  ---"
+   },
+   {
+    "q": "钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 30.8,
+    "answer_head": "根据背景资料，钙钛矿标准配方中 PbI2 与 FAI 的前驱体摩尔比固定为 1.32 : 1 [1]。  --- 参考来"
+   },
+   {
+    "q": "钙钛矿冠军器件的光电转换效率是多少？薄膜在多少摄氏度下退火多久？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "钙钛矿薄膜实验记录.docx#1",
+     "钙钛矿薄膜实验记录.docx#2",
+     "量子点显示技术报告.pdf#3",
+     "量子点显示技术报告.pdf#4",
+     "量子点显示技术报告.pdf#5"
+    ],
+    "elapsed": 12.8,
+    "answer_head": "根据背景资料，钙钛矿冠军器件的光电转换效率为 25.1% [1]。薄膜在 105 摄氏度下退火 23 分钟 [1]。  "
+   },
+   {
+    "q": "信息检索课程的期末考试占综合成绩的百分之多少？平时作业布置几次？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "信息检索课程讲义.md#1",
+     "TeamB_评测报告.md#2",
+     "TeamA_评测报告.md#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 13.8,
+    "answer_head": "根据背景资料，信息检索课程期末闭卷考试占综合成绩的 40%，平时作业共布置 3 次 [1]。  --- 参考来源： [1",
+    "warnings": [
+     "rerank_timeout"
+    ]
+   },
+   {
+    "q": "A 组系统在 GSM8K 测试集上的准确率是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.5,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [1]。  --- 参考来源： [1] 《Te"
+   },
+   {
+    "q": "哪一组在 GSM8K 上报告了 84.9 分？该组案例集的一轮解决率是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 14.9,
+    "answer_head": "根据背景资料，在 GSM8K 上报告 84.9 分的是 **B 组**；其案例集（法律咨询）的一轮解决率为 **71.2"
+   }
+  ],
+  "pass": 12,
+  "total": 12,
+  "avg_elapsed": 17.0
+ },
+ "hist0": {
+  "rows": [
+   {
+    "q": "A 组和 B 组系统在 GSM8K 上的准确率分别是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 10.5,
+    "answer_head": "根据评测报告，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [2]，B 组系统为 84.9 分 [1]。 "
+   },
+   {
+    "q": "那么哪一组的解题步骤通过率更高？具体是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamA_评测报告.md#1",
+     "TeamB_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 12.7,
+    "answer_head": "根据评测报告，A 组的解题步骤通过率更高，为 94.2%；B 组为 91.8% [1][2]。  --- 参考来源： ["
+   }
+  ],
+  "pass": 2,
+  "total": 2,
+  "avg_elapsed": 11.6
+ },
+ "hist5": {
+  "rows": [
+   {
+    "q": "A 组和 B 组系统在 GSM8K 上的准确率分别是多少分？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 25.7,
+    "answer_head": "根据背景资料，A 组系统在 GSM8K 测试集上的准确率为 88.4 分 [2]，B 组系统为 84.9 分 [1]。 "
+   },
+   {
+    "q": "那么哪一组的解题步骤通过率更高？具体是多少？",
+    "doc_hit": true,
+    "ans_hit": true,
+    "pass": true,
+    "cited": [
+     "TeamB_评测报告.md#1",
+     "TeamA_评测报告.md#2",
+     "MoE_Survey_2026.tx#3",
+     "MoE_Survey_2026.tx#4",
+     "MoE_Survey_2026.tx#5"
+    ],
+    "elapsed": 24.0,
+    "answer_head": "根据评测报告，A 组的解题步骤通过率更高，为 94.2%；B 组为 91.8% [1][2]。  --- 参考来源： ["
+   }
+  ],
+  "pass": 2,
+  "total": 2,
+  "avg_elapsed": 24.9
+ }
+}

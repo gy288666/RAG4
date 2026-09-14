@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+  }
+
+  /* 文字选中色跟随品牌藏青，强化整体色彩记忆 */
+  ::selection {
+    @apply bg-brand-100 text-brand-900;
+  }
+
+  /* 细滚动条，避免在侧边栏与消息区抢占视觉重心 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium
+           transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+  }
+
+  .btn-ghost {
+    @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-100;
+  }
+
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-700;
+  }
+
+  .field {
+    @apply w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm outline-none
+           transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100
+           disabled:bg-slate-100 disabled:text-slate-400;
+  }
+
+  /* 卡片：分层靠 1px 边框，不用阴影——纸面上的分栏感 */
+  .card {
+    @apply rounded-lg border border-slate-200 bg-white;
+  }
+
+  /* 页面大标题：衬线、书卷气，是全站的排版签名 */
+  .heading {
+    @apply font-serif text-xl font-semibold tracking-wide text-slate-900;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium;
+  }
+
+  /* 骨架屏（PRD 5.4 加载状态反馈） */
+  .skeleton {
+    @apply animate-pulse rounded bg-slate-200;
+  }
+}
+
+/* 流式生成时的闪烁光标 */
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.streaming-caret::after {
+  content: '▍';
+  margin-left: 1px;
+  animation: caret-blink 1s step-end infinite;
+}

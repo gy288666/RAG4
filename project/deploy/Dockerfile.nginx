@@ -1,0 +1,12 @@
+# 前端构建 + nginx 托管，一个镜像完成
+FROM node:20-alpine AS build
+WORKDIR /build
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm ci
+COPY frontend/ .
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=build /build/dist /usr/share/nginx/html
+# nginx 配置由 compose 挂载（便于不改镜像调整反代参数）
+EXPOSE 80 443
