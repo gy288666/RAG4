@@ -19,11 +19,11 @@ RAG4 当前以 `project/` 下导入的 RAG3 代码作为可运行基线。RAG4 �
 - `npm ci` 成功；安装后报告 3 个 audit vulnerabilities（2 moderate、1 high）。
 - `npm run lint` 成功。
 - `npm run build` 成功，产物输出到 `project/frontend/dist/`。
-- 使用当前机器的全局 Python 测试环境执行 `pytest -q` 成功，测试进度达到 100%，退出码为 0。
+- 使用 Conda `rag311` 环境（Python 3.11.15，已安装 Chroma 0.5.23 与 pytest 8.3.4）执行 `python -m pytest -q` 成功，测试进度达到 100%，退出码为 0。
 
 ## 环境阻断
 
-项目要求 Python 3.10+。本机 Python 为 3.13.9；创建的 `project/backend/.venv` 尚未完成依赖安装。`pip install -r requirements.txt` 在 `chroma-hnswlib==0.7.6` 处失败，原因是该环境没有适配 Python 3.13 的预编译轮子，且缺少 Microsoft Visual C++ 14.0+ 编译工具。因此后端测试的可复现虚拟环境仍需 Python 3.10–3.12 或安装对应 C++ Build Tools 后重新构建。
+系统 Python 3.13 创建的 `project/backend/.venv` 安装依赖时会在 `chroma-hnswlib==0.7.6` 处因缺少 MSVC 编译工具失败；这不影响已存在的 Conda `rag311` 环境。推荐直接使用该环境运行基线：
 
 ## 运行基线
 
@@ -40,10 +40,7 @@ npm run build
 
 ```powershell
 cd project/backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-pytest
+conda run -n rag311 python -m pytest -q
 ```
 
 后续第一项功能开发应从计划中的 `ChunkingEngine` 开始，并以本文件记录的前后端检查作为回归基线。
