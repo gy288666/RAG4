@@ -1,5 +1,0 @@
-name: rag4-py3.11
-channels:
-  - defaults
-dependencies:
-  - python=3.11
