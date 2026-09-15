@@ -94,16 +94,46 @@ export interface ResetRequestItem {
 
 export interface SystemConfigs {
   llm: { base_url: string; api_key_masked: string; model: string; aux_model: string };
-  rerank: { api_url: string; api_key_masked: string; model: string; top_k: number };
-  embedding: { model: string; base_url: string; api_key_masked: string };
+  rerank: {
+    provider: 'remote' | 'local';
+    api_url: string;
+    api_key_masked: string;
+    model: string;
+    version: string;
+    local_path: string;
+    top_k: number;
+  };
+  embedding: {
+    provider: 'remote' | 'local';
+    model: string;
+    version: string;
+    local_path: string;
+    base_url: string;
+    api_key_masked: string;
+  };
   chunking: { chunk_size: number; overlap: number };
   retrieval: { top_n: number; history_rounds: number };
 }
 
 export interface ConfigUpdatePayload {
   llm?: { base_url?: string; api_key?: string; model?: string; aux_model?: string };
-  rerank?: { api_url?: string; api_key?: string; model?: string; top_k?: number };
-  embedding?: { model?: string; base_url?: string; api_key?: string };
+  rerank?: {
+    provider?: 'remote' | 'local';
+    api_url?: string;
+    api_key?: string;
+    model?: string;
+    version?: string;
+    local_path?: string;
+    top_k?: number;
+  };
+  embedding?: {
+    provider?: 'remote' | 'local';
+    model?: string;
+    version?: string;
+    local_path?: string;
+    base_url?: string;
+    api_key?: string;
+  };
   chunking?: { chunk_size?: number; overlap?: number };
   retrieval?: { top_n?: number; history_rounds?: number };
 }

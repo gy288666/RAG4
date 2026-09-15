@@ -1,7 +1,7 @@
 # 基于RAG的学术知识引擎 — 接口设计与对接规范 (API Spec)
 
-> 文档版本：v1.0  
-> 更新日期：2026-07-23  
+> 文档版本：v1.1
+> 更新日期：2026-09-14
 > 状态：正式稿
 
 ---
@@ -508,12 +508,21 @@ data: {"code": 500, "message": "云端 Rerank API 调用超时"}
           "model": "deepseek-ai/DeepSeek-V4-Flash"
         },
         "rerank": {
+          "provider": "remote",
           "api_url": "https://api.cohere.com/v1/rerank",
           "api_key_masked": "****xxxx",
+          "model": "BAAI/bge-reranker-v2-m3",
+          "version": "baseline",
+          "local_path": "",
           "top_k": 5
         },
         "embedding": {
-          "model": "Qwen/Qwen3-Embedding-8B"
+          "provider": "remote",
+          "model": "Qwen/Qwen3-Embedding-8B",
+          "version": "baseline",
+          "local_path": "",
+          "base_url": "",
+          "api_key_masked": ""
         },
         "chunking": {
           "chunk_size": 600,
@@ -522,7 +531,7 @@ data: {"code": 500, "message": "云端 Rerank API 调用超时"}
       }
     }
     ```
-    > **安全说明 [S-1]**：API Key 在数据库中以 AES-256 加密保存，此接口仅返回脱敏掩码，绝不向前端返回明文 Key。`embedding` 块为新增字段，管理员可修改 Embedding 模型名称 [M-2]。
+    > **安全说明 [S-1]**：API Key 在数据库中以 AES-256 加密保存，此接口仅返回脱敏掩码，绝不向前端返回明文 Key。`provider=local` 时使用 `local_path` 加载本地模型；`embedding.version` 同时决定向量索引命名空间。
 
 ### 5.6 更新系统全局配置参数
 *   **接口**：`PUT /api/v1/admin/configs`
@@ -535,12 +544,20 @@ data: {"code": 500, "message": "云端 Rerank API 调用超时"}
         "model": "deepseek-ai/DeepSeek-V4-Flash"
       },
       "rerank": {
+        "provider": "local",
         "api_url": "https://api.cohere.com/v1/rerank",
         "api_key": "rerank-key-xxxxxxxxx",
+        "model": "BAAI/bge-reranker-v2-m3",
+        "version": "domain-reranker-v1",
+        "local_path": "models/domain-reranker-v1",
         "top_k": 5
       },
       "embedding": {
-        "model": "Qwen/Qwen3-Embedding-8B"
+        "provider": "local",
+        "model": "Qwen/Qwen3-Embedding-8B",
+        "version": "domain-embedding-v1",
+        "local_path": "models/domain-embedding-v1",
+        "base_url": ""
       },
       "chunking": {
         "chunk_size": 800,
@@ -548,7 +565,7 @@ data: {"code": 500, "message": "云端 Rerank API 调用超时"}
       }
     }
     ```
-    > **安全说明 [S-1]**：API Key 明文由后端接收后立即进行 AES-256 加密存储，不在任何响应中返回明文。
+    > **安全说明 [S-1]**：API Key 明文由后端接收后立即进行 AES-256 加密存储，不在任何响应中返回明文。更换 Embedding 的 provider、model 或 local_path 时必须同时提交新的 `version`；否则返回 400，防止新旧向量空间混写。
 *   **响应数据**：
     ```json
     {

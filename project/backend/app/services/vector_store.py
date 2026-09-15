@@ -12,10 +12,12 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import math
 import os
+import re
 import threading
 from dataclasses import asdict, dataclass, field
 from typing import Any
@@ -25,9 +27,22 @@ from app.core.config import settings
 logger = logging.getLogger(__name__)
 
 
-def collection_name(user_id: int) -> str:
-    """用户专属 Collection 命名规则（PRD 4.2.1）。"""
-    return f"col_user_{user_id}"
+BASELINE_INDEX_VERSION = "baseline"
+
+
+def collection_name(user_id: int, index_version: str = BASELINE_INDEX_VERSION) -> str:
+    """用户与 Embedding 版本共同确定 Collection。
+
+    ``baseline`` 保留 RAG3 的旧名称，已有索引无需迁移；新模型版本进入独立
+    Collection，防止不同维度或语义空间的向量混写。
+    """
+    base = f"col_user_{user_id}"
+    version = (index_version or BASELINE_INDEX_VERSION).strip()
+    if version in {BASELINE_INDEX_VERSION, "legacy"}:
+        return base
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "_", version).strip("_-").lower() or "index"
+    digest = hashlib.sha256(version.encode("utf-8")).hexdigest()[:8]
+    return f"{base}__{slug[:32]}_{digest}"
 
 
 @dataclass(slots=True)
@@ -42,6 +57,7 @@ class VectorRecord:
     file_name: str
     chunk_index: int
     page: int | None = None
+    embedding_model_version: str | None = None
 
     def metadata(self) -> dict[str, Any]:
         # 向量库通常不接受 None 值，page 为空时省略该键，读取侧统一用 .get()
@@ -53,6 +69,8 @@ class VectorRecord:
         }
         if self.page is not None:
             meta["page"] = int(self.page)
+        if self.embedding_model_version:
+            meta["embedding_model_version"] = self.embedding_model_version
         return meta
 
 
@@ -72,19 +90,34 @@ class RetrievedChunk:
 class BaseVectorStore:
     """向量库统一接口。"""
 
-    def add(self, user_id: int, records: list[VectorRecord]) -> None:
+    def add(
+        self,
+        user_id: int,
+        records: list[VectorRecord],
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> None:
         raise NotImplementedError
 
-    def search(self, user_id: int, embedding: list[float], top_n: int) -> list[RetrievedChunk]:
+    def search(
+        self,
+        user_id: int,
+        embedding: list[float],
+        top_n: int,
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> list[RetrievedChunk]:
         raise NotImplementedError
 
-    def delete_document(self, user_id: int, doc_id: str) -> None:
+    def delete_document(
+        self, user_id: int, doc_id: str, *, index_version: str | None = None
+    ) -> None:
         raise NotImplementedError
 
     def drop_user(self, user_id: int) -> None:
         raise NotImplementedError
 
-    def count(self, user_id: int) -> int:
+    def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
         raise NotImplementedError
 
 
@@ -105,17 +138,23 @@ class ChromaVectorStore(BaseVectorStore):
         )
         self._lock = threading.RLock()
 
-    def _collection(self, user_id: int):
+    def _collection(self, user_id: int, index_version: str = BASELINE_INDEX_VERSION):
         with self._lock:
             return self._client.get_or_create_collection(
-                name=collection_name(user_id),
-                metadata={"hnsw:space": "cosine"},
+                name=collection_name(user_id, index_version),
+                metadata={"hnsw:space": "cosine", "index_version": index_version},
             )
 
-    def add(self, user_id: int, records: list[VectorRecord]) -> None:
+    def add(
+        self,
+        user_id: int,
+        records: list[VectorRecord],
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> None:
         if not records:
             return
-        collection = self._collection(user_id)
+        collection = self._collection(user_id, index_version)
         collection.upsert(
             ids=[r.id for r in records],
             embeddings=[r.embedding for r in records],
@@ -123,8 +162,15 @@ class ChromaVectorStore(BaseVectorStore):
             metadatas=[r.metadata() for r in records],
         )
 
-    def search(self, user_id: int, embedding: list[float], top_n: int) -> list[RetrievedChunk]:
-        collection = self._collection(user_id)
+    def search(
+        self,
+        user_id: int,
+        embedding: list[float],
+        top_n: int,
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> list[RetrievedChunk]:
+        collection = self._collection(user_id, index_version)
         if collection.count() == 0:
             return []
         result = collection.query(
@@ -148,23 +194,44 @@ class ChromaVectorStore(BaseVectorStore):
                     page=int(meta["page"]) if meta.get("page") is not None else None,
                     # cosine distance → 相似度
                     score=float(1.0 - float(distance)) if distance is not None else 0.0,
+                    extra={"embedding_model_version": meta.get("embedding_model_version")},
                 )
             )
         return chunks
 
-    def delete_document(self, user_id: int, doc_id: str) -> None:
+    def delete_document(
+        self, user_id: int, doc_id: str, *, index_version: str | None = None
+    ) -> None:
         # [S-3] 依赖 metadata 中的 doc_id 一次性清除该文档全部向量片段
-        self._collection(user_id).delete(where={"doc_id": doc_id})
+        for name in self._user_collection_names(user_id, index_version):
+            self._client.get_collection(name).delete(where={"doc_id": doc_id})
 
     def drop_user(self, user_id: int) -> None:
         with self._lock:
-            try:
-                self._client.delete_collection(collection_name(user_id))
-            except Exception:  # 集合不存在时忽略
-                logger.debug("删除 Collection 失败（可能不存在）: user_id=%s", user_id)
+            for name in self._user_collection_names(user_id, None):
+                try:
+                    self._client.delete_collection(name)
+                except Exception:  # 集合不存在时忽略
+                    logger.debug("删除 Collection 失败（可能不存在）: %s", name)
 
-    def count(self, user_id: int) -> int:
-        return int(self._collection(user_id).count())
+    def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
+        return int(self._collection(user_id, index_version).count())
+
+    def _user_collection_names(self, user_id: int, index_version: str | None) -> list[str]:
+        if index_version is not None:
+            name = collection_name(user_id, index_version)
+            try:
+                self._client.get_collection(name)
+            except Exception:
+                return []
+            return [name]
+        prefix = f"col_user_{user_id}"
+        result: list[str] = []
+        for collection in self._client.list_collections():
+            name = collection if isinstance(collection, str) else collection.name
+            if name == prefix or name.startswith(f"{prefix}__"):
+                result.append(name)
+        return result
 
 
 # ============================================================
@@ -184,11 +251,13 @@ class LocalVectorStore(BaseVectorStore):
         os.makedirs(persist_dir, exist_ok=True)
         self._lock = threading.RLock()
 
-    def _path(self, user_id: int) -> str:
-        return os.path.join(self._dir, f"{collection_name(user_id)}.json")
+    def _path(self, user_id: int, index_version: str = BASELINE_INDEX_VERSION) -> str:
+        return os.path.join(self._dir, f"{collection_name(user_id, index_version)}.json")
 
-    def _load(self, user_id: int) -> list[dict[str, Any]]:
-        path = self._path(user_id)
+    def _load(
+        self, user_id: int, index_version: str = BASELINE_INDEX_VERSION
+    ) -> list[dict[str, Any]]:
+        path = self._path(user_id, index_version)
         if not os.path.exists(path):
             return []
         try:
@@ -197,24 +266,42 @@ class LocalVectorStore(BaseVectorStore):
         except (OSError, json.JSONDecodeError):  # pragma: no cover
             return []
 
-    def _save(self, user_id: int, rows: list[dict[str, Any]]) -> None:
-        tmp = self._path(user_id) + ".tmp"
+    def _save(
+        self,
+        user_id: int,
+        rows: list[dict[str, Any]],
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> None:
+        tmp = self._path(user_id, index_version) + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fp:
             json.dump(rows, fp, ensure_ascii=False)
-        os.replace(tmp, self._path(user_id))
+        os.replace(tmp, self._path(user_id, index_version))
 
-    def add(self, user_id: int, records: list[VectorRecord]) -> None:
+    def add(
+        self,
+        user_id: int,
+        records: list[VectorRecord],
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> None:
         if not records:
             return
         with self._lock:
-            rows = self._load(user_id)
+            rows = self._load(user_id, index_version)
             new_ids = {r.id for r in records}
             rows = [row for row in rows if row["id"] not in new_ids]
             rows.extend(asdict(r) for r in records)
-            self._save(user_id, rows)
+            self._save(user_id, rows, index_version)
 
-    def search(self, user_id: int, embedding: list[float], top_n: int) -> list[RetrievedChunk]:
-        rows = self._load(user_id)
+    def search(
+        self,
+        user_id: int,
+        embedding: list[float],
+        top_n: int,
+        *,
+        index_version: str = BASELINE_INDEX_VERSION,
+    ) -> list[RetrievedChunk]:
+        rows = self._load(user_id, index_version)
         if not rows:
             return []
         query_norm = math.sqrt(sum(v * v for v in embedding)) or 1.0
@@ -235,23 +322,61 @@ class LocalVectorStore(BaseVectorStore):
                 chunk_index=int(row.get("chunk_index", 0)),
                 page=row.get("page"),
                 score=float(score),
+                extra={"embedding_model_version": row.get("embedding_model_version")},
             )
             for score, row in scored[:top_n]
         ]
 
-    def delete_document(self, user_id: int, doc_id: str) -> None:
+    def delete_document(
+        self, user_id: int, doc_id: str, *, index_version: str | None = None
+    ) -> None:
         with self._lock:
-            rows = [row for row in self._load(user_id) if row.get("doc_id") != doc_id]
-            self._save(user_id, rows)
+            paths = (
+                [self._path(user_id, index_version)]
+                if index_version is not None
+                else self._user_paths(user_id)
+            )
+            for path in paths:
+                if not os.path.exists(path):
+                    continue
+                rows = self._load_path(path)
+                rows = [row for row in rows if row.get("doc_id") != doc_id]
+                self._save_path(path, rows)
 
     def drop_user(self, user_id: int) -> None:
         with self._lock:
-            path = self._path(user_id)
-            if os.path.exists(path):
-                os.remove(path)
+            for path in self._user_paths(user_id):
+                if os.path.exists(path):
+                    os.remove(path)
 
-    def count(self, user_id: int) -> int:
-        return len(self._load(user_id))
+    def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
+        return len(self._load(user_id, index_version))
+
+    def _user_paths(self, user_id: int) -> list[str]:
+        prefix = f"col_user_{user_id}"
+        return [
+            os.path.join(self._dir, filename)
+            for filename in os.listdir(self._dir)
+            if filename == f"{prefix}.json"
+            or (filename.startswith(f"{prefix}__") and filename.endswith(".json"))
+        ]
+
+    @staticmethod
+    def _load_path(path: str) -> list[dict[str, Any]]:
+        if not os.path.exists(path):
+            return []
+        try:
+            with open(path, encoding="utf-8") as fp:
+                return json.load(fp)
+        except (OSError, json.JSONDecodeError):
+            return []
+
+    @staticmethod
+    def _save_path(path: str, rows: list[dict[str, Any]]) -> None:
+        tmp = f"{path}.tmp"
+        with open(tmp, "w", encoding="utf-8") as fp:
+            json.dump(rows, fp, ensure_ascii=False)
+        os.replace(tmp, path)
 
 
 # ============================================================

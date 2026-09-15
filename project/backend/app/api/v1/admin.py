@@ -210,13 +210,19 @@ def get_configs(db: Session = Depends(get_db), _: User = Depends(get_current_adm
                 "aux_model": config_service.get(db, config_service.LLM_AUX_MODEL),
             },
             "rerank": {
+                "provider": config_service.get(db, config_service.RERANK_PROVIDER),
                 "api_url": config_service.get(db, config_service.RERANK_API_URL),
                 "api_key_masked": config_service.masked(db, config_service.RERANK_API_KEY),
                 "model": config_service.get(db, config_service.RERANK_MODEL),
+                "version": config_service.get(db, config_service.RERANK_VERSION),
+                "local_path": config_service.get(db, config_service.RERANK_LOCAL_PATH),
                 "top_k": config_service.get_int(db, config_service.RERANK_TOP_K, 5),
             },
             "embedding": {
+                "provider": config_service.get(db, config_service.EMBEDDING_PROVIDER),
                 "model": config_service.get(db, config_service.EMBEDDING_MODEL),
+                "version": config_service.get(db, config_service.EMBEDDING_VERSION),
+                "local_path": config_service.get(db, config_service.EMBEDDING_LOCAL_PATH),
                 "base_url": config_service.get(db, config_service.EMBEDDING_BASE_URL),
                 "api_key_masked": config_service.masked(db, config_service.EMBEDDING_API_KEY),
             },
@@ -254,18 +260,49 @@ def update_configs(
             updates.append((config_service.LLM_API_KEY, payload.llm.api_key.strip()))
 
     if payload.rerank:
+        if payload.rerank.provider is not None:
+            updates.append((config_service.RERANK_PROVIDER, payload.rerank.provider))
         if payload.rerank.api_url is not None:
             updates.append((config_service.RERANK_API_URL, payload.rerank.api_url.strip()))
         if payload.rerank.model is not None:
             updates.append((config_service.RERANK_MODEL, payload.rerank.model.strip()))
+        if payload.rerank.version is not None:
+            updates.append((config_service.RERANK_VERSION, payload.rerank.version.strip()))
+        if payload.rerank.local_path is not None:
+            updates.append((config_service.RERANK_LOCAL_PATH, payload.rerank.local_path.strip()))
         if payload.rerank.top_k is not None:
             updates.append((config_service.RERANK_TOP_K, str(payload.rerank.top_k)))
         if payload.rerank.api_key:
             updates.append((config_service.RERANK_API_KEY, payload.rerank.api_key.strip()))
 
     if payload.embedding:
+        current_embedding_identity = (
+            config_service.get(db, config_service.EMBEDDING_PROVIDER),
+            config_service.get(db, config_service.EMBEDDING_MODEL),
+            config_service.get(db, config_service.EMBEDDING_LOCAL_PATH),
+        )
+        next_embedding_identity = (
+            payload.embedding.provider or current_embedding_identity[0],
+            payload.embedding.model.strip()
+            if payload.embedding.model is not None
+            else current_embedding_identity[1],
+            payload.embedding.local_path.strip()
+            if payload.embedding.local_path is not None
+            else current_embedding_identity[2],
+        )
+        current_version = config_service.get(db, config_service.EMBEDDING_VERSION)
+        next_version = payload.embedding.version or current_version
+        if next_embedding_identity != current_embedding_identity and next_version == current_version:
+            raise BadRequest("更换 Embedding Adapter 或模型时必须同时填写新的模型版本")
+
+        if payload.embedding.provider is not None:
+            updates.append((config_service.EMBEDDING_PROVIDER, payload.embedding.provider))
         if payload.embedding.model is not None:
             updates.append((config_service.EMBEDDING_MODEL, payload.embedding.model.strip()))
+        if payload.embedding.version is not None:
+            updates.append((config_service.EMBEDDING_VERSION, payload.embedding.version.strip()))
+        if payload.embedding.local_path is not None:
+            updates.append((config_service.EMBEDDING_LOCAL_PATH, payload.embedding.local_path.strip()))
         if payload.embedding.base_url is not None:
             updates.append((config_service.EMBEDDING_BASE_URL, payload.embedding.base_url.strip()))
         if payload.embedding.api_key:
@@ -303,6 +340,9 @@ def update_configs(
         config_service.set_value(db, key, value, commit=False)
     db.commit()
     config_service.invalidate_cache()
+    from app.modeling.registry import clear_model_cache
+
+    clear_model_cache()
 
     return success(None, message="系统全局配置参数已成功保存并立即生效")
 

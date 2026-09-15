@@ -16,7 +16,9 @@ from app.core.security import (
     validate_password,
     verify_password,
 )
-from app.services import chunking_service, parser_service, rerank_service
+from app.modeling import ModelDescriptor, RankedIndex
+from app.modeling import registry as model_registry
+from app.services import chunking_service, embedding_service, parser_service, rerank_service
 from app.services.config_service import RuntimeConfig
 from app.services.parser_service import TextBlock
 from app.services.vector_store import LocalVectorStore, RetrievedChunk, VectorRecord, collection_name
@@ -173,6 +175,10 @@ def test_parse_missing_file():
 
 def test_collection_naming_rule():
     assert collection_name(12) == "col_user_12"
+    assert collection_name(12, "domain-embedding-v1") != collection_name(
+        12, "domain-embedding-v2"
+    )
+    assert collection_name(12, "domain-embedding-v1").startswith("col_user_12__")
 
 
 def test_vector_store_isolates_users(tmp_path):
@@ -211,6 +217,43 @@ def test_vector_store_isolates_users(tmp_path):
     assert store.count(2) == 0
 
 
+def test_vector_store_isolates_embedding_versions(tmp_path):
+    store = LocalVectorStore(str(tmp_path))
+    first = VectorRecord(
+        id="doc_a:0",
+        text="第一版向量",
+        embedding=[1.0, 0.0],
+        doc_id="doc_a",
+        user_id=1,
+        file_name="a.txt",
+        chunk_index=0,
+        embedding_model_version="domain-v1",
+    )
+    second = VectorRecord(
+        id="doc_a:0",
+        text="第二版向量",
+        embedding=[0.0, 1.0, 0.0],
+        doc_id="doc_a",
+        user_id=1,
+        file_name="a.txt",
+        chunk_index=0,
+        embedding_model_version="domain-v2",
+    )
+
+    store.add(1, [first], index_version="domain-v1")
+    store.add(1, [second], index_version="domain-v2")
+
+    assert store.search(1, [1.0, 0.0], 5, index_version="domain-v1")[0].text == "第一版向量"
+    assert store.search(1, [0.0, 1.0, 0.0], 5, index_version="domain-v2")[0].text == "第二版向量"
+    assert store.count(1, index_version="domain-v1") == 1
+    assert store.count(1, index_version="domain-v2") == 1
+
+    # 未指定版本时按 doc_id 清理所有模型版本，避免删除文档后残留旧索引。
+    store.delete_document(1, "doc_a")
+    assert store.count(1, index_version="domain-v1") == 0
+    assert store.count(1, index_version="domain-v2") == 0
+
+
 def test_vector_record_metadata_contains_required_fields():
     record = VectorRecord(
         id="doc_x:3", text="内容", embedding=[0.1], doc_id="doc_x", user_id=7,
@@ -239,6 +282,63 @@ class _StubConfig:
     rerank_api_key = "key"
     rerank_top_k = 2
     rerank_model = "BAAI/bge-reranker-v2-m3"
+
+
+class _LocalConfig(_StubConfig):
+    rerank_provider = "local"
+    rerank_version = "domain-reranker-v1"
+    rerank_local_path = "models/domain-reranker-v1"
+    embedding_provider = "local"
+    embedding_version = "domain-embedding-v1"
+    embedding_local_path = "models/domain-embedding-v1"
+    embedding_model = "unused"
+    embedding_base_url = ""
+    embedding_api_key = ""
+
+
+def test_registry_resolves_local_model_adapters(monkeypatch):
+    embedding = object()
+    reranker = object()
+    monkeypatch.setattr(model_registry, "_local_embedding", lambda path, version: embedding)
+    monkeypatch.setattr(model_registry, "_local_reranker", lambda path, version: reranker)
+
+    assert model_registry.resolve_embedding_model(_LocalConfig()) is embedding
+    assert model_registry.resolve_reranker_model(_LocalConfig()) is reranker
+
+
+def test_model_facades_delegate_to_adapters(monkeypatch):
+    class StubEmbedding:
+        descriptor = ModelDescriptor("embedding", "local", "stub", "v1", 2)
+
+        def embed_documents(self, texts):
+            return [[float(len(text)), 1.0] for text in texts]
+
+        def embed_query(self, text):
+            return [float(len(text)), 1.0]
+
+    class StubReranker:
+        descriptor = ModelDescriptor("reranker", "local", "stub", "v1")
+
+        def rank(self, query, passages, top_k):
+            return [RankedIndex(index=1, score=0.9), RankedIndex(index=0, score=0.2)][:top_k]
+
+    monkeypatch.setattr(settings, "DEV_MOCK_AI", False)
+    monkeypatch.setattr(model_registry, "resolve_embedding_model", lambda config: StubEmbedding())
+    monkeypatch.setattr(model_registry, "resolve_reranker_model", lambda config: StubReranker())
+    monkeypatch.setattr(embedding_service, "_record", lambda *args, **kwargs: None)
+    monkeypatch.setattr(rerank_service.usage_service, "record", lambda *args, **kwargs: None)
+
+    assert embedding_service.embed_texts(["ab", "四个汉字"], _LocalConfig()) == [
+        [2.0, 1.0],
+        [4.0, 1.0],
+    ]
+    candidates = [
+        RetrievedChunk(text="first", doc_id="d", file_name="f", chunk_index=0),
+        RetrievedChunk(text="second", doc_id="d", file_name="f", chunk_index=1),
+    ]
+    ranked, warnings = rerank_service.rerank("query", candidates, _LocalConfig())
+    assert [item.text for item in ranked] == ["second", "first"]
+    assert warnings == []
 
 
 def test_rerank_falls_back_on_failure(monkeypatch):

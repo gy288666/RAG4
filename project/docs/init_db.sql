@@ -1,9 +1,13 @@
 -- =============================================================
--- RAG 学术知识引擎 — 数据库初始化 DDL 脚本 (v1.3 联调版)
+-- RAG 学术知识引擎 — 数据库初始化 DDL 脚本 (v1.4 模型版本版)
 -- 数据库名称：rag_high
 -- 数据库版本：MySQL 5.7+ / 8.0
 -- 文档来源：requirements_document.md v1.1 + api_document.md v1.0
--- 更新日期：2026-07-26
+-- 更新日期：2026-09-14
+-- -------------------------------------------------------------
+-- 变更说明 (v1.4，RAG4 模型微调接入)：
+--   system_configs 新增 Embedding/Reranker 的 provider、version、local_path。
+--   embedding.version 同时作为向量索引命名空间，避免不同模型语义空间混写。
 -- -------------------------------------------------------------
 -- 变更说明 (v1.3，接入真实模型联调后新增)：
 --   1. system_configs 新增 llm.aux_model：辅助任务（问题改写、标题生成）
@@ -241,7 +245,14 @@ INSERT INTO `system_configs` (`config_key`, `config_value`, `description`) VALUE
     ('retrieval.history_rounds', '5',                                         '多轮对话携带的历史轮数上限（PRD 4.3.3）'),
     -- 以下 2 项为 v1.3 新增（真实模型联调后补充）
     ('llm.aux_model',      '',                                                '辅助任务（问题改写、标题生成）模型；留空复用主模型。主模型为推理型时建议单独配置小模型'),
-    ('rerank.model',       'BAAI/bge-reranker-v2-m3',                        'Rerank 模型名称（各服务商取值不同）')
+    ('rerank.model',       'BAAI/bge-reranker-v2-m3',                        'Rerank 模型名称（各服务商取值不同）'),
+    -- 以下 6 项为 v1.4 新增（本地微调模型与版本化索引）
+    ('rerank.provider',    'remote',                                          'Rerank Adapter：remote 或 local'),
+    ('rerank.version',     'baseline',                                        'Rerank 模型版本，用于实验追踪'),
+    ('rerank.local_path',  '',                                                '本地微调 Reranker 目录；留空时使用模型名称'),
+    ('embedding.provider', 'remote',                                          'Embedding Adapter：remote 或 local'),
+    ('embedding.version',  'baseline',                                        'Embedding 模型版本，同时作为向量索引命名空间'),
+    ('embedding.local_path','',                                                '本地微调 Embedding 目录；留空时使用模型名称')
 ON DUPLICATE KEY UPDATE `config_value` = VALUES(`config_value`);
 
 
@@ -249,7 +260,7 @@ ON DUPLICATE KEY UPDATE `config_value` = VALUES(`config_value`);
 -- 完成确认
 -- -----------------------------------------------
 SELECT CONCAT(
-    '数据库 rag_high 建表完成 (v1.2)。共 7 张表：',
+    '数据库 rag_high 建表完成 (v1.4)。共 7 张表：',
     'users, password_reset_requests, documents, chat_sessions, chat_messages, system_configs, usage_logs。',
-    ' system_configs 已写入 15 条默认配置。'
+    ' system_configs 已写入 21 条默认配置。'
 ) AS `初始化结果`;

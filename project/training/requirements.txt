@@ -1,0 +1,8 @@
+-r ../backend/requirements-local-models.txt
+
+# Training-only dependencies. They are intentionally kept out of backend/requirements.txt.
+accelerate>=1.2,<2.0
+datasets>=3.2,<4.0
+peft>=0.14,<1.0
+transformers>=4.48,<5.0
+trl>=0.15,<0.18

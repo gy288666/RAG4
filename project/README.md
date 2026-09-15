@@ -1,5 +1,3 @@
-# RAG2
-
 # 基于 RAG 的学术知识引擎
 
 > 上传专业文献，通过语义检索 + 大模型生成，获得**精准、可溯源**的学术问答。
@@ -39,7 +37,7 @@
 | 模块 | 能力 |
 |------|------|
 | **用户管理** | 用户列表（含文档数、最后登录时间）、角色切换、启用/禁用、生成临时密码 |
-| **系统配置** | LLM / Rerank / Embedding / 切片 / 检索参数热更新，改完即时全局生效 |
+| **系统配置** | LLM / Rerank / Embedding / 切片 / 检索参数热更新；远程/本地模型、模型版本可切换 |
 | **运行监控** | 调用次数、Token 消耗、失败率、每日趋势、OCR 与文档处理失败队列 |
 
 ---
@@ -49,23 +47,23 @@
 | 层 | 选型 |
 |----|------|
 | 前端 | React 18 + TypeScript + Vite + React Router + Axios + TailwindCSS |
-| 后端 | Python 3.10+ + FastAPI + SQLAlchemy 2.0 |
+| 后端 | Conda Python 3.11 + FastAPI + SQLAlchemy 2.0 |
 | 关系库 | MySQL 8（开发可用 SQLite） |
-| 向量库 | Chroma（单用户单 Collection 物理隔离） |
+| 向量库 | Chroma（用户 + Embedding 版本双重 Collection 隔离） |
 | 文档解析 | PyMuPDF / pdfplumber / python-docx / charset-normalizer |
 | OCR | PaddleOCR（首选）→ Tesseract（回退），均为可选依赖 |
-| 模型 | OpenAI 兼容 API（默认 `deepseek-ai/DeepSeek-V4-Flash`）、`Qwen/Qwen3-Embedding-8B`、云端 Rerank（Cohere / 阿里云百炼） |
+| 模型 | OpenAI 兼容 API，或 Sentence Transformers 本地 Embedding / Reranker；支持项目数据微调 |
 
 ---
 
 ## 目录结构
 
 ```
-RAG1/
+RAG4/project/
 ├── docs/                          # 需求、接口、DDL 与变更记录
 │   ├── requirements_document.md
 │   ├── api_document.md
-│   ├── init_db.sql                # MySQL 建库建表脚本（v1.2）
+│   ├── init_db.sql                # MySQL 建库建表脚本（v1.4）
 │   └── db_changelog.md            # 实现阶段的表结构与接口变更说明
 │
 ├── backend/
@@ -75,11 +73,16 @@ RAG1/
 │   │   ├── models/                # 7 张表的 ORM 映射
 │   │   ├── schemas/               # 请求体校验
 │   │   ├── api/v1/                # auth / docs / chat / admin 路由
+│   │   ├── modeling/              # 模型接口、注册表、远程/本地 Adapter
 │   │   ├── services/              # 业务与 RAG 编排（见下）
 │   │   └── utils/                 # 时间格式化、时间有序 ID
 │   ├── tests/                     # 77 个 pytest 用例
 │   ├── requirements.txt
+│   ├── requirements-local-models.txt
 │   └── .env.example
+│
+├── training/                      # 硬负样本、微调与离线评测脚本
+├── models/                        # 本地模型产物（Git 忽略）
 │
 └── frontend/
     └── src/
@@ -100,9 +103,10 @@ RAG1/
 | `parser_service.py` | 多格式解析、扫描版 PDF 判定、字符集识别 |
 | `ocr_service.py` | OCR 引擎探测与适配（PaddleOCR / Tesseract） |
 | `chunking_service.py` | 按段落→句子→字符三级边界切分，支持重叠 |
-| `embedding_service.py` | OpenAI 兼容 `/embeddings` 批量向量化 |
-| `vector_store.py` | 向量库抽象层 + Chroma 实现 + 本地兜底实现 |
-| `rerank_service.py` | 云端精排，超时/失败自动降级 |
+| `modeling/` | Embedding/Reranker 稳定接口与 remote/local Adapter；业务层不感知训练框架 |
+| `embedding_service.py` | 统一模型门面、批量向量化与调用日志 |
+| `vector_store.py` | 向量库抽象层；按用户和 Embedding 版本隔离索引 |
+| `rerank_service.py` | 统一远程/本地精排，超时或失败自动降级 |
 | `llm_service.py` | 流式与非流式生成，Token 统计 |
 | `rag_service.py` | 问答编排：改写 → 检索 → 精排 → 生成 → 引用 → 落库 |
 | `document_service.py` | 上传落盘、后台线程池解析入库、级联删除 |
@@ -114,7 +118,7 @@ RAG1/
 
 ### 0. 前置条件
 
-- Python 3.10+
+- Conda 与 Python 3.11
 - Node.js 18+
 - MySQL 8（若只想快速体验，可跳过，见下方 SQLite 方案）
 
@@ -130,8 +134,9 @@ mysql -u root -p < docs/init_db.sql
 
 ```bash
 cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+conda create -n rag4-py3.11 python=3.11 -y
+conda activate rag4-py3.11
+python -m pip install -r requirements.txt
 
 cp .env.example .env
 # 编辑 .env：至少修改 DATABASE_URL 与 SECRET_KEY
@@ -163,10 +168,20 @@ Vite 已配置 `/api` 代理到 `http://127.0.0.1:8000`，无需处理跨域。
 
 - **大模型**：Base URL、API Key、模型名称
 - **辅助任务模型**：见下方「重要」说明
-- **Embedding**：模型名称；若与大模型不同服务商，另填 Base URL 与 API Key
-- **Rerank**：终结点、API Key、模型名称、Top-K（可留空，留空则跳过精排）
+- **Embedding**：运行方式、模型名称、模型/索引版本；远程模式填写 Base URL 与 Key，
+  本地模式填写模型目录
+- **Rerank**：运行方式、模型版本、Top-K；远程模式填写终结点与 Key，本地模式填写模型目录
 
 保存后立即生效，无需重启服务。
+
+本地模型还需执行：
+
+```powershell
+python -m pip install -r requirements-local-models.txt
+```
+
+微调数据格式、训练命令与上线门禁见 `training/README.md`。更换 Embedding 模型或
+Adapter 时，后台强制要求填写新的版本号，以免新旧语义空间混写。
 
 #### 已实测通过的配置（硅基流动 SiliconFlow）
 
@@ -271,8 +286,9 @@ event: error    data: {"code": 500, "message": "..."}         ← 仅异常时
 
 - **物理文件**：`{UPLOAD_DIR}/{user_id}/{doc_id}{ext}`，落盘文件名使用 `doc_id`，
   杜绝原始文件名带来的路径穿越与重名覆盖。
-- **向量**：每个用户一个 Chroma Collection（`col_user_{user_id}`），检索时只打开
-  自己的 Collection，跨用户读取在物理层面不可达。
+- **向量**：基线沿用 `col_user_{user_id}`；微调模型按
+  `col_user_{user_id}__{embedding_version}_{digest}` 建立独立 Collection。检索只打开
+  当前用户、当前版本的 Collection，既防跨用户读取，也防不同向量空间混写。
 - **关系库**：所有列表与详情查询均强制附加 `user_id` 条件；越权访问统一返回
   `404` 而非 `403`，避免资源 ID 被探测。
 
@@ -294,7 +310,7 @@ event: error    data: {"code": 500, "message": "..."}         ← 仅异常时
 ```bash
 cd backend
 source .venv/bin/activate
-pytest                      # 77 passed
+python -m pytest -q
 ```
 
 测试全程使用 SQLite 临时库 + `DEV_MOCK_AI`，**无需 MySQL、无需任何外部 API Key**。
@@ -400,8 +416,9 @@ apt-get install -y tesseract-ocr tesseract-ocr-chi-sim && pip install pytesserac
 需单独填写 Embedding 的 Base URL 与 Key。
 
 **Q：修改了 Embedding 模型，为什么旧文档搜不到了？**
-不同模型的向量维度与语义空间不同，历史向量无法与新模型的查询向量比较。
-更换模型后需要重新上传文档。
+不同模型的向量维度与语义空间不同。系统会要求新版本号并切换到独立索引，所以旧
+索引不会被污染，但新索引初始为空。当前可重新上传评测文档；RAG4 的异步批量重建
+任务完成后，应通过显式重建完成切换。
 
 **Q：切片参数改了，历史文档会重新切分吗？**
 不会。按 PRD 4.5.2，切片参数仅对之后上传的文档生效。

@@ -176,13 +176,23 @@ def process_document(doc_id: str) -> str:
                 file_name=file_name,
                 chunk_index=chunk.chunk_index,
                 page=chunk.page,
+                embedding_model_version=config.embedding_version,
             )
             for chunk, embedding in zip(chunks, embeddings)
         ]
-        get_vector_store().add(user_id, records)
+        get_vector_store().add(
+            user_id,
+            records,
+            index_version=config.embedding_version,
+        )
 
         _update_status(doc_id, STATUS_READY)
-        logger.info("文档处理完成: %s（%d 个切片）", doc_id, len(records))
+        logger.info(
+            "文档处理完成: %s（%d 个切片，Embedding=%s）",
+            doc_id,
+            len(records),
+            config.embedding_version,
+        )
         return STATUS_READY
 
     except parser_service.ParseError as exc:

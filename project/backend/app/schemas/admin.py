@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -18,14 +20,20 @@ class LLMConfigIn(BaseModel):
 
 
 class RerankConfigIn(BaseModel):
+    provider: Literal["remote", "local"] | None = None
     api_url: str | None = None
     api_key: str | None = None
     model: str | None = None
+    version: str | None = Field(None, min_length=1, max_length=64, pattern=r"^[A-Za-z0-9._-]+$")
+    local_path: str | None = None
     top_k: int | None = Field(None, ge=1, le=50)
 
 
 class EmbeddingConfigIn(BaseModel):
+    provider: Literal["remote", "local"] | None = None
     model: str | None = None
+    version: str | None = Field(None, min_length=1, max_length=64, pattern=r"^[A-Za-z0-9._-]+$")
+    local_path: str | None = None
     base_url: str | None = None
     api_key: str | None = None
 

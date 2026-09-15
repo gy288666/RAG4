@@ -210,7 +210,12 @@ def retrieve(
     started = time.perf_counter()
     try:
         embedding = embedding_service.embed_query(query, config, user_id=user_id)
-        candidates = get_vector_store().search(user_id, embedding, config.retrieval_top_n)
+        candidates = get_vector_store().search(
+            user_id,
+            embedding,
+            config.retrieval_top_n,
+            index_version=config.embedding_version,
+        )
     except embedding_service.EmbeddingError as exc:
         usage_service.record(
             event_type=EVENT_VECTOR_SEARCH,

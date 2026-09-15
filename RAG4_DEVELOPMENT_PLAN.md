@@ -1,6 +1,6 @@
 # RAG4 开发计划：证据驱动的学术 Research Agent
 
-> 文档版本：v2.0  
+> 文档版本：v2.1
 > 编写日期：2026-09-13  
 > 基线项目：RAG3（React 18 + TypeScript + FastAPI + SQLAlchemy + Chroma）  
 > 产品形态：个人学术资料 Research Agent  
@@ -20,6 +20,7 @@ RAG4 的核心任务不是替用户假装完成研究，而是减少资料整理
 2. **知识图谱**连接跨文档实体、方法、数据集和指标；
 3. **Agent 编排**把复杂目标拆成可观察、可停止、可恢复的研究步骤；
 4. **前端重构**把任务计划、执行进度、证据、关系和最终产物放在同一个研究空间中。
+5. **模型实验闭环**用人工标注与 hard negative 持续改进召回、精排和结构化生成，但模型切换必须可评测、可回滚。
 
 RAG4 的一句话价值主张：
 
@@ -108,6 +109,7 @@ RAG3 已具备以下基础，应优先复用：
 6. 重构主要前端页面，形成“目标—计划—执行—证据—产物”的连续体验。
 7. 建立能比较 RAG3 与 RAG4 的检索质量、回答质量和任务完成质量评测。
 8. 保留离线 Fake Adapter、自动化测试与 Docker 部署能力。
+9. 建立远程/本地模型 Adapter、模型与索引版本、训练数据和离线评测闭环，优先完成 Reranker 微调。
 
 ### 3.2 本期非目标
 
@@ -137,6 +139,7 @@ RAG4 只有同时满足以下条件才算完成：
 - 用户能在一次交互内从答案定位到关系和原文；
 - 至少四类核心研究任务能在固定评测集上稳定完成；
 - 前后端测试、构建、迁移和部署流程可复现。
+- 任一微调模型只有在冻结测试集上通过质量、延迟和失败率门禁后才能切换；Embedding 切换不得混用旧索引。
 
 ---
 
@@ -177,6 +180,10 @@ HybridEvidenceEngine → EvidenceBundle
 
 交互层
 SSE / WebSocket → 计划、步骤、工具调用、证据、确认请求、最终产物
+
+实验反馈层
+显式标注/评测失败 → hard negative 构建 → 训练 → 离线评测 → 注册模型版本
+                                                     └→ 灰度切换/回滚
 ```
 
 架构原则：
@@ -184,6 +191,8 @@ SSE / WebSocket → 计划、步骤、工具调用、证据、确认请求、最
 - ResearchAgent、切分、图谱和混合证据分别设计为深模块；
 - 调用者只依赖小而稳定的接口；
 - 外部模型与 Neo4j 通过 Adapter 注入；
+- 在线服务只依赖 EmbeddingModel/RerankerModel 等小接口，训练框架留在离线路径；
+- 模型版本、索引版本、数据版本和代码提交必须共同记录，禁止“覆盖同名权重”；
 - 模块接口同时作为测试表面；
 - Agent 只通过 ToolRegistry 调用工具，不直接依赖 Chroma、Neo4j、文件系统或数据库；
 - Agent 计划必须有最大步骤数、Token 预算、超时和取消信号；
@@ -403,6 +412,35 @@ class ResearchStep:
 4. 证据无法支持的内容进入 `knowledge_gaps`，不得混入结论；
 5. 引用页码、原文片段与文档归属必须通过后端校验。
 
+### 5.8 `TrainableModelRuntime` 模块
+
+模型能力作为跨模块基础设施，而不是塞进 `ResearchAgent` 的训练逻辑。在线侧只暴露
+两个稳定接口：
+
+```text
+EmbeddingModel.embed_documents(texts) / embed_query(text)
+RerankerModel.rank(query, passages, top_k)
+```
+
+每种接口至少有两个 Adapter：
+
+- `remote`：兼容当前云端 Embedding 与 Rerank API，保留 RAG3 基线；
+- `local`：加载项目训练得到的 Sentence Transformers 模型；
+- 测试使用 Fake Adapter，不下载模型、不依赖 GPU。
+
+模型身份由 `task_type + provider + model_id + version` 确定。Embedding 的版本同时
+决定 Chroma Collection 命名空间；修改 provider、model 或 local_path 时必须提交
+新的 version。Reranker 可独立切换，不需要重建向量。训练目录提供：
+
+- 基于显式相关性标签的 hard negative 构建；
+- Embedding 三元组/对比学习，可选 LoRA；
+- CrossEncoder Reranker 二分类训练，可选 LoRA；
+- GraphExtractor 与 ArtifactComposer 的通用 LoRA-SFT；
+- Recall@K、MRR 和 nDCG 离线评测。
+
+训练数据不得默认采集普通用户聊天。优先使用冻结评测集、公开数据与明确授权、完成
+脱敏的数据；生产反馈只能记录显式赞同/纠错和候选证据 ID。
+
 ---
 
 ## 6. 切分逻辑详细设计
@@ -462,6 +500,8 @@ chunking_strategy = structure_parent_child_v1
 - 用户或管理员显式触发重建；
 - 重建采用新版本写入成功后再切换，失败时保留旧索引；
 - 重建过程中限制重复任务，保证幂等。
+- `chunking_version` 与 `embedding_version` 分开管理；前者改变文档结构，后者改变向量空间；
+- Collection 由 `user_id + embedding_version` 唯一确定，完整写入并验证后再原子切换活动版本。
 
 ---
 
@@ -599,7 +639,7 @@ graph：主要用于图谱页面探索，不作为普通问答默认模式
 3. 对识别出的实体执行图谱邻居与有限深度路径检索；
 4. 将图谱路径映射回 RelationEvidence；
 5. 合并文本证据，按 `chunk_id` 去重；
-6. Rerank；
+6. 通过 `RerankerModel` 接口精排（远程基线或本地微调版本）；
 7. 用命中子切片定位父切片；
 8. 控制总 Token 预算；
 9. 返回统一证据包。
@@ -676,6 +716,24 @@ created_at, updated_at
 
 新增 `task_confirmations`，记录需要人工确认的操作及结果，不保存账号凭据或完整敏感内容。
 
+模型实验建议新增：
+
+```text
+model_versions:
+id, task_type, provider, model_id, version, base_model,
+dataset_version, code_commit, artifact_uri, metrics_json, status, created_at
+
+index_versions:
+id, user_id, embedding_version, chunking_version, status,
+document_count, activated_at, created_at
+
+retrieval_judgments:
+id, dataset_split, query_id, candidate_id, label, source,
+is_authorized, created_at
+```
+
+`retrieval_judgments` 只保存显式评测标签或授权反馈，不把普通聊天日志自动转成训练数据。
+
 ### 9.3 Chroma Metadata
 
 新增：
@@ -689,6 +747,7 @@ page_start
 page_end
 token_count
 chunking_version
+embedding_model_version
 ```
 
 ### 9.4 迁移原则
@@ -698,6 +757,7 @@ chunking_version
 - 后台分批重建，不阻塞应用启动；
 - 迁移脚本支持 dry-run；
 - 重建失败可继续使用旧向量索引；
+- 模型和索引使用不可变版本号，切换活动版本不覆盖旧产物；
 - 上线前备份 MySQL、Chroma 和 Neo4j 数据卷。
 
 ---
@@ -953,6 +1013,8 @@ Research Agent
 - 图谱任务成功率、失败队列与重试；
 - 混合检索各阶段耗时；
 - 旧索引待升级数量。
+- Embedding/Reranker 的 provider、模型目录、版本和活动状态；
+- 模型版本对应的冻结评测指标、索引重建进度与一键回滚入口；
 - Agent 任务成功率、平均步骤数、暂停/取消和失败原因；
 - 工具调用延迟、错误率及任务预算消耗；
 - 不展示普通用户完整研究内容和原文。
@@ -1045,6 +1107,17 @@ Agent 指标：
 5. 父子切片 + 混合检索 + Rerank。
 
 每次只改变一个主要变量，保留原始明细，报告不仅写平均值，也展示失败案例。
+
+模型微调实验按以下顺序增加，且每一步都与未微调基线做单变量对照：
+
+1. 基线 Embedding + 基线 Reranker；
+2. 基线 Embedding + hard-negative Reranker；
+3. 领域 Embedding + 基线 Reranker；
+4. 领域 Embedding + hard-negative Reranker；
+5. 在证据门禁不变的条件下比较基线生成模型与 ArtifactComposer LoRA。
+
+Reranker 以 MRR/nDCG 为主，Embedding 以 Recall@K 为主；生成模型不能只看风格评分，
+还必须比较引用准确率、证据覆盖率、JSON/Markdown 结构合法率和不可回答题拒答率。
 
 Agent 实验至少比较：
 
@@ -1227,6 +1300,10 @@ graph_cleanup
 project/
 ├── backend/
 │   ├── app/
+│   │   ├── modeling/
+│   │   │   ├── interfaces.py
+│   │   │   ├── registry.py
+│   │   │   └── adapters/
 │   │   ├── domain/
 │   │   │   ├── research_task.py
 │   │   │   ├── research_step.py
@@ -1271,6 +1348,15 @@ project/
 │       ├── datasets/
 │       ├── run_eval.py
 │       └── reports/
+├── training/
+│   ├── datasets/
+│   │   └── build_retrieval_dataset.py
+│   ├── embedding/train.py
+│   ├── reranker/train.py
+│   ├── sft/train_lora.py
+│   ├── evaluation/evaluate_ranking.py
+│   └── outputs/
+├── models/                       # 本地模型产物，不提交 Git
 ├── frontend/
 │   └── src/
 │       ├── components/
@@ -1308,6 +1394,8 @@ project/
 - 从 RAG3 创建独立开发分支；
 - 修复环境并运行已有测试、前端 lint、build 和 E2E；
 - 固定 RAG3 检索配置、页面截图和评测结果；
+- 建立 Embedding/Reranker 接口、remote/local Adapter 与模型版本配置；
+- 固定第一版检索题、候选证据导出格式与数据授权规则；
 - 选定两组真实文献，定义 20 个 Agent 任务及人工期望产物；
 - 建立迁移、备份和回滚清单。
 
@@ -1315,6 +1403,7 @@ project/
 
 - 前后端在干净环境可启动；
 - RAG3 基线可复现且没有未解释的失败；
+- 基线模型与本地模型可以通过同一接口替换，Fake Adapter 测试通过；
 - Agent MVP 的四类任务、范围和验收样例已经冻结。
 
 ### 第 1 阶段：结构感知切分（第 1 周）
@@ -1342,6 +1431,7 @@ project/
 - 实现归一化、别名、去重、删除和重建；
 - 实现 HybridEvidenceEngine、父切片展开和降级；
 - 建立多跳、对比和不可回答评测。
+- 从基线误召回中构建 hard negative，训练第一版 Reranker 并记录 MRR/nDCG、延迟与失败案例。
 
 完成标准：
 
@@ -1349,6 +1439,7 @@ project/
 - 用户图谱严格隔离；
 - 混合证据能返回文本、关系路径和警告；
 - Neo4j 或 Rerank 不可用时可以明确降级。
+- 微调 Reranker 未通过门禁时可以立即切回 `baseline` 版本。
 
 ### 第 3 阶段：Research Agent 内核（第 4 周）
 
@@ -1376,6 +1467,7 @@ project/
 - 检查核心结论证据覆盖、对比对象覆盖和冲突证据；
 - 实现 `save_research_note` 及确认流程；
 - 建立 20 个端到端 Agent 任务评测。
+- 当 ArtifactComposer 输出协议稳定后，制作 LoRA-SFT 小样本实验；模型输出仍必须通过 EvidenceVerifier。
 
 完成标准：
 
@@ -1407,6 +1499,7 @@ project/
 任务：
 
 - 执行检索、问答和 Agent 完整评测矩阵；
+- 仅当召回瓶颈仍存在时训练领域 Embedding，使用新版本完成独立索引重建与回滚演练；
 - 修复高优先级失败案例；
 - 验证部署、升级、备份、恢复和回滚；
 - 更新需求、接口、数据库、安全和部署文档；
@@ -1426,6 +1519,7 @@ project/
 ### P0：必须完成
 
 - 恢复可运行测试基线；
+- 稳定模型接口、remote/local Adapter、不可变版本号与 Embedding 索引隔离；
 - 结构感知父子切片；
 - 图谱来源证据；
 - 用户隔离；
@@ -1439,6 +1533,7 @@ project/
 - 任务工作区和证据侧栏；
 - 文档详情与局部图谱；
 - 多跳、不可回答和 Agent 任务评测。
+- 冻结评测集与显式授权训练数据规则。
 
 ### P1：建议完成
 
@@ -1450,6 +1545,8 @@ project/
 - 文档范围筛选；
 - 任务暂停、恢复和失败检查点；
 - 快速问答一键转为研究任务。
+- hard-negative Reranker 训练、离线 MRR/nDCG 评测与版本切换；
+- 当 Recall@K 明确受限时进行 Embedding 微调和全量重建实验。
 
 ### P2：后续版本
 
@@ -1461,6 +1558,8 @@ project/
 - 受控外部文献搜索工具；
 - 用户自定义工作流模板；
 - 多 Agent 分工与并行研究。
+- GraphExtractor/ArtifactComposer LoRA-SFT 与偏好优化；
+- 视觉语言模型处理图表、公式和扫描页，并保留页级来源；
 
 ---
 
@@ -1482,6 +1581,9 @@ project/
 | Agent 产物引用不完整 | 用户误信总结 | 完成前执行证据门禁，未覆盖内容进入知识缺口 |
 | 自动保存覆盖用户笔记 | 数据损失 | 写入前确认、版本化保存、默认不覆盖人工内容 |
 | 任务成本不可控 | 延迟和费用过高 | 步骤、Token、工具调用和总时长预算 |
+| 微调数据泄漏或未经授权 | 隐私风险与虚高评测 | 只用显式授权数据；train/dev/test 按文档或主题隔离；记录数据版本 |
+| Embedding 切换后向量混写 | 检索结果不可解释或直接报维度错误 | 新版本独立 Collection；完整重建后原子切换；保留旧索引回滚 |
+| 模型提升来自过拟合 | 离线很好、真实任务退化 | 冻结测试集、单变量实验、记录失败案例与线上灰度指标 |
 
 ---
 
@@ -1493,6 +1595,8 @@ project/
 chore: restore reproducible RAG3 baseline
 feat(chunking): add token-aware parent-child chunks
 feat(indexing): add versioned reindex jobs
+feat(modeling): add local and remote embedding reranker adapters
+feat(training): add hard-negative retrieval training pipeline
 feat(graph): add sourced entity and relation extraction
 feat(graph): add neo4j and in-memory adapters
 feat(evidence): add hybrid evidence engine
@@ -1532,6 +1636,7 @@ docs: publish RAG4 experiment and deployment report
 - 结构化切分设计说明；
 - 知识图谱数据模型与接口说明；
 - RAG3/RAG4 检索对照评测、Agent 任务评测、原始结果和实验报告；
+- 模型训练脚本、数据说明、模型卡、模型/索引版本清单与回滚记录；
 - 前端设计 tokens、页面截图和交互说明；
 - Docker Compose 生产部署文件；
 - 测试报告；
@@ -1556,13 +1661,14 @@ RAG4 的面试价值不应是“我套了一个 Agent 框架、加了 Neo4j”�
 立即执行顺序：
 
 1. 修复并冻结 RAG3 测试和评测基线；
-2. 独立实现 ChunkingEngine，不同时修改图谱和前端；
-3. 为单篇测试文档建立有来源的局部图谱；
-4. 完成图谱删除、用户隔离、混合证据和失败降级；
-5. 用 Fake Adapter 实现 ResearchAgent 状态机和四个只读工具；
-6. 接入真实证据引擎，跑通一个多文档对比任务；
-7. 增加证据门禁、研究产物和保存确认；
+2. 先建立模型接口、版本化索引和冻结评测数据格式，不立即训练大模型；
+3. 独立实现 ChunkingEngine，不同时修改图谱和前端；
+4. 为单篇测试文档建立有来源的局部图谱，并完成混合证据与降级；
+5. 从真实失败案例构建 hard negative，先训练和评测 Reranker；
+6. 用 Fake Adapter 实现 ResearchAgent 状态机和四个只读工具；
+7. 接入真实证据引擎，增加证据门禁、研究产物和保存确认；
 8. 先实现任务工作区，再重构问答、文档详情和图谱页；
-9. 最后补概览、管理监控、部署和完整评测。
+9. 仅在 Recall@K 仍受限时微调 Embedding 并重建独立版本索引；
+10. 最后补生成模型 LoRA 实验、概览、管理监控、部署和完整评测。
 
 第一周结束前不追求 Agent 自主循环或图谱动画；第一项可验收成果必须是**可复现的 RAG3 基线与更可靠的切分模块**。第四周结束时必须先用 Fake Adapter 证明 Agent 状态机、权限和恢复机制正确，再接入真实模型，避免把随机模型行为误当成系统能力。

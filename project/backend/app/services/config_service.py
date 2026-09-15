@@ -28,10 +28,16 @@ RERANK_API_URL = "rerank.api_url"
 RERANK_API_KEY = "rerank.api_key"
 RERANK_TOP_K = "rerank.top_k"
 RERANK_MODEL = "rerank.model"
+RERANK_PROVIDER = "rerank.provider"
+RERANK_VERSION = "rerank.version"
+RERANK_LOCAL_PATH = "rerank.local_path"
 
 EMBEDDING_MODEL = "embedding.model"
 EMBEDDING_BASE_URL = "embedding.base_url"
 EMBEDDING_API_KEY = "embedding.api_key"
+EMBEDDING_PROVIDER = "embedding.provider"
+EMBEDDING_VERSION = "embedding.version"
+EMBEDDING_LOCAL_PATH = "embedding.local_path"
 
 CHUNK_SIZE = "chunking.chunk_size"
 CHUNK_OVERLAP = "chunking.overlap"
@@ -56,9 +62,15 @@ DEFAULTS: dict[str, tuple[str, str]] = {
     RERANK_API_KEY: ("", "Rerank API 调用密钥（AES-256 密文）"),
     RERANK_TOP_K: ("5", "Rerank 精排后保留的 Top-K 文本片段数量"),
     RERANK_MODEL: ("BAAI/bge-reranker-v2-m3", "Rerank 模型名称（各服务商取值不同）"),
+    RERANK_PROVIDER: ("remote", "Rerank Adapter：remote 或 local"),
+    RERANK_VERSION: ("baseline", "Rerank 模型版本，用于实验追踪"),
+    RERANK_LOCAL_PATH: ("", "本地微调 Reranker 目录；留空时使用模型名称"),
     EMBEDDING_MODEL: ("Qwen/Qwen3-Embedding-8B", "文本向量化使用的 Embedding 模型名称"),
     EMBEDDING_BASE_URL: ("", "Embedding 服务 Base URL（留空则复用 LLM Base URL）"),
     EMBEDDING_API_KEY: ("", "Embedding API 调用密钥（AES-256 密文，留空则复用 LLM Key）"),
+    EMBEDDING_PROVIDER: ("remote", "Embedding Adapter：remote 或 local"),
+    EMBEDDING_VERSION: ("baseline", "Embedding 模型版本，同时作为向量索引命名空间"),
+    EMBEDDING_LOCAL_PATH: ("", "本地微调 Embedding 目录；留空时使用模型名称"),
     CHUNK_SIZE: ("600", "文档切片大小（字符数）"),
     CHUNK_OVERLAP: ("60", "相邻切片的重叠字符数"),
     RETRIEVAL_TOP_N: ("20", "向量密集检索的候选片段数量 Top-N"),
@@ -157,7 +169,9 @@ class RuntimeConfig:
     __slots__ = (
         "llm_base_url", "llm_api_key", "llm_model", "llm_aux_model",
         "rerank_api_url", "rerank_api_key", "rerank_top_k", "rerank_model",
+        "rerank_provider", "rerank_version", "rerank_local_path",
         "embedding_model", "embedding_base_url", "embedding_api_key",
+        "embedding_provider", "embedding_version", "embedding_local_path",
         "chunk_size", "chunk_overlap", "retrieval_top_n", "history_rounds",
     )
 
@@ -172,10 +186,16 @@ class RuntimeConfig:
         self.rerank_api_key = get_secret(db, RERANK_API_KEY)
         self.rerank_top_k = max(1, get_int(db, RERANK_TOP_K, 5))
         self.rerank_model = get(db, RERANK_MODEL)
+        self.rerank_provider = get(db, RERANK_PROVIDER)
+        self.rerank_version = get(db, RERANK_VERSION)
+        self.rerank_local_path = get(db, RERANK_LOCAL_PATH)
 
         self.embedding_model = get(db, EMBEDDING_MODEL)
         self.embedding_base_url = (get(db, EMBEDDING_BASE_URL) or self.llm_base_url).rstrip("/")
         self.embedding_api_key = get_secret(db, EMBEDDING_API_KEY) or self.llm_api_key
+        self.embedding_provider = get(db, EMBEDDING_PROVIDER)
+        self.embedding_version = get(db, EMBEDDING_VERSION)
+        self.embedding_local_path = get(db, EMBEDDING_LOCAL_PATH)
 
         self.chunk_size = max(100, get_int(db, CHUNK_SIZE, 600))
         self.chunk_overlap = max(0, min(get_int(db, CHUNK_OVERLAP, 60), self.chunk_size - 1))

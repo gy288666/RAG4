@@ -103,3 +103,34 @@ ON DUPLICATE KEY UPDATE `config_value` = VALUES(`config_value`);
 | 未设置 `max_tokens` | 推理模型的思考内容计入输出预算，服务商默认值（常见 512）被思考吃光，正文被截断甚至为空 | 主生成显式设置 `max_tokens=4096` |
 | 标题生成与主回答流并发 | 同一 API Key 并发请求触发服务商限流，实测出现主回答流被中途掐断（只输出 25 字） | 改为主回答流结束后再顺序生成标题；接口文档允许标题在「即将结束时」推送 |
 | 空回答无提示 | 模型未产出正文时前端显示空白气泡 | 检测到空正文时不落库，直接推送 `event: error` 提示重试 |
+
+---
+
+## v1.4 — 2026-09-14（RAG4 模型微调接入）
+
+为 Embedding 与 Reranker 新增统一的远程/本地 Adapter 配置。该版本不新增数据表，
+只向 `system_configs` 增加六个键，因此可向后兼容升级：
+
+| 配置项 | 默认值 | 用途 |
+|---|---|---|
+| `embedding.provider` | `remote` | `remote` 或 `local` Adapter |
+| `embedding.version` | `baseline` | 模型身份与 Chroma 索引命名空间 |
+| `embedding.local_path` | `''` | 本地微调模型目录 |
+| `rerank.provider` | `remote` | `remote` 或 `local` Adapter |
+| `rerank.version` | `baseline` | 精排模型实验版本 |
+| `rerank.local_path` | `''` | 本地微调模型目录 |
+
+```sql
+INSERT INTO `system_configs` (`config_key`, `config_value`, `description`) VALUES
+    ('embedding.provider', 'remote',   'Embedding Adapter：remote 或 local'),
+    ('embedding.version',  'baseline', 'Embedding 模型版本，同时作为向量索引命名空间'),
+    ('embedding.local_path','',         '本地微调 Embedding 目录'),
+    ('rerank.provider',    'remote',   'Rerank Adapter：remote 或 local'),
+    ('rerank.version',     'baseline', 'Rerank 模型版本，用于实验追踪'),
+    ('rerank.local_path',  '',         '本地微调 Reranker 目录')
+ON DUPLICATE KEY UPDATE `config_value` = VALUES(`config_value`);
+```
+
+基线版本继续读取旧 Collection `col_user_{user_id}`。非基线 Embedding 使用带版本
+摘要的新 Collection；切回旧版本无需删除新索引。文档删除会清理该用户下该文档的
+所有版本向量。

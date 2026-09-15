@@ -168,6 +168,38 @@ def test_get_configs_masks_api_keys(client, admin_headers):
         "/api/v1/admin/configs", headers=admin_headers
     ).text
 
+    assert body["data"]["embedding"]["provider"] == "remote"
+    assert body["data"]["embedding"]["version"] == "baseline"
+    assert body["data"]["rerank"]["provider"] == "remote"
+    assert body["data"]["rerank"]["version"] == "baseline"
+
+
+def test_embedding_identity_change_requires_new_version(client, admin_headers):
+    rejected = client.put(
+        "/api/v1/admin/configs",
+        headers=admin_headers,
+        json={"embedding": {"provider": "local", "local_path": "models/domain-v1"}},
+    ).json()
+    assert rejected["code"] == 400
+
+    accepted = client.put(
+        "/api/v1/admin/configs",
+        headers=admin_headers,
+        json={
+            "embedding": {
+                "provider": "local",
+                "local_path": "models/domain-v1",
+                "version": "domain-v1",
+            }
+        },
+    ).json()
+    assert accepted["code"] == 200
+
+    configs = client.get("/api/v1/admin/configs", headers=admin_headers).json()["data"]
+    assert configs["embedding"]["provider"] == "local"
+    assert configs["embedding"]["version"] == "domain-v1"
+    assert configs["embedding"]["local_path"] == "models/domain-v1"
+
 
 def test_api_key_is_encrypted_at_rest(client, admin_headers):
     plaintext = "rerank-key-abcdefg-7890"

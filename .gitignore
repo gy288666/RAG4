@@ -14,3 +14,8 @@ project/backend/.env
 project/backend/data/
 project/backend/uploads/
 project/backend/chroma_data/
+
+# Locally trained model artifacts and generated training data
+project/models/
+project/training/outputs/
+project/training/data/generated/

@@ -32,6 +32,7 @@ from app.main import app  # noqa: E402
 from app.models.user import ROLE_ADMIN, User  # noqa: E402
 from app.services import config_service, document_service  # noqa: E402
 from app.services import vector_store  # noqa: E402
+from app.modeling.registry import clear_model_cache  # noqa: E402
 
 # 测试中同步执行文档解析，便于直接断言最终状态
 document_service.SYNCHRONOUS_PROCESSING = True
@@ -52,13 +53,23 @@ def _clean_state():
     from app.models.chat import ChatMessage, ChatSession
     from app.models.document import Document
     from app.models.reset_request import PasswordResetRequest
+    from app.models.system_config import SystemConfig
     from app.models.usage_log import UsageLog
 
     with SessionLocal() as db:
-        for model in (ChatMessage, ChatSession, Document, PasswordResetRequest, UsageLog, User):
+        for model in (
+            ChatMessage,
+            ChatSession,
+            Document,
+            PasswordResetRequest,
+            UsageLog,
+            SystemConfig,
+            User,
+        ):
             db.query(model).delete()
         db.commit()
     config_service.invalidate_cache()
+    clear_model_cache()
     # 每个用例使用独立的向量库目录：chromadb 内部会按 path 缓存 system 实例，
     # 直接删除目录会让后续请求命中已失效的连接。
     settings.CHROMA_DIR = os.path.join(_TMP_ROOT, f"chroma_{uuid.uuid4().hex}")

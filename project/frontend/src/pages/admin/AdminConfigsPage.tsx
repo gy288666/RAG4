@@ -12,10 +12,16 @@ interface FormState {
   llmAuxModel: string;
   llmApiKey: string;
   rerankApiUrl: string;
+  rerankProvider: 'remote' | 'local';
   rerankModel: string;
+  rerankVersion: string;
+  rerankLocalPath: string;
   rerankTopK: number;
   rerankApiKey: string;
   embeddingModel: string;
+  embeddingProvider: 'remote' | 'local';
+  embeddingVersion: string;
+  embeddingLocalPath: string;
   embeddingBaseUrl: string;
   embeddingApiKey: string;
   chunkSize: number;
@@ -31,10 +37,16 @@ function toForm(configs: SystemConfigs): FormState {
     llmAuxModel: configs.llm.aux_model,
     llmApiKey: '',
     rerankApiUrl: configs.rerank.api_url,
+    rerankProvider: configs.rerank.provider,
     rerankModel: configs.rerank.model,
+    rerankVersion: configs.rerank.version,
+    rerankLocalPath: configs.rerank.local_path,
     rerankTopK: configs.rerank.top_k,
     rerankApiKey: '',
     embeddingModel: configs.embedding.model,
+    embeddingProvider: configs.embedding.provider,
+    embeddingVersion: configs.embedding.version,
+    embeddingLocalPath: configs.embedding.local_path,
     embeddingBaseUrl: configs.embedding.base_url,
     embeddingApiKey: '',
     chunkSize: configs.chunking.chunk_size,
@@ -75,8 +87,21 @@ export default function AdminConfigsPage() {
 
     const payload: ConfigUpdatePayload = {
       llm: { base_url: form.llmBaseUrl, model: form.llmModel, aux_model: form.llmAuxModel },
-      rerank: { api_url: form.rerankApiUrl, model: form.rerankModel, top_k: form.rerankTopK },
-      embedding: { model: form.embeddingModel, base_url: form.embeddingBaseUrl },
+      rerank: {
+        provider: form.rerankProvider,
+        api_url: form.rerankApiUrl,
+        model: form.rerankModel,
+        version: form.rerankVersion,
+        local_path: form.rerankLocalPath,
+        top_k: form.rerankTopK,
+      },
+      embedding: {
+        provider: form.embeddingProvider,
+        model: form.embeddingModel,
+        version: form.embeddingVersion,
+        local_path: form.embeddingLocalPath,
+        base_url: form.embeddingBaseUrl,
+      },
       chunking: { chunk_size: form.chunkSize, overlap: form.overlap },
       retrieval: { top_n: form.topN, history_rounds: form.historyRounds },
     };
@@ -169,20 +194,56 @@ export default function AdminConfigsPage() {
 
         {/* Rerank */}
         <section className="card space-y-4 p-5">
-          <h2 className="text-sm font-semibold text-slate-700">云端 Rerank 精排</h2>
+          <h2 className="text-sm font-semibold text-slate-700">Rerank 精排</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="label" htmlFor="rerank-url">
-                API 终结点
-              </label>
-              <input
-                id="rerank-url"
+              <label className="label" htmlFor="rerank-provider">运行方式</label>
+              <select
+                id="rerank-provider"
                 className="field"
-                value={form.rerankApiUrl}
-                onChange={(e) => patch({ rerankApiUrl: e.target.value })}
-                placeholder="https://api.cohere.com/v1/rerank"
+                value={form.rerankProvider}
+                onChange={(e) => patch({ rerankProvider: e.target.value as 'remote' | 'local' })}
+              >
+                <option value="remote">远程兼容接口</option>
+                <option value="local">本地微调模型</option>
+              </select>
+            </div>
+            {form.rerankProvider === 'remote' && (
+              <div>
+                <label className="label" htmlFor="rerank-url">
+                  API 终结点
+                </label>
+                <input
+                  id="rerank-url"
+                  className="field"
+                  value={form.rerankApiUrl}
+                  onChange={(e) => patch({ rerankApiUrl: e.target.value })}
+                  placeholder="https://api.cohere.com/v1/rerank"
+                />
+              </div>
+            )}
+            <div>
+              <label className="label" htmlFor="rerank-version">模型版本</label>
+              <input
+                id="rerank-version"
+                className="field"
+                value={form.rerankVersion}
+                onChange={(e) => patch({ rerankVersion: e.target.value })}
+                placeholder="baseline 或 domain-reranker-v1"
               />
             </div>
+            {form.rerankProvider === 'local' && (
+              <div className="sm:col-span-2">
+                <label className="label" htmlFor="rerank-local-path">本地模型目录</label>
+                <input
+                  id="rerank-local-path"
+                  className="field"
+                  value={form.rerankLocalPath}
+                  onChange={(e) => patch({ rerankLocalPath: e.target.value })}
+                  placeholder="models/domain-reranker-v1"
+                />
+              </div>
+            )}
             <div>
               <label className="label" htmlFor="rerank-model">
                 模型名称
@@ -210,19 +271,35 @@ export default function AdminConfigsPage() {
               />
             </div>
           </div>
-          <ApiKeyField
-            id="rerank-key"
-            label="API Key"
-            masked={configs.rerank.api_key_masked}
-            value={form.rerankApiKey}
-            onChange={(value) => patch({ rerankApiKey: value })}
-          />
+          {form.rerankProvider === 'remote' && (
+            <ApiKeyField
+              id="rerank-key"
+              label="API Key"
+              masked={configs.rerank.api_key_masked}
+              value={form.rerankApiKey}
+              onChange={(value) => patch({ rerankApiKey: value })}
+            />
+          )}
         </section>
 
         {/* Embedding */}
         <section className="card space-y-4 p-5">
           <h2 className="text-sm font-semibold text-slate-700">向量化 Embedding</h2>
           <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="label" htmlFor="embedding-provider">运行方式</label>
+              <select
+                id="embedding-provider"
+                className="field"
+                value={form.embeddingProvider}
+                onChange={(e) =>
+                  patch({ embeddingProvider: e.target.value as 'remote' | 'local' })
+                }
+              >
+                <option value="remote">远程兼容接口</option>
+                <option value="local">本地微调模型</option>
+              </select>
+            </div>
             <div>
               <label className="label" htmlFor="embedding-model">
                 模型名称
@@ -236,26 +313,53 @@ export default function AdminConfigsPage() {
               />
             </div>
             <div>
-              <label className="label" htmlFor="embedding-base">
-                Base URL（留空则复用大模型地址）
-              </label>
+              <label className="label" htmlFor="embedding-version">模型/索引版本</label>
               <input
-                id="embedding-base"
+                id="embedding-version"
                 className="field"
-                value={form.embeddingBaseUrl}
-                onChange={(e) => patch({ embeddingBaseUrl: e.target.value })}
+                value={form.embeddingVersion}
+                onChange={(e) => patch({ embeddingVersion: e.target.value })}
+                placeholder="baseline 或 domain-embedding-v1"
               />
             </div>
+            {form.embeddingProvider === 'local' && (
+              <div className="sm:col-span-2">
+                <label className="label" htmlFor="embedding-local-path">本地模型目录</label>
+                <input
+                  id="embedding-local-path"
+                  className="field"
+                  value={form.embeddingLocalPath}
+                  onChange={(e) => patch({ embeddingLocalPath: e.target.value })}
+                  placeholder="models/domain-embedding-v1"
+                />
+              </div>
+            )}
+            {form.embeddingProvider === 'remote' && (
+              <div>
+                <label className="label" htmlFor="embedding-base">
+                  Base URL（留空则复用大模型地址）
+                </label>
+                <input
+                  id="embedding-base"
+                  className="field"
+                  value={form.embeddingBaseUrl}
+                  onChange={(e) => patch({ embeddingBaseUrl: e.target.value })}
+                />
+              </div>
+            )}
           </div>
-          <ApiKeyField
-            id="embedding-key"
-            label="API Key（留空则复用大模型 Key）"
-            masked={configs.embedding.api_key_masked}
-            value={form.embeddingApiKey}
-            onChange={(value) => patch({ embeddingApiKey: value })}
-          />
+          {form.embeddingProvider === 'remote' && (
+            <ApiKeyField
+              id="embedding-key"
+              label="API Key（留空则复用大模型 Key）"
+              masked={configs.embedding.api_key_masked}
+              value={form.embeddingApiKey}
+              onChange={(value) => patch({ embeddingApiKey: value })}
+            />
+          )}
           <p className="text-xs text-ochre-700">
-            提示：更换 Embedding 模型会改变向量维度，历史文档需重新上传才能被检索到。
+            更换 Embedding Adapter 或模型时必须填写新的版本；系统会写入独立索引，
+            避免不同向量空间混用。新版本需要重新构建文档索引。
           </p>
         </section>
 
