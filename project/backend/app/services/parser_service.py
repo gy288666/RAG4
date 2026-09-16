@@ -10,6 +10,10 @@ import logging
 import os
 import re
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.chunking.models import ParsedBlock
 
 from app.services import ocr_service
 
@@ -38,6 +42,9 @@ class ParseResult:
     blocks: list[TextBlock]
     used_ocr: bool = False
     page_count: int = 0
+    # Optional RAG4 side channel; legacy blocks and positional arguments unchanged.
+    structured_blocks: tuple[ParsedBlock, ...] | None = None
+    parser_version: str = "rag3-parser-v1"
 
     @property
     def total_chars(self) -> int:
@@ -173,12 +180,18 @@ def _parse_txt(path: str) -> ParseResult:
     return ParseResult(blocks=[TextBlock(text=text)])
 
 
-def _parse_markdown(path: str) -> ParseResult:
+def _parse_markdown(path: str, *, structured: bool = False) -> ParseResult:
     raw = _decode_bytes(open(path, "rb").read())
     text = clean_text(_markdown_to_text(raw))
     if not text:
         raise ParseError("该 Markdown 文件内容为空")
-    return ParseResult(blocks=[TextBlock(text=text)])
+    result = ParseResult(blocks=[TextBlock(text=text)])
+    if structured:
+        from app.chunking.adapter import markdown_blocks
+
+        result.structured_blocks = markdown_blocks(raw)
+        result.parser_version = "rag3-markdown-structure-v1"
+    return result
 
 
 def _markdown_to_text(md_text: str) -> str:
@@ -274,7 +287,7 @@ def supported_extensions() -> set[str]:
     return set(_PARSERS)
 
 
-def parse(path: str, file_name: str | None = None) -> ParseResult:
+def parse(path: str, file_name: str | None = None, *, structured: bool = False) -> ParseResult:
     """按扩展名分发到对应解析器。"""
     name = file_name or os.path.basename(path)
     ext = os.path.splitext(name)[1].lower()
@@ -283,4 +296,6 @@ def parse(path: str, file_name: str | None = None) -> ParseResult:
         raise ParseError(f"暂不支持的文件格式：{ext or '未知'}")
     if not os.path.exists(path):
         raise ParseError("文件不存在或已被清理")
+    if structured and ext in {".md", ".markdown"}:
+        return _parse_markdown(path, structured=True)
     return parser(path)

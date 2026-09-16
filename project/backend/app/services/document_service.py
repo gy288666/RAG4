@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import logging
+import json
 import os
 import shutil
 import threading
@@ -16,6 +17,8 @@ from concurrent.futures import ThreadPoolExecutor
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
+from app.chunking import ChunkingConfig, ChunkingEngine
+from app.chunking.adapter import adapt_parse_result
 from app.core.database import session_scope
 from app.models.document import (
     STATUS_FAILED,
@@ -134,6 +137,10 @@ def process_document(doc_id: str) -> str:
         if document is None:
             logger.warning("待处理文档不存在: %s", doc_id)
             return STATUS_FAILED
+        # Rebuilds require Phase 2's staged index jobs; config toggles affect uploads.
+        if document.status == STATUS_READY:
+            logger.info("跳过已就绪文档（重建需版本化索引任务）: %s", doc_id)
+            return STATUS_READY
         user_id = document.user_id
         file_name = document.file_name
         local_path = document.local_path
@@ -142,7 +149,13 @@ def process_document(doc_id: str) -> str:
     try:
         # ---------- 1. 解析（含扫描版 PDF 的 OCR） ----------
         _update_status(doc_id, STATUS_PARSING)
-        result = parser_service.parse(local_path, file_name)
+        engine_name = settings.DOCUMENT_CHUNKING_ENGINE
+        if engine_name not in {"rag3", "rag4"}:
+            raise ValueError(f"未知切分器: {engine_name}")
+        result = (
+            parser_service.parse(local_path, file_name, structured=True)
+            if engine_name == "rag4" else parser_service.parse(local_path, file_name)
+        )
 
         if result.used_ocr:
             usage_service.record(
@@ -153,9 +166,24 @@ def process_document(doc_id: str) -> str:
             )
 
         # ---------- 2. 切片 ----------
-        chunks = chunking_service.split_blocks(
-            result.blocks, chunk_size=config.chunk_size, overlap=config.chunk_overlap
-        )
+        chunk_set = None
+        with usage_service.track("document_chunking", user_id=user_id, ref_id=doc_id):
+            if engine_name == "rag4":
+                chunk_set = ChunkingEngine().split(
+                    adapt_parse_result(result, document_id=doc_id, file_name=file_name),
+                    ChunkingConfig(
+                        chunking_version=settings.RAG4_CHUNKING_VERSION,
+                        child_max_tokens=settings.RAG4_CHILD_MAX_TOKENS,
+                        parent_max_tokens=settings.RAG4_PARENT_MAX_TOKENS,
+                    ),
+                )
+                if not chunk_set.verify():
+                    raise ValueError("ChunkSet identity/structure validation failed")
+                chunks = chunk_set.child_chunks
+            else:
+                chunks = chunking_service.split_blocks(
+                    result.blocks, chunk_size=config.chunk_size, overlap=config.chunk_overlap
+                )
         if not chunks:
             raise parser_service.ParseError("文档内容为空，未生成任何有效文本切片")
 
@@ -165,9 +193,12 @@ def process_document(doc_id: str) -> str:
             [c.text for c in chunks], config, user_id=user_id
         )
 
+        if len(embeddings) != len(chunks):
+            raise embedding_service.EmbeddingError("Embedding 数量与切片数量不一致，拒绝写入索引")
+
         records = [
             VectorRecord(
-                id=f"{doc_id}:{chunk.chunk_index}",
+                id=chunk.chunk_id if chunk_set is not None else f"{doc_id}:{chunk.chunk_index}",
                 text=chunk.text,
                 embedding=embedding,
                 # [S-3] Metadata 五要素，缺一不可
@@ -175,8 +206,18 @@ def process_document(doc_id: str) -> str:
                 user_id=user_id,
                 file_name=file_name,
                 chunk_index=chunk.chunk_index,
-                page=chunk.page,
+                page=chunk.page_start if chunk_set is not None else chunk.page,
                 embedding_model_version=config.embedding_version,
+                chunking_version=chunk_set.chunking_version if chunk_set else None,
+                chunk_set_id=chunk_set.chunk_set_id if chunk_set else None,
+                chunk_metadata_json=json.dumps(
+                    {
+                        **chunk.model_dump(mode="json", exclude={"text"}),
+                        "parser_version": chunk_set.parser_version,
+                        "tokenizer_id": chunk_set.tokenizer_id,
+                        "engine_version": chunk_set.engine_version,
+                    }, ensure_ascii=False, sort_keys=True,
+                ) if chunk_set is not None else None,
             )
             for chunk, embedding in zip(chunks, embeddings)
         ]
@@ -188,10 +229,12 @@ def process_document(doc_id: str) -> str:
 
         _update_status(doc_id, STATUS_READY)
         logger.info(
-            "文档处理完成: %s（%d 个切片，Embedding=%s）",
+            "文档处理完成: %s（%d 个切片，Embedding=%s，chunking=%s，chunk_set=%s）",
             doc_id,
             len(records),
             config.embedding_version,
+            chunk_set.chunking_version if chunk_set else "rag3-baseline",
+            chunk_set.chunk_set_id if chunk_set else None,
         )
         return STATUS_READY
 

@@ -1,6 +1,6 @@
 # RAG4 开发计划：证据驱动的学术 Research Agent
 
-> 文档版本：v2.1
+> 文档版本：v2.2（2026-09-16 Phase 1 实施状态更新）
 > 编写日期：2026-09-13  
 > 基线项目：RAG3（React 18 + TypeScript + FastAPI + SQLAlchemy + Chroma）  
 > 产品形态：个人学术资料 Research Agent  
@@ -291,6 +291,8 @@ class ResearchTaskStore:
 任务必须记录：用户目标、文档范围、当前计划、步骤状态、工具输入摘要、证据 ID、预算消耗、确认记录、最终产物和失败原因。敏感原文不重复写入任务日志，只保存证据引用。
 
 ### 5.4 `ChunkingEngine` 模块
+
+2026-09-16：本模块已有 Phase 1 实现，公开入口为 `app.chunking`；实际模型使用 Pydantic 冻结快照，字段为 `chunk_id/document_id/parent_chunk_id/is_parent`，详细契约见 `project/docs/rag4_chunking.md`。下列历史示意中的 `id/doc_id/parent_id/level` 不作为已实现 API 使用。
 
 建议外部接口：
 
@@ -1408,21 +1410,34 @@ project/
 
 ### 第 1 阶段：结构感知切分（第 1 周）
 
-任务：
+2026-09-16 实施状态（以代码与测试为准）：
 
-- 定义 ParsedDocument、DocumentChunk 与 ChunkSet；
-- 实现 Token 计算、结构边界和父子切片；
-- 扩展 Chroma Metadata，增加切分版本与重建任务；
-- 编写模块测试并与 RAG3 做单变量实验。
+- [x] `app.chunking` 定义不可变、可 JSON 序列化的 ParsedDocument、ParsedBlock、DocumentChunk、ChunkSet 与 ChunkingConfig。
+- [x] ChunkingEngine：标题/章节边界、段落/句子/字符降级、父子切片、页码和原文 block 字符定位。
+- [x] 可注入有版本身份的 TokenCounter；无 tokenizer 使用确定性 Unicode 字符计数。上限按选定计数器验证，不宣称 fallback 等于真实模型 token 数。
+- [x] parser/config/tokenizer/engine/chunking 版本参与 SHA-256 身份；ChunkSet.verify 支持结果完整性与输入来源校验。
+- [x] 兼容 ParseResult/TextBlock；Markdown 可选结构通道保留标题，旧 blocks 输出不变；table/formula 提供类型与透传接口。
+- [x] 新上传可用 `DOCUMENT_CHUNKING_ENGINE=rag4`；默认 rag3，原 `chunking_service.py` 未修改；ready 文档不通过上传处理函数重建。
+- [x] Chroma/LocalVectorStore 保存并读回 child 结构 metadata；旧 page/chunk_index 引用与 SSE 契约不变。
+- [x] 引擎单测、旧 split_blocks 金样、双向量后端上传/检索/SSE/失败保护回归。具体命令和最终结果见 `RAG4_BASELINE.md`。
+- [ ] 真实文献检索质量的单变量对比与失败案例报告（本次只有确定性功能测试，不声称质量提升）。
+- [ ] PDF/DOCX 版式级标题、表格、公式自动抽取；父切片持久化及查询接口尚未实现。
 
-完成标准：
+接口、配置、限制及 Phase 2 交接见 `project/docs/rag4_chunking.md`。
 
-- 标题、章节、页码与父子关系可查询；
-- 所有切片符合 Token 上限；
-- 旧策略仍可作为基线运行；
-- 实验报告包含指标与失败案例。
+### 第 2 阶段：版本化索引重建与 active version（未实现，下一阶段）
 
-### 第 2 阶段：知识图谱与混合证据（第 2–3 周）
+按本次确认的开发顺序，索引安全独立先于 Graph/Agent 实施；下列后续阶段编号顺延，原周次只是估算，不表示已完成。
+
+- [ ] 为 ChunkSet（含父片）建立不可变持久化；定义 document_index_jobs 状态、错误、耗时、版本快照与幂等键。
+- [ ] 冻结 source/parser/chunking/tokenizer/embedding 组合身份，将新版本写入独立 staging 索引。
+- [ ] 批量重建、完整性/数量/维度/来源验证通过后原子更新 active version；失败保留旧索引，旧版本可激活回滚。
+- [ ] 让检索只读取 active version，避免新旧同文档重复命中；定义并发、取消、重试和删除一致性。
+- [ ] 增量数据库迁移、备份恢复演练和失败注入测试通过后再开放历史文档重建。
+
+直接入口：`adapt_parse_result(...) -> ParsedDocument`、`ChunkingEngine.split(document, config) -> ChunkSet`、`ChunkSet.verify(document)`。现有 Collection 仍仅按 Embedding 版本隔离，Phase 1 的开关回退不是历史索引版本回滚。
+
+### 第 3 阶段：知识图谱与混合证据（原第 2–3 周估算；未实现）
 
 任务：
 
@@ -1441,7 +1456,7 @@ project/
 - Neo4j 或 Rerank 不可用时可以明确降级。
 - 微调 Reranker 未通过门禁时可以立即切回 `baseline` 版本。
 
-### 第 3 阶段：Research Agent 内核（第 4 周）
+### 第 4 阶段：Research Agent 内核（原第 4 周估算；未实现）
 
 任务：
 
@@ -1458,7 +1473,7 @@ project/
 - 未注册工具和越界文档调用被后端拒绝；
 - 达到预算后能交付部分结果和知识缺口，而不是无限循环。
 
-### 第 4 阶段：证据门禁与研究产物（第 5 周）
+### 第 5 阶段：证据门禁与研究产物（原第 5 周估算；未实现）
 
 任务：
 
@@ -1476,7 +1491,7 @@ project/
 - Agent 不会静默覆盖人工笔记；
 - 四类核心任务均有成功和失败样例。
 
-### 第 5 阶段：Agent 前端工作区（第 6 周）
+### 第 6 阶段：Agent 前端工作区（原第 6 周估算；未实现）
 
 按逐屏方式实施：
 
@@ -1494,7 +1509,7 @@ project/
 - 结论、关系、引用和原文能连续导航；
 - 关键路径 E2E 通过，主要状态具备响应式和可访问性支持。
 
-### 第 6 阶段：整体验证与交付（第 7–8 周）
+### 第 7 阶段：冻结评测、模型微调与上线门禁（原第 7–8 周估算；未完成）
 
 任务：
 

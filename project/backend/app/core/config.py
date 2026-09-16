@@ -11,7 +11,9 @@ from __future__ import annotations
 import os
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -57,6 +59,12 @@ class Settings(BaseSettings):
 
     # ---------- 异步解析线程池 ----------
     WORKER_THREADS: int = 4
+
+    # Phase 1: new uploads only; RAG3's character/overlap config stays separate.
+    DOCUMENT_CHUNKING_ENGINE: Literal["rag3", "rag4"] = "rag3"
+    RAG4_CHUNKING_VERSION: str = Field(default="rag4-structured-v1", min_length=1)
+    RAG4_CHILD_MAX_TOKENS: int = Field(default=256, gt=0)
+    RAG4_PARENT_MAX_TOKENS: int = Field(default=1024, gt=0)
 
     # ---------- RAG 超时（秒），对应 PRD 4.3.3 [M-6] ----------
     QUERY_REWRITE_TIMEOUT: float = 3.0

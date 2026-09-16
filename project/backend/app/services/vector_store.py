@@ -58,6 +58,10 @@ class VectorRecord:
     chunk_index: int
     page: int | None = None
     embedding_model_version: str | None = None
+    chunking_version: str | None = None
+    chunk_set_id: str | None = None
+    # Chroma metadata only accepts scalar values.
+    chunk_metadata_json: str | None = None
 
     def metadata(self) -> dict[str, Any]:
         # 向量库通常不接受 None 值，page 为空时省略该键，读取侧统一用 .get()
@@ -71,7 +75,21 @@ class VectorRecord:
             meta["page"] = int(self.page)
         if self.embedding_model_version:
             meta["embedding_model_version"] = self.embedding_model_version
+        for key in ("chunking_version", "chunk_set_id", "chunk_metadata_json"):
+            value = getattr(self, key)
+            if value is not None:
+                meta[key] = value
         return meta
+
+
+def _retrieved_extra(meta: dict[str, Any]) -> dict[str, Any]:
+    extra = {"embedding_model_version": meta.get("embedding_model_version")}
+    if meta.get("chunking_version"):
+        extra["chunking_version"] = meta["chunking_version"]
+        extra["chunk_set_id"] = meta.get("chunk_set_id")
+        if meta.get("chunk_metadata_json"):
+            extra["chunking"] = json.loads(meta["chunk_metadata_json"])
+    return extra
 
 
 @dataclass(slots=True)
@@ -194,7 +212,7 @@ class ChromaVectorStore(BaseVectorStore):
                     page=int(meta["page"]) if meta.get("page") is not None else None,
                     # cosine distance → 相似度
                     score=float(1.0 - float(distance)) if distance is not None else 0.0,
-                    extra={"embedding_model_version": meta.get("embedding_model_version")},
+                    extra=_retrieved_extra(meta),
                 )
             )
         return chunks
@@ -322,7 +340,7 @@ class LocalVectorStore(BaseVectorStore):
                 chunk_index=int(row.get("chunk_index", 0)),
                 page=row.get("page"),
                 score=float(score),
-                extra={"embedding_model_version": row.get("embedding_model_version")},
+                extra=_retrieved_extra(row),
             )
             for score, row in scored[:top_n]
         ]
