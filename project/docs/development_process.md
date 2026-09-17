@@ -1,8 +1,182 @@
-# 开发过程文档
+# RAG4 开发过程记录
 
-> 版本：v1.0　　更新日期：2026-07-26
-> 覆盖范围：从空仓库到当前可运行版本的完整开发过程、功能清单、运行时业务逻辑、
-> 已知限制与未来扩展方案（含知识图谱设计）
+> 版本：v2.0　　更新日期：2026-09-16
+>
+> 代码检查基准：`main` / `4b0e1dd260bd024d9ef2f5c45e2be26b5d13dad4`
+>
+> 范围：RAG3 基线导入、运行环境恢复、模型基础设施、Phase 1 结构化切分，以及下一阶段交接。后半部分保留原 RAG3 开发回顾。
+
+## 阅读方式与证据口径
+
+本文记录已经发生的开发活动及其依据；[开发计划](../../RAG4_DEVELOPMENT_PLAN.md) 负责未来路线，[基线记录](../../RAG4_BASELINE.md) 保存环境与验证结果，[切分接口说明](rag4_chunking.md) 负责 Phase 1 的详细调用契约。
+
+证据分三类：**代码已存在**、**有已执行的验证记录**、**仅有规划或历史描述**。脚本存在不等于正式训练完成，测试全绿不等于线上性能达标，模型 Collection 版本隔离不等于索引原子激活。本次文档整理执行了源码/提交核对、测试收集与文档检查；完整测试运行结果引用上轮实际执行记录，未把收集测试写成重新运行测试。
+
+原文 v1.0 的日期为 2026-07-26，是被导入的 RAG3 文档日期；当前仓库可追踪的提交从 2026-09-14 开始。原文的“9 个提交”“77 用例”“全链路真实模型验证”和性能数字只属于其历史记录，不能作为当前 RAG4 的验收结论。
+
+## R1. 当前进度与功能边界
+
+当前系统是 **RAG3 可运行问答基线 + 远程/本地模型基础设施 + 可选 RAG4 ChunkingEngine**。Research Agent 仍是产品目标；现有 SSE 问答服务不是 ResearchAgent。
+
+| 阶段 | 核对结果 | 已有证据与未完成部分 |
+| --- | --- | --- |
+| Phase 0：基线与评测冻结 | 部分完成 | 源码导入、独立 Python 环境、后端回归、前端历史 lint/build、模型接口已完成；完整冻结评测集、20 个 Agent 验收任务、备份恢复演练仍缺验收记录 |
+| 模型微调基础设施 | 代码与离线管线已有 | remote/local Embedding、Reranker、版本隔离、hard negative 构建、训练与排名评测脚本；没有正式训练产物或质量提升的验收结论 |
+| Phase 1：结构化切分 | 本轮指定功能切片已完成 | 领域模型、确定性身份、token 计数接口、父子片、解析兼容、上传开关和测试；完整原文布局抽取及真实检索质量对比未完成 |
+| Phase 2：版本化索引重建 | 未实现，下一阶段 | 无 document_index_jobs、父片持久化、staging 验证/激活、active version 或历史索引回滚 |
+| Phase 3：图谱与混合证据 | 未实现 | 无 MemoryGraphStore、Neo4jGraphStore、HybridEvidenceEngine |
+| Phase 4：ResearchAgent 与工具 | 未实现 | 无 ResearchTask/ResearchStep、ResearchAgent、ResearchToolRegistry |
+| Phase 5：证据与产物 | 未实现 | 无 EvidenceVerifier、ArtifactComposer |
+| Phase 6：研究工作区 | 未实现 | 现有前端仍为问答、知识库和管理后台；没有研究任务工作区 |
+| Phase 7：评测、微调与上线门禁 | 未完成 | 有训练/评测入口，不代表完整评测冻结、训练或上线门禁通过 |
+
+本次没有按阶段数量估算“完成百分比”：各阶段工作量不同，而且 Phase 0 仍有待补验收项。
+
+## R2. 可追溯开发时间线
+
+日期取自当前 Git 历史；旧 RAG3 文档叙述与本仓库提交历史分开记录。
+
+| 日期 | 提交 | 实际变更 | 结果及边界 |
+| --- | --- | --- | --- |
+| 2026-09-14 | `c620adf` | 初始仓库与项目规划资料 | 尚不能据规划宣称应用实现 |
+| 2026-09-14 | `170296b` | 导入 RAG3 前后端、测试、部署与文档，恢复可复现基线 | 建立 `project/`；包括问答、文档、权限、管理与部署脚本 |
+| 2026-09-14 | `c1884b5`、`739e53d`、`c22ff88` | 记录 Conda 基线，建立独立 `rag4-py3.11` 环境，移除临时环境清单 | 避开系统 Python 3.13 安装 Chroma 原生依赖受阻的问题 |
+| 2026-09-14 | `b59204b` | 接入版本化远程/本地模型与训练基础设施 | 基线记录为后端 82 项、训练管线 2 项通过；尚无批量索引重建 |
+| 2026-09-16 | `4b0e1dd` | 实现 Phase 1 结构化切分及兼容接入 | 15 个文件变更，新增 74 项测试；后端合计 156 项通过 |
+| 2026-09-16 | 同一提交 | 按用户请求推送 `main` 到 GitHub | 会话中 push 已成功，发布点为 `4b0e1dd`；本文不把本次尚未提交的文档整理写成新代码发布 |
+
+可复核命令：`git log --reverse --oneline`、`git show --stat b59204b`、`git show --stat 4b0e1dd`。GitHub 发布记录：[Phase 1 提交](https://github.com/gy288666/RAG4/commit/4b0e1dd260bd024d9ef2f5c45e2be26b5d13dad4)。
+
+## R3. 基线恢复与模型基础设施的开发过程
+
+### R3.1 先恢复可运行基线
+
+起点是 RAG3 的注册登录、权限、上传解析、检索精排、SSE 回答及引用、配置与运行监控。导入时保留后端 `app.main:app`、前端 Vite 入口、已有接口和数据库模型。现有部署资源包括 Dockerfile、Nginx 配置和 `deploy/docker-compose.yml`；“Docker Compose 尚未编写”是后半部分旧 TODO，现已不适用。文件存在仍不代表本次已完成容器部署实测。
+
+环境恢复中，系统 Python 3.13 的 Chroma 原生依赖安装因缺少 MSVC 工具失败；随后使用独立 Conda `rag4-py3.11`。基线记录保留了 Python 3.11.15、Chroma 0.5.23、pytest 8.3.4 以及当时前端 lint/build 结果。后端测试使用临时 SQLite、临时向量目录和 Mock AI，不需要业务数据库或模型 API Key，但仍需安装项目依赖。
+
+### R3.2 将模型调用与业务流程分开
+
+在 [modeling/interfaces.py](../backend/app/modeling/interfaces.py) 定义 `ModelDescriptor`、`EmbeddingModel`、`RerankerModel` 和 `RankedIndex`，由 [registry.py](../backend/app/modeling/registry.py) 按配置解析 remote/local Adapter；Embedding/Reranker 服务继续作为业务调用入口。管理配置新增 provider、version、local_path。
+
+向量 Collection 使用用户 ID 与 Embedding 版本共同定位；`baseline` 保留旧 `col_user_{user_id}` 名称。新模型版本使用独立 Collection，避免不同维度/语义空间混写。查询也按当前 Embedding 配置选择 Collection，因此配置切到未建好的新版本可能检索不到旧文档；目前没有“验证完成后再激活”的发布过程。
+
+[training/](../training/README.md) 提供 hard negative 构建、Embedding/Reranker 训练、LoRA-SFT 和 Recall@K/MRR/nDCG 评测。已有两项测试验证样本选择与指标计算，并没有证明大模型训练已完成、GPU 运行已验证或生产质量提升。DDL v1.4 的变化是默认配置键扩展，没有为索引重建或研究任务创建新业务表。
+
+## R4. Phase 1 的实施过程
+
+### R4.1 输入、范围与起点检查
+
+开发从 `main` 的 `b59204b` 开始，当时工作区干净。先检查旧 parser、split_blocks、上传流程、向量 metadata、测试夹具和 SQL。确认数据库初始化脚本含 `DROP DATABASE` 后仅读取，没有用其做迁移。真实计划和基线文件位于根目录，而非名为 `RAG4/` 的子目录。
+
+本阶段以独立切分模块为可验证切片：保留 `chunking_service.py` 的 RAG3 行为，先建立纯计算接口，再接入新上传。Graph、Agent、前端工作区和索引重建未进入实现范围。
+
+### R4.2 先定义模型和身份，再实现切分
+
+| 文件/接口 | 实际职责 | 关键约束 |
+| --- | --- | --- |
+| [models.py](../backend/app/chunking/models.py) | ParsedDocument/ParsedBlock、DocumentChunk、ChunkSet、ChunkingConfig、来源和结构 metadata | Pydantic 冻结快照，tuple 集合，拒绝未知字段，JSON 可往返 |
+| [engine.py](../backend/app/chunking/engine.py) | ChunkingEngine、TokenCounter 及两个计数实现 | 按章节分组、段落/句子/空白/字符边界切分；不下载 tokenizer |
+| [adapter.py](../backend/app/chunking/adapter.py) | ParseResult/TextBlock 到 ParsedDocument；Markdown 结构通道 | 不修改旧 blocks；不猜测已丢失的布局 |
+| [document_service.py](../backend/app/services/document_service.py) | 新上传选择引擎、验证结果、子片向量化、状态与日志 | 默认 rag3；ready 文档直接返回；Embedding 数量不匹配时写入前失败 |
+| [vector_store.py](../backend/app/services/vector_store.py) | Chroma/Local 两种后端的结构 metadata 往返 | JSON 字符串适配 Chroma 标量约束；还原到 RetrievedChunk.extra |
+
+`ParsedDocument` 包含文档 ID、文件名、页数、block、source 与 parser_version。每个 `DocumentChunk` 携带 chunking_version、标题、section_path、父 ID、页范围、table/formula metadata 和原 block 字符区间。父片与子片分别连续编号，子片恰好引用一个父片。
+
+结果身份采用规范 JSON 的 SHA-256：输入文档、完整配置、parser/chunking/engine/tokenizer 身份参与 input_id；每片内容与关系参与 chunk_id；完整结果与统计参与 chunk_set_id。时间不放入身份，耗时单独记录。`ChunkSet.verify(document)` 检查结果完整性与输入身份，不能代替未来的索引数量/维度/激活验证，也不是密码学签名。
+
+### R4.3 处理解析兼容和运行开关
+
+旧 Markdown 解析会删除 `#`，因此单靠旧 TextBlock 无法恢复标题层级。实现采用 `ParseResult.structured_blocks` 可选通道：`parse(..., structured=True)` 对 Markdown 保留 ATX/setext 标题及 fenced code；旧 blocks 文本和旧位置参数保持兼容。PDF 沿用逐页文本；DOCX 沿用既有扁平输出，未伪装成版式级抽取。
+
+配置来自启动环境：`DOCUMENT_CHUNKING_ENGINE` 默认 `rag3`，显式 `rag4` 启用新上传路径；RAG4 独立使用 `RAG4_CHUNKING_VERSION`、`RAG4_CHILD_MAX_TOKENS=256`、`RAG4_PARENT_MAX_TOKENS=1024`。这些不是管理后台 RAG3 的动态 chunk_size/overlap 配置。恢复 rag3 并重启，只改变之后处理的文档，不会重建已 ready 的文档。
+
+无 tokenizer 时采用 `unicode-codepoint-v1`，按 Unicode 字符计数，保证可重复而不承诺真实模型 token 上限。注入 tokenizer 后固定其身份；运行中报错直接失败，避免同一结果混用计数口径。父片预算不小于子片预算，Phase 1 不做重叠。表格、公式、代码独立分组；表格/公式 metadata 可透传，不代表已经自动提取出结构。
+
+### R4.4 测试与审查中的问题及修正
+
+| 发现 | 原因与修正 | 验证方式 |
+| --- | --- | --- |
+| 非单调 token 计数拒绝可容纳文本 | BPE 合并可能令更长文本 token 更少；增加全文检查和二分未命中时的前缀搜索，每片重新计数 | 合并 token 与前缀搜索回归用例 |
+| Markdown `C#` 标题变成 `C` | 结束井号规则过宽；只移除前面带空白的 closing sequence | 标题保真回归 |
+| fenced code 缩进丢失 | 普通清洗会压缩空白；代码保留缩进，切分时保留边界空白 | 父片与子片拼接还原原代码 |
+| 集成测试 helper 导入错误 | 测试引用了错误的 mock embedding 函数名 | 修正后双向量后端集成测试通过 |
+| Embedding 返回数量不足可被 zip 静默截断 | 集成层增加数量相等校验，禁止不完整输入写索引 | 数量不匹配失败测试 |
+
+旧 `split_blocks` 实际允许输出长度达到 `chunk_size + overlap`，回归金样保留此行为，没有按新引擎的严格预算要求重写旧函数。独立测试/审查与主线程集成完成后，由主线程统一运行全量后端回归。
+
+## R5. 当前运行链路与数据安全边界
+
+```text
+上传 -> 保存原文件/Document(pending) -> parsing
+  -> rag3: ParseResult.blocks -> split_blocks
+  -> rag4: 可选结构解析 -> adapt_parse_result -> ChunkingEngine -> verify
+  -> 子片文本 Embedding -> 数量校验 -> 向量写入 -> ready / failed
+
+问答 -> 查询向量 -> 用户 + 当前 Embedding 版本 Collection
+  -> Reranker -> LLM -> SSE 正文与引用
+```
+
+RAG4 上传仅索引 child chunks，稳定 chunk_id 避免使用旧 `doc_id:chunk_index` 覆盖旧片；旧路径仍保持原 ID。复杂结构随向量保存，引用 page 继续映射 page_start；完整父片目前只存在 ChunkSet 返回值，尚无父片持久化或查询 API。
+
+`usage_logs` 的 `document_chunking` 记录耗时和成功/失败；引擎日志记录文档、版本、tokenizer、ChunkSet ID、片数和耗时。异常处理更新文档为 failed，并保留既有索引。没有阶段任务表、进程崩溃恢复或跨数据库/向量库事务；因此“捕获异常后写 failed”不能扩大为“任何故障都会自动恢复”。
+
+当前保护范围：已 ready 文档不会通过该函数重建，切分失败不会删除既有文档索引，向量数量不匹配在写入前阻断。尚未覆盖的风险是向量写入中途失败可能留下新文档部分记录，failed 重试缺少 generation 清理，检索也没有索引任务的 active 门禁。这些是 Phase 2 的明确前置工作。
+
+## R6. 验证记录与复现方式
+
+| 验证时间/来源 | 范围 | 结果 | 能证明什么 |
+| --- | --- | --- | --- |
+| 2026-09-14 基线记录 | 后端、训练管线 | 82 passed；2 passed | 当时版本的功能回归及离线数据/指标逻辑 |
+| 2026-09-14 基线记录 | 前端 lint/build | 成功 | 当时类型检查和构建通过；未作为本次重新运行结果 |
+| 2026-09-16 Phase 1 实施记录 | 新增两份切分测试 | 74 passed，23.37s | 引擎、兼容、双向量后端、PDF、SSE、故障保护 |
+| 2026-09-16 Phase 1 实施记录 | 全量后端 | 156 passed，102.09s | 82 项原测试加 74 项新测试，无失败或跳过 |
+| 2026-09-16 本次文档核对 | pytest collect-only | 后端收集 156 项；训练管线收集 2 项 | 当前提交仍能发现对应测试；不是一次新的通过结果 |
+
+在仓库根目录执行以下 PowerShell 命令可复现测试；已有环境无需重新安装。
+
+```powershell
+conda activate rag4-py3.11
+Set-Location E:\RAG4\project\backend
+python -m pytest -o addopts='' -q --tb=short
+python -m pytest tests/test_chunking_integration.py tests/test_chunking_engine.py -o addopts='' -q --tb=short
+Set-Location E:\RAG4\project
+python -m pytest training/tests -q
+```
+
+如果只核对数量，在对应测试命令中增加 `--collect-only`。完整依赖安装见 [project README](../README.md)，本地模型与训练依赖分别见 `requirements-local-models.txt` 和 [训练说明](../training/README.md)。Phase 1 没有新增依赖或数据库 schema 迁移。
+
+未获得本轮验收证据的项目：扫描版 OCR、真实模型训练、冻结语料 Recall/MRR/nDCG 提升、10 并发与生产时延、前端 E2E、容器部署、备份恢复。旧文档的 6 秒解析/4.3 秒检索不能用于宣称当前 RAG4 性能。另有已记录的 Chroma/posthog telemetry 签名兼容日志，功能测试通过；本次未调整依赖。
+
+## R7. Phase 2 交接与后续记录要求
+
+下一阶段入口已经存在：`adapt_parse_result(...) -> ParsedDocument`、`ChunkingEngine.split(document, config) -> ChunkSet`、`ChunkSet.verify(document)`。先完成一个安全重建闭环，再扩展批量执行。
+
+| 顺序 | 下一步工作 | 验收门槛 |
+| --- | --- | --- |
+| 1 | 定义 ChunkSet/父片不可变存储、document_index_jobs、active version 和增量迁移 | 旧数据可继续读取，源/parser/chunking/tokenizer/embedding 版本固定，错误/耗时可追踪 |
+| 2 | 将候选版本写入独立 staging 索引 | 构建期间查询继续使用旧 active，新旧数据不混写 |
+| 3 | 校验来源、身份、切片数、向量数与维度，再激活 | 校验失败不发布；切换原子化且可追溯 |
+| 4 | 实现回滚、重试、取消、删除与并发一致性 | 失败注入下旧版本仍可查询；重复操作幂等；部分数据不可见 |
+| 5 | 备份恢复演练通过后开放历史文档批量重建 | 有迁移/恢复说明及测试证据，再标记 Phase 2 完成 |
+
+后续顺序遵循当前开发计划：Phase 3 图谱与混合证据 → Phase 4 Agent/工具 → Phase 5 证据门禁/产物 → Phase 6 研究工作区 → Phase 7 冻结评测、微调与上线门禁。历史图谱方案里的 MySQL 邻接表选型只是旧提案；当前规划包含 MemoryGraphStore/Neo4jGraphStore，二者均未实现，不从旧提案推导新功能已经存在。
+
+每次阶段结束更新本文，至少记录：起点与交付提交、目标与边界、关键变更和文件入口、实际故障与修正、测试命令及结果、未验证内容、回退操作、下一阶段前置条件。暂未提交时写“工作区变更”；没有测过的指标写“未验证”；计划中出现的名称不能直接进入完成清单。
+
+## R8. 本次文档整理记录
+
+本次只调整文档：补充本文 RAG4 过程记录；根 README 更新 Phase 1 状态并添加入口；project README 更新测试数量与切分模块说明；本地项目概览标注初始化前历史范围；基线记录补充发布确认。正文保留原 RAG3 开发经历与故障分析，并把历史分支、测试数、性能数字和图谱提案限定在当时范围，避免覆盖掉有价值的演进记录。
+
+文档核对：五份改动文档中的 42 个本地文件链接均可解析，代码围栏成对；修正文末空白后执行 `git diff --check`。本次不修改业务代码、数据库或模型配置。
+
+---
+
+## 历史附录：RAG3 v1.0 开发记录
+
+> 原文版本：v1.0，原更新日期：2026-07-26。以下第 1–8 节是导入的 RAG3 历史记录，不是当前 RAG4 验收清单。
+>
+> 原“零外部依赖”应理解为不需要外部模型 API/业务数据库，仍依赖 Python 包与本地测试设施；“当前”“已完成”“待办”和旧 ADR 均限定在原记录时期。原图谱设计没有在当前仓库实现。
 
 ---
 

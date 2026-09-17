@@ -4,6 +4,8 @@
 >
 > 实现依据：`docs/requirements_document.md` (v1.1) 与 `docs/api_document.md` (v1.0)。
 
+RAG4 当前代码基准为 `4b0e1dd`：模型基础设施和 Phase 1 结构化切分已接入，默认仍走 RAG3 上传切分路径；研究 Agent 尚未实现。开发过程、进度边界及验证证据见 [开发过程记录](docs/development_process.md)，RAG4 开关和接口见 [切分说明](docs/rag4_chunking.md)。
+
 ---
 
 ## 目录
@@ -74,9 +76,10 @@ RAG4/project/
 │   │   ├── schemas/               # 请求体校验
 │   │   ├── api/v1/                # auth / docs / chat / admin 路由
 │   │   ├── modeling/              # 模型接口、注册表、远程/本地 Adapter
+│   │   ├── chunking/              # RAG4 领域模型、结构化切分与解析兼容
 │   │   ├── services/              # 业务与 RAG 编排（见下）
 │   │   └── utils/                 # 时间格式化、时间有序 ID
-│   ├── tests/                     # 77 个 pytest 用例
+│   ├── tests/                     # 156 项 pytest 测试（4b0e1dd）
 │   ├── requirements.txt
 │   ├── requirements-local-models.txt
 │   └── .env.example
@@ -103,6 +106,7 @@ RAG4/project/
 | `parser_service.py` | 多格式解析、扫描版 PDF 判定、字符集识别 |
 | `ocr_service.py` | OCR 引擎探测与适配（PaddleOCR / Tesseract） |
 | `chunking_service.py` | 按段落→句子→字符三级边界切分，支持重叠 |
+| `chunking/` | 可选 RAG4 结构化父子切分、版本身份、页码/来源/结构 metadata |
 | `modeling/` | Embedding/Reranker 稳定接口与 remote/local Adapter；业务层不感知训练框架 |
 | `embedding_service.py` | 统一模型门面、批量向量化与调用日志 |
 | `vector_store.py` | 向量库抽象层；按用户和 Embedding 版本隔离索引 |
@@ -307,13 +311,15 @@ event: error    data: {"code": 500, "message": "..."}         ← 仅异常时
 
 ## 测试
 
-```bash
-cd backend
-source .venv/bin/activate
-python -m pytest -q
+```powershell
+conda activate rag4-py3.11
+Set-Location E:\RAG4\project\backend
+python -m pytest -o addopts='' -q --tb=short
 ```
 
 测试全程使用 SQLite 临时库 + `DEV_MOCK_AI`，**无需 MySQL、无需任何外部 API Key**。
+
+`4b0e1dd` 对应的最近完整结果：156 passed，其中 Phase 1 新增 74 项；训练目录另有 2 项数据/指标测试，不计入后端 156 项。本次文档整理仅重新收集测试数量，完整执行结果见 [基线记录](../RAG4_BASELINE.md)。
 
 | 文件 | 覆盖内容 |
 |------|----------|
@@ -322,6 +328,8 @@ python -m pytest -q
 | `test_chat.py` | 会话 CRUD 与越权、SSE 事件序列、引用字段、纯模型模式、多轮上下文、预览文本 |
 | `test_admin.py` | RBAC、用户管理、密码重置闭环、Key 加密与脱敏、配置生效、监控统计 |
 | `test_services.py` | bcrypt / AES、邮箱密码规则、切片边界、多格式解析、向量隔离、Rerank 降级 |
+| `test_chunking_engine.py` | 结构边界、父子关系、来源、版本身份、token 预算、异常与旧切分金样 |
+| `test_chunking_integration.py` | 解析兼容、Chroma/本地存储、PDF、上传、SSE、开关回退和失败保护 |
 
 前端类型与构建检查：
 

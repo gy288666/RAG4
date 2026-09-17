@@ -2,9 +2,11 @@
 
 > 记录日期：2026-09-14
 
+> 最近代码交付：2026-09-16，`4b0e1dd feat: implement RAG4 structured chunking engine` 已按用户请求推送至 GitHub main。下文 Phase 1 中“未提交/推送”描述的是开发完成、发布之前的时点；发布后的过程与当前进度见 [开发过程记录](project/docs/development_process.md)。
+
 ## 当前基线
 
-RAG4 当前以 `project/` 下导入的 RAG3 代码作为可运行基线。模型运行时与训练脚手架已经接入；Research Agent、知识图谱和混合证据引擎尚未实现，这些能力仍以根目录的 `RAG4_DEVELOPMENT_PLAN.md` 为设计目标。
+RAG4 当前以 `project/` 下导入的 RAG3 代码作为可运行基线。模型运行时、训练脚手架与 Phase 1 结构化切分已经接入，默认仍使用 RAG3 切分；Research Agent、知识图谱和混合证据引擎尚未实现，这些能力仍以根目录的 `RAG4_DEVELOPMENT_PLAN.md` 为设计目标。
 
 ## 目录与入口
 
