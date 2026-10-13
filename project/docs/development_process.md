@@ -1,12 +1,68 @@
 # RAG4 开发过程记录
 
-> 版本：v2.0　　更新日期：2026-09-16
+Phase 2.16 最新相关验证（2026-10-10）：重建组 **73 passed / 234.58s**，补充配额及原认证/文档组 **39 passed / 89.16s**，覆盖 100 个不同用例；MySQL 3307 合成并发 **passed / 8843ms**。收集 378 项，未重跑全量，未迁移业务库或发布。详情见本页 R16 与基线记录。
+
+Phase 2.15 最新相关验证：幂等创建、恢复、批量任务、管理 API、结构门禁共 **61 passed / 106.10s**。语法/差异检查通过；未重跑全量，以下 349 passed 为上一阶段记录。
+
+Phase 2.14 最新完整验证：后端 **349 passed / 618.48s**，专项损坏回归 **14 passed / 52.27s**，MySQL 组合恢复 **29979ms passed**；语法和差异检查通过。下文旧轮次数字作为历史保留。当前验收边界见 [Phase 2 验收索引](phase2_acceptance.md)。
+
+Phase 2.12 最新相关回归：版本 API 与原版本服务 **37 passed / 122.75s**，compileall 和 git diff --check 通过；本轮未重跑全量。
+
+最新验证：2026-09-22 Phase 2.9 后端全量 **282 passed / 421.93s**，MySQL/上传文件/Chroma 组合演练 **32882ms passed**。compileall 和 git diff --check 通过；历史各轮测试记录保留原始结果。
+
+Phase 2.10 后续相关验证：新 API/重建服务 **29 passed / 89.41s**，原认证/文档 API **22 passed / 42.61s**；本轮未重跑全量。compileall 和 git diff --check 通过。
+
+> 版本：v2.16　　更新日期：2026-10-10
 >
-> 代码检查基准：`main` / `4b0e1dd260bd024d9ef2f5c45e2be26b5d13dad4`
+> Phase 2 开发起点：`main` / `511cbbd`；2.1–2.16 实现当前为工作区变更。Phase 1 验证基准为 `4b0e1dd`。
 >
-> 范围：RAG3 基线导入、运行环境恢复、模型基础设施、Phase 1 结构化切分，以及下一阶段交接。后半部分保留原 RAG3 开发回顾。
+> 范围：RAG3 基线导入、运行环境恢复、模型基础设施、Phase 1 结构化切分，以及 Phase 2.1–2.6 的持久化、候选验证、激活回滚、批量任务、显式恢复与只读结构门禁。后半部分保留原 RAG3 开发回顾。
+
+## R16. Phase 2.16：用户创建配额（2026-10-10）
+
+先核对工作区、任务状态机、幂等创建及恢复事务，保留已有 Phase 2 修改。创建幂等键不能防止不同键或无键请求积累任务，因此本次只实现逻辑任务准入。实现假设：pending/running/failed 均占额度，默认每用户 8 个；ready/cancelled 保留数据但释放额度；失败可显式取消，不自动删除 checkpoint。该假设不代表模型物理并发限制。
+
+新增启动配置和 RebuildQuotaExceeded，API 超限映射 429；数据库用户行无操作更新取得锁后，复查幂等键、统计数量并插入任务/映射。避免用进程内锁或先计数后无锁插入，兼容 SQLite 与 MySQL；避免 ORM 自动修改账号 updated_at。恢复先取得相同锁再交换原任务和续接任务，不新增额度，调低上限也不阻止既有恢复。
+
+先补 12 项测试，因配置未实现而全部在 setup 失败；实现后相关 73 项通过。随后加入恢复与创建竞争、降低上限、映射回滚及配置边界测试，配额用例最终为 17 项，和原认证/文档 22 项合计 39 项通过。两个运行合计覆盖 100 个不同用例，不把测试收集或历史全量写成当前全量通过。实际命令见 [基线记录](../../RAG4_BASELINE.md)。
+
+另在新建合成库 `rag4_restore_1c3d37503d42_source` 验证真实 MySQL 8.4.9/3307，执行增量 002–007 并通过结构门禁。四线程不同键在配额 2 下只产生两个任务及两条映射；双线程同键在配额 1 下返回同一任务；恢复、旧键重放、取消后新创建均通过。报告在 `C:\Users\gy\AppData\Local\Temp\rag4_quota_l6h4tpm2\report.json`，耗时 8843ms，数据保留，未写业务库或调用远程模型。
+
+配置、边界和回退见 [配额契约](rebuild_quota.md)。无新增迁移/依赖，默认 RAG3 行为保持。语法和差异检查通过，工作区未提交或推送。下一步在 worker 领取边界实现独立并发/租约约束；自动队列、模型费用预算、GC、大规模性能和正式部署仍缺验收，Graph/Agent/前端未实现。
+
+## R14. Phase 2.6：只读迁移结构检查（2026-09-17）
+
+最新后续进展见下述 R15；本节保留当时验证范围。
+
+为防止“脚本重复执行成功”被误认为“已有表结构正确”，新增 schema_preflight 服务和显式指定数据库的 CLI。按 ORM 对照八张 Phase 2 表和 users/documents 主键前置条件；输出缺表、字段与约束问题及有序迁移文件。工具不执行 SQL 修复，不接入业务启动流程，也不新增依赖。
+
+首次真实验证暴露 MySQL VARCHAR 反射带 CHARACTER SET 的显示差异，已在类型比较中规范化，保留独立的 collation 检查，并新增回归用例。MySQL 8.4.9/3307 合成验证库通过（68ms），rag_high 缺八张表（51ms），符合预期；两次检查均只读。修正 database.init_db 注释，避免把含 DROP DATABASE 的历史初始化脚本作为升级入口。
+
+接口、退出码、运行方式和未覆盖项见 [只读结构门禁](schema_preflight.md)。备份恢复演练、正式迁移、后台调度和完整上线验收仍未完成。新增 10 项结构检查测试；后端全量 255 passed / 274.98s，compileall 和 git diff --check 通过。详细命令及实测记录在本轮基线记录中保存。
+
+## R15. Phase 2.7：合成关系数据库备份恢复（2026-09-18）
+
+新增独立演练脚本和 10 项安全/完整性测试。通过随机新建 source/before/after 库，验证真实 mysqldump/mysql 导出导入、七张 baseline 表数据保留、十五张迁移后表恢复及 002–006 重放。准备任务和 ChunkSet 通过真实服务生成，含中文文档。拒绝已有非空目标，失败备份只保留 partial，备份摘要不匹配时拒绝恢复；报告不含密码或行内容。
+
+MySQL 8.4.9/3307 两次通过（8972ms、最终 5717ms），相关测试 34 passed / 30.82s。未重跑全量，上一轮 255 passed 仍仅是历史全量记录。产物位置在基线中，演练接口见 [备份恢复说明](migration_restore_drill.md)。未修改业务库，没有新增 Python 依赖。后续仍需 Chroma/上传文件配套恢复和正式上线验证；Graph/Agent 不在本轮范围。
 
 ## 阅读方式与证据口径
+
+Phase 2.15 实现可选创建幂等键，新增 007 映射表和 12 项测试。映射与任务原子提交，同键同参重放保持原快照/状态，冲突 409，省略键保持旧行为；显式恢复不会将原键转移到续接任务。此前 MySQL 合成库已验证双线程唯一任务、007 重放和组合恢复。2026-09-26 收尾时旧测试 session 不可用，重新验证相关组，实际结果记入基线。无新依赖、业务迁移或自动队列。契约见 [创建幂等](rebuild_idempotency.md)。
+
+Phase 2.14 统一清单结构检查，修复缺字段可能误报“版本不存在”的语义问题。新增 14 项损坏回归通过（52.27s），当前代码的 MySQL 组合恢复再次通过（29979ms）。新增 [验收索引](phase2_acceptance.md)，将源码、测试和上线缺口放在同一份清单中，避免将手动闭环误记为完整生产平台。全量结果见本轮基线。
+
+Phase 2.13 新增历史版本列表/详情，采用 owner SQL 过滤和字段白名单；冻结文档后来变化时仍保留历史可见性，损坏清单显示 invalid，而不是让列表全盘失败。查询不读向量，不声称当前可激活。新增 9 项用例及 worker/API 回滚闭环，相关 **26 passed / 75.70s**，语法和差异检查通过。本轮未重跑全量、未更改业务库、无依赖/迁移。下一步收敛 Phase 2 整体验收，说明见 [版本 API](index_version_api.md)。
+
+Phase 2.12 新增用户级 active GET/PUT，必须提供目标版本（停用为显式 null）和 expected_revision。新增 ActiveRevisionConflict 类型保留 ValueError 兼容性，HTTP 返回 409；错误版本归属返回统一 404，完整性失败保留旧指针。发现停用原先会初始化向量库，已将其改为不依赖向量后端，增强故障时解除 active 绑定的可用性。新增 17 项 API 用例，覆盖 Local/Chroma 激活回滚、过期 revision、越权、损坏清单和后端不可用停用。命令与结果见基线，契约见 [版本 API](index_version_api.md)。没有自动激活、删除索引、迁移或新依赖。
+
+Phase 2.11 新增受控 worker 执行入口，绑定管理员凭据与任务冻结模型身份。选择独立单任务进程，保持 HTTP 创建 pending 的语义，不引入未经验证的内存后台队列。复用 SQL 领取/失败重试机制，新增 10 项测试，执行/API/重建服务共 **39 passed / 114.98s**。语法与差异检查通过，未重跑全量、未使用远程模型、未修改业务库。限制和命令见 [worker](rebuild_worker.md)，下一步是用户级 CAS 激活/停用。
+
+Phase 2.10（2026-09-22）从恢复验证推进到用户管理入口：新增 `/api/v1/index-rebuilds` 的创建、分页、详情、取消。复用 JWT 和既有同步重建服务；请求不能覆盖用户 ID、模型地址或凭据，模型配置由管理员配置快照获得，维度由请求显式声明、执行阶段验证。创建不自动调度，避免没有可靠 worker 时虚报已排队。新增 17 项 API 测试，与重建服务共 **29 passed / 89.41s**；首轮扩展前 27 passed / 83.05s。接口无新依赖或迁移，限制和后续执行入口见 [管理 API](rebuild_api.md)。
+
+Phase 2.9（2026-09-22）新增 MySQL/上传/Chroma 组合演练，复用之前的文件快照、逻辑备份与索引验证接口，新增 7 项测试。MySQL 8.4.9/3307 独立库验证通过（32882ms），导入后全表摘要、active 检索、baseline 回退和源数据不变均通过。首轮相关测试 36 passed / 1 failed，原因是密码传递测试创建 URL 时漏传用户名，已修正测试夹具；全量回归结果记录在基线中。没有新增依赖、业务迁移或远程模型调用，未提交推送。详情见 [组合恢复](mysql_combined_restore.md)。
+
+最新切片记录：Phase 2.8 新增 [停写配套恢复](offline_restore.md) 模块及合成演练，用进程退出确保 Chroma 和 SQLite 无写入者后再捕获。恢复前检查外部可信清单摘要及全部文件，恢复到新目录后复核 active 索引与 baseline 查询；旧源数据库未改变。新增 10 项测试与现有版本服务测试合计 **30 passed / 61.11s**，涵盖真实 Chroma 子进程恢复、损坏/缺失/多余文件、清单篡改、拒绝覆盖、重叠路径、复制期间源改变及链接拒绝。未重跑全量，没有新增依赖或业务迁移。下一步是 MySQL 与配套文件的统一合成恢复演练；本轮不是生产灾难恢复验收。
 
 本文记录已经发生的开发活动及其依据；[开发计划](../../RAG4_DEVELOPMENT_PLAN.md) 负责未来路线，[基线记录](../../RAG4_BASELINE.md) 保存环境与验证结果，[切分接口说明](rag4_chunking.md) 负责 Phase 1 的详细调用契约。
 
@@ -16,14 +72,14 @@
 
 ## R1. 当前进度与功能边界
 
-当前系统是 **RAG3 可运行问答基线 + 远程/本地模型基础设施 + 可选 RAG4 ChunkingEngine**。Research Agent 仍是产品目标；现有 SSE 问答服务不是 ResearchAgent。
+当前系统是 **RAG3 可运行问答基线 + 远程/本地模型基础设施 + 可选 RAG4 ChunkingEngine + 独立切分准备任务持久化**。Research Agent 仍是产品目标；现有 SSE 问答服务不是 ResearchAgent。
 
 | 阶段 | 核对结果 | 已有证据与未完成部分 |
 | --- | --- | --- |
 | Phase 0：基线与评测冻结 | 部分完成 | 源码导入、独立 Python 环境、后端回归、前端历史 lint/build、模型接口已完成；完整冻结评测集、20 个 Agent 验收任务、备份恢复演练仍缺验收记录 |
 | 模型微调基础设施 | 代码与离线管线已有 | remote/local Embedding、Reranker、版本隔离、hard negative 构建、训练与排名评测脚本；没有正式训练产物或质量提升的验收结论 |
 | Phase 1：结构化切分 | 本轮指定功能切片已完成 | 领域模型、确定性身份、token 计数接口、父子片、解析兼容、上传开关和测试；完整原文布局抽取及真实检索质量对比未完成 |
-| Phase 2：版本化索引重建 | 未实现，下一阶段 | 无 document_index_jobs、父片持久化、staging 验证/激活、active version 或历史索引回滚 |
+| Phase 2：版本化索引重建 | 进行中，新增显式中断恢复 | 已有准备、staging、激活/查询/回滚、批量 checkpoint/重试/取消和隔离续接；后台调度、增量复用、自动故障检测与上线门禁未完成 |
 | Phase 3：图谱与混合证据 | 未实现 | 无 MemoryGraphStore、Neo4jGraphStore、HybridEvidenceEngine |
 | Phase 4：ResearchAgent 与工具 | 未实现 | 无 ResearchTask/ResearchStep、ResearchAgent、ResearchToolRegistry |
 | Phase 5：证据与产物 | 未实现 | 无 EvidenceVerifier、ArtifactComposer |
@@ -117,9 +173,9 @@
   -> Reranker -> LLM -> SSE 正文与引用
 ```
 
-RAG4 上传仅索引 child chunks，稳定 chunk_id 避免使用旧 `doc_id:chunk_index` 覆盖旧片；旧路径仍保持原 ID。复杂结构随向量保存，引用 page 继续映射 page_start；完整父片目前只存在 ChunkSet 返回值，尚无父片持久化或查询 API。
+RAG4 上传仅索引 child chunks，稳定 chunk_id 避免使用旧 `doc_id:chunk_index` 覆盖旧片；旧路径仍保持原 ID。复杂结构随向量保存，引用 page 继续映射 page_start。上传路径仍不保存完整父片；Phase 2.1 独立准备服务现可持久化并读取完整父片，尚无公共 HTTP 查询 API。
 
-`usage_logs` 的 `document_chunking` 记录耗时和成功/失败；引擎日志记录文档、版本、tokenizer、ChunkSet ID、片数和耗时。异常处理更新文档为 failed，并保留既有索引。没有阶段任务表、进程崩溃恢复或跨数据库/向量库事务；因此“捕获异常后写 failed”不能扩大为“任何故障都会自动恢复”。
+`usage_logs` 的 `document_chunking` 记录耗时和成功/失败；引擎日志记录文档、版本、tokenizer、ChunkSet ID、片数和耗时。上传异常处理更新文档为 failed，并保留既有索引。独立准备服务已有任务表，但没有进程崩溃恢复或跨数据库/向量库事务；因此“捕获异常后写 failed”不能扩大为“任何故障都会自动恢复”。
 
 当前保护范围：已 ready 文档不会通过该函数重建，切分失败不会删除既有文档索引，向量数量不匹配在写入前阻断。尚未覆盖的风险是向量写入中途失败可能留下新文档部分记录，failed 重试缺少 generation 清理，检索也没有索引任务的 active 门禁。这些是 Phase 2 的明确前置工作。
 
@@ -132,6 +188,13 @@ RAG4 上传仅索引 child chunks，稳定 chunk_id 避免使用旧 `doc_id:chun
 | 2026-09-16 Phase 1 实施记录 | 新增两份切分测试 | 74 passed，23.37s | 引擎、兼容、双向量后端、PDF、SSE、故障保护 |
 | 2026-09-16 Phase 1 实施记录 | 全量后端 | 156 passed，102.09s | 82 项原测试加 74 项新测试，无失败或跳过 |
 | 2026-09-16 本次文档核对 | pytest collect-only | 后端收集 156 项；训练管线收集 2 项 | 当前提交仍能发现对应测试；不是一次新的通过结果 |
+| 2026-09-16 Phase 2.1 实施 | 全量后端实际运行 | 170 passed，130.64s | 原 156 项回归及新增 14 项持久化/隔离/并发/失败测试通过 |
+| Phase 2.2 实施 | 全量后端 + 后补失败测试 | 201 passed，177.52s；另 2 passed，6.18s | 全量回归加新增 SQL 发布失败测试；当前合计 203 项，非同一次全量执行 |
+| Phase 2.2 真实联调 | SiliconFlow/MySQL/Chroma | 7 模型 HTTP 200；实际 staging validated | MySQL 5.7.44 迁移重放、真实 4096 维向量回读、baseline 保留；不代表质量/性能验收 |
+| 2026-09-17 Phase 2.3 | 全量后端 | 223 passed，226.08s | 新增 20 项激活/回滚/检索/变更门禁测试及全部既有回归 |
+| 2026-09-17 Phase 2.3 | MySQL 8.4.9/3307 + SiliconFlow + Chroma | BGE 1024 维，激活/查询/回滚成功 | Qwen8B 当次超时；显式选择另一可用模型完成合成数据联调，业务模型未切换 |
+| 2026-09-17 Phase 2.4 | 全量后端 | 235 passed，267.91s | 12 项批量 checkpoint/重试/取消/输入门禁测试及原有回归 |
+| 2026-09-17 Phase 2.5 | 修复资源清理后全量后端 | 245 passed，283.44s | 10 项恢复用例及全部回归；原 PDF/SSL 句柄耗尽失败已消除 |
 
 在仓库根目录执行以下 PowerShell 命令可复现测试；已有环境无需重新安装。
 
@@ -164,13 +227,81 @@ python -m pytest training/tests -q
 
 每次阶段结束更新本文，至少记录：起点与交付提交、目标与边界、关键变更和文件入口、实际故障与修正、测试命令及结果、未验证内容、回退操作、下一阶段前置条件。暂未提交时写“工作区变更”；没有测过的指标写“未验证”；计划中出现的名称不能直接进入完成清单。
 
-## R8. 本次文档整理记录
+## R8. 上轮文档整理记录（511cbbd）
 
 本次只调整文档：补充本文 RAG4 过程记录；根 README 更新 Phase 1 状态并添加入口；project README 更新测试数量与切分模块说明；本地项目概览标注初始化前历史范围；基线记录补充发布确认。正文保留原 RAG3 开发经历与故障分析，并把历史分支、测试数、性能数字和图谱提案限定在当时范围，避免覆盖掉有价值的演进记录。
 
 文档核对：五份改动文档中的 42 个本地文件链接均可解析，代码围栏成对；修正文末空白后执行 `git diff --check`。本次不修改业务代码、数据库或模型配置。
 
 ---
+
+## R9. Phase 2.1 开发记录
+
+本轮从干净的 `511cbbd` 开始，核对文档服务、ChunkSet 校验、数据库会话/模型、向量实现与测试夹具。选择先完成准备任务和父片存储，避免在缺少持久化证据时直接切换在线索引。
+
+新增 `models/index_job.py` 与 `services/index_job_service.py`。实现用户级幂等请求、源文件摘要/参数冻结、条件更新抢占、临时源文件快照、结构/身份校验、完整 ChunkSet 持久化及重新读取校验。成功状态和结果在同一事务提交；源变化、解析异常和落库异常保留既有文档/索引。解析前复制并验证临时文件，消除了先检查原路径再解析原路径的时间窗口。
+
+修改文档删除流程以清理附属记录，并注册新模型；独立测试覆盖父子片恢复、版本不冲突、重复键冲突、跨用户拒绝、数据篡改、并发抢占及并发建任务、失败注入和删除清理。错误存储采用分类码，避免原始异常内容含密钥或原文。
+
+新增仅建表的 MySQL 增量脚本；没有执行历史含 DROP DATABASE 的初始化脚本，也没有访问业务数据库。SQLite 自动测试创建新表；MySQL 实例迁移、备份恢复和大文档容量尚未验证。无新增依赖。详细调用、状态和回退说明见 [切分准备接口](index_preparation.md)。
+
+后续入口为 `load_chunk_set`。下一切片需固定 Embedding 配置并写入独立 staging，再验证完整性；active version、批量重建、取消/租约恢复和在线回滚仍未实现。旧上传开关和检索保持原状。
+
+验证：backend 目录执行 `python -m pytest -o addopts='' -q`，结果 **170 passed in 130.64s**；新增测试 14 项。新增模型和服务 compileall 通过。未重新运行前端与训练测试，因为没有修改相应代码。
+
+## R10. Phase 2.2 开发与真实模型联调
+
+在上一切片未提交的工作区继续开发，保留所有已有修改。先按用户授权读取本地凭据，以合成文本检查硅基流动说明中的全部 7 个模型，全部 HTTP 200。实际连接 MySQL 后确认服务版本为 5.7.44-log，修正了将客户端 8.4.9 当成服务版本的认知。
+
+新增 `models/index_build.py` 与 `services/index_build_service.py`：保存远程 EmbeddingSpec、独立 staging namespace、状态和错误阶段/耗时；验证每条向量的数量、维度、有限值、非零值后写入，通过 Local/Chroma 新增的 `read_records` 回读全部记录，逐条核对 ID、文本、metadata 和向量值，再事务发布 validated manifest。没有接入在线索引切换，失败的部分写入保持隔离，重试分配新 namespace。
+
+文档删除与候选发布在 MySQL 上共享文档行锁；删除同时清理构建记录。SQLite 不具备相同的跨进程行锁语义，限制已记录。尚无批量、取消、租约恢复、候选 GC 或 active version。
+
+新增 `003_index_builds.sql` 及真实验证脚本 `scripts/validate_index_staging.py`。首次真实迁移测试发现脚本错误拆分 SQL 注释分号，修正为先移除整行注释后执行；随后两份增量迁移均重复执行通过，真实 Qwen3-Embedding-8B → Chroma 构建 validated，baseline 记录未变化。创建的两个 scratch 数据库及临时目录均保留，未修改业务库，具体名称见 [联调记录](model_connectivity_validation.md)。
+
+测试命令：backend 下 `python -m pytest tests/test_index_builds.py -o addopts='' -q --tb=short` 首批 31 passed / 53.52s；全量 `python -m pytest -o addopts='' -q --tb=short` 为 201 passed / 177.52s。全量启动后补充的 SQL 发布失败测试单独执行 `python -m pytest tests/test_index_builds.py -k sql_publication -o addopts='' -q --tb=short`，2 passed / 6.18s；当前合计 203 项均有通过记录。compileall、git diff --check 通过，无新增依赖。
+
+下一切片建立用户级完整索引版本、文档覆盖集合和 active 指针，激活前重新验证候选及文档状态，查询绑定对应模型配置，并保留旧版本可回滚。单个文档 validated 不能直接替换整个用户知识库。
+
+补充环境核对：用户指出双实例后，分别连接确认 3306=MySQL 5.7.44、3307=MySQL 8.4.9；RAG3 原 `.env` 使用 3307。选定 3307 为 RAG4 主开发实例，新增显式端口配置并在独立验证库重跑成功（validated、4096 维、3625ms）。3306 保留为兼容性环境，两个实例的已有业务库均未改动。详见 [双实例选型记录](model_connectivity_validation.md)。
+
+## R11. Phase 2.3 用户级激活与回滚（2026-09-17）
+
+从现有未提交工作区继续，核对实际入口 rag_service.retrieve。原候选仅覆盖单文档，因此新增 IndexVersion 完整用户清单，要求所有文档 ready、每份恰有一个候选且 EmbeddingSpec 一致。新增 records_sha256，以文本/metadata/float32 向量完整摘要识别构建完成后的篡改；旧无摘要候选必须重建。
+
+新增 ActiveIndex 的 CAS 修订号和 IndexSwitch 审计，同事务切换与记录。激活、回滚前重新验证；查询一次固定一个版本，使用冻结模型配置，在现有 Reranker 和引用接口前合并结果。模型密钥仍由当前安全配置提供，并检查 endpoint 绑定；未激活保持原检索。新增、删除等文档变化会显式报错直到重建或停用，没有隐式切换/忽略文档。
+
+新增 20 项测试覆盖完整覆盖/重复/跨用户拒绝、不同模型隔离、实际版本回滚、并发 CAS 唯一胜者、篡改拒绝、SQL 审计失败回滚、现有检索与引用、上传/删除/凭据 endpoint 变化门禁。backend 执行 `python -m pytest -o addopts='' -q --tb=short`：223 passed / 226.08s；compileall 和 git diff --check 通过。无新增依赖。
+
+真实脚本扩展到 004 迁移重放和激活/真实查询/回滚/停用。MySQL 3307 上首次及重试因 Qwen3-Embedding-8B 超时停在 embedding，失败记录保留；直接探测 BGE 成功后显式选择 Pro/BAAI/bge-m3，1024 维链路完整通过。没有把超时当成功，也未修改业务模型配置。新增验证资源见 [真实验证记录](model_connectivity_validation.md)。
+
+下一切片仍属 Phase 2：上传/删除与 active 版本的增量衔接、批量调度/恢复和迁移上线门禁。当前每次查询回读全部候选，适用于正确性验证，不作为生产性能结论。没有实现 Graph/Agent/前端。
+
+## R12. Phase 2.4 批量重建与失败恢复（2026-09-17）
+
+保留前轮工作区修改，新增 IndexRebuild 与 create_rebuild/run_rebuild/get_rebuild/cancel_rebuild。将准备、候选构建、完整版本组装串成可查询的同步任务。冻结源摘要/文件名/集合与两类配置，启动和完成前校验；每份文档成功后持久化候选 ID，失败重试重新验证已完成结果并跳过模型计算。失败文档使用新子任务键与 namespace，历史结果不覆盖。
+
+取消在文档边界协作处理，远程请求不强杀；最终 SQL CASE 根据最新取消标志决定 ready/cancelled，防止晚到取消被 ready 覆盖。任务只生成待激活版本，base_revision 保留供显式 CAS 激活，批量工作不自动改 active。
+
+新增 12 项 Local/Chroma 测试，首轮 12 passed / 33.02s，覆盖重试不重复向量化、取消、输入变化、权限、上传后完整重建和修订号冲突。增加 005 迁移并扩展真实脚本。MySQL 3307 验证库中本次真实批量任务 ready，1 个 checkpoint，5077ms，显式激活/停用通过，baseline 1 条记录保留。首次完整脚本的查询阶段曾返回 EmbeddingError，未把该次整条链路写成成功。
+
+当前恢复仅处理受控失败，不接管崩溃后 running；无自动后台队列、跨任务增量复用、HTTP/UI 或 GC。下一切片应继续补租约/恢复和业务库迁移门禁，而非进入 Graph/Agent。接口见 [批量重建](index_rebuild.md)。
+
+最终全量命令 `python -m pytest -o addopts='' -q --tb=short`：235 passed / 267.91s；compileall 与 git diff --check 通过。真实批量任务显式激活后再次调用查询，返回 1 条合成资料证据，随后停用成功。首次完整脚本查询失败仍保留在记录中，不将重试成功解释为外部模型持续稳定。
+
+## R13. Phase 2.5 显式中断恢复（2026-09-17）
+
+从现有未提交工作区继续，选择独立续接代替重置同一个 running 任务。新增 recover_rebuild 和 RebuildRecovery：条件更新持久化取消原任务，同一事务复制已提交 checkpoint/冻结请求/base_revision 并建立唯一续接关联。旧进程即使仍运行，也只能完成旧 namespace 或旧 checkpoint，数据库取消标志阻止其发布 ready；新任务有独立 ID，重复/并发恢复返回同一个目标。
+
+恢复操作新增 index_recovery 耗时/成败日志。没有实现进程存活检测、心跳/租约和自动调度；恢复为显式服务调用。失败任务仍用原重试接口，主动取消的任务不被恢复。没有绕过源校验或激活 CAS，也没有重新声明整个 Phase 2 已完成。
+
+新增 10 项测试，首轮 10 passed / 27.02s，覆盖模拟未捕获中断、checkpoint 复用、旧工作线程迟到、并发唯一续接、事务失败回滚、权限与主动取消。MySQL 3307 现有独立验证库执行 006 两次，复用之前真实 BGE 向量 checkpoint，续接 ready / 125ms / 无新增模型调用，active 不变；MySQL 两线程并发恢复也只产生一个目标。
+
+真实验证脚本追加了 scratch 数据库中的中断快照模拟，明确不是强杀业务进程。没有修改业务库、没有删除历史任务/向量、没有新增依赖。下一切片继续完善 Phase 2 的调度或上线迁移门禁；接口见 [中断恢复](rebuild_recovery.md)。
+
+本轮全量首次运行发现两个既有 PDF/SSL 用例因 Too many open files 失败（243 passed / 2 failed，286.25s）。定位到 Chroma 0.5.23 按路径缓存 System，原夹具每测试创建新目录却未停止实例，测试数量增加后累积耗尽 Windows 文件句柄。已在测试 teardown 中停止并移除本用例新增的 System，保留运行前已有实例，不提高系统限制、不删除用户文件或改动生产工厂。恢复运行日志补充后的独立恢复测试为 10 passed / 27.39s。
+
+修复后重跑完整命令 `python -m pytest -o addopts='' -q --tb=short`：**245 passed / 283.44s**，此前两项故障已通过。compileall 和 git diff --check 通过，新增文档 7 个本地链接有效；真实 MySQL index_recovery 日志查询也通过。本轮没有新增依赖。
 
 ## 历史附录：RAG3 v1.0 开发记录
 

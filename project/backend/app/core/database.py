@@ -59,7 +59,8 @@ def session_scope() -> Iterator[Session]:
 def init_db() -> None:
     """建表（仅在表不存在时创建）。
 
-    生产环境请以 ``docs/init_db.sql`` 为准，本函数主要服务于开发与测试。
+    本函数主要服务于开发与测试。已有数据库升级应先检查结构，再使用
+    ``docs/migrations`` 增量脚本；历史 init_db.sql 含删除数据库语句，不能用于升级。
     """
     from app import models  # noqa: F401  确保所有模型完成注册
 

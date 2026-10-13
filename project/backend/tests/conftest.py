@@ -23,6 +23,7 @@ os.environ["DOCUMENT_CHUNKING_ENGINE"] = "rag3"
 os.environ["RAG4_CHUNKING_VERSION"] = "rag4-structured-v1"
 os.environ["RAG4_CHILD_MAX_TOKENS"] = "256"
 os.environ["RAG4_PARENT_MAX_TOKENS"] = "1024"
+os.environ["RAG4_MAX_OPEN_REBUILDS_PER_USER"] = "8"
 os.environ["SECRET_KEY"] = "test-secret-key-for-pytest-only"
 os.environ["RESET_REQUEST_INTERVAL_MINUTES"] = "10"
 
@@ -56,12 +57,27 @@ def _clean_state():
     """每个用例前清空业务数据与向量库，保证互不干扰。"""
     from app.models.chat import ChatMessage, ChatSession
     from app.models.document import Document
+    from app.models.index_job import DocumentIndexJob, StoredChunkSet
+    from app.models.index_build import IndexBuild
+    from app.models.index_version import ActiveIndex, IndexVersion, IndexSwitch
+    from app.models.index_rebuild import IndexRebuild
+    from app.models.rebuild_recovery import RebuildRecovery
+    from app.models.rebuild_request import RebuildRequest
     from app.models.reset_request import PasswordResetRequest
     from app.models.system_config import SystemConfig
     from app.models.usage_log import UsageLog
 
     with SessionLocal() as db:
         for model in (
+            RebuildRequest,
+            RebuildRecovery,
+            IndexRebuild,
+            IndexSwitch,
+            ActiveIndex,
+            IndexVersion,
+            IndexBuild,
+            DocumentIndexJob,
+            StoredChunkSet,
             ChatMessage,
             ChatSession,
             Document,
@@ -78,7 +94,24 @@ def _clean_state():
     # 直接删除目录会让后续请求命中已失效的连接。
     settings.CHROMA_DIR = os.path.join(_TMP_ROOT, f"chroma_{uuid.uuid4().hex}")
     vector_store.reset_vector_store()
-    yield
+    # Chroma 0.5.23 retains every System by path and exposes no public close().
+    # Release only this test's instances, without deleting persisted files or
+    # touching clients that existed before the test. Otherwise the growing
+    # suite exhausts Windows file handles in unrelated later PDF/SSL tests.
+    try:
+        from chromadb.api.shared_system_client import SharedSystemClient
+    except ImportError:
+        SharedSystemClient = None
+    previous_systems = set(SharedSystemClient._identifier_to_system) if SharedSystemClient else set()
+    try:
+        yield
+    finally:
+        vector_store.reset_vector_store()
+        if SharedSystemClient:
+            for identifier in set(SharedSystemClient._identifier_to_system) - previous_systems:
+                system = SharedSystemClient._identifier_to_system[identifier]
+                system.stop()
+                del SharedSystemClient._identifier_to_system[identifier]
 
 
 @pytest.fixture

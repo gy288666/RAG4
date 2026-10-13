@@ -66,6 +66,9 @@ class Settings(BaseSettings):
     RAG4_CHILD_MAX_TOKENS: int = Field(default=256, gt=0)
     RAG4_PARENT_MAX_TOKENS: int = Field(default=1024, gt=0)
 
+    # Pending/running/retryable-failed rebuilds per owner; terminal history stays.
+    RAG4_MAX_OPEN_REBUILDS_PER_USER: int = Field(default=8, gt=0, le=10000)
+
     # ---------- RAG 超时（秒），对应 PRD 4.3.3 [M-6] ----------
     QUERY_REWRITE_TIMEOUT: float = 3.0
     RERANK_TIMEOUT: float = 3.0

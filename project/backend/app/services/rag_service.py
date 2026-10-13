@@ -209,13 +209,16 @@ def retrieve(
     """密集检索 Top-N → 云端 Rerank Top-K，返回 ``(片段, 警告)``。"""
     started = time.perf_counter()
     try:
-        embedding = embedding_service.embed_query(query, config, user_id=user_id)
-        candidates = get_vector_store().search(
-            user_id,
-            embedding,
-            config.retrieval_top_n,
-            index_version=config.embedding_version,
-        )
+        from app.services.index_version_service import search_active
+        candidates = search_active(user_id, query, config, store=get_vector_store())
+        if candidates is None:
+            embedding = embedding_service.embed_query(query, config, user_id=user_id)
+            candidates = get_vector_store().search(
+                user_id,
+                embedding,
+                config.retrieval_top_n,
+                index_version=config.embedding_version,
+            )
     except embedding_service.EmbeddingError as exc:
         usage_service.record(
             event_type=EVENT_VECTOR_SEARCH,

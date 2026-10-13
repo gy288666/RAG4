@@ -1,8 +1,34 @@
 # 数据库变更记录
 
+## 2026-09-26：Phase 2.15 创建幂等映射
+
+新增 `migrations/007_rebuild_requests.sql`，创建 `index_rebuild_requests`：复合主键 `(user_id, request_key)`、参数指纹 request_sha256 和唯一 task_id。MySQL request_key 为 utf8mb4_bin，区分大小写。用户及任务外键均 ON DELETE CASCADE。仅新增表，不修改或回填旧任务，回退旧应用保留此表。合成 MySQL 3307 已验证迁移重放和并发去重，未迁移业务库。契约见 [创建幂等说明](rebuild_idempotency.md)。
+
 > 基线：`init_db.sql` v1.1（随 requirements_document.md v1.1 发布）
 
 ---
+
+## Phase 2.1 — 2026-09-16：持久化切分准备
+
+新增 `document_index_jobs` 与 `document_chunk_sets`，分别记录有幂等键的切分准备任务和完整父子片 JSON。任务完成与结果写入在同一事务提交，不修改现有 documents 字段、文档状态或在线向量。
+
+已有库使用 [增量脚本](migrations/002_chunk_preparation.sql)，不要运行含 DROP DATABASE 的全量初始化脚本。开发/测试 `init_db()` 可创建新表；MySQL 实例迁移仍需在备份副本验证。代码回退保留新表即可。完整契约见 [接口说明](index_preparation.md)。
+
+## Phase 2.2：候选索引构建
+
+新增 `document_index_builds`，保存独立 staging 命名空间、Embedding 配置快照、状态/错误阶段/耗时和验证 manifest。使用 [003 增量脚本](migrations/003_index_builds.sql)，不修改旧表。002/003 已在 MySQL 5.7.44-log 独立验证库各执行两次，并通过真实模型联调；业务库升级和备份恢复仍待验证。详细记录见 [连通与联调证据](model_connectivity_validation.md)。
+
+## Phase 2.3 — 2026-09-17：用户级 active version
+
+新增 user_index_versions、user_active_indexes、user_index_switches，版本清单与 CAS 指针、事务切换审计分开保存。使用 [004 增量脚本](migrations/004_active_indexes.sql)，已在 MySQL 8.4.9/3307 独立验证库重复执行并通过真实激活/查询/回滚。原表不变，业务库尚未迁移。旧候选缺少完整记录摘要需重建。接口和回退见 [激活说明](index_activation.md)。
+
+## Phase 2.4 — 2026-09-17：批量重建 checkpoint
+
+新增 `user_index_rebuilds`，保存完整源快照、模型/切分配置、逐文档候选 ID、重试计数、取消请求、候选版本和错误/耗时。使用 [005 增量脚本](migrations/005_index_rebuilds.sql)，已在 MySQL 8.4.9/3307 独立库重复执行。不会自动激活，也没有 running 任务的崩溃接管；详见 [批量服务](index_rebuild.md)。
+
+## Phase 2.5 — 2026-09-17：中断恢复关联
+
+新增 `index_rebuild_recoveries`，source_task_id 唯一，记录原任务与独立续接任务。原任务持久化取消、续接创建和关联插入同事务提交。使用 [006 脚本](migrations/006_rebuild_recovery.sql)，已在 MySQL 3307 验证重放、checkpoint 恢复及并发唯一续接。没有修改旧任务字段或重置旧任务执行状态。
 
 ## v1.2 — 2026-07-26（实现阶段）
 

@@ -1,6 +1,6 @@
 # RAG4 开发计划：证据驱动的学术 Research Agent
 
-> 文档版本：v2.2（2026-09-16 Phase 1 实施状态更新）
+> 文档版本：v2.14（2026-10-10 Phase 2.1–2.16 实施状态更新）
 > 编写日期：2026-09-13  
 > 基线项目：RAG3（React 18 + TypeScript + FastAPI + SQLAlchemy + Chroma）  
 > 产品形态：个人学术资料 Research Agent  
@@ -1425,17 +1425,53 @@ project/
 
 接口、配置、限制及 Phase 2 交接见 `project/docs/rag4_chunking.md`。
 
-### 第 2 阶段：版本化索引重建与 active version（未实现，下一阶段）
+### 第 2 阶段：版本化索引重建与 active version（进行中：已接入用户级激活与回滚）
 
 按本次确认的开发顺序，索引安全独立先于 Graph/Agent 实施；下列后续阶段编号顺延，原周次只是估算，不表示已完成。
 
-- [ ] 为 ChunkSet（含父片）建立不可变持久化；定义 document_index_jobs 状态、错误、耗时、版本快照与幂等键。
-- [ ] 冻结 source/parser/chunking/tokenizer/embedding 组合身份，将新版本写入独立 staging 索引。
-- [ ] 批量重建、完整性/数量/维度/来源验证通过后原子更新 active version；失败保留旧索引，旧版本可激活回滚。
-- [ ] 让检索只读取 active version，避免新旧同文档重复命中；定义并发、取消、重试和删除一致性。
+- [x] 为 ChunkSet（含父片）建立内容寻址、插入后不覆盖的持久化；新增 document_index_jobs 切分准备任务，记录状态、错误分类、耗时、源文件摘要、切分配置、结果版本与用户级幂等键。已实现所有权校验、重复执行抢占、事务发布与失败隔离；完整索引任务及跨部署版本冻结仍待后续实现。
+- [x] 对已持久化 ChunkSet 冻结 input/parser/chunking/tokenizer/engine 身份与远程 Embedding 调用配置，将新版本写入独立 staging 并回读验证。仅单文档、远程 Adapter；本地权重指纹与跨部署环境冻结仍待实现。
+- [x] 用户级版本完整覆盖验证、修订号 CAS 原子更新 active 指针与切换审计同事务提交；失败保留旧指针，保留版本可重新校验并回滚。服务接口已实现，未开放 HTTP/UI。
+- [x] 激活后检索只读取清单中的候选，固定模型配置，保留原引用流程；未激活则走 baseline。上传/删除后版本失配明确报错，支持显式停用恢复原路径。
+- [x] 显式批量重建服务：冻结完整源快照、逐文档 checkpoint、受控失败重试、协作取消、生成待激活版本；不会自动切换 active。
+- [x] 显式中断恢复：原 running 任务持久化取消、独立续接、已提交 checkpoint 复用、并发唯一目标与恢复事务回滚；不自动接管旧进程。
+- [x] 用户级创建幂等性与可配置未完成任务配额；事务内串行准入，满额同键重放、恢复交换和取消兼容，保留旧数据。未提供执行并发或费用预算。
+- [ ] 后台批量调度、跨版本增量复用、租约/心跳与自动恢复、失败候选回收和完整跨进程删除一致性。
 - [ ] 增量数据库迁移、备份恢复演练和失败注入测试通过后再开放历史文档重建。
 
 直接入口：`adapt_parse_result(...) -> ParsedDocument`、`ChunkingEngine.split(document, config) -> ChunkSet`、`ChunkSet.verify(document)`。现有 Collection 仍仅按 Embedding 版本隔离，Phase 1 的开关回退不是历史索引版本回滚。
+
+Phase 2.1 新增入口：`index_job_service.create_job/run_job/get_job/load_chunk_set`；详见 `project/docs/index_preparation.md`。当前成功状态只代表切分结果持久化，未写入或激活任何新索引。
+
+Phase 2.2 新增入口：`index_build_service.EmbeddingSpec/create_build/run_build/get_build`，以及 `BaseVectorStore.read_records`。已完成新命名空间、维度/数量/来源/向量值校验、失败隔离和验证 manifest，详见 `project/docs/index_staging.md`。MySQL + SiliconFlow + Chroma 合成文档链路已实际通过；validated 不等于 active，用户级原子切换由下述 Phase 2.3 提供。
+
+Phase 2.3（2026-09-17）新增 `index_version_service.create_version/active_state/switch_version/search_active`，详见 `project/docs/index_activation.md`。用户级原子切换已实现，新增 20 项测试，全量 223 passed。每次 active 查询完整回读校验仅适用于当前小规模场景；尚未完成整个 Phase 2 的上线门禁。
+
+Phase 2.4 新增 `index_rebuild_service.create_rebuild/run_rebuild/get_rebuild/cancel_rebuild`，详见 `project/docs/index_rebuild.md`。提供同步可重试的完整重建任务；显式中断恢复由下述 2.5 提供，自动增量衔接和自动故障接管仍未实现。
+
+Phase 2.5 增加 `recover_rebuild` 和 `index_rebuild_recoveries`，显式恢复中断任务，见 `project/docs/rebuild_recovery.md`。尚无自动故障检测、后台队列或租约恢复。
+
+Phase 2.6 已增加只读 `inspect_schema(engine)` 与 `scripts/check_index_schema.py`，检查 002–006 表结构和外键前置条件，提供有序缺表迁移建议，已有表漂移阻止通过。MySQL 3307 合成库通过，旧库准确报告缺表，未执行业务迁移。详见 `project/docs/schema_preflight.md`；备份恢复演练、专用库正式迁移及完整上线验收仍未完成。
+
+Phase 2.7 已完成合成关系数据库的备份恢复演练脚本：新建独立库，校验迁移前后备份、恢复后数据摘要、结构门禁及迁移重放。详见 `project/docs/migration_restore_drill.md`。2.6 中待做的备份恢复已获得这一受限范围的证据；Chroma/上传文件配套恢复、业务库迁移和完整上线验收仍未完成。
+
+Phase 2.8 新增停写目录快照的 capture/verify/restore 接口和独立子进程演练，已验证合成 SQLite、上传文件、真实 Chroma 的配套恢复，恢复后 active 查询和 baseline 停用回退通过，原数据库保持不变。见 `project/docs/offline_restore.md`。下一步组合 MySQL 逻辑备份与文件/向量快照，尚不能宣称生产统一恢复或业务库迁移验收完成。
+
+Phase 2.9 已将 MySQL dump、上传文件和 Chroma 组合为一次停写合成恢复演练，真实 MySQL 3307 验证导入后表摘要、索引来源、active 查询、baseline 回退及源数据不变通过。见 `project/docs/mysql_combined_restore.md`。没有执行生产迁移；后续补受权限保护的 Phase 2 任务管理入口与业务验收，再决定上线条件。
+
+Phase 2.10 已接入 JWT 保护的用户重建任务创建、分页、详情和取消 HTTP 接口，SQL 按所有者隔离，模型地址/版本来自管理员配置，创建仅为 pending。见 `project/docs/rebuild_api.md`。执行调度、HTTP 重试/恢复、CAS 激活和任务前端尚未完成；未修改默认 RAG3 行为。
+
+Phase 2.11 新增显式单任务 worker 及 execute_configured_rebuild，执行前绑定当前管理员凭据和冻结 endpoint/model/version，校验所有者与账号状态，复用数据库 CAS 领取及失败 checkpoint 重试。见 `project/docs/rebuild_worker.md`。无自动队列或 HTTP 长任务执行，成功不激活；下一步开放用户级 CAS 激活/停用入口。
+
+Phase 2.12 已新增 JWT 用户级 active GET/PUT 接口，显式 revision 条件激活/回滚/停用，冲突返回 409，复用原有完整性验证和事务审计。停用不再依赖向量后端初始化。见 `project/docs/index_version_api.md`。版本列表/详情、自动调度与前端未实现，生产迁移仍未执行。
+
+Phase 2.13 已增加用户级历史版本分页/详情，展示安全字段和清单完整性标记，历史查询不依赖向量后端或当前文档集合。补充创建→worker执行→激活→历史发现→回滚检索闭环测试。版本列表/详情这一缺口已补齐；自动调度、前端及生产迁移仍未完成，后续收敛 Phase 2 整体验收。
+
+Phase 2.14 统一版本清单解析与损坏拒绝，补充摘要匹配但结构损坏的回归，防止激活误报 404。`project/docs/phase2_acceptance.md` 汇总手动闭环、验证证据及未通过的上线条件；不把自动调度、质量评测或生产发布标记为完成。
+
+Phase 2.15 增加可选创建幂等键及 007 映射表，任务与映射同事务、并发冲突整笔回滚后读取胜出任务。同键同参返回原冻结任务，异参 409，不传键兼容旧行为。MySQL 合成库验证并发唯一任务与迁移重放通过。见 `project/docs/rebuild_idempotency.md`；配额、GC、自动调度与上线迁移仍未完成。
+
+Phase 2.16 已加入用户未完成重建任务的创建配额，启动配置默认 8；pending/running/failed 计入，ready/cancelled 保留历史并释放额度。数据库事务内锁定用户、复查幂等键并统计准入；恢复沿用额度，同键重放优先，HTTP 超限 429。MySQL 3307 合成并发验证通过，无新增表或依赖。见 `project/docs/rebuild_quota.md`。该切片未实现 worker 物理并发、模型费用预算、GC、可靠队列或生产上线；下一步先定义执行领取处的并发/租约边界。
 
 ### 第 3 阶段：知识图谱与混合证据（原第 2–3 周估算；未实现）
 

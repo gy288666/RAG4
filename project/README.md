@@ -79,7 +79,7 @@ RAG4/project/
 │   │   ├── chunking/              # RAG4 领域模型、结构化切分与解析兼容
 │   │   ├── services/              # 业务与 RAG 编排（见下）
 │   │   └── utils/                 # 时间格式化、时间有序 ID
-│   ├── tests/                     # 156 项 pytest 测试（4b0e1dd）
+│   ├── tests/                     # 378 项用例；最近全量 349 passed（Phase 2.14）
 │   ├── requirements.txt
 │   ├── requirements-local-models.txt
 │   └── .env.example
@@ -319,7 +319,9 @@ python -m pytest -o addopts='' -q --tb=short
 
 测试全程使用 SQLite 临时库 + `DEV_MOCK_AI`，**无需 MySQL、无需任何外部 API Key**。
 
-`4b0e1dd` 对应的最近完整结果：156 passed，其中 Phase 1 新增 74 项；训练目录另有 2 项数据/指标测试，不计入后端 156 项。本次文档整理仅重新收集测试数量，完整执行结果见 [基线记录](../RAG4_BASELINE.md)。
+Phase 2.14 最近完整结果：349 passed / 618.48s；训练目录另有 2 项数据/指标测试，不计入后端数量。MySQL 3307 的 checkpoint 续接、并发唯一目标和 MySQL/上传文件/Chroma 停写合成组合恢复验证通过。详见 [基线记录](../RAG4_BASELINE.md)、[组合恢复](docs/mysql_combined_restore.md) 和 [真实验证](docs/model_connectivity_validation.md)。
+
+Phase 2.16 最新相关结果：重建组 73 passed / 234.58s，补充配额及认证/文档组 39 passed / 89.16s；合计覆盖 100 个不同用例，本轮未重跑全量。当前收集 378 项。默认每用户最多 8 个 pending/running/failed 重建，超限 429，不改默认上传/问答。配置和局限见 [创建配额](docs/rebuild_quota.md)。
 
 | 文件 | 覆盖内容 |
 |------|----------|

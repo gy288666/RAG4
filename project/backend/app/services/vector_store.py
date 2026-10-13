@@ -19,6 +19,7 @@ import math
 import os
 import re
 import threading
+import struct
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
@@ -105,6 +106,16 @@ class RetrievedChunk:
     extra: dict[str, Any] = field(default_factory=dict)
 
 
+def records_digest(records: list[VectorRecord]) -> str:
+    """Canonical float32 identity shared by candidate and activation validation."""
+    payload = [{"id": r.id, "text": r.text, "metadata": r.metadata(),
+                "vector": [struct.pack("!f", x).hex() for x in r.embedding]}
+               for r in sorted(records, key=lambda r: r.id)]
+    serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                            separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(serialized.encode()).hexdigest()
+
+
 class BaseVectorStore:
     """向量库统一接口。"""
 
@@ -136,6 +147,10 @@ class BaseVectorStore:
         raise NotImplementedError
 
     def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
+        raise NotImplementedError
+
+    def read_records(self, user_id: int, *, index_version: str) -> list[VectorRecord]:
+        """Read complete candidate records for integrity verification (not top-K)."""
         raise NotImplementedError
 
 
@@ -234,6 +249,21 @@ class ChromaVectorStore(BaseVectorStore):
 
     def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
         return int(self._collection(user_id, index_version).count())
+
+    def read_records(self, user_id: int, *, index_version: str) -> list[VectorRecord]:
+        data = self._collection(user_id, index_version).get(include=["documents", "embeddings", "metadatas"])
+        if not data["ids"]:
+            return []
+        return [VectorRecord(
+            id=record_id, text=text, embedding=[float(v) for v in vector],
+            doc_id=meta["doc_id"], user_id=meta["user_id"], file_name=meta["file_name"],
+            chunk_index=meta["chunk_index"], page=meta.get("page"),
+            embedding_model_version=meta.get("embedding_model_version"),
+            chunking_version=meta.get("chunking_version"), chunk_set_id=meta.get("chunk_set_id"),
+            chunk_metadata_json=meta.get("chunk_metadata_json"),
+        ) for record_id, text, vector, meta in zip(
+            data["ids"], data["documents"], data["embeddings"], data["metadatas"], strict=True
+        )]
 
     def _user_collection_names(self, user_id: int, index_version: str | None) -> list[str]:
         if index_version is not None:
@@ -369,6 +399,16 @@ class LocalVectorStore(BaseVectorStore):
 
     def count(self, user_id: int, *, index_version: str = BASELINE_INDEX_VERSION) -> int:
         return len(self._load(user_id, index_version))
+
+    def read_records(self, user_id: int, *, index_version: str) -> list[VectorRecord]:
+        # Unlike the baseline best-effort reader, integrity verification must
+        # propagate malformed JSON and I/O errors rather than treating them as empty.
+        with self._lock:
+            path = self._path(user_id, index_version)
+            if not os.path.exists(path):
+                return []
+            with open(path, encoding="utf-8") as stream:
+                return [VectorRecord(**row) for row in json.load(stream)]
 
     def _user_paths(self, user_id: int) -> list[str]:
         prefix = f"col_user_{user_id}"

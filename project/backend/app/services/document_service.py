@@ -14,6 +14,7 @@ import shutil
 import threading
 from concurrent.futures import ThreadPoolExecutor
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -29,6 +30,8 @@ from app.models.document import (
     Document,
 )
 from app.models.usage_log import EVENT_OCR_CALL
+from app.models.index_job import DocumentIndexJob, StoredChunkSet
+from app.models.index_build import IndexBuild
 from app.services import chunking_service, config_service, embedding_service, usage_service
 from app.services import parser_service
 from app.services.vector_store import VectorRecord, get_vector_store
@@ -269,6 +272,8 @@ def _handle_failure(doc_id: str, user_id: int, message: str, *, ocr_related: boo
 
 def delete_document(db: Session, document: Document) -> None:
     """同步清理向量、物理文件与 MySQL 元数据（PRD 4.2.4）。"""
+    # Match the candidate publisher's lock before touching external storage.
+    db.execute(select(Document.id).where(Document.id == document.id).with_for_update())
     user_id = document.user_id
     doc_id = document.id
     local_path = document.local_path
@@ -285,6 +290,10 @@ def delete_document(db: Session, document: Document) -> None:
     except OSError:
         logger.warning("删除物理文件失败: %s", local_path, exc_info=True)
 
+    # Explicit cleanup also supports SQLite deployments without FK enforcement.
+    db.query(IndexBuild).filter_by(document_id=doc_id).delete()
+    db.query(DocumentIndexJob).filter_by(document_id=doc_id).delete()
+    db.query(StoredChunkSet).filter_by(document_id=doc_id).delete()
     db.delete(document)
     db.commit()
 
