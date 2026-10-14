@@ -1,0 +1,302 @@
+{
+  "artifact_id": "artifact_f3ae8f9dc71944f5326b10935ffa7080ce82c583b08553c5e4c502d6ea04ef1a",
+  "composer_version": "comparison-table-v2",
+  "completion_status": "partial",
+  "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+  "goal": "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+  "rows": [
+    {
+      "document_id": "dpr",
+      "title": "dpr.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "supported",
+          "statement": "该方法使用了BERT预训练模型和双编码器架构。",
+          "claim_ids": [
+            "claim_8b6924c483fbd484746a5fdd33f64fddbf96cc4bd272a3abf76cd64458245d9c"
+          ],
+          "reasons": []
+        },
+        {
+          "facet": "dataset",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "虽然提到了TREC、Natural Questions和WebQuestions等数据集，但没有明确提到SQuAD和TriviaQA。"
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "supported",
+          "statement": "DPR在四个数据集上优于之前的SOTA结果，准确率提高了1%到12%。",
+          "claim_ids": [
+            "claim_aa38057638e3801e85e7f76533c4bfd9dbc96362c68f242d78554f0b1d90a5d4"
+          ],
+          "reasons": []
+        },
+        {
+          "facet": "limitation",
+          "status": "supported",
+          "statement": "SQuAD数据集的性能较低，原因在于问题是在看到段落后由注释者编写的。",
+          "claim_ids": [
+            "claim_d2c30142a1163f11c6ca5fe5ca62d5df00a3422090f11c87483277bb60b68ac7"
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "document_id": "fid",
+      "title": "fid.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        },
+        {
+          "facet": "dataset",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        },
+        {
+          "facet": "limitation",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "realm",
+      "title": "realm.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "虽然提到了REALM使用检索增强的语言模型预训练方法，但没有具体说明是使用了检索增强的语言模型预训练方法。"
+          ]
+        },
+        {
+          "facet": "dataset",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "numeric_value_not_in_quote"
+          ]
+        },
+        {
+          "facet": "limitation",
+          "status": "missing",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+          ]
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "claim_id": "claim_8b6924c483fbd484746a5fdd33f64fddbf96cc4bd272a3abf76cd64458245d9c",
+      "document_id": "dpr",
+      "facet": "method",
+      "statement": "该方法使用了BERT预训练模型和双编码器架构。",
+      "citation": {
+        "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+        "char_start": 0,
+        "char_end": 242,
+        "quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs."
+      }
+    },
+    {
+      "claim_id": "claim_aa38057638e3801e85e7f76533c4bfd9dbc96362c68f242d78554f0b1d90a5d4",
+      "document_id": "dpr",
+      "facet": "result",
+      "statement": "DPR在四个数据集上优于之前的SOTA结果，准确率提高了1%到12%。",
+      "citation": {
+        "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+        "char_start": 0,
+        "char_end": 173,
+        "quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy."
+      }
+    },
+    {
+      "claim_id": "claim_d2c30142a1163f11c6ca5fe5ca62d5df00a3422090f11c87483277bb60b68ac7",
+      "document_id": "dpr",
+      "facet": "limitation",
+      "statement": "SQuAD数据集的性能较低，原因在于问题是在看到段落后由注释者编写的。",
+      "citation": {
+        "chunk_id": "chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a",
+        "char_start": 0,
+        "char_end": 587,
+        "quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage."
+      }
+    }
+  ],
+  "citation_sources": [
+    {
+      "claim_id": "claim_8b6924c483fbd484746a5fdd33f64fddbf96cc4bd272a3abf76cd64458245d9c",
+      "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+      "source_locator": {
+        "source": {
+          "uri": "document:dpr",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-1",
+            "char_start": 544,
+            "char_end": 786,
+            "page_start": 2,
+            "page_end": 2
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 2,
+      "page_end": 2
+    },
+    {
+      "claim_id": "claim_aa38057638e3801e85e7f76533c4bfd9dbc96362c68f242d78554f0b1d90a5d4",
+      "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+      "source_locator": {
+        "source": {
+          "uri": "document:dpr",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-7",
+            "char_start": 1520,
+            "char_end": 1693,
+            "page_start": 8,
+            "page_end": 8
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 8,
+      "page_end": 8
+    },
+    {
+      "claim_id": "claim_d2c30142a1163f11c6ca5fe5ca62d5df00a3422090f11c87483277bb60b68ac7",
+      "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+      "source_locator": {
+        "source": {
+          "uri": "document:dpr",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-4",
+            "char_start": 2903,
+            "char_end": 3490,
+            "page_start": 5,
+            "page_end": 5
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 5,
+      "page_end": 5
+    }
+  ],
+  "verification": {
+    "verifier_version": "exact-source-numeric-and-model-v2",
+    "annotation_status": "machine_review_only",
+    "verdicts": [
+      {
+        "claim_id": "claim_52932df5cd51aa317b3b8e6c14aff93b3e8d26ef53a472e5b118a5fd0cbac7e3",
+        "status": "insufficient",
+        "reason": "numeric_value_not_in_quote"
+      },
+      {
+        "claim_id": "claim_8b6924c483fbd484746a5fdd33f64fddbf96cc4bd272a3abf76cd64458245d9c",
+        "status": "supported",
+        "reason": "该方法确实使用了BERT预训练模型和双编码器架构。"
+      },
+      {
+        "claim_id": "claim_bba6904107548094f5ba02d6ff89812ebc8d82781201356a612c410059537ac1",
+        "status": "insufficient",
+        "reason": "虽然提到了TREC、Natural Questions和WebQuestions等数据集，但没有明确提到SQuAD和TriviaQA。"
+      },
+      {
+        "claim_id": "claim_aa38057638e3801e85e7f76533c4bfd9dbc96362c68f242d78554f0b1d90a5d4",
+        "status": "supported",
+        "reason": "该研究确实表明DPR在四个数据集上优于之前的SOTA结果，准确率提高了1%到12%。"
+      },
+      {
+        "claim_id": "claim_d2c30142a1163f11c6ca5fe5ca62d5df00a3422090f11c87483277bb60b68ac7",
+        "status": "supported",
+        "reason": "该研究确实提到SQuAD数据集的性能较低，原因在于问题是在看到段落后由注释者编写的。"
+      },
+      {
+        "claim_id": "claim_70f41557e46ff770fc623a286ec9dcfc6415b77dbe0ecd6f967a8a44460f93e9",
+        "status": "insufficient",
+        "reason": "虽然提到了REALM使用检索增强的语言模型预训练方法，但没有具体说明是使用了检索增强的语言模型预训练方法。"
+      }
+    ],
+    "supported": 3,
+    "total": 6,
+    "warnings": [
+      "literal_numeric_values_checked_no_unit_conversion",
+      "semantic_support_is_machine_judgment_requires_human_review"
+    ]
+  },
+  "knowledge_gaps": [
+    "dpr:dataset:uncertain",
+    "fid:method:missing",
+    "fid:dataset:missing",
+    "fid:result:missing",
+    "fid:limitation:missing",
+    "realm:method:uncertain",
+    "realm:dataset:missing",
+    "realm:result:uncertain",
+    "realm:limitation:missing"
+  ],
+  "warnings": [
+    "machine_review_only",
+    "cross_paper_results_not_directly_comparable"
+  ],
+  "markdown": "# 文献比较\n\n比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。\n\n| 文献 | 方法 | 数据集 | 结果 | 局限 |\n| --- | --- | --- | --- | --- |\n| dpr.pdf | 该方法使用了BERT预训练模型和双编码器架构。 [1] | 待核验 | DPR在四个数据集上优于之前的SOTA结果，准确率提高了1%到12%。 [2] | SQuAD数据集的性能较低，原因在于问题是在看到段落后由注释者编写的。 [3] |\n| fid.pdf | 证据未检出 | 证据未检出 | 证据未检出 | 证据未检出 |\n| realm.pdf | 待核验 | 证据未检出 | 待核验 | 证据未检出 |\n\n引用由原文定位及模型核验；仍需人工复核。实验条件未统一，本表不作性能排名。\n\n引用：\n[1] dpr.pdf，PDF 页 2–2，切片 chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0，字符 0:242：By leveraging the now standard BERT pretrained model (Devlin et al., 2019) and a dual-encoder architecture (Bromley et al., 1994), we focus on developing the right training scheme using a relatively small number of question and passage pairs.\n[2] dpr.pdf，PDF 页 8–8，切片 chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a，字符 0:173：Overall, our DPR-based models outperform the previous state- of-the-art results on four out of the ﬁve datasets, with 1% to 12% absolute differences in exact match accuracy.\n[3] dpr.pdf，PDF 页 5–5，切片 chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a，字符 0:587：The results are measured on the de- velopment set of Natural Questions. Our DPR trained using 1,000 examples already outperforms BM25. tiple datasets, TREC, the smallest dataset of the ﬁve, beneﬁts greatly from more training examples. In contrast, Natural Questions and WebQuestions improve modestly and TriviaQA degrades slightly. Results can be improved further in some cases by combining DPR with BM25 in both single- and multi-dataset settings. We conjecture that the lower performance on SQuAD is due to two reasons. First, the annota- tors wrote questions after seeing the passage.\n\n知识缺口：\ndpr:dataset:uncertain\nfid:method:missing\nfid:dataset:missing\nfid:result:missing\nfid:limitation:missing\nrealm:method:uncertain\nrealm:dataset:missing\nrealm:result:uncertain\nrealm:limitation:missing\n"
+}

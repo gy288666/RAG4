@@ -63,12 +63,14 @@ def _clean_state():
     from app.models.index_rebuild import IndexRebuild
     from app.models.rebuild_recovery import RebuildRecovery
     from app.models.rebuild_request import RebuildRequest
+    from app.models.research_task import ResearchTaskRecord
     from app.models.reset_request import PasswordResetRequest
     from app.models.system_config import SystemConfig
     from app.models.usage_log import UsageLog
 
     with SessionLocal() as db:
         for model in (
+            ResearchTaskRecord,
             RebuildRequest,
             RebuildRecovery,
             IndexRebuild,

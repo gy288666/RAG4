@@ -1,0 +1,367 @@
+{
+  "artifact_id": "artifact_29c95ce29f691f6cd2afc88d082dd88f4580db2b34e07445b48da1834022aa98",
+  "composer_version": "comparison-table-v2",
+  "completion_status": "partial",
+  "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+  "goal": "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+  "rows": [
+    {
+      "document_id": "dpr",
+      "title": "dpr.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "supported",
+          "statement": "采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。",
+          "claim_ids": [
+            "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101"
+          ],
+          "reasons": []
+        },
+        {
+          "facet": "dataset",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+          ]
+        },
+        {
+          "facet": "limitation",
+          "status": "supported",
+          "statement": "SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。",
+          "claim_ids": [
+            "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002"
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "document_id": "fid",
+      "title": "fid.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "supported",
+          "statement": "该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。",
+          "claim_ids": [
+            "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee"
+          ],
+          "reasons": []
+        },
+        {
+          "facet": "dataset",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "supported",
+          "statement": "Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。",
+          "claim_ids": [
+            "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a"
+          ],
+          "reasons": []
+        },
+        {
+          "facet": "limitation",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "realm",
+      "title": "realm.pdf",
+      "cells": [
+        {
+          "facet": "method",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+          ]
+        },
+        {
+          "facet": "dataset",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+          ]
+        },
+        {
+          "facet": "result",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quoted table associates 38.5 and 52.0 with X=CC-News; the statement omits this experimental condition."
+          ]
+        },
+        {
+          "facet": "limitation",
+          "status": "uncertain",
+          "statement": null,
+          "claim_ids": [],
+          "reasons": [
+            "The quote reports both encoder and retriever benefits; it does not support differences between pre-training corpora or a need for further attribution research."
+          ]
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+      "document_id": "dpr",
+      "facet": "method",
+      "statement": "采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。",
+      "citation": {
+        "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+        "char_start": 0,
+        "char_end": 572,
+        "quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong."
+      }
+    },
+    {
+      "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+      "document_id": "dpr",
+      "facet": "limitation",
+      "statement": "SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。",
+      "citation": {
+        "chunk_id": "chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2",
+        "char_start": 0,
+        "char_end": 486,
+        "quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+      }
+    },
+    {
+      "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+      "document_id": "fid",
+      "facet": "method",
+      "statement": "该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。",
+      "citation": {
+        "chunk_id": "chunk_e6227d6e214b5fd71ca1e29c73b6a4db5f377add2938c1c8e2f613d4e4b2577f",
+        "char_start": 0,
+        "char_end": 1509,
+        "quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. (2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. "
+      }
+    },
+    {
+      "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+      "document_id": "fid",
+      "facet": "result",
+      "statement": "Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。",
+      "citation": {
+        "chunk_id": "chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a",
+        "char_start": 0,
+        "char_end": 574,
+        "quote": "875\nQuestion + Passage 1\nencoder\nQuestion + Passage 2\nencoder\nQuestion + Passage N\nencoder\ndecoder\nAnswer\nconcat\n…\n…\n…\n…\nFigure 2: Architecture of the Fusion-in-Decoder method.\nrepresentations.\nThen, a sequence-to-sequence\nmodel generates the answer, taking as input the re-\ntrieved passages in addition to the question. While\nconceptually simple, this method sets new state-of-\nthe-art results on the TriviaQA and NaturalQues-\ntions benchmarks. In particular, we show that the\nperformance of our method signiﬁcantly improves\nwhen the number of retrieved passages increases."
+      }
+    }
+  ],
+  "citation_sources": [
+    {
+      "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+      "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+      "source_locator": {
+        "source": {
+          "uri": "document:dpr",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-1",
+            "char_start": 544,
+            "char_end": 1116,
+            "page_start": 2,
+            "page_end": 2
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 2,
+      "page_end": 2
+    },
+    {
+      "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+      "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+      "source_locator": {
+        "source": {
+          "uri": "document:dpr",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-3",
+            "char_start": 2749,
+            "char_end": 3235,
+            "page_start": 4,
+            "page_end": 4
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 4,
+      "page_end": 4
+    },
+    {
+      "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+      "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+      "source_locator": {
+        "source": {
+          "uri": "document:fid",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-2",
+            "char_start": 1765,
+            "char_end": 3274,
+            "page_start": 3,
+            "page_end": 3
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 3,
+      "page_end": 3
+    },
+    {
+      "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+      "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+      "source_locator": {
+        "source": {
+          "uri": "document:fid",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-1",
+            "char_start": 0,
+            "char_end": 574,
+            "page_start": 2,
+            "page_end": 2
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 2,
+      "page_end": 2
+    }
+  ],
+  "verification": {
+    "verifier_version": "exact-source-numeric-and-model-v2",
+    "annotation_status": "machine_review_only",
+    "verdicts": [
+      {
+        "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+        "status": "supported",
+        "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+      },
+      {
+        "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+        "status": "insufficient",
+        "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+      },
+      {
+        "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+        "status": "insufficient",
+        "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+      },
+      {
+        "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+        "status": "supported",
+        "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+      },
+      {
+        "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+        "status": "supported",
+        "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+      },
+      {
+        "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+        "status": "insufficient",
+        "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+      },
+      {
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "status": "supported",
+        "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+      },
+      {
+        "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+        "status": "insufficient",
+        "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+      },
+      {
+        "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+        "status": "insufficient",
+        "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+      },
+      {
+        "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+        "status": "insufficient",
+        "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+      },
+      {
+        "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+        "status": "insufficient",
+        "reason": "The quoted table associates 38.5 and 52.0 with X=CC-News; the statement omits this experimental condition."
+      },
+      {
+        "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+        "status": "insufficient",
+        "reason": "The quote reports both encoder and retriever benefits; it does not support differences between pre-training corpora or a need for further attribution research."
+      }
+    ],
+    "supported": 4,
+    "total": 12,
+    "warnings": [
+      "literal_numeric_values_checked_no_unit_conversion",
+      "semantic_support_is_machine_judgment_requires_human_review",
+      "secondary_ai_source_audit_not_human"
+    ]
+  },
+  "knowledge_gaps": [
+    "dpr:dataset:uncertain",
+    "dpr:result:uncertain",
+    "fid:dataset:uncertain",
+    "fid:limitation:uncertain",
+    "realm:method:uncertain",
+    "realm:dataset:uncertain",
+    "realm:result:uncertain",
+    "realm:limitation:uncertain"
+  ],
+  "warnings": [
+    "machine_review_only",
+    "cross_paper_results_not_directly_comparable"
+  ],
+  "markdown": "# 文献比较\n\n比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。\n\n| 文献 | 方法 | 数据集 | 结果 | 局限 |\n| --- | --- | --- | --- | --- |\n| dpr.pdf | 采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。 [1] | 待核验 | 待核验 | SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。 [2] |\n| fid.pdf | 该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。 [3] | 待核验 | Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。 [4] | 待核验 |\n| realm.pdf | 待核验 | 待核验 | 待核验 | 待核验 |\n\n引用由原文定位及模型核验；仍需人工复核。实验条件未统一，本表不作性能排名。\n\n引用：\n[1] dpr.pdf，PDF 页 2–2，切片 chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0，字符 0:572：By leveraging the now standard BERT pretrained model (Devlin et al., 2019) and a dual-encoder architecture (Bromley et al., 1994), we focus on developing the right training scheme using a relatively small number of question and passage pairs. Through a series of careful ablation studies, our ﬁnal solution is surprisingly simple: the embedding is optimized for maximizing inner products of the question and relevant passage vectors, with an objective compar- ing all pairs of questions and passages in a batch. Our Dense Passage Retriever (DPR) is exception- ally strong.\n[2] dpr.pdf，PDF 页 4–4，切片 chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2，字符 0:486：, 2016) is a popu- lar benchmark dataset for reading comprehension. Annotators were presented with a Wikipedia para- graph, and asked to write questions that could be answered from the given text. Although SQuAD has been used previously for open-domain QA re- search, it is not ideal because many questions lack context in absence of the provided paragraph. We still include it in our experiments for providing a fair comparison to previous work and we will discuss more in Section 5.1.\n[3] fid.pdf，PDF 页 3–3，切片 chunk_e6227d6e214b5fd71ca1e29c73b6a4db5f377add2938c1c8e2f613d4e4b2577f，字符 0:1509：The model takes as input the question, as well as the support passages, and generates the answer. More precisely, each retrieved passage and its title are concatenated with the question, and processed independently from other passages by the encoder. We add special tokens question:, title: and context: before the question, title and text of each passage. Finally, the decoder performs atten- 1lucene.apache.org 2spacy.io 3github.com/facebookresearch/faiss tion over the concatenation of the resulting repre- sentations of all the retrieved passages. The model thus performs evidence fusion in the decoder only, and we refer to it as Fusion-in-Decoder. By processing passages independently in the en- coder, but jointly in the decoder, this method differs from Min et al. (2020) and Lewis et al. (2020b). Processing passages independently in the encoder allows to scale to large number of contexts, as it only performs self attention over one context at a time. This means that the computation time of the model grows linearly with the number of passages, instead of quadratically. On the other hand, pro- cessing passages jointly in the decoder allows to better aggregate evidence from multiple passages. 4 Experiments In this section, we report empirical evaluations of Fusion-in-Decoder for open domain QA. Datasets. We consider the following datasets, and use the same setting as Lee et al. (2019): • NaturalQuestions (Kwiatkowski et al., 2019) contains questions corresponding to Google search queries. \n[4] fid.pdf，PDF 页 2–2，切片 chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a，字符 0:574：875 Question + Passage 1 encoder Question + Passage 2 encoder Question + Passage N encoder decoder Answer concat … … … … Figure 2: Architecture of the Fusion-in-Decoder method. representations. Then, a sequence-to-sequence model generates the answer, taking as input the re- trieved passages in addition to the question. While conceptually simple, this method sets new state-of- the-art results on the TriviaQA and NaturalQues- tions benchmarks. In particular, we show that the performance of our method signiﬁcantly improves when the number of retrieved passages increases.\n\n知识缺口：\ndpr:dataset:uncertain\ndpr:result:uncertain\nfid:dataset:uncertain\nfid:limitation:uncertain\nrealm:method:uncertain\nrealm:dataset:uncertain\nrealm:result:uncertain\nrealm:limitation:uncertain\n"
+}

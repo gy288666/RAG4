@@ -12,8 +12,10 @@ from app.models.reset_request import PasswordResetRequest
 from app.models.system_config import SystemConfig
 from app.models.usage_log import UsageLog
 from app.models.user import User
+from app.models.research_task import ResearchTaskRecord
 
 __all__ = [
+    "ResearchTaskRecord",
     "RebuildRequest",
     "User",
     "PasswordResetRequest",

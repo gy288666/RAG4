@@ -1,0 +1,23 @@
+{
+  "schema": "research-mysql-probe-v1",
+  "status": "passed",
+  "business_database_modified": false,
+  "scope": "additive DDL + UTF-8 checkpoint + CAS, not production deployment",
+  "server_version": "8.4.9",
+  "database": "rag4_research_probe_20261013_254fa635",
+  "server_port": 3307,
+  "unicode_roundtrip": true,
+  "cas_conflict_preserved": true,
+  "column_types": {
+    "id": "VARCHAR(64) COLLATE \"utf8mb4_unicode_ci\"",
+    "user_id": "INTEGER",
+    "status": "VARCHAR(16) COLLATE \"utf8mb4_unicode_ci\"",
+    "revision": "INTEGER",
+    "payload_json": "LONGTEXT",
+    "payload_sha256": "VARCHAR(64) COLLATE \"utf8mb4_unicode_ci\"",
+    "created_at": "DATETIME",
+    "updated_at": "DATETIME"
+  },
+  "migration_sha256": "89621ca429e90d1af76c696f72572ff6dd063fb51a7e15c46e39910c6a10983c",
+  "probe_source_sha256": "c95a8d764c816d09e14f446bb5021f590cdd53ed1c3b228ccd620b9c617a46f5"
+}

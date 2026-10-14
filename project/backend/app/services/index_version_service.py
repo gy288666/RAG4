@@ -197,6 +197,19 @@ def _verify_manifest(user_id, manifest, store):
             raise ValueError("Version member changed")
 
 
+def load_version_snapshot(user_id: int, version_id: str, *, store=None):
+    """Read and verify an explicit retained version without changing activation.
+
+    Research callers freeze this ID rather than following a mutable pointer.
+    Current corpus and all member records must still match the sealed manifest.
+    """
+    store = store if store is not None else get_vector_store()
+    with session_scope() as db:
+        manifest = _manifest(db, user_id, version_id)
+    _verify_manifest(user_id, manifest, store)
+    return manifest
+
+
 def active_state(user_id: int) -> tuple[str | None, int]:
     with session_scope() as db:
         if db.get(User, user_id) is None:

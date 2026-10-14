@@ -6,7 +6,7 @@
 
 ## 当前基线
 
-RAG4 当前以 `project/` 下导入的 RAG3 代码作为可运行基线。模型运行时、训练脚手架与 Phase 1 结构化切分已经接入，默认仍使用 RAG3 切分；Research Agent、知识图谱和混合证据引擎尚未实现，这些能力仍以根目录的 `RAG4_DEVELOPMENT_PLAN.md` 为设计目标。
+RAG4 以 `project/` 下导入的 RAG3 代码作为可运行基线，默认仍使用 RAG3 切分。2026-10-13 已新增文献比较场景的来源内存图谱、混合证据、SQL ResearchAgent 任务/工具及核验产物最小后端；质量验收、Neo4j、通用自主规划与研究工作区尚未完成。当前边界见文末最新记录和 `project/docs/research_backend_mvp.md`；下文旧轮次的“未实现”保留为历史状态。
 
 ## 目录与入口
 
@@ -350,3 +350,66 @@ git diff --check
 下一切片入口：`rebuild_execution.execute_configured_rebuild` 与 `index_rebuild_service.run_rebuild` 的领取事务。前置条件是明确执行槽、租约及迟到执行者隔离语义，设计失败/取消/恢复下的释放方式并先通过并发和故障注入测试，再接可靠队列。Graph、ResearchAgent 和研究工作区仍未实现。本轮未提交或推送。
 
 收尾增强账号时间戳测试：先固定为 2000 年，再断言准入不会改动，避免同秒操作掩盖问题。单项 `python -m pytest tests/test_rebuild_quota.py::test_users_have_independent_quota_without_account_timestamp_mutation -o addopts='' -q --tb=short`：**1 passed in 9.78s**。差异检查发现新增记录末尾空行，移除后复查通过。
+
+## 发布与开发范围调整（2026-10-12）
+
+Phase 2.1–2.16 已提交并推送到 GitHub main，提交 `476127bb23c7745e46410b80c49b11561f1693e8`；推送后本地 HEAD 与远程 main 核对一致。该提交包含 75 个文件，不含独立任务的 artifacts 截图，也未进行业务库迁移或生产部署。前述各轮“尚未提交”是当时状态。
+
+按用户要求收紧近期计划：现有索引能力冻结为维护基线，当前全量回归和隔离文献手动闭环作为有限收尾；下一切片转为 3–5 篇真实论文、20 题开发回归、RAG3/结构切分对照及失败案例。随后按 Phase 3–6 顺序完成最小混合证据、研究任务、带核验的比较表和用户操作路径。引用支持、证据缺口与已知失败案例改善作为验收目标；指标尚无新实测结果。
+
+队列、租约、GC、Neo4j 和正式训练改为有实测阻塞或明确运行需求时触发，采用第 3.4 节记录的最小范围与退出条件。受控实验串行运行不等于系统已有全局并发保护。首批 20 题用于开发回归，不充当独立训练测试集；现有 experiment 脚本会修改全局配置和删除实验账号文档，不直接在业务环境运行。
+
+本轮修改 8 份文档：`RAG4_DEVELOPMENT_PLAN.md`、`README.md`、本基线、`project/docs/development_process.md`、`project/docs/phase2_acceptance.md`、`project/docs/rebuild_quota.md`、`project/docs/rag4_chunking.md`、`project/training/README.md`。同步消除当前入口的过时状态描述，保留明确标注的历史记录。仅调整计划和说明，没有新增应用代码、数据库迁移、依赖或模型调用；没有将新评测集、Graph、Agent 或前端功能标记为已完成。
+
+验证采用修改文档的本地文件链接、代码围栏配对与 `git diff --check` 检查；不对纯文档变更重复运行后端测试。当前 378 项完整回归与真实论文质量验证仍列为下一切片待执行，历史测试结果不变。本轮计划修订尚未提交或推送。
+
+## 真实文献检索试点（2026-10-12）
+
+按收紧后的计划推进实际验证。开工 git status 为前轮 8 份文档修改及独立 artifacts 截图，全部保留。先在原发布基线执行后端全量 `python -m pytest -o addopts='' -q --tb=short`，**378 passed in 465.54s (0:07:45)**；此时新增试点测试尚未加入。没有创建索引队列、租约或新业务表。
+
+新增文件：
+
+- `project/backend/app/evaluation/__init__.py`、`literature.py`：Pilot/Paper/Question/Evidence 与 Candidate/Span 类型、PDF 摘要/页数校验、唯一锚点定位、现有切分器适配、向量值校验与跨切片原文覆盖指标。
+- `project/backend/scripts/evaluate_literature.py`：明确参数和凭据环境变量、80 次调用预算/30 秒超时/每批一次尝试、现有 RemoteEmbeddingAdapter 和 LocalVectorStore、独立输出及失败报告；不写业务 SQL、管理员配置或 active。
+- `project/backend/evaluation/literature_pilot_v1.json`、`README.md`：三篇官方来源、许可及 SHA-256 固定，20 题 AI 草稿与复现契约；27 个证据区间已定位，尚未人工语义复核。
+- `project/backend/evaluation/results/literature_pilot_20261012.json`、`parent_expansion_diagnostic_20261012.json`：两次尝试、逐题候选位置/分数、完整原始报告摘要、源码/输入身份和离线父片诊断；不包含密钥或向量正文。
+- `project/backend/tests/test_literature_pilot.py`：19 项离线功能和失败保护测试。
+- `project/docs/research_corpus_sources.md`、`literature_pilot_report.md`：原论文与许可依据、AI 标签范围、真实结果及失败分析。同步更新开发计划、根 README、Phase 2 验收和开发过程记录，不把试点写成 Graph/Agent 已完成。
+
+语料是 DPR（ACL 2020，13 页）、FiD（ACL 2021，7 页）、REALM（PMLR 2020，10 页），PDF 与本地完整原文/向量位于 `E:\RAG4\project\backend\data\literature-pilot-v1`，受现有忽略规则保护。许可与作者出处留在来源注记及定义文件中；下载模型与文献不等于正式训练。该试点只对照纯检索，真实文献 SQL staging/激活/回滚闭环及人工标注验收仍待完成。
+
+固定模型 Qwen/Qwen3-Embedding-8B、4096 维；RAG3 600/60，RAG4 子预算 600/父预算 1800/无重叠/字符 fallback，同一批问题向量。RAG3 254 子片，RAG4 272。Top-10 标注锚点覆盖均值 **33.33%→41.67%**，全证据题数均 **5/16**；q01 出现锚点退化。四道证据不足题只保存检索明细，未测拒答，不计为正确；没有生成答案或验证引用。短锚点不等同于完整语义支持，默认路径保持原有设置，没有达到新的质量切换门槛。
+
+首轮 `run-qwen8b-20261012` 保留 failed / rag4_embedding / ConnectError，60587ms、19 次调用；RAG3 成功结果保留。第二轮 `run-qwen8b-20261012-attempt2` 同参数，剩余调用预算 61，**succeeded / 125176ms / 35 次调用**。两轮合计 54 次、1 次失败，服务返回 total_tokens 合计 117219，货币费用未知。此前许可来源核对和本轮请求都未涉及用户私有文献；API Key 只在进程内读取，没有写入输出或仓库。
+
+额外的离线父片诊断只复用既有候选排名，不新增 API 调用：覆盖均值 51.04%、全证据题 7/16，q01/q09 的指定锚点补全；但 q01 上下文 4467→12709 字符，预算不等价，尚未接入在线检索。下一切片由这些具体失败驱动有预算的父片展开、等价证据复核与文档范围覆盖，不据此扩展 Neo4j、租约或训练平台。
+
+在 `E:\RAG4\project\backend` 的 `rag4-py3.11` 环境运行：
+
+```powershell
+python -m pytest tests/test_literature_pilot.py -o addopts='' -q --tb=short
+python -m pytest tests/test_literature_pilot.py tests/test_chunking_engine.py tests/test_services.py -o addopts='' -q --tb=short
+python scripts/evaluate_literature.py --pilot evaluation/literature_pilot_v1.json --sources data/literature-pilot-v1 --output data/literature-pilot-v1/run-new
+```
+
+前两项实际结果 **19 passed / 3.79s**、**108 passed / 8.03s**。第三项是复现命令，运行前由进程设置 RAG4_EVAL_API_KEY；本轮实际使用相同 run 接口分别写入上述两个新目录，第二轮扣减首轮调用预算。代码准备时修复了导入路径和歧义锚点，没有降低校验要求；测试最终全通过。没有新增依赖或修改已有业务实现，本轮未重跑新增后的 397 项全量，尚未提交或推送。
+
+
+## 2026-10-13：Phase 3–5 文献比较后端切片
+
+保留默认 RAG3 和既有手动索引。新增 EvidenceCorpus/Bundle、GraphStore/MemoryGraphStore、来源实体与两跳探索、HybridEvidenceEngine；ResearchTask/Step、工具注册与 ResearchAgent；SQL checkpoint/CAS 和所有者 HTTP/单步 CLI；EvidenceVerifier/ArtifactComposer 和结构化引用。文件与接口清单见 [后端切片](project/docs/research_backend_mvp.md)。仅新增 research_tasks 迁移 008，不新增依赖。
+
+真实三篇论文的 SQLite 版本激活/回滚闭环通过，文档向量复用、查询/模型在线；MySQL 8.4.9/3307 隔离新增表、中文往返、过期 revision 拒绝通过，未迁移业务库。七次在线尝试共 31 请求、9 网络失败、报告 33406 Token，货币/失败请求用量未知。旧核验器曾错误接受 38.2 对 38.5；当前独立数字门禁拒绝该结论，保存的语义判断离线回放得到 3/6 机器支持、9 缺口、partial 产物。最新在线第 7 次严格响应 schema 失败保留，不能标记质量通过。
+
+固定旧 Top-10、6000 字符父片回放：平均锚点覆盖 41.67%→47.92%，全证据 5/16→6/16；q01 改善，q09/q12 未改善。先保留子片后展开父片避免初版挤掉证据。真实关系未证明图谱收益。20 题仍待人工标注审核，90% 支持率及缺口题未验收。
+
+最终全量 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**432 passed / 500.17s**，无失败/跳过；compileall、差异、公开 JSON 和文档链接检查通过，详见开发记录 R19；无业务配置/active 修改、无前端/正式微调、无新依赖，本轮未提交推送。旧任务/产物可读取历史身份，新生成必须通过当前核验；回滚可停用研究入口/worker 继续 RAG3，保留研究表与记录。后续先修复真实引用与响应协议并做人工质量验收，Phase 2 不继续无边界扩建。
+
+
+## 2026-10-13 R20：来源引用编号与协议修复
+
+新增 source-handles-v2（连续原文目录和区间绑定）、安全 schema 诊断、显式 JSON 输出、重复 JSON 键拒绝和有界候选归一；历史任务缺省仍是原协议。真实重跑查明 REALM claims 超限，保留 DPR/FiD 已完成步骤，从复制 SQLite 受限续接成功，失败连接也保留。9 请求、1 网络失败、20203 已报 Token，费用/失败用量未知。
+
+在线 12 候选中机器通过 6；二次 AI 来源复核发现两条 REALM 条件/支持不足，展示版撤下，仅 4 条、8 缺口；不是人工质量验收或生产语义 verifier 自动修复。q09 为预算不足，q12 为候选召回缺口，没有伪装成改善。新增文件、接口配置和结果见 [修复记录](project/docs/research_citation_fix.md)。
+
+最终 backend `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**440 passed / 470.62s**，无失败/跳过。此前 432 项为 R19 历史结果。无新依赖、业务库迁移/配置/active 改动，无前端/训练或 GitHub 推送。继续优先条件/归属核验与范围内检索。

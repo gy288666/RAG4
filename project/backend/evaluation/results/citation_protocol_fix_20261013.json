@@ -1,0 +1,539 @@
+{
+  "schema": "citation-protocol-fix-result-v1",
+  "status": "succeeded_with_partial_artifact",
+  "annotation_status": "machine_review_only",
+  "human_quality_gate_passed": false,
+  "business_database_modified": false,
+  "request_count": 9,
+  "transport_failed_requests": 1,
+  "provider_reported_total_tokens": 20203,
+  "money_cost": "unknown",
+  "attempts": [
+    {
+      "schema_version": "research-comparison-result-v1",
+      "status": "failed",
+      "annotation_status": "machine_review_only",
+      "task_status": "failed",
+      "duration_ms": 111719,
+      "completion_spec": {
+        "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "timeout_seconds": 60,
+        "max_output_tokens": 2048,
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object"
+      },
+      "embedding_spec": {
+        "provider": "remote",
+        "endpoint": "https://api.siliconflow.cn/v1/embeddings",
+        "model_id": "Qwen/Qwen3-Embedding-8B",
+        "version": "pilot-remote-v1",
+        "dimension": 4096,
+        "timeout_seconds": 30
+      },
+      "model_calls_reserved": 3,
+      "tool_calls_used": 6,
+      "error_type": null,
+      "steps": [
+        {
+          "id": "search-0",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-1",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-2",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-0",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-1",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-2",
+          "status": "failed",
+          "warnings": [
+            "response_schema_invalid:extract_cited:claims:too_long"
+          ],
+          "error_type": "ValidationError"
+        },
+        {
+          "id": "verify",
+          "status": "pending",
+          "warnings": [],
+          "error_type": null
+        },
+        {
+          "id": "compose",
+          "status": "pending",
+          "warnings": [],
+          "error_type": null
+        }
+      ],
+      "retry_events": [],
+      "executed_source_sha256": {
+        "app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83",
+        "app/research/agent.py": "8d978b5b79179068015545d2a36c9404486a7c6546d125393b846b26e6aa4099",
+        "app/research/artifacts.py": "ad6f90693781de3d88051f617985b24d9d22f860a4def522a89ddafef3a636df",
+        "app/research/evidence.py": "df19e6dafa93a6568926e24638d021aa5be4658214d5227659e89a13f97db93e",
+        "app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+        "app/research/model.py": "dcfe89801f3e5abb48393a524811c7d87da9ef5da2adb6f2687f1ee6230f9ba4",
+        "app/research/protocol.py": "5473824d999a8616ebfbbce53d4e23e544f23dfae8ddada46c1b6f0fab0d8dcf",
+        "app/research/runtime.py": "7013f995e58edc47c2ad677bc1e808b275ca8c8f34de74264aedffbd441008e7",
+        "app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+        "app/research/tasks.py": "15b2a6818f65d953a8822f46b16e0c9125aa432e48655d61132789e7c2a49840",
+        "app/research/tools.py": "ce3910e087b1d5e2bb33ca3bfe26718d5b60fe1a79ab06f9f884c2f9486cd665",
+        "scripts/evaluate_research_comparison.py": "b1822789a07ca66a5f96ddd018bd4106b9b7d9a977fc0aab547375369c5666de",
+        "app/services/index_version_service.py": "40fd5f4307651f16a8ef7e50bb30584f8ee87588e545a27eadca4f585a61f12d"
+      },
+      "cached_report_sha256": "ff2d80b89c5e506bd4d8b0a9f3eb933e0972efb426d6107c19665cefe779b88e",
+      "cached_vectors_sha256": "f20d9c6e10105b330f31439227b11040d20252e13c7988fa7c2d68608121d4a4",
+      "cached_vector_file_sha256": {
+        "col_user_1__rag4_e3a8ec87.json": "9b4ca09d8832b5a79a59e395eb3387643e5f067ad07743232c2e040825dec1ac"
+      },
+      "activation_rehearsal": [
+        [
+          "version_18de24392a5400007c1ef227",
+          1
+        ],
+        [
+          "version_18de2439dbc38c846fd4e41a",
+          2
+        ],
+        [
+          "version_18de24392a5400007c1ef227",
+          3
+        ],
+        [
+          null,
+          4
+        ]
+      ],
+      "attempt": "research-citation-handles-20261013-attempt1",
+      "calls": [
+        {
+          "inputs": 4,
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 166,
+            "total_tokens": 166
+          },
+          "duration_ms": 3908
+        },
+        {
+          "inputs": 4,
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 166,
+            "total_tokens": 166
+          },
+          "duration_ms": 2383
+        },
+        {
+          "inputs": 4,
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 166,
+            "total_tokens": 166
+          },
+          "duration_ms": 16503
+        },
+        {
+          "operation": "extract_cited",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2502,
+            "completion_tokens": 372,
+            "total_tokens": 2874
+          },
+          "elapsed_ms": 24572
+        },
+        {
+          "operation": "extract_cited",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2872,
+            "completion_tokens": 375,
+            "total_tokens": 3247
+          },
+          "elapsed_ms": 13619
+        },
+        {
+          "operation": "extract_cited",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2730,
+            "completion_tokens": 469,
+            "total_tokens": 3199
+          },
+          "elapsed_ms": 10961
+        }
+      ],
+      "raw_report_sha256": "01826ac269cc1e472ca531a3e5afe79f63a113b18c894c3359c26f37a51fc422"
+    },
+    {
+      "schema": "citation-handles-continuation-v1",
+      "status": "failed",
+      "annotation_status": "machine_review_only",
+      "task_status": "failed",
+      "duration_ms": 8288,
+      "model_calls_reserved": 4,
+      "tool_calls_used": 7,
+      "steps": [
+        {
+          "id": "search-0",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-1",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-2",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-0",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-1",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-2",
+          "status": "failed",
+          "warnings": [],
+          "error_type": "ConnectTimeout"
+        },
+        {
+          "id": "verify",
+          "status": "pending",
+          "warnings": [],
+          "error_type": null
+        },
+        {
+          "id": "compose",
+          "status": "pending",
+          "warnings": [],
+          "error_type": null
+        }
+      ],
+      "max_new_model_requests": 2,
+      "retries": 0,
+      "original_claim_count": 8,
+      "original_error_warnings": [
+        "response_schema_invalid:extract_cited:claims:too_long"
+      ],
+      "claim_count": 8,
+      "source_task_sha256": "2dbe4a5760d9209858b030476c5c26667f46b1c263a9bcd787372ee737121261",
+      "executed_source_sha256": {
+        "agent.py": "8d978b5b79179068015545d2a36c9404486a7c6546d125393b846b26e6aa4099",
+        "artifacts.py": "f628cb406e7d9f7571e6c1e2193898d66899e9d386080d63b50836290af55105",
+        "evidence.py": "df19e6dafa93a6568926e24638d021aa5be4658214d5227659e89a13f97db93e",
+        "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+        "model.py": "dcfe89801f3e5abb48393a524811c7d87da9ef5da2adb6f2687f1ee6230f9ba4",
+        "protocol.py": "5473824d999a8616ebfbbce53d4e23e544f23dfae8ddada46c1b6f0fab0d8dcf",
+        "runtime.py": "7013f995e58edc47c2ad677bc1e808b275ca8c8f34de74264aedffbd441008e7",
+        "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+        "tasks.py": "15b2a6818f65d953a8822f46b16e0c9125aa432e48655d61132789e7c2a49840",
+        "tools.py": "ce3910e087b1d5e2bb33ca3bfe26718d5b60fe1a79ab06f9f884c2f9486cd665",
+        "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+      },
+      "attempt": "research-citation-handles-20261013-resume1",
+      "calls": [
+        {
+          "operation": "extract_cited",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "failed",
+          "usage": {},
+          "error_type": "ConnectTimeout",
+          "elapsed_ms": 5049
+        }
+      ],
+      "raw_report_sha256": "559b9949228524255907ec10032ac0d6c301d4e0ba89794b120f08a9ac22f11e"
+    },
+    {
+      "schema": "citation-handles-continuation-v1",
+      "status": "succeeded",
+      "annotation_status": "machine_review_only",
+      "task_status": "completed",
+      "duration_ms": 54485,
+      "model_calls_reserved": 6,
+      "tool_calls_used": 10,
+      "steps": [
+        {
+          "id": "search-0",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-1",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "search-2",
+          "status": "succeeded",
+          "warnings": [
+            "parent_budget_exceeded"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-0",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-1",
+          "status": "succeeded",
+          "warnings": [
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "analyse-2",
+          "status": "succeeded",
+          "warnings": [
+            "candidate_claim_count:5",
+            "draft_claim_rejected:method:duplicate_facet",
+            "graph_relations_are_source_backed_hypotheses"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "verify",
+          "status": "succeeded",
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "error_type": null
+        },
+        {
+          "id": "compose",
+          "status": "succeeded",
+          "warnings": [
+            "machine_review_only",
+            "cross_paper_results_not_directly_comparable"
+          ],
+          "error_type": null
+        }
+      ],
+      "max_new_model_requests": 2,
+      "retries": 1,
+      "original_claim_count": 8,
+      "original_error_warnings": [],
+      "claim_count": 12,
+      "verification": {
+        "verifier_version": "exact-source-numeric-and-model-v2",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+            "status": "supported",
+            "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+          },
+          {
+            "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+            "status": "insufficient",
+            "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+          },
+          {
+            "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+            "status": "insufficient",
+            "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+          },
+          {
+            "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+            "status": "supported",
+            "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+          },
+          {
+            "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+            "status": "supported",
+            "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+          },
+          {
+            "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+            "status": "insufficient",
+            "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+          },
+          {
+            "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+            "status": "supported",
+            "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+          },
+          {
+            "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+            "status": "insufficient",
+            "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+          },
+          {
+            "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+            "status": "insufficient",
+            "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+          },
+          {
+            "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+            "status": "insufficient",
+            "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+          },
+          {
+            "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+            "status": "supported",
+            "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+          },
+          {
+            "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+            "status": "supported",
+            "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+          }
+        ],
+        "supported": 6,
+        "total": 12,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review"
+        ]
+      },
+      "completion_status": "partial",
+      "knowledge_gaps": [
+        "dpr:dataset:uncertain",
+        "dpr:result:uncertain",
+        "fid:dataset:uncertain",
+        "fid:limitation:uncertain",
+        "realm:method:uncertain",
+        "realm:dataset:uncertain"
+      ],
+      "artifact_id": "artifact_b3f82768eb525a42722efc5c8a7882e7e9aad9091f851ca7e73ac2dca8efb681",
+      "source_task_sha256": "3b4fe16e5fc61ac8a39a002334b70ff55fa8c482ddb668439b409dfe00e92122",
+      "executed_source_sha256": {
+        "agent.py": "8d978b5b79179068015545d2a36c9404486a7c6546d125393b846b26e6aa4099",
+        "artifacts.py": "f628cb406e7d9f7571e6c1e2193898d66899e9d386080d63b50836290af55105",
+        "evidence.py": "df19e6dafa93a6568926e24638d021aa5be4658214d5227659e89a13f97db93e",
+        "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+        "model.py": "dcfe89801f3e5abb48393a524811c7d87da9ef5da2adb6f2687f1ee6230f9ba4",
+        "protocol.py": "5473824d999a8616ebfbbce53d4e23e544f23dfae8ddada46c1b6f0fab0d8dcf",
+        "runtime.py": "7013f995e58edc47c2ad677bc1e808b275ca8c8f34de74264aedffbd441008e7",
+        "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+        "tasks.py": "15b2a6818f65d953a8822f46b16e0c9125aa432e48655d61132789e7c2a49840",
+        "tools.py": "ce3910e087b1d5e2bb33ca3bfe26718d5b60fe1a79ab06f9f884c2f9486cd665",
+        "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+      },
+      "attempt": "research-citation-handles-20261013-resume2",
+      "calls": [
+        {
+          "operation": "extract_cited",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2730,
+            "completion_tokens": 655,
+            "total_tokens": 3385
+          },
+          "elapsed_ms": 19745
+        },
+        {
+          "operation": "verify",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 5812,
+            "completion_tokens": 1188,
+            "total_tokens": 7000
+          },
+          "elapsed_ms": 25248
+        }
+      ],
+      "raw_report_sha256": "dbcac00e678a2d2f26d0d302c585a23b0ec0ceaf46144f89af6b259254d68bb4"
+    }
+  ],
+  "limitations": [
+    "Bounded explicit continuations from copied SQLite; not a successful single uninterrupted run",
+    "Only query embeddings live; document vectors reused",
+    "First full run failed claims:too_long; first continuation failed ConnectTimeout; second continuation succeeded",
+    "Wire candidate bound changed after diagnosis; results are not a single-variable quality comparison",
+    "Online semantic verifier approved two insufficient REALM statements; secondary AI review demoted them",
+    "Human quality and q09/q12 improvements remain unproven"
+  ]
+}

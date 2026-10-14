@@ -1,0 +1,32 @@
+{
+  "schema": "secondary-source-audit-v1",
+  "status": "succeeded",
+  "mode": "agent_source_review_of_supplied_original_quotes",
+  "annotation_status": "machine_review_only",
+  "human_quality_gate_passed": false,
+  "extra_model_api_calls": 0,
+  "online_supported": 6,
+  "audited_supported": 4,
+  "candidate_claims": 12,
+  "rejected_claims": {
+    "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9": "The quoted table associates 38.5 and 52.0 with X=CC-News; the statement omits this experimental condition.",
+    "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21": "The quote reports both encoder and retriever benefits; it does not support differences between pre-training corpora or a need for further attribution research."
+  },
+  "input_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+  "artifact_id": "artifact_29c95ce29f691f6cd2afc88d082dd88f4580db2b34e07445b48da1834022aa98",
+  "knowledge_gaps": [
+    "dpr:dataset:uncertain",
+    "dpr:result:uncertain",
+    "fid:dataset:uncertain",
+    "fid:limitation:uncertain",
+    "realm:method:uncertain",
+    "realm:dataset:uncertain",
+    "realm:result:uncertain",
+    "realm:limitation:uncertain"
+  ],
+  "limitations": [
+    "Secondary AI review, not human gold labels or a production semantic-verifier fix",
+    "Remaining claims also require human review",
+    "Raw online model decisions retained unchanged"
+  ]
+}

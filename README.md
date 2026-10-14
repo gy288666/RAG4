@@ -1,6 +1,12 @@
 # RAG4
 
-Phase 2.16（2026-10-10）已完成 [用户重建创建配额](project/docs/rebuild_quota.md)：默认 8 个未完成任务，超限 429；幂等重放与恢复不重复占额。相关回归 **73 passed / 234.58s**，补充及认证/文档回归 **39 passed / 89.16s**；MySQL 3307 合成并发验证通过。后端收集 378 项，本轮未重跑全量、未迁移业务库或推送。
+**当前进度（2026-10-13）：Phase 1–5 的文献比较最小后端已经接通，研究质量验收仍未通过。** 新增来源图谱、混合证据、SQL 研究任务/步骤、暂停恢复取消、证据核验和可追溯比较表；默认 RAG3 保留。见 [接口及阶段边界](project/docs/research_backend_mvp.md)、[真实运行与失败修复](project/docs/research_comparison_report.md)、[部分比较表](project/backend/evaluation/results/citation_comparison_20261013.md)。20 题仍是 AI 标签草稿；有界父片回放完整证据 5/16→6/16，真实数字误判已加入独立门禁，人工质量门槛尚未通过。
+
+Phase 2.1–2.16 已提交并推送至 `476127b`，手动索引闭环保持维护。2026-10-14 GitHub 同步批次包含新增研究代码、测试、文档与公开试点结果；最新全量 **440 passed / 470.62s**，详见 [开发记录 R19](project/docs/development_process.md)。三篇论文在隔离 SQLite 完成版本切换/回滚；MySQL 3307 仅验证新增研究表和 checkpoint CAS，没有迁移业务库。可靠调度、Neo4j、正式微调和研究工作区仍未实现。引用编号协议和有界响应恢复已验证，二次 AI 来源复核表仅展示 4 条结论、8 项缺口；见 [引用修复记录](project/docs/research_citation_fix.md)。下一步聚焦条件/归属核验与范围内检索，以 [计划第 3.4 节](RAG4_DEVELOPMENT_PLAN.md) 为准。
+
+以下为已发生的分阶段记录，其中“本轮”指对应历史轮次；开发过程与当前执行安排见 [开发记录](project/docs/development_process.md)。
+
+Phase 2.16（2026-10-10）已完成 [用户重建创建配额](project/docs/rebuild_quota.md)：默认 8 个未完成任务，超限 429；幂等重放与恢复不重复占额。相关回归 **73 passed / 234.58s**，补充及认证/文档回归 **39 passed / 89.16s**；MySQL 3307 合成并发验证通过。后端收集 378 项，该轮未重跑全量或迁移业务库；代码后于 2026-10-12 推送。
 
 Phase 2.15（2026-09-26）已完成 [创建幂等键](project/docs/rebuild_idempotency.md)：同用户同键同参返回原任务，异参 409；新增 007 迁移，独立 MySQL 并发验证通过。最新相关回归 **61 passed / 106.10s**，本轮未重跑全量或迁移业务库。
 
@@ -8,7 +14,7 @@ Phase 2.15（2026-09-26）已完成 [创建幂等键](project/docs/rebuild_idemp
 
 RAG4 以证据驱动的学术 Research Agent 为目标，从 RAG3 逐步演进。`project/` 中已有可运行的 RAG3 前后端、远程/本地 Embedding 与 Reranker Adapter、按 Embedding 版本隔离的索引，以及 Embedding、Reranker、LoRA-SFT 训练入口。
 
-Phase 1 结构化 ChunkingEngine 已实现，默认仍使用 RAG3。Phase 2 已有持久化、staging 验证、用户级激活/回滚、带 checkpoint 的批量重建，以及隔离旧执行者的显式中断续接。最近后端全量 **349 passed**；MySQL 8.4.9/3307 上的真实向量复用、并发恢复及运行日志验证已通过。已增加只读迁移结构门禁和停写合成组合恢复；后台调度、增量复用、自动故障检测和完整上线验收仍待完成；Graph、ResearchAgent 和研究工作区尚未实现。路线见 [开发计划](RAG4_DEVELOPMENT_PLAN.md)，入口见 [中断恢复](project/docs/rebuild_recovery.md)。
+Phase 1/2 历史验收：结构化 ChunkingEngine、staging 验证、用户级激活/回滚、批量 checkpoint 和显式中断续接已实现；MySQL 上的向量复用及恢复演练已记录。默认仍使用 RAG3。349 passed 是旧轮次结果，当前进度和验证以上文及开发记录为准；部署与恢复入口见 [中断恢复](project/docs/rebuild_recovery.md)。
 
 基线验证与环境限制见 [RAG4_BASELINE.md](RAG4_BASELINE.md)。RAG3 项目细节见 [RAG3_PROJECT_OVERVIEW.md](RAG3_PROJECT_OVERVIEW.md)。
 

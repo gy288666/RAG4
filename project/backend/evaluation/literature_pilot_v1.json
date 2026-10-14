@@ -1,0 +1,333 @@
+{
+  "schema_version": "literature-pilot-v1",
+  "corpus_version": "open-domain-qa-papers-v1",
+  "annotation_status": "ai_draft",
+  "papers": [
+    {
+      "document_id": "dpr",
+      "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+      "url": "https://aclanthology.org/2020.emnlp-main.550/",
+      "pdf_url": "https://aclanthology.org/2020.emnlp-main.550.pdf",
+      "file_name": "dpr.pdf",
+      "sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+      "pages": 13,
+      "license": "CC-BY-4.0",
+      "license_url": "https://aclanthology.org/2020.emnlp-main.550/"
+    },
+    {
+      "document_id": "fid",
+      "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering",
+      "url": "https://aclanthology.org/2021.eacl-main.74/",
+      "pdf_url": "https://aclanthology.org/2021.eacl-main.74.pdf",
+      "file_name": "fid.pdf",
+      "sha256": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175",
+      "pages": 7,
+      "license": "CC-BY-4.0",
+      "license_url": "https://aclanthology.org/2021.eacl-main.74/"
+    },
+    {
+      "document_id": "realm",
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "url": "https://proceedings.mlr.press/v119/guu20a.html",
+      "pdf_url": "https://proceedings.mlr.press/v119/guu20a/guu20a.pdf",
+      "file_name": "realm.pdf",
+      "sha256": "653e9bf290eabefa71d08dc0b1170486336b7d9e31d832921e8305fd78f8d416",
+      "pages": 10,
+      "license": "CC-BY-4.0",
+      "license_url": "https://proceedings.mlr.press/pmlr-license-agreement.html"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q01",
+      "category": "fact",
+      "question": "DPR 的编码器网络、表示提取方式及维数是什么？",
+      "expected_answer": "两个独立 BERT-base uncased，CLS 输出 768 维。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "two independent"
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "category": "fact",
+      "question": "DPR 的最优训练方案使用哪些负样本？",
+      "expected_answer": "批内金段落复用为负例，并加入一个 BM25 负例。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "one BM25"
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "category": "fact",
+      "question": "DPR 的基本检索单元长度是多少，是否重叠？",
+      "expected_answer": "不重叠的 100 words 段落，附文章标题。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 4,
+          "anchor": "100 words"
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "category": "fact",
+      "question": "DPR 的 top-k retrieval accuracy 衡量什么？",
+      "expected_answer": "前 k 个候选包含答案跨度的题目比例。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 2,
+          "anchor": "top-k retrieval accuracy"
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "category": "fact",
+      "question": "FiD 编码阶段如何处理问题、标题和多个段落？",
+      "expected_answer": "问题、标题与每段正文拼接，各段分别编码。",
+      "evidence": [
+        {
+          "document_id": "fid",
+          "page": 3,
+          "anchor": "processed independently from other passages"
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "category": "fact",
+      "question": "FiD 初始化模型及 base/large 参数规模是什么？",
+      "expected_answer": "预训练 T5，base 220M，large 770M。",
+      "evidence": [
+        {
+          "document_id": "fid",
+          "page": 4,
+          "anchor": "220M and 770M parameters"
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "category": "fact",
+      "question": "REALM 的 salient span masking 重点掩码什么？",
+      "expected_answer": "命名实体和日期等需要世界知识的显著跨度。",
+      "evidence": [
+        {
+          "document_id": "realm",
+          "page": 5,
+          "anchor": "we mask salient spans"
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "category": "fact",
+      "question": "REALM 微调知识库候选切片长度和单位是什么？",
+      "expected_answer": "最多 288 BERT wordpieces，不是 288 个词。",
+      "evidence": [
+        {
+          "document_id": "realm",
+          "page": 6,
+          "anchor": "288 BERT"
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "category": "comparison",
+      "question": "比较 DPR 与 FiD 的编码输入，问题和段落是否拼接？",
+      "expected_answer": "DPR 独立双编码器；FiD 将问题与每段标题正文拼接并分别编码。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "two independent"
+        },
+        {
+          "document_id": "fid",
+          "page": 3,
+          "anchor": "processed independently from other passages"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "category": "comparison",
+      "question": "比较 DPR 和 REALM 学习检索器的训练信号。",
+      "expected_answer": "DPR 使用 QA 监督及批内/BM25 负例；REALM 使用无监督 MLM 信号。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "one BM25"
+        },
+        {
+          "document_id": "realm",
+          "page": 1,
+          "anchor": "masked language modeling"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "category": "comparison",
+      "question": "DPR、FiD 与 REALM 的切片长度能只按数字直接比较吗？",
+      "expected_answer": "DPR/FiD 为 100 words；REALM 为最多 288 BERT wordpieces，单位不同。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 4,
+          "anchor": "100 words"
+        },
+        {
+          "document_id": "fid",
+          "page": 4,
+          "anchor": "100 words"
+        },
+        {
+          "document_id": "realm",
+          "page": 6,
+          "anchor": "288 BERT"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "category": "comparison",
+      "question": "比较 DPR 与 REALM 的文档索引更新，区分预训练和微调。",
+      "expected_answer": "DPR 离线 FAISS；REALM 预训练异步刷新，微调固定文档编码器更新查询侧。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "using FAISS"
+        },
+        {
+          "document_id": "realm",
+          "page": 4,
+          "anchor": "asynchronously"
+        },
+        {
+          "document_id": "realm",
+          "page": 5,
+          "anchor": "query side"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "category": "comparison",
+      "question": "FiD 如何融合段落，REALM 如何表示无需外部知识？能保证 RAG4 拒答吗？",
+      "expected_answer": "FiD 在解码器融合，REALM 加空文档；工程推断：不证明 RAG4 正确拒答。",
+      "evidence": [
+        {
+          "document_id": "fid",
+          "page": 3,
+          "anchor": "decoder only"
+        },
+        {
+          "document_id": "realm",
+          "page": 5,
+          "anchor": "adding an empty null document"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "category": "comparison",
+      "question": "DPR 的 top-k 检索准确率与 FiD 的 EM 是否相同？",
+      "expected_answer": "不同，一个评价检索候选含答案跨度，另一个评价规范化答案匹配。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 2,
+          "anchor": "top-k retrieval accuracy"
+        },
+        {
+          "document_id": "fid",
+          "page": 4,
+          "anchor": "Predicted answers are evaluated"
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "category": "multihop",
+      "question": "结合三篇的切片单位，推导 RAG4 比较证据应保存哪些定位信息。",
+      "expected_answer": "工程推断：文档、页码/原文区间、切片版本及计数单位；原论文没有 RAG4 实测。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 4,
+          "anchor": "100 words"
+        },
+        {
+          "document_id": "fid",
+          "page": 4,
+          "anchor": "100 words"
+        },
+        {
+          "document_id": "realm",
+          "page": 6,
+          "anchor": "288 BERT"
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "category": "multihop",
+      "question": "结合 DPR 的训练和 FiD 的融合，证据未召回与召回后回答错误应怎样区分改进？",
+      "expected_answer": "工程推断：分别定位检索负例训练与答案融合问题，不能直接宣称 RAG4 微调有效。",
+      "evidence": [
+        {
+          "document_id": "dpr",
+          "page": 3,
+          "anchor": "one BM25"
+        },
+        {
+          "document_id": "fid",
+          "page": 3,
+          "anchor": "decoder only"
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "category": "unanswerable",
+      "question": "三方法在同一中文论文比较任务上的准确率分别是多少？",
+      "expected_answer": "固定语料没有所问共同任务实验，不能用 NQ 数值代答。",
+      "evidence": []
+    },
+    {
+      "id": "q18",
+      "category": "unanswerable",
+      "question": "用硅基流动在用户电脑重现三方法，每次请求多少钱？",
+      "expected_answer": "论文没有当前供应商计费和用户电脑测量，证据不足。",
+      "evidence": []
+    },
+    {
+      "id": "q19",
+      "category": "unanswerable",
+      "question": "在同样模型规模、候选、样本与硬件下，哪种方法显著更好？",
+      "expected_answer": "固定语料无满足全部条件的共同受控比较，不能强行排名。",
+      "evidence": []
+    },
+    {
+      "id": "q20",
+      "category": "unanswerable",
+      "question": "三论文用 Qwen3 作为读者模型时哪个方法最好？",
+      "expected_answer": "固定语料没有这个实验对象，不能补造结果。",
+      "evidence": []
+    }
+  ]
+}

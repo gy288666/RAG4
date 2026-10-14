@@ -1,0 +1,108 @@
+{
+  "schema_version": "verification-replay-v1",
+  "status": "succeeded",
+  "mode": "offline_numeric_gate_plus_recorded_model_judgments",
+  "extra_model_calls": 0,
+  "input_task_sha256": "4e2c1c21a7386f3d9b4a221e3405389bb06f150414a0241e7c8aad258e7c79ec",
+  "original_artifact_id": "artifact_625f21e7c41e53db9d853a93f88d3302038a7bae3cca4ebb3d5a0051a92a42c3",
+  "original_verifier_version": "exact-source-and-model-v1",
+  "original_supported": 4,
+  "verification": {
+    "verifier_version": "exact-source-numeric-and-model-v2",
+    "annotation_status": "machine_review_only",
+    "verdicts": [
+      {
+        "claim_id": "claim_52932df5cd51aa317b3b8e6c14aff93b3e8d26ef53a472e5b118a5fd0cbac7e3",
+        "status": "insufficient",
+        "reason": "numeric_value_not_in_quote"
+      },
+      {
+        "claim_id": "claim_8b6924c483fbd484746a5fdd33f64fddbf96cc4bd272a3abf76cd64458245d9c",
+        "status": "supported",
+        "reason": "该方法确实使用了BERT预训练模型和双编码器架构。"
+      },
+      {
+        "claim_id": "claim_bba6904107548094f5ba02d6ff89812ebc8d82781201356a612c410059537ac1",
+        "status": "insufficient",
+        "reason": "虽然提到了TREC、Natural Questions和WebQuestions等数据集，但没有明确提到SQuAD和TriviaQA。"
+      },
+      {
+        "claim_id": "claim_aa38057638e3801e85e7f76533c4bfd9dbc96362c68f242d78554f0b1d90a5d4",
+        "status": "supported",
+        "reason": "该研究确实表明DPR在四个数据集上优于之前的SOTA结果，准确率提高了1%到12%。"
+      },
+      {
+        "claim_id": "claim_d2c30142a1163f11c6ca5fe5ca62d5df00a3422090f11c87483277bb60b68ac7",
+        "status": "supported",
+        "reason": "该研究确实提到SQuAD数据集的性能较低，原因在于问题是在看到段落后由注释者编写的。"
+      },
+      {
+        "claim_id": "claim_70f41557e46ff770fc623a286ec9dcfc6415b77dbe0ecd6f967a8a44460f93e9",
+        "status": "insufficient",
+        "reason": "虽然提到了REALM使用检索增强的语言模型预训练方法，但没有具体说明是使用了检索增强的语言模型预训练方法。"
+      }
+    ],
+    "supported": 3,
+    "total": 6,
+    "warnings": [
+      "literal_numeric_values_checked_no_unit_conversion",
+      "semantic_support_is_machine_judgment_requires_human_review"
+    ]
+  },
+  "artifact_id": "artifact_f3ae8f9dc71944f5326b10935ffa7080ce82c583b08553c5e4c502d6ea04ef1a",
+  "completion_status": "partial",
+  "knowledge_gaps": [
+    "dpr:dataset:uncertain",
+    "fid:method:missing",
+    "fid:dataset:missing",
+    "fid:result:missing",
+    "fid:limitation:missing",
+    "realm:method:uncertain",
+    "realm:dataset:missing",
+    "realm:result:uncertain",
+    "realm:limitation:missing"
+  ],
+  "sources": [
+    {
+      "document_id": "dpr",
+      "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+      "url": "https://aclanthology.org/2020.emnlp-main.550/",
+      "pdf_url": "https://aclanthology.org/2020.emnlp-main.550.pdf",
+      "file_name": "dpr.pdf",
+      "sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+      "pages": 13,
+      "license": "CC-BY-4.0",
+      "license_url": "https://aclanthology.org/2020.emnlp-main.550/"
+    },
+    {
+      "document_id": "fid",
+      "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering",
+      "url": "https://aclanthology.org/2021.eacl-main.74/",
+      "pdf_url": "https://aclanthology.org/2021.eacl-main.74.pdf",
+      "file_name": "fid.pdf",
+      "sha256": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175",
+      "pages": 7,
+      "license": "CC-BY-4.0",
+      "license_url": "https://aclanthology.org/2021.eacl-main.74/"
+    },
+    {
+      "document_id": "realm",
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "url": "https://proceedings.mlr.press/v119/guu20a.html",
+      "pdf_url": "https://proceedings.mlr.press/v119/guu20a/guu20a.pdf",
+      "file_name": "realm.pdf",
+      "sha256": "653e9bf290eabefa71d08dc0b1170486336b7d9e31d832921e8305fd78f8d416",
+      "pages": 10,
+      "license": "CC-BY-4.0",
+      "license_url": "https://proceedings.mlr.press/pmlr-license-agreement.html"
+    }
+  ],
+  "limitations": [
+    "Reuses original semantic judgments; no independent support audit",
+    "Human quality gate not passed"
+  ],
+  "executed_source_sha256": {
+    "replay_research_verification.py": "cbe491ab409ee03741305632bb9c06397d61468890f9e599e0130d5562409861",
+    "artifacts.py": "b4fe517782e09fc897ce1b90f765a5d8ad3ad5e136de96adc7ccef6c4baec9e5"
+  }
+}

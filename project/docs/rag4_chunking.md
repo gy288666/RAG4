@@ -64,13 +64,15 @@ RAG4_PARENT_MAX_TOKENS=1024
 
 设 `DOCUMENT_CHUNKING_ENGINE=rag4` 并重启后，新上传使用 RAG4；当前上传路径使用字符 fallback。两个 RAG4 budget 独立于后台 RAG3 的 chunk_size/overlap。恢复为 rag3 并重启即可让后续上传回到原算法，无数据库迁移。非法配置会明确失败；父预算必须不小于子预算。
 
-上传只将 child chunks 向量化，RAG4 使用新 chunk_id；默认 RAG3 保留 `doc_id:chunk_index`。VectorRecord 增加可选 chunking_version、chunk_set_id、chunk_metadata_json，复杂结构存成 JSON 字符串满足 Chroma 标量限制。两种向量后端都将其还原到 RetrievedChunk.extra.chunking；旧引用 page 使用 page_start，chunk_index/SSE 契约不变。父片完整内容当前只存在 ChunkSet 返回值中，尚未持久化或提供父片查询 API。
+上传只将 child chunks 向量化，RAG4 使用新 chunk_id；默认 RAG3 保留 `doc_id:chunk_index`。VectorRecord 增加可选 chunking_version、chunk_set_id、chunk_metadata_json，复杂结构存成 JSON 字符串满足 Chroma 标量限制。两种向量后端都将其还原到 RetrievedChunk.extra.chunking；旧引用 page 使用 page_start，chunk_index/SSE 契约不变。Phase 1 上传路径的父片只存在返回值中；后续 Phase 2 的独立准备任务已将完整父子 ChunkSet 持久化，可通过 `index_job_service.load_chunk_set` 读取。尚无独立父片 HTTP 查询接口，不应将这两条路径混为一谈。
 
 ready 文档调用 process_document 会直接返回，不因开关变化被重写。Embedding 数量不匹配在写入前失败；切分失败记为 failed 并保留既有其他文档索引。错误和耗时记录在 `usage_logs.document_chunking`；引擎日志包含 document/version/tokenizer/chunk_set/片数/elapsed_ms。日志不打印正文。失败不会删除旧版本数据。
 
-**本开关不是索引版本激活/回滚。** 现有 Collection 仅隔离 Embedding 版本；不要用上传函数对历史同一文档构造多份切分版本。现有向量写入没有跨 SQL/Chroma 事务，中途写入失败的新文档可能留下部分记录，失败重试也没有 generation 级清理；完整 staging、可见性门禁和原子发布属于 Phase 2，不能以本功能宣称已经实现。
+**本开关不是索引版本激活/回滚。** 此处描述 Phase 1 上传路径：Collection 按 Embedding 版本隔离，不能用上传函数对历史同一文档构造多份切分版本；没有跨 SQL/Chroma 事务，中途写入失败可能留下部分记录。后续 Phase 2 已另行实现 staging 验证、active 指针及回滚，入口见 [索引重建](index_rebuild.md)；这些能力不能由切换上传开关代替。
 
 ## Phase 2 前置条件
+
+以下是 Phase 1 交接时的历史要求，相关存储、验证、显式激活和合成恢复已在 Phase 2 实现。当前执行安排以 [开发计划第 3.4 节](../../RAG4_DEVELOPMENT_PLAN.md) 为准，不重复建设这些接口。
 
 1. 设计增量 schema：不可变 ChunkSet/父片快照、document_index_jobs、active version，明确 user/document/version 组合和并发幂等键。
 2. 冻结 parser/chunking/tokenizer/embedding 版本组合，独立 staging collection 写入；校验 ChunkSet 来源与 hash、child 数量、向量维度及元数据完整性。

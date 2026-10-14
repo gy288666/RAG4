@@ -1,0 +1,32 @@
+{
+  "schema": "research-final-regression-v1",
+  "date": "2026-10-13",
+  "environment": "rag4-py3.11, Windows, backend",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "passed": 432,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 500.17,
+  "code_sha256": {
+    "project/backend/app/research/agent.py": "8d978b5b79179068015545d2a36c9404486a7c6546d125393b846b26e6aa4099",
+    "project/backend/app/research/artifacts.py": "b4fe517782e09fc897ce1b90f765a5d8ad3ad5e136de96adc7ccef6c4baec9e5",
+    "project/backend/app/research/evidence.py": "df19e6dafa93a6568926e24638d021aa5be4658214d5227659e89a13f97db93e",
+    "project/backend/app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+    "project/backend/app/research/model.py": "aca7689525814cb93ca6a8042c52b5a08ce119f16235443b05340bafa3ad1fae",
+    "project/backend/app/research/runtime.py": "7013f995e58edc47c2ad677bc1e808b275ca8c8f34de74264aedffbd441008e7",
+    "project/backend/app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+    "project/backend/app/research/tasks.py": "15b2a6818f65d953a8822f46b16e0c9125aa432e48655d61132789e7c2a49840",
+    "project/backend/app/research/tools.py": "2d26e09723978a0183e0de21630a56b79e5b2f7df80a82fb91b2545c17c6890e",
+    "project/backend/app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83",
+    "project/backend/app/models/research_task.py": "ad1aa112690fa14742ba5647753afaf2d20fccfa7afe7b04729bbdb0dedb247d",
+    "project/backend/app/api/v1/research.py": "0195a035f0e768e712ecf1f38c4134ee3c2cacef04632f0d22f3c5b31531087c",
+    "project/backend/app/services/index_version_service.py": "40fd5f4307651f16a8ef7e50bb30584f8ee87588e545a27eadca4f585a61f12d",
+    "project/backend/tests/test_research_agent.py": "28593e18de913ae4b1cdd7ed7675fdeccb15ac926a727814011bff1a1e4e2e51",
+    "project/backend/tests/test_research_evidence.py": "99d58dbd8ee9560ba1ae571c29825fc52ff2b830c3f63d06ec4c2318d36ac2e9",
+    "project/backend/tests/test_research_runtime.py": "fab9e2fe62dd7e05b814b16d47d83ebbc4966114c01c04673c205f89b1d334b3",
+    "project/docs/migrations/008_research_tasks.sql": "89621ca429e90d1af76c696f72572ff6dd063fb51a7e15c46e39910c6a10983c"
+  },
+  "scope": "functional regression, not human research-quality gate",
+  "business_database_modified": false,
+  "committed_or_pushed": false
+}
