@@ -11,7 +11,7 @@ import unicodedata
 from decimal import Decimal
 from typing import Literal, Protocol
 
-from pydantic import Field
+from pydantic import Field, model_serializer
 
 from app.chunking.models import Identifier, Snapshot, SourceLocator, SourceSpan, content_id
 from .evidence import EvidenceBundle, EvidenceCorpus
@@ -82,13 +82,121 @@ class Judgment(Snapshot):
     verdicts: tuple[Verdict, ...] = Field(max_length=20)
 
 
+class SourceCheck(Snapshot):
+    """A model judgment with an independently checked literal support excerpt."""
+    status: Literal["supported", "contradicted", "insufficient"]
+    reason: str = Field(min_length=1, max_length=200)
+    support_quote: str = Field(max_length=1600)
+    support_ids: tuple[Identifier, ...] = Field(default=(), max_length=4)
+
+    @model_serializer(mode="wrap")
+    def preserve_quote_protocol(self, handler):
+        payload = handler(self)
+        if not self.support_ids:
+            payload.pop("support_ids", None)
+        return payload
+
+
+class ClaimAssessment(Snapshot):
+    claim_id: Identifier
+    attribution: SourceCheck
+    conditions: SourceCheck
+    entailment: SourceCheck
+
+    def verdict(self, claim):
+        failures = []
+        contradicted = False
+        for name in ("attribution", "conditions", "entailment"):
+            check = getattr(self, name)
+            grounded = bool(check.support_quote.strip()) and check.support_quote in claim.citation.quote
+            if check.support_ids:
+                grounded = grounded and resolve_support(claim, check.support_ids) == check.support_quote
+            if check.status != "supported" or not grounded:
+                failures.append(name + ":" + (check.reason if grounded or check.status == "insufficient" else "support_excerpt_not_in_quote"))
+                contradicted |= grounded and check.status == "contradicted"
+        return Verdict(claim_id=self.claim_id,
+            status=("contradicted" if contradicted else "insufficient") if failures else "supported",
+            reason="; ".join(failures)[:400] if failures else "all_source_checks_supported")
+
+
+class CheckedJudgment(Snapshot):
+    assessments: tuple[ClaimAssessment, ...] = Field(max_length=20)
+
+
+def verification_sources(claim):
+    """Disjoint exact quote windows; IDs bind claim, citation and local offsets.
+
+    No additional retrieval or normalized text. Keep table line groups intact
+    where possible, preferring paragraph boundaries over arbitrary character cuts.
+    """
+    sources, start, text = [], 0, claim.citation.quote
+    while start < len(text):
+        end = min(start + 800, len(text))
+        if end < len(text):
+            breaks = [m.end() for m in re.finditer(r"\n\s*\n|[.!?。！？](?:\s+|$)", text[start:end])]
+            if breaks and breaks[-1] >= 400:
+                end = start + breaks[-1]
+        identity = content_id("support_", {"protocol": "source-handles-v4", "claim_id": claim.claim_id,
+            "citation": claim.citation.model_dump(mode="json"), "start": start, "end": end})
+        sources.append({"source_id": identity, "start": start, "end": end, "text": text[start:end]})
+        start = end
+    return tuple(sources)
+
+
+def resolve_support(claim, support_ids):
+    """Resolve an enclosing original interval; never concatenate distant quotes."""
+    catalog = {s["source_id"]: s for s in verification_sources(claim)}
+    if not support_ids or len(set(support_ids)) != len(support_ids) or any(i not in catalog for i in support_ids):
+        return None
+    start = min(catalog[i]["start"] for i in support_ids)
+    end = max(catalog[i]["end"] for i in support_ids)
+    return claim.citation.quote[start:end] if end - start <= 1600 else None
+
+
+class HandleCheck(Snapshot):
+    status: Literal["supported", "contradicted", "insufficient"]
+    reason: str = Field(min_length=1, max_length=200)
+    support_ids: tuple[Identifier, ...] = Field(max_length=4)
+
+    def resolve(self, claim):
+        text = resolve_support(claim, self.support_ids)
+        if text is None:
+            reason = "no_support_selected" if not self.support_ids else "unknown_support_id_or_invalid_span"
+            return SourceCheck(status="insufficient", reason=(reason + ": " + self.reason)[:200],
+                support_quote="", support_ids=self.support_ids)
+        return SourceCheck(status=self.status, reason=self.reason, support_quote=text, support_ids=self.support_ids)
+
+
+class HandleAssessment(Snapshot):
+    claim_id: Identifier
+    attribution: HandleCheck
+    conditions: HandleCheck
+    entailment: HandleCheck
+
+    def resolve(self, claim):
+        return ClaimAssessment(claim_id=self.claim_id, **{name: getattr(self, name).resolve(claim)
+            for name in ("attribution", "conditions", "entailment")})
+
+
+class HandleJudgment(Snapshot):
+    assessments: tuple[HandleAssessment, ...] = Field(max_length=20)
+
+
 class VerificationReport(Snapshot):
-    verifier_version: Literal["exact-source-and-model-v1", "exact-source-numeric-and-model-v2"] = "exact-source-numeric-and-model-v2"
+    verifier_version: Literal["exact-source-and-model-v1", "exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4"] = "exact-source-numeric-and-model-v2"
     annotation_status: Literal["machine_review_only"] = "machine_review_only"
     verdicts: tuple[Verdict, ...]
     supported: int
     total: int
     warnings: tuple[str, ...] = ()
+    assessments: tuple[ClaimAssessment, ...] = ()
+
+    @model_serializer(mode="wrap")
+    def preserve_historical_wire_format(self, handler):
+        payload = handler(self)
+        if self.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+            payload.pop("assessments", None)
+        return payload
 
 
 def _quote_matches(text: str, quote: str):
@@ -215,7 +323,12 @@ class EvidenceVerifier:
     def verify(self, corpus: EvidenceCorpus, claims: tuple[Claim, ...]) -> VerificationReport:
         if len(claims) > 20 or len({c.claim_id for c in claims}) != len(claims):
             raise ValueError("Invalid verification scope")
-        valid, invalid = [], []
+        protocol = getattr(self.model, "verification_protocol", "numeric-model-v2")
+        if protocol not in {"numeric-model-v2", "source-checks-v3", "source-handles-v4"}:
+            raise ValueError("Unknown verification protocol")
+        handles = protocol == "source-handles-v4"
+        checked = protocol in {"source-checks-v3", "source-handles-v4"}
+        valid, invalid, assessments = [], [], ()
         for claim in claims:
             try:
                 claim.citation.validate_source(corpus, claim.document_id)
@@ -228,9 +341,28 @@ class EvidenceVerifier:
             except ValueError:
                 invalid.append(Verdict(claim_id=claim.claim_id, status="insufficient", reason="source_integrity_failed"))
         if valid:
-            judged = validate_response(Judgment, self.model.generate("verify", {"claims": [
+            payload = {"claims": [
                 {"claim_id": c.claim_id, "statement": c.statement, "quote": c.citation.quote,
-                 "context": corpus.chunks[c.citation.chunk_id].text} for c in valid]}), "verify")
+                 "document_id": c.document_id, "facet": c.facet,
+                 "source_uri": corpus.chunks[c.citation.chunk_id].source_locator.source.uri,
+                 "section_path": corpus.chunks[c.citation.chunk_id].section_path,
+                 "context": corpus.chunks[c.citation.chunk_id].text} for c in valid]}
+            if checked:
+                claims_by_id = {c.claim_id: c for c in valid}
+                operation = "verify_handles" if handles else "verify_checked"
+                if handles:
+                    for item in payload["claims"]:
+                        item["sources"] = verification_sources(claims_by_id[item["claim_id"]])
+                        del item["quote"]  # One authoritative source catalog, no copied quote required.
+                assessments = validate_response(HandleJudgment if handles else CheckedJudgment,
+                    self.model.generate(operation, payload), operation).assessments
+                if len({a.claim_id for a in assessments}) != len(assessments) or any(a.claim_id not in claims_by_id for a in assessments):
+                    raise ValueError("Judge returned duplicate or unknown claim IDs")
+                if handles:
+                    assessments = tuple(a.resolve(claims_by_id[a.claim_id]) for a in assessments)
+                judged = Judgment(verdicts=tuple(a.verdict(claims_by_id[a.claim_id]) for a in assessments))
+            else:
+                judged = validate_response(Judgment, self.model.generate("verify", payload), "verify")
             ids = {c.claim_id for c in valid}
             if len({v.claim_id for v in judged.verdicts}) != len(judged.verdicts) or any(v.claim_id not in ids for v in judged.verdicts):
                 raise ValueError("Judge returned duplicate or unknown claim IDs")
@@ -239,7 +371,8 @@ class EvidenceVerifier:
                 status="insufficient", reason="judge_did_not_verify_claim")) for c in valid]
         else:
             verdicts = invalid
-        return VerificationReport(verdicts=tuple(verdicts), supported=sum(v.status == "supported" for v in verdicts),
+        return VerificationReport(verifier_version="exact-source-handles-v4" if handles else "exact-source-checks-v3" if checked else "exact-source-numeric-and-model-v2",
+            assessments=assessments, verdicts=tuple(verdicts), supported=sum(v.status == "supported" for v in verdicts),
             total=len(claims), warnings=("literal_numeric_values_checked_no_unit_conversion",
                 "semantic_support_is_machine_judgment_requires_human_review"))
 
@@ -309,7 +442,10 @@ class ComparisonArtifact(Snapshot):
         if self.composer_version == "comparison-table-v1":
             excluded.add("completion_status")
             excluded.add("citation_sources")
-        return content_id("artifact_", self.model_dump(mode="json", exclude=excluded))
+        payload = self.model_dump(mode="json", exclude=excluded)
+        if self.verification.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+            payload["verification"].pop("assessments", None)
+        return content_id("artifact_", payload)
 
 
 def _escape(text):
@@ -324,13 +460,24 @@ class ArtifactComposer:
     """
     def compose(self, corpus, goal, document_ids, titles, claims, verification):
         corpus.require_scope(corpus.user_id, document_ids)
-        if verification.verifier_version != "exact-source-numeric-and-model-v2":
+        if verification.verifier_version not in {"exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4"}:
             raise ValueError("Historical verifier results must be reverified before composing a new artifact")
         verdicts = {v.claim_id: v for v in verification.verdicts}
         if len(verdicts) != len(verification.verdicts) or set(verdicts) != {c.claim_id for c in claims}:
             raise ValueError("Verification does not cover exactly the supplied claims")
         if verification.total != len(claims) or verification.supported != sum(v.status == "supported" for v in verdicts.values()):
             raise ValueError("Verification counters mismatch")
+        if verification.verifier_version in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+            assessments = {a.claim_id: a for a in verification.assessments}
+            if len(assessments) != len(verification.assessments) or not set(assessments) <= set(verdicts):
+                raise ValueError("Invalid verification assessments")
+            for claim in claims:
+                assessment = assessments.get(claim.claim_id)
+                if verdicts[claim.claim_id].status == "supported" and (assessment is None or assessment.verdict(claim).status != "supported"):
+                    raise ValueError("Supported claim failed source checks")
+                if verification.verifier_version == "exact-source-handles-v4" and verdicts[claim.claim_id].status == "supported":
+                    if any(not getattr(assessment, name).support_ids for name in ("attribution", "conditions", "entailment")):
+                        raise ValueError("Supported claim missing source handles")
         for c in claims:
             c.citation.validate_source(corpus, c.document_id)
             if c.document_id not in document_ids or c.claim_id != c.expected_id(corpus.corpus_id):

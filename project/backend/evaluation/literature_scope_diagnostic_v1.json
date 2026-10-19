@@ -1,0 +1,8 @@
+{
+  "version": "question-explicit-documents-v1",
+  "basis": "Manually read document names in question text only; not inferred from evidence labels or expected answers.",
+  "document_scopes": {
+    "q09": ["dpr", "fid"],
+    "q12": ["dpr", "realm"]
+  }
+}

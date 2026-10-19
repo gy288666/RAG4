@@ -97,3 +97,21 @@ MySQL 8.4.9/3307 隔离库验证新增 DDL、中文 payload 往返和 stale-revi
 新增 source-handles-v2：新 HTTP 研究任务默认使用来源区间编号，历史 CompletionSpec 缺省仍为 literal-quote-v1。JSON 输出由 response_format 显式选择（HTTP 默认 text，试点明确 json_object）；不做静默兼容降级。引用目录连续、不重叠、不扩大已选上下文；接收最多八条候选，输出仍最多四个 facet，并记录重复/超量诊断。新增 protocol.py 和 test_research_citations.py；诊断脚本仅用于离线 AI 锚点，不作为生产检索策略。
 
 真实 checkpoint 有界续接成功；在线 6/12 机器支持，二次 AI 来源审阅又撤下两条 REALM，最终部分表 4 条、8 缺口。这不是人工审核或生产语义核验修复。q09/q12 仍未改善。详见 [引用修复记录](research_citation_fix.md) 与 [当前部分表](../backend/evaluation/results/citation_comparison_20261013.md)。本页前面的 R19 数字/实验为历史记录，最新全量 440 passed / 470.62s。
+
+
+## 2026-10-14：显式逐项核验候选
+
+创建研究任务时可传 `verification_protocol: "source-checks-v3"`，冻结于 CompletionSpec；缺省和历史任务均为 `numeric-model-v2`。新报告 exact-source-checks-v3 保存每条结论的 attribution、conditions、entailment，每项有 status/reason/support_quote，所有支持项须通过精确原文检查；ArtifactComposer 重查分项，历史产物身份保持兼容。
+
+新协议尚未达到默认切换门槛：真实诊断六条全部拒绝，包含引文抄写误拒与残余语义误判；相关协议/任务/存储回归 46 项通过不代表语义质量通过。可用独立回放脚本保存新结果，不修改原任务。详见 [逐项核验记录](research_source_checks.md) 和 [开发记录 R22](development_process.md)。
+
+最终全量回归：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**451 passed / 494.48s**，无失败、无跳过。编译检查与差异空白检查通过。测试通过不代表上述真实语义质量门槛通过。
+
+
+## 2026-10-14：来源编号核验候选
+
+任务创建可显式选择 verification_protocol=source-handles-v4。模型返回三项检查的 support_ids，服务端在结论自己的引用目录中还原并保存 support_quote；成品阶段重验编号/文本映射。未知/重复/跨结论编号与空选择不能发布支持结论。既有 v2/v3 保留兼容，默认仍为 v2。
+
+六条诊断子集不再发生引文抄写失败，但只一条获机器支持，完整十二条请求超时；q09/q12 的显式文档范围过滤也没有改善锚点覆盖。故不切换默认，不宣称完成语义质量或检索验收。详见 [来源编号与范围对照](research_verification_handles.md)。
+
+最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**466 passed / 521.87s**，无失败或跳过。本轮新增 15 项回归覆盖（含 API 参数化新增两项）。编译、差异空白、公开结果 JSON 和凭据模式检查通过；语义质量门槛仍未通过。

@@ -87,11 +87,15 @@ def test_wrong_credentials_endpoint_or_disabled_owner_cannot_execute(published, 
     assert disabled.status == "failed" and not disabled.claims
 
 
-def test_create_api_and_step_use_frozen_owned_version(client, user_headers, published, storage):
+@pytest.mark.parametrize("protocol", ["numeric-model-v2", "source-handles-v4"])
+def test_create_api_and_step_use_frozen_owned_version(client, user_headers, published, storage, protocol):
     owner, task, version, _ = published
     body = {"index_version_id": version.id, "document_ids": [s.document_id for s in task.sources], "goal": "比较文献"}
+    if protocol != "numeric-model-v2":
+        body["verification_protocol"] = protocol
     created = client.post("/api/v1/research-tasks", headers=user_headers, json=body)
     assert created.status_code == 200, created.json()
+    assert created.json()["data"]["completion"]["verification_protocol"] == protocol
     task_id = created.json()["data"]["id"]
     step = client.post(f"/api/v1/research-tasks/{task_id}/run", headers=user_headers)
     assert step.status_code == 200 and step.json()["data"]["steps"][0]["status"] == "succeeded"

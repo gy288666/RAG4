@@ -27,6 +27,7 @@ class CreateRequest(BaseModel):
     budget: TaskBudget = Field(default_factory=TaskBudget)
     extraction_protocol: Literal["literal-quote-v1", "source-handles-v2"] = "source-handles-v2"
     response_format: Literal["text", "json_object"] = "text"
+    verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4"] = "numeric-model-v2"
 
 
 class ControlRequest(BaseModel):
@@ -52,7 +53,7 @@ def create(body: CreateRequest, user: User = Depends(get_current_user), db: Sess
     return _handle(lambda: create_task(user.id, body.index_version_id, body.document_ids, body.goal,
         budget=body.budget, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
             model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
-            response_format=body.response_format)).model_dump(mode="json"))
+            response_format=body.response_format, verification_protocol=body.verification_protocol)).model_dump(mode="json"))
 
 
 @router.get("", summary="查询自己的研究任务")

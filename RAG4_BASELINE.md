@@ -413,3 +413,25 @@ python scripts/evaluate_literature.py --pilot evaluation/literature_pilot_v1.jso
 在线 12 候选中机器通过 6；二次 AI 来源复核发现两条 REALM 条件/支持不足，展示版撤下，仅 4 条、8 缺口；不是人工质量验收或生产语义 verifier 自动修复。q09 为预算不足，q12 为候选召回缺口，没有伪装成改善。新增文件、接口配置和结果见 [修复记录](project/docs/research_citation_fix.md)。
 
 最终 backend `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**440 passed / 470.62s**，无失败/跳过。此前 432 项为 R19 历史结果。无新依赖、业务库迁移/配置/active 改动，无前端/训练或 GitHub 推送。继续优先条件/归属核验与范围内检索。
+
+
+## 2026-10-14：Phase 1–5 质量优化候选
+
+本轮复用既有结构化切片、冻结索引和研究任务，新增 SourceCheck / ClaimAssessment / CheckedJudgment，显式可选的 source-checks-v3 核验协议，以及产物生成前的逐项复查。模型逐项报告来源归属、实验条件、完整语义和原文支持片段；未知/重复 claim_id、缺项或不受来源支持的片段不能直接变成发布结论。历史任务默认 numeric-model-v2，历史报告序列化及真实产物身份保持兼容。没有新增依赖或业务库迁移。
+
+新增脚本 scripts/reverify_research_claims.py 在新目录中复制 SQLite 并验证冻结来源，最多一次模型请求，可指定结论子集。两次实际实验共 2 请求、1 ReadTimeout、5811 已报 Token，费用及失败用量未知。第二轮六条旧 supported 结论全部被拒，其中存在引文抄写导致的误拒，REALM 的语义误判仍在模型分项中出现。未证明质量提高，新协议不作为默认，不替换旧展示表。账本为 project/backend/evaluation/results/source_checks_20261014.json。
+
+相关回归命令：`python -m pytest tests/test_research_verification_checks.py tests/test_research_agent.py tests/test_research_citations.py tests/test_research_runtime.py -o addopts='' -q --tb=short --show-capture=no`，结果 **46 passed / 30.84s**。新增 11 项测试覆盖契约、历史真实身份和失败保护；不能用测试替身的成功证明语义准确率。完整说明见 [逐项核验记录](project/docs/research_source_checks.md)。
+
+最终全量回归：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**451 passed / 494.48s**，无失败、无跳过。编译检查与差异空白检查通过。测试通过不代表上述真实语义质量门槛通过。
+
+
+## 2026-10-14：核验来源编号与范围对照
+
+继续上一轮未提交开发，新增 source-handles-v4 / exact-source-handles-v4：verification_sources、resolve_support、HandleCheck/HandleAssessment/HandleJudgment，模型选择编号，服务端还原原文；空、重复、跨结论、未知或超长区间不支持发布。SourceCheck 保存 support_ids 与 support_quote，ArtifactComposer 重建编号映射；旧 v2 产物身份和 v3 报告序列化继续回归验证。默认仍为 numeric-model-v2。
+
+实际两次模型请求：六条旧 supported 子集一次成功，1 supported / 5 insufficient，无引文抄写校验失败；全部十二条一次 ReadTimeout。合计 6156 已报 Token，失败用量及货币费用未知，不通过人工质量门槛。另以题目明确论文范围过滤冻结 Top-10、6000 字符预算，q09 仍 1/2、q12 仍 2/3 锚点覆盖，零额外模型调用。来源编号修复与语义/召回不足分别记录，不以全拒绝宣称准确。
+
+修改研究模型/核验/API/协议诊断、复核脚本和 runtime 测试；新增编号与范围测试、evaluate_evidence_scope.py、明确范围配置和公开结果账本；无新依赖、业务库迁移或生产检索改动。详见 [来源编号与检索对照](project/docs/research_verification_handles.md)。
+
+最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**466 passed / 521.87s**，无失败或跳过。本轮新增 15 项回归覆盖（含 API 参数化新增两项）。编译、差异空白、公开结果 JSON 和凭据模式检查通过；语义质量门槛仍未通过。

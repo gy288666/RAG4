@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-14",
+  "working_directory": "project/backend",
+  "environment": "rag4-py3.11",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "result": "466 passed in 521.87s (0:08:41)",
+  "passed": 466,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 521.87,
+  "new_regression_cases": 15,
+  "initial_result": "3 failed in 5.49s",
+  "preliminary_targeted_result": "32 passed in 28.12s before API parameterization",
+  "quality_gate_passed": false,
+  "source_sha256": {
+    "app/research/artifacts.py": "ed534ebcabeafd90d99a15ee83fb23ff3ce56ddfe30b7f6921083d238db4ef54",
+    "app/research/model.py": "29ece60c63f58bcd1e0c82f65812be1ed36e0eda94be600fd7b4780e2aed078b",
+    "app/research/protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+    "app/api/v1/research.py": "98a2a7a678f52270f06934e9407eff66c73c944de0a83a80767a927d9ea05a0f",
+    "scripts/reverify_research_claims.py": "7bf4e35514776b50fb87972184998142d2fffde8485ad14ef5195f7ac8b5427d",
+    "scripts/evaluate_evidence_scope.py": "32ccff6fe04e2d3749e0ef4f157a93f8f6f43fdae4557de6f66c9f81d2b6f065",
+    "tests/test_verification_handles.py": "c3ad15b2f1337115ac6f40854545f1f598194dcd8440939dc001fe5e1184b145",
+    "tests/test_evidence_scope_replay.py": "525e03e7c8a674ce7e1ae3a03c88254f431024b4f6331897290020d185025fa7",
+    "tests/test_research_runtime.py": "b9478f960e4d1b4b09a94548481cc5e4b6a35f24e4adcd6483dc8c691a4e6683"
+  }
+}

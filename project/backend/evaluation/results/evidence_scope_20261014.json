@@ -1,0 +1,165 @@
+{
+  "schema": "evidence-scope-replay-v1",
+  "annotation_status": "ai_draft",
+  "quality_gate_passed": false,
+  "extra_model_calls": 0,
+  "max_context_chars": 6000,
+  "max_items": 10,
+  "retrieval_report_sha256": "ff2d80b89c5e506bd4d8b0a9f3eb933e0972efb426d6107c19665cefe779b88e",
+  "scope_input": {
+    "version": "question-explicit-documents-v1",
+    "basis": "Manually read document names in question text only; not inferred from evidence labels or expected answers.",
+    "document_scopes": {
+      "q09": [
+        "dpr",
+        "fid"
+      ],
+      "q12": [
+        "dpr",
+        "realm"
+      ]
+    }
+  },
+  "scope_sha256": "80db9eaca79554a5730af4a4cbeb0c14c8aa64ad7dc4f5b880411d3ab063890e",
+  "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+  "rows": [
+    {
+      "question_id": "q09",
+      "variant": "all_documents",
+      "document_ids": [
+        "dpr",
+        "fid",
+        "realm"
+      ],
+      "covered_anchors": 1,
+      "total_anchors": 2,
+      "coverage": [
+        false,
+        true
+      ],
+      "context_chars": 5917,
+      "bundle_id": "bundle_e505b4418f526954304c59b81cdb3c7a6cd95250f3da30604b74f6b29e4c351d",
+      "chunk_ids": [
+        "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+        "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+        "chunk_5c710c48fd48d05aee053fe5eae38c7d78a3819ebc0f9f92bcfed3b021afc9a5",
+        "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+        "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+        "chunk_45159b7f28297c64072a995f1dbeb60f930714142c24673e8c575d130ad089ea",
+        "chunk_22ccae1ac2605817e4bb575245654bfb6b17ef52b1476e1aa5fb668e4b38d79f",
+        "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+        "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+        "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7"
+      ],
+      "warnings": [
+        "no_context_for_document:realm",
+        "parent_budget_exceeded"
+      ]
+    },
+    {
+      "question_id": "q09",
+      "variant": "explicit_scope",
+      "document_ids": [
+        "dpr",
+        "fid"
+      ],
+      "covered_anchors": 1,
+      "total_anchors": 2,
+      "coverage": [
+        false,
+        true
+      ],
+      "context_chars": 5917,
+      "bundle_id": "bundle_d283506f66d56529994473555b9edbfbdb230fd82ff6f6e412cde6b4796baf22",
+      "chunk_ids": [
+        "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+        "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+        "chunk_5c710c48fd48d05aee053fe5eae38c7d78a3819ebc0f9f92bcfed3b021afc9a5",
+        "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+        "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+        "chunk_45159b7f28297c64072a995f1dbeb60f930714142c24673e8c575d130ad089ea",
+        "chunk_22ccae1ac2605817e4bb575245654bfb6b17ef52b1476e1aa5fb668e4b38d79f",
+        "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+        "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+        "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7"
+      ],
+      "warnings": [
+        "parent_budget_exceeded"
+      ]
+    },
+    {
+      "question_id": "q12",
+      "variant": "all_documents",
+      "document_ids": [
+        "dpr",
+        "fid",
+        "realm"
+      ],
+      "covered_anchors": 2,
+      "total_anchors": 3,
+      "coverage": [
+        false,
+        true,
+        true
+      ],
+      "context_chars": 5950,
+      "bundle_id": "bundle_c0ef5340e39fafeee8293c5fdf2707db64240d75543aa382b06684ece593653c",
+      "chunk_ids": [
+        "chunk_07616150f674daa97c40599f018252e49d8e24a0de0b7eda33f0bb6eb8388378",
+        "chunk_33000d28e65b997054620c04d8f98d2f2ee37187e8d27f591d181b85e2680ebe",
+        "chunk_64b8b8bcd5ca68abb7394fca520c83f6b14aa33edb8c5c1ddb90be3dffe4f54b",
+        "chunk_9568be0d82313df5a7d0974c621a1478e43fa6f09bcda9045251d8c7aec77d83",
+        "chunk_5ccd12dc5ce8d73a640e4ee0f1ed74459a910645e6a0c2494c49dd4c7dbd6d14",
+        "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+        "chunk_f22276551dc35706e60f398953d902355ceaecb20ff4985718a3537354dc7761",
+        "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+        "chunk_bb03c251825216f60b6815ee2fdd59e4be8aa63c802f762bf35c40e178be961d"
+      ],
+      "warnings": [
+        "no_context_for_document:fid",
+        "parent_budget_exceeded"
+      ]
+    },
+    {
+      "question_id": "q12",
+      "variant": "explicit_scope",
+      "document_ids": [
+        "dpr",
+        "realm"
+      ],
+      "covered_anchors": 2,
+      "total_anchors": 3,
+      "coverage": [
+        false,
+        true,
+        true
+      ],
+      "context_chars": 5950,
+      "bundle_id": "bundle_8690f4fe978d56d20e81e86ade5a4a1b56b97fa90dd9973e6410a240188a098a",
+      "chunk_ids": [
+        "chunk_07616150f674daa97c40599f018252e49d8e24a0de0b7eda33f0bb6eb8388378",
+        "chunk_33000d28e65b997054620c04d8f98d2f2ee37187e8d27f591d181b85e2680ebe",
+        "chunk_64b8b8bcd5ca68abb7394fca520c83f6b14aa33edb8c5c1ddb90be3dffe4f54b",
+        "chunk_9568be0d82313df5a7d0974c621a1478e43fa6f09bcda9045251d8c7aec77d83",
+        "chunk_5ccd12dc5ce8d73a640e4ee0f1ed74459a910645e6a0c2494c49dd4c7dbd6d14",
+        "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+        "chunk_f22276551dc35706e60f398953d902355ceaecb20ff4985718a3537354dc7761",
+        "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+        "chunk_bb03c251825216f60b6815ee2fdd59e4be8aa63c802f762bf35c40e178be961d"
+      ],
+      "warnings": [
+        "parent_budget_exceeded"
+      ]
+    }
+  ],
+  "limitations": [
+    "Filtered frozen top-10 only, no refill or new query embeddings",
+    "Maximum budgets equal; actual context lengths can differ",
+    "AI anchor coverage is not semantic correctness or end-to-end quality"
+  ],
+  "code_sha256": {
+    "evaluate_evidence_scope.py": "32ccff6fe04e2d3749e0ef4f157a93f8f6f43fdae4557de6f66c9f81d2b6f065",
+    "diagnose_evidence_gaps.py": "db5d6b2707ae1a4412fd63951fc47cb3432def8cbb2cd0c4afdf23bbc80eba09",
+    "evidence.py": "df19e6dafa93a6568926e24638d021aa5be4658214d5227659e89a13f97db93e"
+  }
+}

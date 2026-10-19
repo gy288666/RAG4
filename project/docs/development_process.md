@@ -1169,3 +1169,42 @@ python -m pytest tests/test_literature_pilot.py tests/test_research_evidence.py 
 交付前核对 61 个项目变更文件；最新测试记录的受测代码 SHA 全部与当前文件匹配，重新收集 440 项测试通过。最近一次全量为 440 passed / 470.62s，本次未改变受测代码，不重复全量。公开 JSON、凭据扫描和差异检查通过。artifact 截图、原始 PDF、实验数据库、向量、原始失败目录和 .env 不纳入提交；用户本地截图保留。
 
 GitHub 同步不代表生产上线、业务库迁移或人工质量验收通过。仍保留部分产物、8 项缺口及 q09/q12 的未改善记录，不把后续前端/Neo4j/训练写成完成。具体提交编号与远程结果以 main 的 Git 历史为准。
+
+
+## R22：Phase 1–5 来源核验质量切片（2026-10-14）
+
+按“优化 1–5 阶段”推进一个可验证切片，先检查 main 工作区：仅用户 artifacts 未跟踪，本轮保留。复用既有 Phase 1 原文定位、Phase 2 冻结版本、Phase 3 证据范围与 Phase 4 checkpoint，将优化落在 Phase 5 的已知实际误判。代码核对确认检索已有逐文档 namespace 和所有者范围校验，没有无证据地改动索引基础设施。
+
+使用 diagnosing-bugs 建立真实 verifier/composer 边界反馈；初始 6 项测试全部失败。新增三项类型化检查、协议配置、模型提示、逐项记录及成品二次门禁；修复新字段改变旧产物序列化身份的问题，并用仓库中真实旧产物验证身份。相关回归 46 passed / 30.84s，新增 11 项；没有新增依赖。
+
+真实模型回放先对 12 条结论请求一次，ReadTimeout / 61039ms，失败完整保留；再按旧 supported 选择六条诊断子集，请求一次成功 / 34425ms / 5811 Token。最终六条全部拒绝，包含原有有效结论的误拒：模型仍改写引文，而且对 REALM limitation 的语义支持判断仍错误。不能把全拒绝写成质量提升。因此新协议显式可选、默认保持 v2，不覆盖旧任务、索引、报告或展示表，不继续网络重试。完整结果和限制见 [逐项核验记录](research_source_checks.md)。
+
+实际文件：后端 app/research/artifacts.py、model.py、protocol.py、app/api/v1/research.py；新增 scripts/reverify_research_claims.py、tests/test_research_verification_checks.py、evaluation/results/source_checks_20261014.json。同步开发计划、基线、本记录、后端说明和逐项核验文档。尚未提交或推送 GitHub。
+
+下一步先用来源编号减少核验引文抄写失败，再在固定样本之外验证条件/归属判断；q09/q12 做同预算检索对照，人工核对开发集。版式解析、生产调度、图谱收益、完整自主规划和人工质量验收仍未完成；Phase 6/7 未实施。
+
+最终全量回归：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**451 passed / 494.48s**，无失败、无跳过。编译检查与差异空白检查通过。测试通过不代表上述真实语义质量门槛通过。
+
+本轮另更新根 README，并新增 `project/backend/evaluation/results/source_checks_tests_20261014.json` 保存测试结果和修改源码摘要。未提交或推送；本地用户 artifacts 保持原样。
+
+
+## R23：核验抄写消除与真实缺口验证（2026-10-14）
+
+按用户选定的优先级接续 R22，检查并保留全部已有修改和用户 artifacts。三个编号协议用例先失败，再新增 source-handles-v4、稳定编号目录和服务端还原；支持片段不由模型抄写，产物生成前重建映射。补空/重复/跨结论/伪造编号、超长区间、原文排版、旧报告序列化与 API 协议冻结测试。未修改默认 RAG3 或研究 v2 协议。
+
+线上预算预先限定两次：旧 supported 六条子集完成，1 supported、5 insufficient，无引用抄写/陌生编号拒绝；十二条完整核验读取超时。两次总计6156已报Token，失败用量和费用未知。首轮空编号归一化未保留模型原理由，发现后修复并补断言，保留原报告，不反推遗失理由；此后的完整请求超时没有新理由可审计。没有继续重试或更换模型刷结果。
+
+离线范围对照根据问题中出现的论文名明确 q09 DPR/FiD、q12 DPR/REALM；先选择证据，再用 AI 锚点评分。固定原 Top-10，不补候选，max_items=10/max_context_chars=6000。q09 1/2→1/2、5917→5917；q12 2/3→2/3、5950→5950。记录无改善，保留“预算不足”和“候选缺失”的具体诊断，不改生产检索。
+
+文件与接口、命令及完整实验记录见 [R23 记录](research_verification_handles.md)。本轮无新依赖、业务库迁移、训练、前端、提交或 GitHub 推送。下一步是有调用预算的长批次核验和语义质量验证，并分别对 q09 上下文与 q12 召回做单变量实验；完整阶段验收仍待人工复核。
+
+最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**466 passed / 521.87s**，无失败或跳过。本轮新增 15 项回归覆盖（含 API 参数化新增两项）。编译、差异空白、公开结果 JSON 和凭据模式检查通过；语义质量门槛仍未通过。
+
+
+## R24：来源核验优化 GitHub 交付核对（2026-10-19）
+
+按用户要求整理 R22–R23 的核验协议、来源编号、等预算范围对照、测试和文档。提交前 main 与 origin/main 均为 6f2d1d2，fetch 后无分叉；采用普通提交与非强制推送。历史记录中的“未提交或推送”保留为当轮状态。
+
+核对 23 个项目文件，最新 466 passed / 521.87s 测试记录中的九项代码摘要及上一轮独立核验测试摘要均与当前文件一致；本次没有改动受测代码，不重复全量。公开 JSON、凭据模式和差异空白检查通过。用户 artifacts、原论文、数据库、向量和环境凭据均保留在本地。
+
+此次交付保持默认 numeric-model-v2；v3/v4 为显式可选候选。模型超时、1/6 支持和 q09/q12 未改善均如实保留，GitHub 交付不代表语义质量验收或生产部署。最终提交与远程结果以 main Git 历史为准。

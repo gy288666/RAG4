@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-14",
+  "environment": "rag4-py3.11",
+  "working_directory": "project/backend",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "result": "451 passed in 494.48s (0:08:14)",
+  "passed": 451,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 494.48,
+  "targeted_result": "46 passed in 30.84s",
+  "initial_red_result": "6 failed in 4.54s",
+  "new_regression_cases": 11,
+  "quality_gate_passed": false,
+  "changed_source_sha256": {
+    "project/backend/app/research/artifacts.py": "171f55bb7b0f2c55b9401cc620f67035d055fa4df61393a2a937282527df4ad9",
+    "project/backend/app/research/model.py": "e2fe78f24aafd73e5b3a5f198a0a89f59ab2c2ab240fc4a84b76f512058272bd",
+    "project/backend/app/research/protocol.py": "6fd632ea75ef63425cff147944b60dd54ded0866c4f7ba03edc7efa77686ce9d",
+    "project/backend/app/api/v1/research.py": "e32ce4fe222855290a519ef825f7fe6fd9c031ea4f58dff23158d24ed957d3c7",
+    "project/backend/tests/test_research_verification_checks.py": "bd65fc074cdebbad12eb0b8b1a2bac307fe17b1d27678659b524275ccfabeb20",
+    "project/backend/scripts/reverify_research_claims.py": "63a06bc9d245e997bded33485036399613d76e9b9f468e30b5e11c9e32318e8d"
+  }
+}
