@@ -5,7 +5,7 @@ from typing import Protocol
 
 from .artifacts import Claim, ComparisonArtifact, VerificationReport
 from .graph import GraphRelation
-from .tasks import BundleRef, ResearchTask, ToolResult, comparison_plan
+from .tasks import BundleRef, ResearchTask, ToolResult, VerificationBatch, comparison_plan
 from .tools import ToolContext, comparison_tools
 
 
@@ -23,15 +23,22 @@ def now():
 
 
 def validate_task_plan(task):
-    expected = comparison_plan(task.sources, task.goal)
+    expected = comparison_plan(task.sources, task.goal, version=task.schema_version)
     fields = {"id", "objective", "tool_name", "arguments", "dependencies"}
     if [s.model_dump(include=fields) for s in task.steps] != [s.model_dump(include=fields) for s in expected]:
         raise ValueError("Task plan differs from approved comparison policy")
-    if len(expected) > task.budget.max_steps or len(task.sources) + 1 > task.budget.max_model_calls:
+    calls = 2 * len(task.sources) if task.schema_version == "research-comparison-v2" else len(task.sources) + 1
+    if len(expected) > task.budget.max_steps or calls > task.budget.max_model_calls:
         raise ValueError("Budget cannot cover the comparison plan")
+    if len({b.document_id for b in task.verification_batches}) != len(task.verification_batches):
+        raise ValueError("Duplicate verification batch")
+    if task.verification_batches and task.schema_version != "research-comparison-v2":
+        raise ValueError("Historical plan cannot contain document batches")
+    for batch in task.verification_batches:
+        batch.validate_scope(task)
 
 
-def _apply_tool_result(task, tool_name, result):
+def _apply_tool_result(task, tool_name, result, arguments=None):
     if result.status != "succeeded":
         return {}, result
     changes = {}
@@ -44,7 +51,14 @@ def _apply_tool_result(task, tool_name, result):
         changes["claims"] = task.claims + claims
         changes["relations"] = task.relations + tuple(GraphRelation.model_validate(r) for r in result.data["relations"])
         summary = {"claim_ids": [c.claim_id for c in claims], "relation_count": len(result.data["relations"])}
-    elif tool_name == "verify_evidence":
+    elif tool_name == "verify_document":
+        batch = VerificationBatch.model_validate(result.data["batch"])
+        if batch.document_id != arguments["document_id"]:
+            raise ValueError("Tool returned another document batch")
+        batch.validate_scope(task)
+        changes["verification_batches"] = tuple(b for b in task.verification_batches if b.document_id != batch.document_id) + (batch,)
+        summary = {"document_id": batch.document_id, "supported": batch.verification.supported, "total": batch.verification.total}
+    elif tool_name in {"verify_evidence", "merge_verification"}:
         changes["verification"] = VerificationReport.model_validate(result.data["verification"])
         summary = {"supported": changes["verification"].supported, "total": changes["verification"].total}
     else:
@@ -78,7 +92,7 @@ class ResearchAgent:
         done = {s.id for s in task.steps if s.status == "succeeded"}
         if not set(step.dependencies) <= done:
             raise ValueError("Step dependencies not completed")
-        uses_model = step.tool_name in {"compare_evidence", "verify_evidence"}
+        uses_model = step.tool_name in {"compare_evidence", "verify_evidence", "verify_document"}
         if (task.tool_calls_used >= task.budget.max_steps
                 or uses_model and task.model_calls_used >= task.budget.max_model_calls):
             return self.store.save_checkpoint(task.model_copy(update={"status": "failed", "error_code": "research_budget_exhausted"}), expected_revision=task.revision)
@@ -100,7 +114,7 @@ class ResearchAgent:
                 error_type=type(error).__name__)
         result = result.model_copy(update={"elapsed_ms": round((perf_counter() - execution_started) * 1000)})
         try:
-            changes, result = _apply_tool_result(claimed, step.tool_name, result)
+            changes, result = _apply_tool_result(claimed, step.tool_name, result, step.arguments)
         except (ValueError, KeyError, TypeError) as error:
             changes = {}
             result = result.model_copy(update={"status": "failed", "data": {},

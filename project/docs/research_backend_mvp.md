@@ -89,7 +89,7 @@ MySQL 8.4.9/3307 隔离库验证新增 DDL、中文 payload 往返和 stale-revi
 
 ## 下一验收切片
 
-先核对 FiD 引用丢弃与 REALM 严格响应协议失败，补来源上下文和有界质量回归；用现有 20 题区分检索定位、陈述支持和缺口识别，人工审阅比较表。q09/q12 未改善，图谱收益尚未证明，不扩建 Neo4j/队列。Phase 2 接口已可供后续任务直接复用；前置条件为完整 ready 来源、成功 jobs/builds、verified manifest 和迁移核对，不需要再增加索引平台层。
+当前入口以 [R26 续接记录](research_continuation.md) 为准：q09/q12 开发锚点已补齐，三份逐文档核验已合并，但仅四条机器支持/八缺口，方法条件误拒与局限 entailment 误判尚存。先区分检索定位、陈述支持和缺口识别，再审阅比较表。图谱收益尚未证明，不扩建 Neo4j/队列。Phase 2 接口已可供后续任务直接复用；前置条件为完整 ready 来源、成功 jobs/builds、verified manifest 和迁移核对。
 
 
 ## R20 引用修复补充
@@ -115,3 +115,18 @@ MySQL 8.4.9/3307 隔离库验证新增 DDL、中文 payload 往返和 stale-revi
 六条诊断子集不再发生引文抄写失败，但只一条获机器支持，完整十二条请求超时；q09/q12 的显式文档范围过滤也没有改善锚点覆盖。故不切换默认，不宣称完成语义质量或检索验收。详见 [来源编号与范围对照](research_verification_handles.md)。
 
 最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**466 passed / 521.87s**，无失败或跳过。本轮新增 15 项回归覆盖（含 API 参数化新增两项）。编译、差异空白、公开结果 JSON 和凭据模式检查通过；语义质量门槛仍未通过。
+
+
+## 2026-10-20：可恢复逐文档核验与窗口策略
+
+新增 plan_version=research-comparison-v2，每篇 verify_document 至多四条并保存 VerificationBatch，merge_verification 在全部文档成功后合并；默认仍 v1。请求 budget 省略时按计划选择有限预算，自定义不足则拒绝。新增 context_policy=local-window-v3 和 candidate_policy=lexical-fusion-v2，均须显式选择，默认策略保持。EvidenceItem 保存窗口原父片偏移，引用与持久化按真实文字计数和映射。
+
+真实四次请求两成功/两超时，成功两份报告保留但没有完整产物；q09 开发锚点补齐，q12 未改善。工程恢复通过不等于模型/网络超时消失或语义质量通过。详见 [实现与实验记录](research_batching_context.md)。
+
+最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**483 passed / 749.89s**，无失败、无跳过。本轮新增17项覆盖；编译和差异空白检查、公开JSON与凭据模式检查通过。源码摘要见 `project/backend/evaluation/results/research_batching_tests_20261020.json`。该结果不替代人工语义验收。
+
+## R26：来源角色提示与核验续接
+
+创建 API 新增可选 `candidate_policy="source-role-v3"`，仅对缺失索引文字的同篇候选进行来源角色排序；默认 vector-v1、既有 lexical-fusion-v2 保留。配置持久化在 ResearchTask，继续使用只读冻结语料和现有 EvidenceBundle 引用校验。
+
+离线六路对照补齐 q12 的 DPR 方法证据，配合 local-window-v3 的开发锚点覆盖为 53.13%、完整 8/16；未重新生成全部答案。新预算副本完成三份核验报告，保留原成功批次与全部失败，生成 4 条机器支持/8 缺口的部分表；有效方法误拒和局限分项误判仍存。续接工具、谱系与预算接口、命令和限制见 [R26 记录](research_continuation.md)。无新增依赖或迁移。

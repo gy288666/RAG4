@@ -435,3 +435,27 @@ python scripts/evaluate_literature.py --pilot evaluation/literature_pilot_v1.jso
 修改研究模型/核验/API/协议诊断、复核脚本和 runtime 测试；新增编号与范围测试、evaluate_evidence_scope.py、明确范围配置和公开结果账本；无新依赖、业务库迁移或生产检索改动。详见 [来源编号与检索对照](project/docs/research_verification_handles.md)。
 
 最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**466 passed / 521.87s**，无失败或跳过。本轮新增 15 项回归覆盖（含 API 参数化新增两项）。编译、差异空白、公开结果 JSON 和凭据模式检查通过；语义质量门槛仍未通过。
+
+
+## 2026-10-20：分批核验、上下文分配与候选对照
+
+HEAD 基于 d65992a。新增 research-comparison-v2、VerificationBatch、verify_document/merge_verification；3–5 篇的计划/预算预先准入，每份报告按 CAS 持久保存，失败恢复不重复成功批次，默认 v1 保留。新增 local-window-v3 及原父片偏移、LexicalEvidenceRetriever 和显式策略配置，旧引用/任务默认序列化保持兼容；无依赖或业务库迁移。
+
+真实回放复用原抽取 checkpoint，四次请求：DPR ReadTimeout；明确恢复后 DPR/FiD 成功；REALM ConnectTimeout。保存两份独立报告，未合并或生成半成品；6997 已报 Token，失败用量/货币费用未知。脚本四次上限已用完，不隐藏重试。
+
+固定三篇源文件/原 Top-10、最多十项/6000 字符，保留三轮正负开发结果。最终窗口策略 q09 1/2→2/2，整体 47.92%→51.04%、全证据 6/16→7/16，无锚点退化；q12 仍 2/3，词法补充无覆盖收益。AI 开发锚点不是人工或 holdout，不默认切换。相关 27 passed / 61.84s，完整记录见 [分批与上下文记录](project/docs/research_batching_context.md)。
+
+最终全量：在 `project/backend` 执行 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`，**483 passed / 749.89s**，无失败、无跳过。本轮新增17项覆盖；编译和差异空白检查、公开JSON与凭据模式检查通过。源码摘要见 `project/backend/evaluation/results/research_batching_tests_20261020.json`。该结果不替代人工语义验收。
+
+## 2026-10-20 R26：方法证据与有限续接
+
+新增 CandidatePolicy 的 source-role-v3 和 LexicalEvidenceRetriever 的显式来源角色提示，runtime/API 冻结新选择，默认不切换。索引方法候选优先第一人称操作段落，相关工作次序降低；速度类问题及已有索引证据保留。固定原 Top-10、十候选/6000 字符六路对照：q12 2/3→3/3，配合新窗口 q09 保持完整，平均 47.92%→53.13%、全证据 6/16→8/16，二十题无锚点退化。不是人工语义指标或 holdout。
+
+回放脚本新增 fork_checkpoint、--continue-from / --new-request-budget，与 --resume 互斥；新目录 SQLite 副本与谱系摘要、逐执行源码摘要可核查。原四次预算和两成功批次保留，新预算两请求：REALM ConnectError，显式恢复后成功，4777 已报 Token；累计六请求、三网络失败、11774 已报 Token，费用/失败用量未知。完成合并、4/12 支持与8缺口 partial 产物。仍有方法条件误拒和 limitation entailment 误判，Phase 1–5 质量验收未通过。
+
+相关命令 `python -m pytest tests/test_research_continuation.py tests/test_research_lexical.py tests/test_research_runtime.py tests/test_research_verification_batches.py tests/test_research_context_windows.py -o addopts='' -q --tb=short --show-capture=no`：**38 passed / 66.59s**。全量 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**494 passed / 738.80s**，无失败/跳过，新增十一项工程回归；源码摘要见 `project/backend/evaluation/results/research_continuation_tests_20261020.json`。无依赖、业务迁移、active 修改、训练或前端改动。文件、接口、结果和下一切片见 [R26 记录](project/docs/research_continuation.md)；本轮未提交或推送。
+
+
+## 2026-10-26：GitHub 交付核对
+
+R25–R26 代码、测试与实验记录纳入本批 GitHub 同步；15份源码摘要与既有494项全量通过记录一致，无新模型请求或业务迁移。用户截图与运行数据保留本地。完整交付核对见 [开发记录 R27](project/docs/development_process.md)。此前各轮“未推送”描述为对应开发时的历史状态，最终提交以 main Git 历史为准；质量门槛仍未通过。

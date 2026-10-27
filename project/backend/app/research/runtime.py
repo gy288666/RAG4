@@ -18,6 +18,7 @@ from app.utils.ids import generate_id
 from .agent import ResearchAgent
 from .evidence import EvidenceCorpus, HybridEvidenceEngine, VectorHit
 from .graph import MemoryGraphStore
+from .lexical import LexicalEvidenceRetriever
 from .model import CompletionSpec, JsonResearchModel
 from .store import SQLResearchTaskStore
 from .tasks import ResearchTask, SourceBinding, TaskBudget, comparison_plan
@@ -52,13 +53,17 @@ def _load_scope(user_id, version_id, document_ids, store):
     return corpus, bindings, manifest
 
 
-def create_task(user_id, version_id, document_ids, goal, *, completion, budget=None, vector_store=None, task_store=None):
+def create_task(user_id, version_id, document_ids, goal, *, completion, budget=None, vector_store=None, task_store=None,
+                plan_version="research-comparison-v1", context_policy="parent-floor-v2", candidate_policy="vector-v1"):
     if not 3 <= len(document_ids) <= 5 or not goal.strip():
         raise ValueError("Select 3–5 documents and a research goal")
     corpus, sources, _ = _load_scope(user_id, version_id, tuple(document_ids), vector_store or get_vector_store())
-    task = ResearchTask(id=generate_id("research"), user_id=user_id, goal=goal,
+    if budget is None:
+        budget = TaskBudget(max_steps=max(12, 3 * len(sources) + 4), max_model_calls=max(8, 2 * len(sources) + 2)) if plan_version == "research-comparison-v2" else TaskBudget()
+    task = ResearchTask(id=generate_id("research"), user_id=user_id, goal=goal, schema_version=plan_version,
         index_version_id=version_id, corpus_id=corpus.corpus_id, sources=sources,
-        completion=completion, budget=budget or TaskBudget(), steps=comparison_plan(sources, goal))
+        completion=completion, budget=budget, context_policy=context_policy, candidate_policy=candidate_policy,
+        steps=comparison_plan(sources, goal, version=plan_version))
     return (task_store or SQLResearchTaskStore()).create(task)
 
 
@@ -131,6 +136,9 @@ def configured_agent(*, vector_store=None, task_store=None):
             graph.replace_document(task.user_id, source.document_id,
                 tuple(r for r in task.relations if r.document_id == source.document_id), corpus)
         retriever = FrozenVersionRetriever(task, corpus, manifest, config, store, research_facets=True)
+        if task.candidate_policy in {"lexical-fusion-v2", "source-role-v3"}:
+            retriever = LexicalEvidenceRetriever(corpus, retriever,
+                source_role=task.candidate_policy == "source-role-v3")
         model = JsonResearchModel(task.completion, api_key=config.llm_api_key, max_calls=1)
         return ToolContext(task, corpus, HybridEvidenceEngine(corpus, retriever, graph), model, frozen_corpus)
 

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-20",
+  "environment": "rag4-py3.11",
+  "working_directory": "project/backend",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "result": "483 passed in 749.89s (0:12:29)",
+  "passed": 483,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 749.89,
+  "new_regression_cases": 17,
+  "targeted_result": "27 passed in 61.84s",
+  "initial_red_results": [
+    "4 failed in 10.09s",
+    "3 failed in 6.54s"
+  ],
+  "quality_gate_passed": false,
+  "changed_source_sha256": {
+    "app/api/v1/research.py": "c9264c5f3cc6d101b5769eaae70d0629b52f92afb295a07e58a0b89b8aceab3b",
+    "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+    "app/research/artifacts.py": "22b4d73559f51c6b35eb8e51f691303d2ca407f7997adacf4a3b6d3ddd1e1a7b",
+    "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+    "app/research/runtime.py": "c6b10fd0dd15fd2d4cf5bc3396c9a7f37eb380462185af565c6cc0fe0a80de69",
+    "app/research/tasks.py": "06bd19b46667442632f8b43892e84b1fea3662f33aab7734ed61f100cefda9fe",
+    "app/research/tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+    "app/research/lexical.py": "3035f58221a954ec38a189b29084658e432d3632f894163f3ac0a5a507c782ae",
+    "tests/test_research_runtime.py": "65ac673afd0fe321c41acd887f0cdfbc3ae908702db731ce27ca1a41b1a5923c",
+    "tests/test_research_verification_batches.py": "5a03f4b18792d4deceb383fe0b47526a44e94d8540525cfbe3227e1e3cfa1a67",
+    "tests/test_research_context_windows.py": "d02af26761e9988a4a53b2e51e7b438ae20ff8ca28e86485e5f6cf16674d5f15",
+    "tests/test_research_lexical.py": "c9026ff1b58e9810d2b53255a43c89a72f2e0d52fd089b6ff79cb4c3eec0da33",
+    "scripts/reverify_research_batches.py": "e5e49339af71c0c0a3561ce935533203a968ea3eb3f7a5648576f306fef16bbd",
+    "scripts/evaluate_research_retrieval.py": "a755597d99c114ddaf7f9782916d794c681f41841f424c6d6485c2e763b59798"
+  }
+}

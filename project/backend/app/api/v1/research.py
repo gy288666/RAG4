@@ -12,7 +12,7 @@ from app.research.agent import TaskConflict
 from app.research.model import CompletionSpec
 from app.research.runtime import configured_agent, create_task
 from app.research.store import SQLResearchTaskStore
-from app.research.tasks import TaskBudget
+from app.research.tasks import TaskBudget, PlanVersion, ContextPolicy, CandidatePolicy
 from app.services import config_service
 from app.services.embedding_service import build_endpoint
 
@@ -24,7 +24,10 @@ class CreateRequest(BaseModel):
     index_version_id: str = Field(min_length=1, max_length=64)
     document_ids: tuple[str, ...] = Field(min_length=3, max_length=5)
     goal: str = Field(min_length=1, max_length=2000)
-    budget: TaskBudget = Field(default_factory=TaskBudget)
+    budget: TaskBudget | None = None
+    plan_version: PlanVersion = "research-comparison-v1"
+    context_policy: ContextPolicy = "parent-floor-v2"
+    candidate_policy: CandidatePolicy = "vector-v1"
     extraction_protocol: Literal["literal-quote-v1", "source-handles-v2"] = "source-handles-v2"
     response_format: Literal["text", "json_object"] = "text"
     verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4"] = "numeric-model-v2"
@@ -51,7 +54,8 @@ def _handle(action):
 def create(body: CreateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     config = config_service.load_runtime_config(db)
     return _handle(lambda: create_task(user.id, body.index_version_id, body.document_ids, body.goal,
-        budget=body.budget, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
+        budget=body.budget, plan_version=body.plan_version, context_policy=body.context_policy,
+        candidate_policy=body.candidate_policy, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
             model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
             response_format=body.response_format, verification_protocol=body.verification_protocol)).model_dump(mode="json"))
 

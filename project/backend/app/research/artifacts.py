@@ -230,7 +230,7 @@ def citation_catalog(bundle: EvidenceBundle):
     """
     result = {}
     for item in bundle.items:
-        text, start = item.chunk.text, 0
+        text, start = item.text, 0
         while start < len(text):
             end = min(start + 1600, len(text))
             if end < len(text):
@@ -238,8 +238,9 @@ def citation_catalog(bundle: EvidenceBundle):
                 if boundaries and boundaries[-1] >= 800:
                     end = start + boundaries[-1]
             citation_id = content_id("cite_", {"protocol": "source-handles-v2", "corpus_id": bundle.corpus_id,
-                "chunk_set_id": item.chunk_set_id, "chunk_id": item.chunk.chunk_id, "start": start, "end": end})
-            result[citation_id] = (item, start, end)
+                "chunk_set_id": item.chunk_set_id, "chunk_id": item.chunk.chunk_id,
+                "start": start + item.context_start, "end": end + item.context_start})
+            result[citation_id] = (item, start + item.context_start, end + item.context_start)
             start = end
     return result
 
@@ -265,20 +266,20 @@ def extract_claims(model: ResearchModel, corpus: EvidenceCorpus, document_id: st
         return _extract_cited(model, corpus, document_id, bundle, goal)
     draft = validate_response(AnalysisDraft, model.generate("extract", {
         "goal": goal, "document_id": document_id, "facets": list(FACETS),
-        "evidence": [{"evidence_id": i.evidence_id, "text": i.chunk.text} for i in bundle.items]}), "extract")
+        "evidence": [{"evidence_id": i.evidence_id, "text": i.text} for i in bundle.items]}), "extract")
     items = {i.evidence_id: i for i in bundle.items}
     claims, warnings = [], []
     seen = set()
     for candidate in draft.claims:
         item = items.get(candidate.evidence_id)
-        matches = _quote_matches(item.chunk.text, candidate.quote) if item is not None else ()
+        matches = _quote_matches(item.text, candidate.quote) if item is not None else ()
         location = matches[0] if len(matches) == 1 else None
         if location is None or candidate.facet in seen:
             warnings.append("draft_claim_rejected:" + candidate.facet)
             reason = "unknown_evidence" if item is None else "duplicate_facet" if candidate.facet in seen else "ambiguous_quote" if len(matches) > 1 else "quote_not_found"
             warnings.append("draft_claim_rejected:" + candidate.facet + ":" + reason)
             continue
-        start, end = location
+        start, end = (n + item.context_start for n in location)
         claim = Claim(claim_id="pending", document_id=document_id, facet=candidate.facet,
             statement=candidate.statement, citation=Citation(chunk_id=item.chunk.chunk_id,
                 char_start=start, char_end=end, quote=item.chunk.text[start:end]))

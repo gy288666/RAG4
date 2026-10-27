@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-20",
+  "environment": "rag4-py3.11",
+  "working_directory": "project/backend",
+  "base_commit": "d65992ab73f0b80e2e71a38315acfc1003431234",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "result": "494 passed in 738.80s (0:12:18)",
+  "passed": 494,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 738.8,
+  "targeted_result": "38 passed in 66.59s",
+  "new_regression_cases": 11,
+  "prior_full_test_record_sha256": "8df6805b0402cd2756afff54bfef20767aa9b37f60cfd986f47f49c3391326ea",
+  "raw_log_sha256": "df541045ed55449fc299befd94389edc480a21f1b8071ce19e70132b5905d1af",
+  "quality_gate_passed": false,
+  "initial_red_results": [
+    "ImportError: cannot import name fork_checkpoint",
+    "1 failed, 11 passed in 9.69s"
+  ],
+  "changed_source_sha256": {
+    "app/api/v1/research.py": "c9264c5f3cc6d101b5769eaae70d0629b52f92afb295a07e58a0b89b8aceab3b",
+    "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+    "app/research/artifacts.py": "22b4d73559f51c6b35eb8e51f691303d2ca407f7997adacf4a3b6d3ddd1e1a7b",
+    "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+    "app/research/lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+    "app/research/runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+    "app/research/tasks.py": "1d66e78dba41eeeb7844a039da5ad8bcc02af2c4197cfd90d106176376f5c18f",
+    "app/research/tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+    "scripts/evaluate_research_retrieval.py": "534074e9a69c36f98e47626cb7de2895cd1b318d905f7eb2302d659f5d8954e0",
+    "scripts/reverify_research_batches.py": "aa3e4dbaed969ae496bb478e7069d5a97eb1dca0967f499d10c778b983fdbfec",
+    "tests/test_research_context_windows.py": "d02af26761e9988a4a53b2e51e7b438ae20ff8ca28e86485e5f6cf16674d5f15",
+    "tests/test_research_continuation.py": "49f2fb0fe97a6966fb3b0a0619af1db330b0c0419f569bc281513b8fb3f546ea",
+    "tests/test_research_lexical.py": "cedf2dbb21ff7ba473f5a29392b80590e7068b295d59e6eb60d80f677aae3168",
+    "tests/test_research_runtime.py": "0ffd046e848202fc7ffb14f4622c33d0e56014b1c427a07f7c52801c252937cd",
+    "tests/test_research_verification_batches.py": "5a03f4b18792d4deceb383fe0b47526a44e94d8540525cfbe3227e1e3cfa1a67"
+  }
+}

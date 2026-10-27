@@ -1,8 +1,8 @@
 # RAG4
 
-**当前进度（2026-10-13）：Phase 1–5 的文献比较最小后端已经接通，研究质量验收仍未通过。** 新增来源图谱、混合证据、SQL 研究任务/步骤、暂停恢复取消、证据核验和可追溯比较表；默认 RAG3 保留。见 [接口及阶段边界](project/docs/research_backend_mvp.md)、[真实运行与失败修复](project/docs/research_comparison_report.md)、[部分比较表](project/backend/evaluation/results/citation_comparison_20261013.md)。20 题仍是 AI 标签草稿；有界父片回放完整证据 5/16→6/16，真实数字误判已加入独立门禁，人工质量门槛尚未通过。
+**当前进度（2026-10-20）：Phase 1–5 的文献比较最小后端已接通，研究质量验收仍未通过。** 可选来源角色排序与窗口策略补齐 q09/q12 开发锚点，平均覆盖 47.92%→53.13%、完整题 6/16→8/16，二十题无锚点退化。复制断点并以两次新请求完成 REALM 核验，三报告合并产出 4 条机器支持、8 项缺口的部分表；仍有语义误拒与分项误判。AI 标签、默认 RAG3/旧策略保留。见 [本轮实现与实测限制](project/docs/research_continuation.md)、[接口及阶段边界](project/docs/research_backend_mvp.md)。R25–R26 改动纳入 2026-10-26 GitHub 同步批次，交付说明见开发记录 R27。
 
-Phase 2.1–2.16 已提交并推送至 `476127b`，手动索引闭环保持维护。2026-10-14 GitHub 同步批次包含新增研究代码、测试、文档与公开试点结果；最新全量 **466 passed / 521.87s**，详见 [开发记录 R23](project/docs/development_process.md)。三篇论文在隔离 SQLite 完成版本切换/回滚；MySQL 3307 仅验证新增研究表和 checkpoint CAS，没有迁移业务库。可靠调度、Neo4j、正式微调和研究工作区仍未实现。引用编号协议和有界响应恢复已验证，二次 AI 来源复核表仅展示 4 条结论、8 项缺口；见 [引用修复记录](project/docs/research_citation_fix.md)。2026-10-14 已新增显式可选的逐项核验候选，但真实回放暴露引文抄写误拒和残余语义错误，默认协议保持不变；见 [逐项核验记录](project/docs/research_source_checks.md)。后续已加入来源编号核验，六条子集无抄写失败，但语义稳定性和完整批次超时仍待解决，范围对照未改善 q09/q12；见 [来源编号记录](project/docs/research_verification_handles.md)。下一步验证有界核验与具体召回/上下文改进，以 [计划第 3.4 节](RAG4_DEVELOPMENT_PLAN.md) 为准。
+Phase 2.1–2.16 已提交并推送至 `476127b`，手动索引闭环保持维护。R26 全量 **494 passed / 738.80s**，无失败/跳过；相关 **38 passed / 66.59s**，见 [开发记录 R26](project/docs/development_process.md)。三篇论文已在隔离 SQLite 完成版本切换/回滚；MySQL 3307 仅验证研究表和 checkpoint CAS，未迁移业务库。可靠调度、Neo4j、正式微调和研究工作区仍未实现。当前先修复方法条件误拒与局限语义误判，再有限重跑抽取/核验并复核答案与拒答；推进范围以 [计划第 3.4 节](RAG4_DEVELOPMENT_PLAN.md) 为准。历史引用修复、核验协议和正负实验保留在开发记录 R19–R25。
 
 以下为已发生的分阶段记录，其中“本轮”指对应历史轮次；开发过程与当前执行安排见 [开发记录](project/docs/development_process.md)。
 

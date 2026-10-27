@@ -1,0 +1,1312 @@
+{
+  "schema": "research-continuation-result-v1",
+  "date": "2026-10-20",
+  "annotation_status": "machine_review_only",
+  "quality_gate_passed": false,
+  "experiment": {
+    "schema": "document-verification-continuation-v1",
+    "task_id": "research_18dffe689db4acec5fe5bf9e",
+    "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+    "reused_search_and_analysis_steps": 6,
+    "source_model_calls_reserved": 6,
+    "max_requests": 6,
+    "calls": [
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "failed",
+        "usage": {},
+        "error_type": "ReadTimeout",
+        "elapsed_ms": 62175,
+        "document_id": "dpr"
+      },
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 2131,
+          "completion_tokens": 1319,
+          "total_tokens": 3450
+        },
+        "elapsed_ms": 31686,
+        "document_id": "dpr"
+      },
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 2665,
+          "completion_tokens": 882,
+          "total_tokens": 3547
+        },
+        "elapsed_ms": 20198,
+        "document_id": "fid"
+      },
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "failed",
+        "usage": {},
+        "error_type": "ConnectTimeout",
+        "elapsed_ms": 5040,
+        "document_id": "realm"
+      },
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "failed",
+        "usage": {},
+        "error_type": "ConnectError",
+        "elapsed_ms": 5896,
+        "document_id": "realm"
+      },
+      {
+        "operation": "verify_handles",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "source-handles-v4",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 3523,
+          "completion_tokens": 1254,
+          "total_tokens": 4777
+        },
+        "elapsed_ms": 23043,
+        "document_id": "realm"
+      }
+    ],
+    "annotation_status": "machine_review_only",
+    "quality_gate_passed": false,
+    "business_database_modified": false,
+    "completion": {
+      "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "timeout_seconds": 60,
+      "max_output_tokens": 4096,
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "source-handles-v4"
+    },
+    "script_sha256": "e5e49339af71c0c0a3561ce935533203a968ea3eb3f7a5648576f306fef16bbd",
+    "code_sha256": {
+      "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+      "artifacts.py": "22b4d73559f51c6b35eb8e51f691303d2ca407f7997adacf4a3b6d3ddd1e1a7b",
+      "evidence.py": "50aa790d9e2e8278bb529985dd685bf206adf681810bf231fd86ddaddc057c17",
+      "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+      "lexical.py": "551586b492bc7126662aa18fd0ca3e999a0f6a4d376355c977b5a045d15932d5",
+      "model.py": "29ece60c63f58bcd1e0c82f65812be1ed36e0eda94be600fd7b4780e2aed078b",
+      "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+      "runtime.py": "c6b10fd0dd15fd2d4cf5bc3396c9a7f37eb380462185af565c6cc0fe0a80de69",
+      "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+      "tasks.py": "06bd19b46667442632f8b43892e84b1fea3662f33aab7734ed61f100cefda9fe",
+      "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+      "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+    },
+    "status": "succeeded",
+    "task_status": "completed",
+    "tool_calls_reserved": 8,
+    "model_calls_reserved": 6,
+    "batch_documents": [
+      "dpr",
+      "fid",
+      "realm"
+    ],
+    "attempt_elapsed_ms": 34168,
+    "prior_attempts": [
+      {
+        "status": "failed",
+        "attempt_elapsed_ms": 65965,
+        "batch_documents": [],
+        "model_calls_reserved": 1,
+        "tool_calls_reserved": 1
+      },
+      {
+        "status": "failed",
+        "attempt_elapsed_ms": 67758,
+        "batch_documents": [
+          "dpr",
+          "fid"
+        ],
+        "model_calls_reserved": 4,
+        "tool_calls_reserved": 4
+      },
+      {
+        "status": "failed",
+        "attempt_elapsed_ms": 9613,
+        "batch_documents": [
+          "dpr",
+          "fid"
+        ],
+        "model_calls_reserved": 5,
+        "tool_calls_reserved": 5
+      }
+    ],
+    "parent_report_sha256": "d6fecd3529197aacc3390859cbdcc53f6bf0715c42a64bf4d1a2062f45805431",
+    "parent_task_sha256": "55c5ca404f42717db9eddb9326652deff843bc4c1747ddca3350d99cd23a1d64",
+    "parent_max_requests": 4,
+    "inherited_requests": 4,
+    "new_request_budget": 2,
+    "execution_fingerprints": [
+      {
+        "requests_before": 4,
+        "script_sha256": "483d7e5f5c216149a52623566dd623620274f2eb33f93db1091d7b6a48fccfb6",
+        "research_source_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "22b4d73559f51c6b35eb8e51f691303d2ca407f7997adacf4a3b6d3ddd1e1a7b",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "546214eb4a210c0f01f64db1cdde652e9e2b234f1cc9bfeebcf1377eccfda048",
+          "model.py": "29ece60c63f58bcd1e0c82f65812be1ed36e0eda94be600fd7b4780e2aed078b",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "1d66e78dba41eeeb7844a039da5ad8bcc02af2c4197cfd90d106176376f5c18f",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        }
+      },
+      {
+        "requests_before": 5,
+        "script_sha256": "483d7e5f5c216149a52623566dd623620274f2eb33f93db1091d7b6a48fccfb6",
+        "research_source_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "22b4d73559f51c6b35eb8e51f691303d2ca407f7997adacf4a3b6d3ddd1e1a7b",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "546214eb4a210c0f01f64db1cdde652e9e2b234f1cc9bfeebcf1377eccfda048",
+          "model.py": "29ece60c63f58bcd1e0c82f65812be1ed36e0eda94be600fd7b4780e2aed078b",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "1d66e78dba41eeeb7844a039da5ad8bcc02af2c4197cfd90d106176376f5c18f",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        }
+      }
+    ],
+    "supported": 4,
+    "total": 12,
+    "artifact_id": "artifact_a48b916a26ff11b4f0b493ff86f8f07e5fbf286cb449b78a1242f2db0d3e426c",
+    "knowledge_gaps": 8
+  },
+  "new_requests": 2,
+  "new_reported_tokens": 4777,
+  "lineage_reported_tokens": 11774,
+  "failed_request_usage": "unknown",
+  "currency_cost": "unknown",
+  "preservation": {
+    "parent_report_digest_matches": true,
+    "parent_task_digest_matches": true,
+    "successful_batches_equal": true
+  },
+  "verification": {
+    "verifier_version": "exact-source-handles-v4",
+    "annotation_status": "machine_review_only",
+    "verdicts": [
+      {
+        "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      {
+        "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+      },
+      {
+        "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      {
+        "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      {
+        "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      {
+        "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+      },
+      {
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+      },
+      {
+        "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未具体说明模型参数量。; conditions:no_support_selected: 未具体说明模型参数量。; entailment:no_support_selected: 未具体说明模型参数量。"
+      },
+      {
+        "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+        "status": "insufficient",
+        "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+      },
+      {
+        "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未提及具体数据集。; conditions:no_support_selected: 未具体说明使用的数据集和模型变体。; entailment:no_support_selected: 未具体说明使用的数据集和模型变体。"
+      },
+      {
+        "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+        "status": "insufficient",
+        "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+      },
+      {
+        "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+        "status": "insufficient",
+        "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+      }
+    ],
+    "supported": 4,
+    "total": 12,
+    "warnings": [
+      "literal_numeric_values_checked_no_unit_conversion",
+      "semantic_support_is_machine_judgment_requires_human_review"
+    ],
+    "assessments": [
+      {
+        "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+        "attribution": {
+          "status": "supported",
+          "reason": "明确提到使用了双编码器架构并优化嵌入以最大化内积。",
+          "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+          "support_ids": [
+            "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+          ]
+        },
+        "conditions": {
+          "status": "supported",
+          "reason": "具体描述了优化目标是最大化问题和相关段落向量的内积。",
+          "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+          "support_ids": [
+            "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+          ]
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "明确提到使用了双编码器架构并优化嵌入以最大化内积。",
+          "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+          "support_ids": [
+            "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+        "attribution": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        }
+      },
+      {
+        "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+        "attribution": {
+          "status": "supported",
+          "reason": "明确提到DPR模型在四个数据集上优于之前的最佳结果。",
+          "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+          "support_ids": [
+            "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+          ]
+        },
+        "conditions": {
+          "status": "supported",
+          "reason": "准确匹配率提高了1%到12%的具体数值被提及。",
+          "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+          "support_ids": [
+            "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+          ]
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "明确提到DPR模型在四个数据集上优于之前的最佳结果。",
+          "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+          "support_ids": [
+            "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+        "attribution": {
+          "status": "supported",
+          "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+          "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+          "support_ids": [
+            "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+          ]
+        },
+        "conditions": {
+          "status": "supported",
+          "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+          "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+          "support_ids": [
+            "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+          ]
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+          "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+          "support_ids": [
+            "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+        "attribution": {
+          "status": "supported",
+          "reason": "该方法在编码器中独立处理段落，在解码器中联合处理。",
+          "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+          "support_ids": [
+            "support_c63e5c6931e149a9157d20204c4a3015ad318ced3153faff82e48d36f1bfbfe2"
+          ]
+        },
+        "conditions": {
+          "status": "supported",
+          "reason": "处理大量段落的条件被明确描述。",
+          "support_quote": "(2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. ",
+          "support_ids": [
+            "support_efc41a7d8a32db7892a8c83fa6b0abeb06232c0a09b889014ffbb2ecb161ddca"
+          ]
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "该方法能够处理大量段落。",
+          "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+          "support_ids": [
+            "support_c63e5c6931e149a9157d20204c4a3015ad318ced3153faff82e48d36f1bfbfe2"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+        "attribution": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        }
+      },
+      {
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "attribution": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+          "support_quote": ""
+        }
+      },
+      {
+        "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+        "attribution": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明模型参数量。",
+          "support_quote": ""
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明模型参数量。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明模型参数量。",
+          "support_quote": ""
+        }
+      },
+      {
+        "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+        "attribution": {
+          "status": "supported",
+          "reason": "提及使用检索增强的语言模型预训练方法，通过优化语言模型的困惑度来训练检索器。",
+          "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+          "support_ids": [
+            "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+          ]
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "明确提到通过优化语言模型的困惑度来训练检索器。",
+          "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+          "support_ids": [
+            "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+        "attribution": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未提及具体数据集。",
+          "support_quote": ""
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+          "support_quote": ""
+        }
+      },
+      {
+        "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+        "attribution": {
+          "status": "supported",
+          "reason": "提及在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。",
+          "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.",
+          "support_ids": [
+            "support_37a32891e072c93f552965ae15849ef9d5ffa8585d452456ada9cbc25f2bf2e6"
+          ]
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "具体数值与声明一致。",
+          "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.",
+          "support_ids": [
+            "support_37a32891e072c93f552965ae15849ef9d5ffa8585d452456ada9cbc25f2bf2e6"
+          ]
+        }
+      },
+      {
+        "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+        "attribution": {
+          "status": "supported",
+          "reason": "提及REALM的性能在不同预训练语料库上有所差异，且需要进一步研究以确定其对编码器和检索器的具体贡献。",
+          "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+          "support_ids": [
+            "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+            "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+          ]
+        },
+        "conditions": {
+          "status": "insufficient",
+          "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+          "support_quote": ""
+        },
+        "entailment": {
+          "status": "supported",
+          "reason": "提及需要进一步研究以确定其对编码器和检索器的具体贡献。",
+          "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+          "support_ids": [
+            "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+            "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+          ]
+        }
+      }
+    ]
+  },
+  "artifact": {
+    "artifact_id": "artifact_a48b916a26ff11b4f0b493ff86f8f07e5fbf286cb449b78a1242f2db0d3e426c",
+    "composer_version": "comparison-table-v2",
+    "completion_status": "partial",
+    "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+    "goal": "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+    "rows": [
+      {
+        "document_id": "dpr",
+        "title": "dpr.pdf",
+        "cells": [
+          {
+            "facet": "method",
+            "status": "supported",
+            "statement": "采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。",
+            "claim_ids": [
+              "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101"
+            ],
+            "reasons": []
+          },
+          {
+            "facet": "dataset",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+            ]
+          },
+          {
+            "facet": "result",
+            "status": "supported",
+            "statement": "DPR模型在四个数据集上优于之前的最佳结果，准确匹配率提高了1%到12%。",
+            "claim_ids": [
+              "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e"
+            ],
+            "reasons": []
+          },
+          {
+            "facet": "limitation",
+            "status": "supported",
+            "statement": "SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。",
+            "claim_ids": [
+              "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002"
+            ],
+            "reasons": []
+          }
+        ]
+      },
+      {
+        "document_id": "fid",
+        "title": "fid.pdf",
+        "cells": [
+          {
+            "facet": "method",
+            "status": "supported",
+            "statement": "该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。",
+            "claim_ids": [
+              "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee"
+            ],
+            "reasons": []
+          },
+          {
+            "facet": "dataset",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+            ]
+          },
+          {
+            "facet": "result",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+            ]
+          },
+          {
+            "facet": "limitation",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "attribution:no_support_selected: 未具体说明模型参数量。; conditions:no_support_selected: 未具体说明模型参数量。; entailment:no_support_selected: 未具体说明模型参数量。"
+            ]
+          }
+        ]
+      },
+      {
+        "document_id": "realm",
+        "title": "realm.pdf",
+        "cells": [
+          {
+            "facet": "method",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+            ]
+          },
+          {
+            "facet": "dataset",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "attribution:no_support_selected: 未提及具体数据集。; conditions:no_support_selected: 未具体说明使用的数据集和模型变体。; entailment:no_support_selected: 未具体说明使用的数据集和模型变体。"
+            ]
+          },
+          {
+            "facet": "result",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+            ]
+          },
+          {
+            "facet": "limitation",
+            "status": "uncertain",
+            "statement": null,
+            "claim_ids": [],
+            "reasons": [
+              "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+            ]
+          }
+        ]
+      }
+    ],
+    "citations": [
+      {
+        "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+        "document_id": "dpr",
+        "facet": "method",
+        "statement": "采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。",
+        "citation": {
+          "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+          "char_start": 0,
+          "char_end": 572,
+          "quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong."
+        }
+      },
+      {
+        "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+        "document_id": "dpr",
+        "facet": "result",
+        "statement": "DPR模型在四个数据集上优于之前的最佳结果，准确匹配率提高了1%到12%。",
+        "citation": {
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "char_start": 0,
+          "char_end": 244,
+          "quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al."
+        }
+      },
+      {
+        "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+        "document_id": "dpr",
+        "facet": "limitation",
+        "statement": "SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。",
+        "citation": {
+          "chunk_id": "chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2",
+          "char_start": 0,
+          "char_end": 486,
+          "quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+        }
+      },
+      {
+        "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+        "document_id": "fid",
+        "facet": "method",
+        "statement": "该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。",
+        "citation": {
+          "chunk_id": "chunk_e6227d6e214b5fd71ca1e29c73b6a4db5f377add2938c1c8e2f613d4e4b2577f",
+          "char_start": 0,
+          "char_end": 1509,
+          "quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. (2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. "
+        }
+      }
+    ],
+    "citation_sources": [
+      {
+        "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "source_locator": {
+          "source": {
+            "uri": "document:dpr",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-1",
+              "char_start": 544,
+              "char_end": 1116,
+              "page_start": 2,
+              "page_end": 2
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 2,
+        "page_end": 2
+      },
+      {
+        "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "source_locator": {
+          "source": {
+            "uri": "document:dpr",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-7",
+              "char_start": 1520,
+              "char_end": 1764,
+              "page_start": 8,
+              "page_end": 8
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 8,
+        "page_end": 8
+      },
+      {
+        "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "source_locator": {
+          "source": {
+            "uri": "document:dpr",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-3",
+              "char_start": 2749,
+              "char_end": 3235,
+              "page_start": 4,
+              "page_end": 4
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 4,
+        "page_end": 4
+      },
+      {
+        "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+        "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+        "source_locator": {
+          "source": {
+            "uri": "document:fid",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-2",
+              "char_start": 1765,
+              "char_end": 3274,
+              "page_start": 3,
+              "page_end": 3
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 3,
+        "page_end": 3
+      }
+    ],
+    "verification": {
+      "verifier_version": "exact-source-handles-v4",
+      "annotation_status": "machine_review_only",
+      "verdicts": [
+        {
+          "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+          "status": "supported",
+          "reason": "all_source_checks_supported"
+        },
+        {
+          "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+          "status": "insufficient",
+          "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+        },
+        {
+          "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+          "status": "supported",
+          "reason": "all_source_checks_supported"
+        },
+        {
+          "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+          "status": "supported",
+          "reason": "all_source_checks_supported"
+        },
+        {
+          "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+          "status": "supported",
+          "reason": "all_source_checks_supported"
+        },
+        {
+          "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+          "status": "insufficient",
+          "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+        },
+        {
+          "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+          "status": "insufficient",
+          "reason": "attribution:no_support_selected: 未具体说明使用了哪些数据集。; conditions:no_support_selected: 未具体说明使用了哪些数据集。; entailment:no_support_selected: 未具体说明使用了哪些数据集。"
+        },
+        {
+          "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+          "status": "insufficient",
+          "reason": "attribution:no_support_selected: 未具体说明模型参数量。; conditions:no_support_selected: 未具体说明模型参数量。; entailment:no_support_selected: 未具体说明模型参数量。"
+        },
+        {
+          "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+          "status": "insufficient",
+          "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+        },
+        {
+          "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+          "status": "insufficient",
+          "reason": "attribution:no_support_selected: 未提及具体数据集。; conditions:no_support_selected: 未具体说明使用的数据集和模型变体。; entailment:no_support_selected: 未具体说明使用的数据集和模型变体。"
+        },
+        {
+          "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+          "status": "insufficient",
+          "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+        },
+        {
+          "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+          "status": "insufficient",
+          "reason": "conditions:no_support_selected: 未具体说明使用的数据集和模型变体。"
+        }
+      ],
+      "supported": 4,
+      "total": 12,
+      "warnings": [
+        "literal_numeric_values_checked_no_unit_conversion",
+        "semantic_support_is_machine_judgment_requires_human_review"
+      ],
+      "assessments": [
+        {
+          "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+          "attribution": {
+            "status": "supported",
+            "reason": "明确提到使用了双编码器架构并优化嵌入以最大化内积。",
+            "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+            "support_ids": [
+              "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+            ]
+          },
+          "conditions": {
+            "status": "supported",
+            "reason": "具体描述了优化目标是最大化问题和相关段落向量的内积。",
+            "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+            "support_ids": [
+              "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+            ]
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "明确提到使用了双编码器架构并优化嵌入以最大化内积。",
+            "support_quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong.",
+            "support_ids": [
+              "support_9950d923548f50ed74bbdb3682756d56dd5665961a82df2f71cdeae4d69f395e"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+          "attribution": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          }
+        },
+        {
+          "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+          "attribution": {
+            "status": "supported",
+            "reason": "明确提到DPR模型在四个数据集上优于之前的最佳结果。",
+            "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+            "support_ids": [
+              "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+            ]
+          },
+          "conditions": {
+            "status": "supported",
+            "reason": "准确匹配率提高了1%到12%的具体数值被提及。",
+            "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+            "support_ids": [
+              "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+            ]
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "明确提到DPR模型在四个数据集上优于之前的最佳结果。",
+            "support_quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al.",
+            "support_ids": [
+              "support_de6e4bc18e7d49b29b169c3e2046db60c9048a4fb1082a2aa9caf846e0e4a6fe"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+          "attribution": {
+            "status": "supported",
+            "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+            "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+            "support_ids": [
+              "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+            ]
+          },
+          "conditions": {
+            "status": "supported",
+            "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+            "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+            "support_ids": [
+              "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+            ]
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "明确提到SQuAD数据集的问题是在看到段落后由注释者编写的，缺乏上下文。",
+            "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+            "support_ids": [
+              "support_af088dd57f99157ea309e676316dffd16d76025132a924e956b1ec06a4f5371c"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+          "attribution": {
+            "status": "supported",
+            "reason": "该方法在编码器中独立处理段落，在解码器中联合处理。",
+            "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+            "support_ids": [
+              "support_c63e5c6931e149a9157d20204c4a3015ad318ced3153faff82e48d36f1bfbfe2"
+            ]
+          },
+          "conditions": {
+            "status": "supported",
+            "reason": "处理大量段落的条件被明确描述。",
+            "support_quote": "(2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. ",
+            "support_ids": [
+              "support_efc41a7d8a32db7892a8c83fa6b0abeb06232c0a09b889014ffbb2ecb161ddca"
+            ]
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "该方法能够处理大量段落。",
+            "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+            "support_ids": [
+              "support_c63e5c6931e149a9157d20204c4a3015ad318ced3153faff82e48d36f1bfbfe2"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+          "attribution": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          }
+        },
+        {
+          "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+          "attribution": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用了哪些数据集。",
+            "support_quote": ""
+          }
+        },
+        {
+          "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+          "attribution": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明模型参数量。",
+            "support_quote": ""
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明模型参数量。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明模型参数量。",
+            "support_quote": ""
+          }
+        },
+        {
+          "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+          "attribution": {
+            "status": "supported",
+            "reason": "提及使用检索增强的语言模型预训练方法，通过优化语言模型的困惑度来训练检索器。",
+            "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+            "support_ids": [
+              "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+            ]
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "明确提到通过优化语言模型的困惑度来训练检索器。",
+            "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+            "support_ids": [
+              "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+          "attribution": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未提及具体数据集。",
+            "support_quote": ""
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+            "support_quote": ""
+          }
+        },
+        {
+          "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+          "attribution": {
+            "status": "supported",
+            "reason": "提及在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。",
+            "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.",
+            "support_ids": [
+              "support_37a32891e072c93f552965ae15849ef9d5ffa8585d452456ada9cbc25f2bf2e6"
+            ]
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "具体数值与声明一致。",
+            "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.",
+            "support_ids": [
+              "support_37a32891e072c93f552965ae15849ef9d5ffa8585d452456ada9cbc25f2bf2e6"
+            ]
+          }
+        },
+        {
+          "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+          "attribution": {
+            "status": "supported",
+            "reason": "提及REALM的性能在不同预训练语料库上有所差异，且需要进一步研究以确定其对编码器和检索器的具体贡献。",
+            "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+            "support_ids": [
+              "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+              "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+            ]
+          },
+          "conditions": {
+            "status": "insufficient",
+            "reason": "no_support_selected: 未具体说明使用的数据集和模型变体。",
+            "support_quote": ""
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "提及需要进一步研究以确定其对编码器和检索器的具体贡献。",
+            "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+            "support_ids": [
+              "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+              "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+            ]
+          }
+        }
+      ]
+    },
+    "knowledge_gaps": [
+      "dpr:dataset:uncertain",
+      "fid:dataset:uncertain",
+      "fid:result:uncertain",
+      "fid:limitation:uncertain",
+      "realm:method:uncertain",
+      "realm:dataset:uncertain",
+      "realm:result:uncertain",
+      "realm:limitation:uncertain"
+    ],
+    "warnings": [
+      "machine_review_only",
+      "cross_paper_results_not_directly_comparable"
+    ],
+    "markdown": "# 文献比较\n\n比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。\n\n| 文献 | 方法 | 数据集 | 结果 | 局限 |\n| --- | --- | --- | --- | --- |\n| dpr.pdf | 采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。 [1] | 待核验 | DPR模型在四个数据集上优于之前的最佳结果，准确匹配率提高了1%到12%。 [2] | SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。 [3] |\n| fid.pdf | 该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。 [4] | 待核验 | 待核验 | 待核验 |\n| realm.pdf | 待核验 | 待核验 | 待核验 | 待核验 |\n\n引用由原文定位及模型核验；仍需人工复核。实验条件未统一，本表不作性能排名。\n\n引用：\n[1] dpr.pdf，PDF 页 2–2，切片 chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0，字符 0:572：By leveraging the now standard BERT pretrained model (Devlin et al., 2019) and a dual-encoder architecture (Bromley et al., 1994), we focus on developing the right training scheme using a relatively small number of question and passage pairs. Through a series of careful ablation studies, our ﬁnal solution is surprisingly simple: the embedding is optimized for maximizing inner products of the question and relevant passage vectors, with an objective compar- ing all pairs of questions and passages in a batch. Our Dense Passage Retriever (DPR) is exception- ally strong.\n[2] dpr.pdf，PDF 页 8–8，切片 chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a，字符 0:244：Overall, our DPR-based models outperform the previous state- of-the-art results on four out of the ﬁve datasets, with 1% to 12% absolute differences in exact match accuracy. It is interesting to contrast our results to those of ORQA (Lee et al.\n[3] dpr.pdf，PDF 页 4–4，切片 chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2，字符 0:486：, 2016) is a popu- lar benchmark dataset for reading comprehension. Annotators were presented with a Wikipedia para- graph, and asked to write questions that could be answered from the given text. Although SQuAD has been used previously for open-domain QA re- search, it is not ideal because many questions lack context in absence of the provided paragraph. We still include it in our experiments for providing a fair comparison to previous work and we will discuss more in Section 5.1.\n[4] fid.pdf，PDF 页 3–3，切片 chunk_e6227d6e214b5fd71ca1e29c73b6a4db5f377add2938c1c8e2f613d4e4b2577f，字符 0:1509：The model takes as input the question, as well as the support passages, and generates the answer. More precisely, each retrieved passage and its title are concatenated with the question, and processed independently from other passages by the encoder. We add special tokens question:, title: and context: before the question, title and text of each passage. Finally, the decoder performs atten- 1lucene.apache.org 2spacy.io 3github.com/facebookresearch/faiss tion over the concatenation of the resulting repre- sentations of all the retrieved passages. The model thus performs evidence fusion in the decoder only, and we refer to it as Fusion-in-Decoder. By processing passages independently in the en- coder, but jointly in the decoder, this method differs from Min et al. (2020) and Lewis et al. (2020b). Processing passages independently in the encoder allows to scale to large number of contexts, as it only performs self attention over one context at a time. This means that the computation time of the model grows linearly with the number of passages, instead of quadratically. On the other hand, pro- cessing passages jointly in the decoder allows to better aggregate evidence from multiple passages. 4 Experiments In this section, we report empirical evaluations of Fusion-in-Decoder for open domain QA. Datasets. We consider the following datasets, and use the same setting as Lee et al. (2019): • NaturalQuestions (Kwiatkowski et al., 2019) contains questions corresponding to Google search queries. \n\n知识缺口：\ndpr:dataset:uncertain\nfid:dataset:uncertain\nfid:result:uncertain\nfid:limitation:uncertain\nrealm:method:uncertain\nrealm:dataset:uncertain\nrealm:result:uncertain\nrealm:limitation:uncertain\n"
+  },
+  "claim_diagnostics": [
+    {
+      "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+      "document_id": "dpr",
+      "facet": "method",
+      "statement": "采用双编码器架构，并优化嵌入以最大化问题和相关段落向量的内积。"
+    },
+    {
+      "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+      "document_id": "dpr",
+      "facet": "dataset",
+      "statement": "使用了Natural Questions、TREC、WebQuestions和TriviaQA等数据集。"
+    },
+    {
+      "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+      "document_id": "dpr",
+      "facet": "result",
+      "statement": "DPR模型在四个数据集上优于之前的最佳结果，准确匹配率提高了1%到12%。"
+    },
+    {
+      "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+      "document_id": "dpr",
+      "facet": "limitation",
+      "statement": "SQuAD数据集的问题缺乏上下文，因为问题是在看到段落后由注释者编写的。"
+    },
+    {
+      "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+      "document_id": "fid",
+      "facet": "method",
+      "statement": "该方法在编码器中独立处理段落，在解码器中联合处理，从而能够处理大量段落。"
+    },
+    {
+      "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+      "document_id": "fid",
+      "facet": "dataset",
+      "statement": "实验使用了NaturalQuestions、TriviaQA和SQuAD三个数据集。"
+    },
+    {
+      "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+      "document_id": "fid",
+      "facet": "result",
+      "statement": "Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。"
+    },
+    {
+      "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+      "document_id": "fid",
+      "facet": "limitation",
+      "statement": "该方法需要包含数十亿参数的模型，这使得查询和训练模型成本高昂。"
+    },
+    {
+      "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+      "document_id": "realm",
+      "facet": "method",
+      "statement": "REALM使用检索增强的语言模型预训练方法，通过优化语言模型的困惑度来训练检索器。"
+    },
+    {
+      "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+      "document_id": "realm",
+      "facet": "dataset",
+      "statement": "实验在NATURALQUESTIONS-OPEN、WEBQUESTIONS和CURATEDTREC三个开放问答基准数据集上进行。"
+    },
+    {
+      "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+      "document_id": "realm",
+      "facet": "result",
+      "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。"
+    },
+    {
+      "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+      "document_id": "realm",
+      "facet": "limitation",
+      "statement": "REALM的性能在不同预训练语料库上有所差异，且需要进一步研究以确定其对编码器和检索器的具体贡献。"
+    }
+  ],
+  "inspection": [
+    {
+      "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+      "finding": "Missing CC-News pretraining condition; final insufficient, no longer displayed"
+    },
+    {
+      "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+      "finding": "Source reports completed ablation, not a need for further study. Entailment check still incorrectly supported; final insufficient only because conditions check failed"
+    },
+    {
+      "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+      "finding": "Method description has supporting source but conditions check requires unrelated dataset/model variant detail; apparent false rejection"
+    }
+  ],
+  "limitations": [
+    "Reuses prior extraction; not a new end-to-end task with the source-role retrieval policy",
+    "Four accepted claims and eight gaps do not establish human support rate or refusal quality",
+    "No further model calls in this two-request experiment; no production default change"
+  ],
+  "local_artifacts_sha256": {
+    "artifact.json": "ba5c77ea069bc5745ffd0d7bb45dacd1fd91e34332e680846ec475d8135d6d17",
+    "comparison.md": "e3d0e2cf413358c948cf476147b287ae9e1754a87618aa73c02dcb91da3c2e85",
+    "report.json": "d86a47016552bf6c343e6b7dc9f4c2a9063a514b962fc7f75599cec3bba3f5da",
+    "task.json": "701520def095b1a203d0c645088b8176a40002267dd669130f7045ca95d688c1"
+  }
+}

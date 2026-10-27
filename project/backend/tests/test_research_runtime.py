@@ -101,3 +101,23 @@ def test_create_api_and_step_use_frozen_owned_version(client, user_headers, publ
     assert step.status_code == 200 and step.json()["data"]["steps"][0]["status"] == "succeeded"
     assert client.get("/api/v1/research-tasks", headers=user_headers).json()["data"]["total"] == 2
     assert versions.active_state(owner) == (None, 0)
+
+
+@pytest.mark.parametrize('candidate_policy', ['lexical-fusion-v2', 'source-role-v3'])
+def test_create_batched_plan_freezes_policies_and_checks_budget(client,user_headers,published,storage,candidate_policy):
+    owner,task,version,_ = published
+    body = {'index_version_id':version.id,'document_ids':[s.document_id for s in task.sources],
+        'goal':'比较文献','plan_version':'research-comparison-v2','verification_protocol':'source-handles-v4',
+        'context_policy':'local-window-v3','candidate_policy':candidate_policy}
+    created = client.post('/api/v1/research-tasks',headers=user_headers,json=body)
+    assert created.status_code==200,created.json()
+    data = created.json()['data']
+    assert data['schema_version']=='research-comparison-v2' and len(data['steps'])==11
+    assert data['budget']['max_steps']==13 and data['budget']['max_model_calls']==8
+    assert data['context_policy']==body['context_policy'] and data['candidate_policy']==body['candidate_policy']
+    step = client.post(f"/api/v1/research-tasks/{data['id']}/run",headers=user_headers).json()['data']
+    assert step['steps'][0]['status']=='succeeded'
+    assert step['bundles'][0]['options']['context_policy']=='local-window-v3'
+    body['budget'] = {'max_steps':12,'max_model_calls':4}
+    assert client.post('/api/v1/research-tasks',headers=user_headers,json=body).status_code==400
+    assert versions.active_state(owner)==(None,0)

@@ -1,7 +1,7 @@
 """Fixed, bounded literature-comparison plan; no model-controlled tool execution."""
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_validator, model_serializer
 
 from app.chunking.models import Identifier, Snapshot
 from .artifacts import Claim, ComparisonArtifact, VerificationReport
@@ -29,6 +29,16 @@ class EvidenceRef(Snapshot):
     chunk_set_id: str
     matched_child_ids: tuple[str, ...]
     channels: tuple[str, ...]
+    context_start: int = 0
+    context_end: int | None = None
+
+    @model_serializer(mode="wrap")
+    def preserve_historical_ref(self, handler):
+        payload = handler(self)
+        if self.context_start == 0 and self.context_end is None:
+            payload.pop("context_start", None)
+            payload.pop("context_end", None)
+        return payload
 
 
 class BundleRef(Snapshot):
@@ -57,7 +67,7 @@ class BundleRef(Snapshot):
             raise ValueError("Persisted evidence corpus mismatch")
         items = tuple(EvidenceItem(chunk=corpus.chunks[i.chunk_id], **i.model_dump(exclude={"chunk_id"})) for i in self.items)
         bundle = EvidenceBundle(**self.model_dump(exclude={"items"}), items=items)
-        if bundle.bundle_id != bundle.expected_id() or bundle.context_chars != sum(len(i.chunk.text) for i in items):
+        if bundle.bundle_id != bundle.expected_id() or bundle.context_chars != sum(len(i.text) for i in items):
             raise ValueError("Persisted evidence identity mismatch")
         for item in items:
             corpus.validate_item(item)
@@ -87,8 +97,32 @@ class ResearchStep(Snapshot):
     finished_at: str | None = None
 
 
+PlanVersion = Literal["research-comparison-v1", "research-comparison-v2"]
+ContextPolicy = Literal["parent-floor-v2", "local-window-v3"]
+CandidatePolicy = Literal["vector-v1", "lexical-fusion-v2", "source-role-v3"]
+
+
+class VerificationBatch(Snapshot):
+    """One document's complete machine report, published by one CAS checkpoint."""
+    document_id: Identifier
+    claim_ids: tuple[Identifier, ...] = Field(max_length=4)
+    verification: VerificationReport
+
+    def validate_scope(self, task):
+        expected = tuple(c.claim_id for c in task.claims if c.document_id == self.document_id)
+        report = self.verification
+        version = {"numeric-model-v2": "exact-source-numeric-and-model-v2",
+            "source-checks-v3": "exact-source-checks-v3", "source-handles-v4": "exact-source-handles-v4"}[task.completion.verification_protocol]
+        if (self.document_id not in {s.document_id for s in task.sources} or self.claim_ids != expected
+                or len(set(expected)) != len(expected) or len(expected) > 4
+                or len(report.verdicts) != len(expected) or {v.claim_id for v in report.verdicts} != set(expected)
+                or report.total != len(expected) or report.supported != sum(v.status == "supported" for v in report.verdicts)
+                or report.verifier_version != version):
+            raise ValueError("Verification batch scope or protocol mismatch")
+
+
 class ResearchTask(Snapshot):
-    schema_version: Literal["research-comparison-v1"] = "research-comparison-v1"
+    schema_version: PlanVersion = "research-comparison-v1"
     id: Identifier
     user_id: int = Field(strict=True, gt=0)
     goal: str = Field(min_length=1, max_length=2000)
@@ -96,6 +130,8 @@ class ResearchTask(Snapshot):
     corpus_id: Identifier
     sources: tuple[SourceBinding, ...] = Field(min_length=3, max_length=5)
     completion: CompletionSpec
+    context_policy: ContextPolicy = "parent-floor-v2"
+    candidate_policy: CandidatePolicy = "vector-v1"
     budget: TaskBudget
     status: Literal["pending", "running", "paused", "completed", "failed", "cancelled"] = "pending"
     revision: int = Field(default=0, strict=True, ge=0)
@@ -106,8 +142,20 @@ class ResearchTask(Snapshot):
     claims: tuple[Claim, ...] = ()
     relations: tuple[GraphRelation, ...] = ()
     verification: VerificationReport | None = None
+    verification_batches: tuple[VerificationBatch, ...] = Field(default=(), max_length=5)
     artifact: ComparisonArtifact | None = None
     error_code: str | None = None
+
+    @model_serializer(mode="wrap")
+    def preserve_historical_format(self, handler):
+        payload = handler(self)
+        if self.schema_version == "research-comparison-v1":
+            payload.pop("verification_batches", None)
+        if self.context_policy == "parent-floor-v2":
+            payload.pop("context_policy", None)
+        if self.candidate_policy == "vector-v1":
+            payload.pop("candidate_policy", None)
+        return payload
 
     @model_validator(mode="after")
     def consistent_scope(self):
@@ -118,7 +166,9 @@ class ResearchTask(Snapshot):
         return self
 
 
-def comparison_plan(sources: tuple[SourceBinding, ...], goal: str) -> tuple[ResearchStep, ...]:
+def comparison_plan(sources: tuple[SourceBinding, ...], goal: str, *, version: PlanVersion = "research-comparison-v1") -> tuple[ResearchStep, ...]:
+    if version not in {"research-comparison-v1", "research-comparison-v2"}:
+        raise ValueError("Unknown comparison plan version")
     searches, analyses = [], []
     for n, source in enumerate(sources):
         search_id = f"search-{n}"
@@ -131,4 +181,11 @@ def comparison_plan(sources: tuple[SourceBinding, ...], goal: str) -> tuple[Rese
         tool_name="verify_evidence", arguments={}, dependencies=tuple(s.id for s in analyses))
     compose = ResearchStep(id="compose", objective="交付含可核对引用和知识缺口的比较表",
         tool_name="compose_artifact", arguments={}, dependencies=("verify",))
+    if version == "research-comparison-v2":
+        batches = [ResearchStep(id=f"verify-{n}", objective="核验该论文至多四条结论并保存独立报告",
+            tool_name="verify_document", arguments={"document_id": source.document_id},
+            dependencies=(f"analyse-{n}",)) for n, source in enumerate(sources)]
+        merge = ResearchStep(id="verify", objective="检查全部文档核验报告并合并，不调用模型",
+            tool_name="merge_verification", arguments={}, dependencies=tuple(s.id for s in batches))
+        return tuple(searches + analyses + batches + [merge, compose])
     return tuple(searches + analyses + [verify, compose])
