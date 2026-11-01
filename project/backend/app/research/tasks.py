@@ -112,12 +112,13 @@ class VerificationBatch(Snapshot):
         expected = tuple(c.claim_id for c in task.claims if c.document_id == self.document_id)
         report = self.verification
         version = {"numeric-model-v2": "exact-source-numeric-and-model-v2",
-            "source-checks-v3": "exact-source-checks-v3", "source-handles-v4": "exact-source-handles-v4"}[task.completion.verification_protocol]
+            "source-checks-v3": "exact-source-checks-v3", "source-handles-v4": "exact-source-handles-v4", "facet-handles-v5": "exact-facet-handles-v5"}[task.completion.verification_protocol]
         if (self.document_id not in {s.document_id for s in task.sources} or self.claim_ids != expected
                 or len(set(expected)) != len(expected) or len(expected) > 4
                 or len(report.verdicts) != len(expected) or {v.claim_id for v in report.verdicts} != set(expected)
                 or report.total != len(expected) or report.supported != sum(v.status == "supported" for v in report.verdicts)
-                or report.verifier_version != version):
+                or report.verifier_version != version
+                or report.context_policy != task.completion.verification_context_policy):
             raise ValueError("Verification batch scope or protocol mismatch")
 
 

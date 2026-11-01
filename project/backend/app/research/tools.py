@@ -134,6 +134,7 @@ def _merge_verification(context, args):
         batch.validate_scope(task)
         reports.append(batch.verification)
     report = VerificationReport(verifier_version=reports[0].verifier_version,
+        context_policy=reports[0].context_policy,contexts=tuple(c for r in reports for c in r.contexts),
         verdicts=tuple(v for r in reports for v in r.verdicts),
         assessments=tuple(a for r in reports for a in r.assessments),
         total=sum(r.total for r in reports), supported=sum(r.supported for r in reports),

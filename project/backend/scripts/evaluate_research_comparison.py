@@ -19,7 +19,7 @@ from types import SimpleNamespace
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
-def main():
+def parse_options(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--pilot", type=Path, required=True)
     parser.add_argument("--sources", type=Path, required=True)
@@ -30,18 +30,45 @@ def main():
     parser.add_argument("--model-timeout", type=int, default=60, choices=range(1, 61))
     parser.add_argument("--extraction-protocol", choices=("literal-quote-v1", "source-handles-v2"), default="source-handles-v2")
     parser.add_argument("--response-format", choices=("text", "json_object"), default="json_object")
+    parser.add_argument('--plan-version',choices=('research-comparison-v1','research-comparison-v2'),default='research-comparison-v1')
+    parser.add_argument('--context-policy',choices=('parent-floor-v2','local-window-v3'),default='parent-floor-v2')
+    parser.add_argument('--candidate-policy',choices=('vector-v1','lexical-fusion-v2','source-role-v3'),default='vector-v1')
+    parser.add_argument('--verification-protocol',choices=('numeric-model-v2','source-checks-v3','source-handles-v4','facet-handles-v5'),default='numeric-model-v2')
+    parser.add_argument('--verification-context-policy',choices=('cited-chunk-v1','preceding-children-v1'),default='cited-chunk-v1')
+    parser.add_argument('--max-output-tokens',type=int,choices=(2048,4096,8192),default=2048)
     parser.add_argument("--retry-network-once", action="store_true",
         help="Explicitly resume at most one failed network step; consumes task/call budgets")
-    args = parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def completion_for(args):
+    """Validate opt-in settings before credentials, SQL setup or provider use."""
+    from app.research.model import CompletionSpec
+    return CompletionSpec(endpoint='https://api.siliconflow.cn/v1/chat/completions',model_id=args.model,
+        timeout_seconds=args.model_timeout,max_output_tokens=args.max_output_tokens,
+        extraction_protocol=args.extraction_protocol,response_format=args.response_format,
+        verification_protocol=args.verification_protocol,verification_context_policy=args.verification_context_policy)
+
+
+def reject_options(message):
+    print('error: '+message,file=sys.stderr)
+    raise SystemExit(2)
+
+
+def main():
+    args=parse_options()
+    try:completion=completion_for(args)
+    except ValueError:
+        reject_options('Invalid verification protocol/context combination')
     key = os.environ.get("RAG4_EVAL_API_KEY")
     if not key:
-        parser.error("Set RAG4_EVAL_API_KEY in memory; never pass it on the command line")
+        reject_options('Set RAG4_EVAL_API_KEY in memory; never pass it on the command line')
     cached_report = args.cached_run / "report.json"
     if hashlib.sha256(cached_report.read_bytes()).hexdigest() != args.cached_report_sha256:
-        parser.error("Cached report digest mismatch")
+        reject_options('Cached report digest mismatch')
     previous = json.loads(cached_report.read_text(encoding="utf-8"))
     if previous["status"] != "succeeded" or previous["config"]["dimension"] != 4096:
-        parser.error("A successful 4096-dimensional retrieval run is required")
+        reject_options('A successful 4096-dimensional retrieval run is required')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     # Set isolated configuration BEFORE importing any application SQL module.
@@ -69,7 +96,10 @@ def main():
     from evaluate_literature import PilotEmbedding
 
     report = {"schema_version": "research-comparison-result-v1", "status": "running",
+        "task_policies":{'plan_version':args.plan_version,'context_policy':args.context_policy,
+            'candidate_policy':args.candidate_policy,'verification_context_policy':args.verification_context_policy},
         "started_at": datetime.now(timezone.utc).isoformat(), "annotation_status": "machine_review_only",
+        "quality_gate_passed": False,
         "cached_report_sha256": args.cached_report_sha256,
         "network": {"siliconflow_no_proxy": "api.siliconflow.cn" in os.environ.get("NO_PROXY", "")},
         "network_retry_limit": int(args.retry_network_once), "retry_events": [],
@@ -156,17 +186,19 @@ def main():
         report["activation_rehearsal"].append(versions.switch_version(1, second.id, expected_revision=1, store=store))
         report["activation_rehearsal"].append(versions.switch_version(1, version.id, expected_revision=2, store=store))
         report["activation_rehearsal"].append(versions.switch_version(1, None, expected_revision=3, store=store))
-        completion = CompletionSpec(endpoint="https://api.siliconflow.cn/v1/chat/completions", model_id=args.model,
-            timeout_seconds=args.model_timeout, max_output_tokens=2048,
-            extraction_protocol=args.extraction_protocol, response_format=args.response_format)
         client = httpx.Client(timeout=httpx.Timeout(args.model_timeout, connect=8), limits=httpx.Limits(keepalive_expiry=60))
         report["network"]["caller_owned_connection_reuse"] = True
-        model = JsonResearchModel(completion, api_key=key, max_calls=8, client=client)
-        embedding = PilotEmbedding(api_key=key, model=build_spec.model_id, max_calls=4, client=client)
+        embedding = PilotEmbedding(api_key=key, model=build_spec.model_id,
+            max_calls=4 if args.plan_version=='research-comparison-v1' else len(pilot.papers)+1, client=client)
         report["completion_spec"], report["embedding_spec"] = completion.model_dump(), build_spec.model_dump()
         task = create_task(1, version.id, tuple(p.document_id for p in pilot.papers),
-            "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
-            completion=completion, budget=TaskBudget(), vector_store=store, task_store=tasks)
+            ("比较三篇论文" if len(pilot.papers)==3 else f"比较{len(pilot.papers)}篇论文")+
+            "的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+            completion=completion, budget=TaskBudget() if args.plan_version=='research-comparison-v1' else None,
+            plan_version=args.plan_version,context_policy=args.context_policy,candidate_policy=args.candidate_policy,
+            vector_store=store, task_store=tasks)
+        model = JsonResearchModel(completion, api_key=key, max_calls=task.budget.max_model_calls, client=client)
+        report['call_limits']={'completion':task.budget.max_model_calls,'embedding':embedding.max_calls}
 
         def context_factory(current):
             def fresh():
@@ -180,6 +212,9 @@ def main():
                 graph.replace_document(1, p.document_id, tuple(r for r in current.relations if r.document_id == p.document_id), corpus)
             retriever = FrozenVersionRetriever(current, corpus, manifest, SimpleNamespace(
                 embedding_base_url="https://api.siliconflow.cn/v1", embedding_api_key=key), store, model=embedding, research_facets=True)
+            if current.candidate_policy in {'lexical-fusion-v2','source-role-v3'}:
+                from app.research.lexical import LexicalEvidenceRetriever
+                retriever=LexicalEvidenceRetriever(corpus,retriever,source_role=current.candidate_policy=='source-role-v3')
             return ToolContext(current, corpus, HybridEvidenceEngine(corpus, retriever, graph), model, fresh)
 
         agent = ResearchAgent(tasks, context_factory)

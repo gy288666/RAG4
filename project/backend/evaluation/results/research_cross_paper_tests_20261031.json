@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-31",
+  "environment": "rag4-py3.11",
+  "scope": "diagnostic tooling only; production research implementation unchanged",
+  "command": "python -m pytest tests/test_cross_paper_experiment.py tests/test_verification_claim_file.py tests/test_verification_single_replay.py tests/test_single_claim_experiment.py tests/test_verification_facets.py tests/test_verification_handles.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "45 passed in 5.65s",
+  "passed": 45,
+  "failed": 0,
+  "skipped": 0,
+  "new_regression_cases": 13,
+  "earlier_result": "39 passed in 4.11s before offline score exit handling",
+  "semantic_gate": {
+    "command": "python scripts/evaluate_cross_paper_claims.py --score-report evaluation/results/research_cross_paper_20261031.json",
+    "status": "expectation_mismatch",
+    "exit_code": 2,
+    "extra_model_calls": 0
+  },
+  "full_suite_rerun": false,
+  "prior_full_suite": "509 passed in 501.85s (0:08:21)",
+  "unchanged_production_sha256": {
+    "app/api/v1/research.py": "c25fc88888bf014588341c31ba1bcfcab3273dd06dff8f0e6f1a75a9f0e45016",
+    "app/research/artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+    "app/research/model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+    "app/research/tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b"
+  },
+  "changed_source_sha256": {
+    "scripts/reverify_research_claims.py": "fe56ec48d8d87f2e5a62060c4fb62f27a1461869e7b46c032acf96ab7aea3048",
+    "scripts/evaluate_cross_paper_claims.py": "a17df0228eaccdc345688372d76b43834eefc0e2d0661f5f439962e90ee7c560",
+    "tests/test_verification_claim_file.py": "fc589e258fa95fe3feafd4d8e5281613c6456c1b5b88b14fe6407844c08251b1",
+    "tests/test_cross_paper_experiment.py": "c5ec5b403af85e3235acc46e43ba7de507ca0ec63493490e7262c6f0ee23e2dc"
+  },
+  "quality_gate_passed": false
+}

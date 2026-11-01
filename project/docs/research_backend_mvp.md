@@ -130,3 +130,43 @@ MySQL 8.4.9/3307 隔离库验证新增 DDL、中文 payload 往返和 stale-revi
 创建 API 新增可选 `candidate_policy="source-role-v3"`，仅对缺失索引文字的同篇候选进行来源角色排序；默认 vector-v1、既有 lexical-fusion-v2 保留。配置持久化在 ResearchTask，继续使用只读冻结语料和现有 EvidenceBundle 引用校验。
 
 离线六路对照补齐 q12 的 DPR 方法证据，配合 local-window-v3 的开发锚点覆盖为 53.13%、完整 8/16；未重新生成全部答案。新预算副本完成三份核验报告，保留原成功批次与全部失败，生成 4 条机器支持/8 缺口的部分表；有效方法误拒和局限分项误判仍存。续接工具、谱系与预算接口、命令和限制见 [R26 记录](research_continuation.md)。无新增依赖或迁移。
+
+## R28：按结论类别核验候选（2026-10-31）
+
+创建任务可显式选择 verification_protocol=facet-handles-v5，历史和默认仍为 numeric-model-v2。服务器通过 FacetRequirements/facet-scope-v1 为四个 facet 选择条件检查目标，模型操作 verify_facets，报告 exact-facet-handles-v5。仍需全部三项通过及精确来源编号校验；逐文档批次、合并、产物复查和历史身份已接入。v4 来源编号本身保持稳定。
+
+本轮用四次上限的原/新协议对照分别检验真实误判和合成迁移案例，不把契约测试通过当作语义准确。实现、预算、结果及限制见 [R28 记录](research_facet_verification.md)。无新增依赖、业务迁移、索引激活或前端实现。
+
+
+R28 最终全量 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**509 passed /501.85s**，无失败/跳过。真实v5读取超时，合成原/新均4/4；不声明真实修复或默认切换，详见上述R28记录。
+
+
+## R29：逐条诊断入口
+
+新增evaluate_single_claims.py及原复核脚本的显式输出预算与前后来源守卫。固定四次真实请求，单条v5两条正反例符合预期，v4为1/2。生产模块未改，不在verify_document内部隐式循环模型；先做独立样本与预算验证。相关32项通过，历史全量509项及摘要保留，详见 [R29记录](research_single_verification.md)。
+
+
+## R30：诊断Claim及语义红灯
+
+复核CLI新增与claim-id互斥的claim-file，文件仍须通过任务范围、精确引用和确定性身份验证。跨论文六例v5实测5/6，FiD背景方法误归属阻塞切换；离线score-report对该账本返回2，不能把请求成功算作质量通过。相关45项通过，生产研究代码及默认不变，详见 [R30记录](research_cross_paper_verification.md)。
+
+
+## R31：可选核验前文窗口
+
+创建API新增verification_context_policy（默认cited-chunk-v1），preceding-children-v1只与facet-handles-v5组合。ContextPart/VerificationContext持久化规范chunk引用和确定性窗口身份；最多两前序子片、6000字符，原support_ids目录不扩大，批次和成品复查来源。模型调用次数不增加，旧默认及历史身份保留。全量549 passed /265.06s；真实归属负例改善，正例ConnectTimeout未判断，不声明无退化。字段、预算、回滚与下一入口见 [R31记录](research_verification_context.md)。
+
+
+## R32：窗口复测与试点CLI
+
+preceding-children-v1在同六个冻结DPR/FiD案例上取得6/6开发预期符合，生产实现不改。evaluate_research_comparison.py新增显式计划/检索/核验/上下文设置和有限输出预算，v2预算沿用runtime准入，旧默认保留；无效组合提前拒绝。相关44项通过，历史全量549项记录保留；本轮未执行新端到端任务。运行命令、预算与限制见 [R32记录](research_context_suite.md)。
+
+
+## R33：新任务端到端、有界恢复与来源复核（2026-11-01）
+
+保留R28–R32及用户artifacts。按R32入口对DPR/FiD/REALM重新查询、抽取与逐篇核验，复用经绑定校验的旧文档向量。首轮6次Completion的最后REALM核验ReadTimeout，DPR/FiD检查点保留；不把失败记录改成成功。新增`resume_research_comparison.py`，仅在新SQLite副本对末篇网络失败显式恢复一次，随后合并/产物；拒绝语义错误、付费步骤未完成、预算不足、缺报告或凭据重定向。
+
+恢复成功；累计12/13步、7/8次Completion（6成功1超时），3批查询Embedding，无新增文档Embedding。已报Token合计36863，失败请求用量与费用未知。成功报告、原JSON和向量不变，Claim/引用/上下文/正式Artifact离线重建一致。执行后追加提供商绑定检查，原执行脚本摘要归档，最终测试源码摘要另存，无额外付费复跑。
+
+机器产物partial，12条中6条支持6缺口。Agent逐条来源复核发现REALM方法引文未支持所述训练目标，结果38.5/52.0遗漏CC-News条件；只从另存展示稿撤回2条，保留原机器判断和Artifact。展示稿4条/8待确认，未经人工验收。另记DPR数据集/FiD结果疑似误拒、DPR结果百分点问题、错误引用与背景归属；质量门槛仍false，不能将六例开发测试通过外推到新任务质量。
+
+最终相关24 passed /3.62s，新增11项，无失败/跳过；生产模块摘要与R31一致，未重复549项历史全量。无依赖、业务库访问、默认策略切换、前端、Neo4j、训练或GitHub推送。完整命令、实际文件、4份公开结果和下一切片见 [R33记录](research_context_end_to_end.md)。下一步修复本次声明引用匹配及条件核验，先验证语义收益，不追加索引设施。

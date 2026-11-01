@@ -1,0 +1,889 @@
+{
+  "schema": "verification-facet-comparison-v1",
+  "annotation_status": "development_ai_expectations",
+  "quality_gate_passed": false,
+  "max_model_calls": 4,
+  "calls": [
+    {
+      "operation": "verify_handles",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "source-handles-v4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 3971,
+        "completion_tokens": 1495,
+        "total_tokens": 5466
+      },
+      "elapsed_ms": 45029,
+      "group": "real"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "failed",
+      "usage": {},
+      "error_type": "ReadTimeout",
+      "elapsed_ms": 62303,
+      "group": "real"
+    },
+    {
+      "operation": "verify_handles",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "source-handles-v4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1482,
+        "completion_tokens": 1085,
+        "total_tokens": 2567
+      },
+      "elapsed_ms": 26270,
+      "group": "synthetic_transfer"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1690,
+        "completion_tokens": 1277,
+        "total_tokens": 2967
+      },
+      "elapsed_ms": 34251,
+      "group": "synthetic_transfer"
+    }
+  ],
+  "runs": [
+    {
+      "group": "real",
+      "protocol": "source-handles-v4",
+      "status": "succeeded",
+      "verification": {
+        "verifier_version": "exact-source-handles-v4",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+            "status": "insufficient",
+            "reason": "conditions:no_support_selected: 未具体说明数值结果，如精确匹配和零样本检索召回@5。"
+          },
+          {
+            "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+            "status": "insufficient",
+            "reason": "attribution:no_support_selected: 未直接提及REALM在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。; entailment:no_support_selected: 未直接提及REALM在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。"
+          },
+          {
+            "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+            "status": "insufficient",
+            "reason": "conditions:no_support_selected: 未具体说明不同预训练语料库上的性能差异。"
+          },
+          {
+            "claim_id": "claim_0054e9897f8d548abe17c3dd4814f65a2ee6e1ec7870271b592de49b30268a38",
+            "status": "insufficient",
+            "reason": "conditions:no_support_selected: 未具体说明数值结果，如精确匹配和零样本检索召回@5。"
+          }
+        ],
+        "supported": 0,
+        "total": 4,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review"
+        ],
+        "assessments": [
+          {
+            "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+            "attribution": {
+              "status": "supported",
+              "reason": "提及使用检索增强的语言模型预训练方法，通过优化语言模型的困惑度来训练检索器。",
+              "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+              "support_ids": [
+                "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+              ]
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未具体说明数值结果，如精确匹配和零样本检索召回@5。",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "明确说明了通过优化语言模型的困惑度来训练检索器。",
+              "support_quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.",
+              "support_ids": [
+                "support_2a0e403831e4c9871ee355c5731b1998950656b703192132bf32d628928741ef"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+            "attribution": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未直接提及REALM在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。",
+              "support_quote": ""
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "表格2显示了REALM在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。",
+              "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.",
+              "support_ids": [
+                "support_37a32891e072c93f552965ae15849ef9d5ffa8585d452456ada9cbc25f2bf2e6"
+              ]
+            },
+            "entailment": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未直接提及REALM在NQ开发集上的精确匹配和零样本检索召回@5的具体数值。",
+              "support_quote": ""
+            }
+          },
+          {
+            "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+            "attribution": {
+              "status": "supported",
+              "reason": "提及需要进一步研究以确定其对编码器和检索器的具体贡献。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+                "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+              ]
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未具体说明不同预训练语料库上的性能差异。",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "提及需要进一步研究以确定其对编码器和检索器的具体贡献。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_9c25119955b4579dcd866290e076b31ae7fcdaab89926caeda8f089d2cbf9de3",
+                "support_4eb2c5aaf604821a703be58b9adfcd1176137c3f78c9487de1732f354b81ae82"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_0054e9897f8d548abe17c3dd4814f65a2ee6e1ec7870271b592de49b30268a38",
+            "attribution": {
+              "status": "supported",
+              "reason": "提及通过分别重置检索器或编码器参数，再进行微调，考察预训练对两个组件的贡献。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_74a49e5686f5fd3bec1c9739a8e18f1ab898d9295936fb4983c30e2bec3ff3ba",
+                "support_c18330bb4b1379370c564b04aa15885570eccebe8bcbf82534444ade673da8d9"
+              ]
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未具体说明数值结果，如精确匹配和零样本检索召回@5。",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "提及通过分别重置检索器或编码器参数，再进行微调，考察预训练对两个组件的贡献。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_74a49e5686f5fd3bec1c9739a8e18f1ab898d9295936fb4983c30e2bec3ff3ba",
+                "support_c18330bb4b1379370c564b04aa15885570eccebe8bcbf82534444ade673da8d9"
+              ]
+            }
+          }
+        ]
+      },
+      "rows": [
+        {
+          "case_id": "real_method",
+          "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+          "expected": "supported",
+          "actual": "insufficient",
+          "verdict_matches": false,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "insufficient",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported"
+          },
+          "checks_match": false
+        },
+        {
+          "case_id": "real_missing_condition",
+          "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+          "expected": "not_supported",
+          "actual": "insufficient",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "insufficient",
+            "conditions": "supported",
+            "entailment": "insufficient"
+          },
+          "required_checks": {
+            "conditions": "not_supported"
+          },
+          "checks_match": false
+        },
+        {
+          "case_id": "real_invented_future_work",
+          "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+          "expected": "not_supported",
+          "actual": "insufficient",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "insufficient",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "entailment": "not_supported"
+          },
+          "checks_match": false
+        },
+        {
+          "case_id": "real_completed_investigation",
+          "claim_id": "claim_0054e9897f8d548abe17c3dd4814f65a2ee6e1ec7870271b592de49b30268a38",
+          "expected": "supported",
+          "actual": "insufficient",
+          "verdict_matches": false,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "insufficient",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "checks_match": false
+        }
+      ],
+      "verdict_matches": 2,
+      "complete_matches": 0
+    },
+    {
+      "group": "real",
+      "protocol": "facet-handles-v5",
+      "status": "failed",
+      "error_type": "RuntimeError",
+      "diagnostics": []
+    },
+    {
+      "group": "synthetic_transfer",
+      "protocol": "source-handles-v4",
+      "status": "succeeded",
+      "verification": {
+        "verifier_version": "exact-source-handles-v4",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+            "status": "supported",
+            "reason": "all_source_checks_supported"
+          },
+          {
+            "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+            "status": "insufficient",
+            "reason": "attribution:no_support_selected: 推理时独立编码每个段落; conditions:no_support_selected: 推理时独立编码每个段落; entailment:no_support_selected: 推理时独立编码每个段落"
+          },
+          {
+            "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+            "status": "supported",
+            "reason": "all_source_checks_supported"
+          },
+          {
+            "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+            "status": "insufficient",
+            "reason": "conditions:no_support_selected: 未提供具体贡献信息; entailment:no_support_selected: 未提供具体贡献信息"
+          }
+        ],
+        "supported": 2,
+        "total": 4,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review"
+        ],
+        "assessments": [
+          {
+            "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+            "attribution": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+            "attribution": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 推理时独立编码每个段落",
+              "support_quote": ""
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 推理时独立编码每个段落",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 推理时独立编码每个段落",
+              "support_quote": ""
+            }
+          },
+          {
+            "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+            "attribution": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+            "attribution": {
+              "status": "supported",
+              "reason": "直接引用",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_88a3a41a51ad519a64f774901ed7d202696b4cd8af9856cfff79e11ca4c64532"
+              ]
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未提供具体贡献信息",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 未提供具体贡献信息",
+              "support_quote": ""
+            }
+          }
+        ]
+      },
+      "rows": [
+        {
+          "case_id": "transfer_method",
+          "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+          "expected": "supported",
+          "actual": "supported",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_wrong_stage",
+          "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+          "expected": "not_supported",
+          "actual": "insufficient",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "insufficient",
+            "conditions": "insufficient",
+            "entailment": "insufficient"
+          },
+          "required_checks": {
+            "entailment": "not_supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_limitation",
+          "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+          "expected": "supported",
+          "actual": "supported",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_conjunction",
+          "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+          "expected": "not_supported",
+          "actual": "insufficient",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "insufficient",
+            "entailment": "insufficient"
+          },
+          "required_checks": {
+            "entailment": "not_supported"
+          },
+          "checks_match": true
+        }
+      ],
+      "verdict_matches": 4,
+      "complete_matches": 4
+    },
+    {
+      "group": "synthetic_transfer",
+      "protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "verification": {
+        "verifier_version": "exact-facet-handles-v5",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+            "status": "supported",
+            "reason": "all_source_checks_supported"
+          },
+          {
+            "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+            "status": "contradicted",
+            "reason": "attribution:原文明确说明了推理时独立编码每个段落; conditions:原文明确说明了推理时独立编码每个段落; entailment:原文明确说明了推理时独立编码每个段落"
+          },
+          {
+            "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+            "status": "supported",
+            "reason": "all_source_checks_supported"
+          },
+          {
+            "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+            "status": "insufficient",
+            "reason": "attribution:no_support_selected: 原文未提及编码器和检索器各自的贡献; conditions:no_support_selected: 原文未提及编码器和检索器各自的贡献; entailment:no_support_selected: 原文未提及编码器和检索器各自的贡献"
+          }
+        ],
+        "supported": 2,
+        "total": 4,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review"
+        ],
+        "assessments": [
+          {
+            "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+            "attribution": {
+              "status": "supported",
+              "reason": "直接引用了原文",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "原文明确说明了推理时独立编码每个段落",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "原文直接支持该陈述",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_c4d1e6f1558a2283f5a38431f2871ef12d4a32252c11cac899e3ed969033ad9b"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+            "attribution": {
+              "status": "contradicted",
+              "reason": "原文明确说明了推理时独立编码每个段落",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_8c64f431873d50503ad5586f9d9a01c5d34d66cd6f4b254fbf75a89cb6b6c4e0"
+              ]
+            },
+            "conditions": {
+              "status": "contradicted",
+              "reason": "原文明确说明了推理时独立编码每个段落",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_8c64f431873d50503ad5586f9d9a01c5d34d66cd6f4b254fbf75a89cb6b6c4e0"
+              ]
+            },
+            "entailment": {
+              "status": "contradicted",
+              "reason": "原文明确说明了推理时独立编码每个段落",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_8c64f431873d50503ad5586f9d9a01c5d34d66cd6f4b254fbf75a89cb6b6c4e0"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+            "attribution": {
+              "status": "supported",
+              "reason": "直接引用了原文",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "原文明确指出方法在手写文档上失败",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "原文明确指出方法在手写文档上失败",
+              "support_quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents.",
+              "support_ids": [
+                "support_05aee6ae9c9d8851c84c4d6bc177e2948e3a63e127ee828922dc9ed8ab8c0fc3"
+              ]
+            }
+          },
+          {
+            "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+            "attribution": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 原文未提及编码器和检索器各自的贡献",
+              "support_quote": ""
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 原文未提及编码器和检索器各自的贡献",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "insufficient",
+              "reason": "no_support_selected: 原文未提及编码器和检索器各自的贡献",
+              "support_quote": ""
+            }
+          }
+        ]
+      },
+      "rows": [
+        {
+          "case_id": "transfer_method",
+          "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+          "expected": "supported",
+          "actual": "supported",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_wrong_stage",
+          "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+          "expected": "not_supported",
+          "actual": "contradicted",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "contradicted",
+            "conditions": "contradicted",
+            "entailment": "contradicted"
+          },
+          "required_checks": {
+            "entailment": "not_supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_limitation",
+          "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+          "expected": "supported",
+          "actual": "supported",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "supported",
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "required_checks": {
+            "conditions": "supported",
+            "entailment": "supported"
+          },
+          "checks_match": true
+        },
+        {
+          "case_id": "transfer_conjunction",
+          "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+          "expected": "not_supported",
+          "actual": "insufficient",
+          "verdict_matches": true,
+          "checks": {
+            "attribution": "insufficient",
+            "conditions": "insufficient",
+            "entailment": "insufficient"
+          },
+          "required_checks": {
+            "entailment": "not_supported"
+          },
+          "checks_match": true
+        }
+      ],
+      "verdict_matches": 4,
+      "complete_matches": 4
+    }
+  ],
+  "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+  "fixture_sha256": "1b4bad39373753cf0cf07a0248f18ac4c8789770121641ee87637ff38ac1c8cb",
+  "business_database_modified": false,
+  "new_extraction": false,
+  "limitations": [
+    "AI-authored cases are not human validation or an independent holdout",
+    "Four real diagnostic claims and four synthetic cases do not measure all paper comparison quality"
+  ],
+  "code_sha256": {
+    "evaluate_verification_facets.py": "9bbf91c7a250cc3fd8d2131815ef1e55da35573353499fc487e93620acdd8ee6",
+    "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+    "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+    "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+    "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+    "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+    "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+    "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+    "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+    "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+    "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+    "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+    "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+    "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+  },
+  "fixture": [
+    {
+      "group": "real",
+      "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+      "cases": [
+        {
+          "case_id": "real_method",
+          "claim": {
+            "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+            "document_id": "realm",
+            "facet": "method",
+            "statement": "REALM使用检索增强的语言模型预训练方法，通过优化语言模型的困惑度来训练检索器。",
+            "citation": {
+              "chunk_id": "chunk_809535800bc7f2e4682e21fd18982fd7a6bc843a53145a892bffed43986ca4e6",
+              "char_start": 0,
+              "char_end": 419,
+              "quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized."
+            }
+          },
+          "expected": "supported",
+          "required_checks": {
+            "conditions": "supported"
+          }
+        },
+        {
+          "case_id": "real_missing_condition",
+          "claim": {
+            "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+            "document_id": "realm",
+            "facet": "result",
+            "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。",
+            "citation": {
+              "chunk_id": "chunk_fc58b5432be75214e2550ef8cbe432afe0065e4bf58254375e97ab130a514d8f",
+              "char_start": 0,
+              "char_end": 589,
+              "quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13."
+            }
+          },
+          "expected": "not_supported",
+          "required_checks": {
+            "conditions": "not_supported"
+          }
+        },
+        {
+          "case_id": "real_invented_future_work",
+          "claim": {
+            "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+            "document_id": "realm",
+            "facet": "limitation",
+            "statement": "REALM的性能在不同预训练语料库上有所差异，且需要进一步研究以确定其对编码器和检索器的具体贡献。",
+            "citation": {
+              "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+              "char_start": 0,
+              "char_end": 1394,
+              "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n"
+            }
+          },
+          "expected": "not_supported",
+          "required_checks": {
+            "entailment": "not_supported"
+          }
+        },
+        {
+          "case_id": "real_completed_investigation",
+          "claim": {
+            "claim_id": "claim_0054e9897f8d548abe17c3dd4814f65a2ee6e1ec7870271b592de49b30268a38",
+            "document_id": "realm",
+            "facet": "method",
+            "statement": "通过分别重置检索器或编码器参数，再进行微调，考察预训练对两个组件的贡献。",
+            "citation": {
+              "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+              "char_start": 0,
+              "char_end": 1394,
+              "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n"
+            }
+          },
+          "expected": "supported",
+          "required_checks": {
+            "conditions": "supported",
+            "entailment": "supported"
+          }
+        }
+      ]
+    },
+    {
+      "group": "synthetic_transfer",
+      "corpus_id": "corpus_f67bc90344d62482a7f64f66ac2f29aa46a5f8d0a983b5124b011ccc5ab7dc59",
+      "cases": [
+        {
+          "case_id": "transfer_method",
+          "claim": {
+            "claim_id": "claim_4e0fec585243392517423091fa3c0618a4cdd153c6a66ad3dcedb13a033bd1d7",
+            "document_id": "synthetic",
+            "facet": "method",
+            "statement": "推理时独立编码每个段落。",
+            "citation": {
+              "chunk_id": "chunk_704b953956b1c340990149cb5814b84022428d058dbd4c955cb5cf41d6647445",
+              "char_start": 0,
+              "char_end": 208,
+              "quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents."
+            }
+          },
+          "expected": "supported",
+          "required_checks": {
+            "conditions": "supported"
+          }
+        },
+        {
+          "case_id": "transfer_wrong_stage",
+          "claim": {
+            "claim_id": "claim_1cf206c1a4f7e495446d2963f49d97847bf1b6f9cc56cef9df6f5eda28110a29",
+            "document_id": "synthetic",
+            "facet": "method",
+            "statement": "仅在训练时独立编码段落，推理时不独立编码。",
+            "citation": {
+              "chunk_id": "chunk_704b953956b1c340990149cb5814b84022428d058dbd4c955cb5cf41d6647445",
+              "char_start": 0,
+              "char_end": 208,
+              "quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents."
+            }
+          },
+          "expected": "not_supported",
+          "required_checks": {
+            "entailment": "not_supported"
+          }
+        },
+        {
+          "case_id": "transfer_limitation",
+          "claim": {
+            "claim_id": "claim_62c1468fb00060226fd8039746fa541062e8f1ccacc834d0d49746ad255a2d61",
+            "document_id": "synthetic",
+            "facet": "limitation",
+            "statement": "该方法在手写文档上失败。",
+            "citation": {
+              "chunk_id": "chunk_704b953956b1c340990149cb5814b84022428d058dbd4c955cb5cf41d6647445",
+              "char_start": 0,
+              "char_end": 208,
+              "quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents."
+            }
+          },
+          "expected": "supported",
+          "required_checks": {
+            "conditions": "supported",
+            "entailment": "supported"
+          }
+        },
+        {
+          "case_id": "transfer_conjunction",
+          "claim": {
+            "claim_id": "claim_568f13c85af6845dbff87a40aeb662dda6fba29d5f36591ad37a02423d748049",
+            "document_id": "synthetic",
+            "facet": "limitation",
+            "statement": "该方法在手写文档上失败，且尚不清楚编码器和检索器各自的贡献。",
+            "citation": {
+              "chunk_id": "chunk_704b953956b1c340990149cb5814b84022428d058dbd4c955cb5cf41d6647445",
+              "char_start": 0,
+              "char_end": 208,
+              "quote": "We encode each passage independently during inference. We reset the encoder and retriever separately and found both components improve accuracy. A limitation of our method is failure on handwritten documents."
+            }
+          },
+          "expected": "not_supported",
+          "required_checks": {
+            "entailment": "not_supported"
+          }
+        }
+      ]
+    }
+  ],
+  "fixture_digest_format": "UTF-8 JSON with LF line endings before Windows text-mode translation",
+  "fixture_file_sha256": "fc4756f585d8e705a3a5f44aeb7f276b392ac37e45f2fb113dd2fe1508f469ad",
+  "reported_tokens": 11000,
+  "failed_request_usage": "unknown",
+  "currency_cost": "unknown",
+  "conclusion": "Real v5 timed out; no evidence of real semantic improvement. Synthetic groups both 4/4; no default switch."
+}

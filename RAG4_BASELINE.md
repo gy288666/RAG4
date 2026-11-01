@@ -459,3 +459,57 @@ HEAD 基于 d65992a。新增 research-comparison-v2、VerificationBatch、verify
 ## 2026-10-26：GitHub 交付核对
 
 R25–R26 代码、测试与实验记录纳入本批 GitHub 同步；15份源码摘要与既有494项全量通过记录一致，无新模型请求或业务迁移。用户截图与运行数据保留本地。完整交付核对见 [开发记录 R27](project/docs/development_process.md)。此前各轮“未推送”描述为对应开发时的历史状态，最终提交以 main Git 历史为准；质量门槛仍未通过。
+
+
+## 2026-10-31 R28：结论类别核验候选
+
+新增 FacetRequirements/requirements_for、策略版本 facet-scope-v1，可选 facet-handles-v5 / exact-facet-handles-v5 / verify_facets。四类结论分别检查条件目标，三项来源审核、数字检查与成品复查保留；旧默认及 v2/v3/v4 行为不变。API、批次范围、合并、SQL恢复与产物身份已接入。新增有限四请求对照脚本与契约回归，无新依赖或迁移。
+
+真实旧报告复现方法误拒和虚构未来工作分项误支持。新对照四请求、三成功/一 ReadTimeout，11000已报Token，失败用量/货币未知。真实 v4 最终2/4符合预期，指定分项均不符合；真实 v5 超时不可评分；合成两种协议均4/4。未证实真实语义改善，不切换默认，不覆盖旧表或声称Phase1–5验收完成。源码/测试/调用预算与完整账本见 [R28记录](project/docs/research_facet_verification.md)。相关55 passed /44.68s，之后新增两项随全量执行；最终全量 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：**509 passed /501.85s**，无失败或跳过，新增15项；源码摘要见 `project/backend/evaluation/results/research_facet_tests_20261031.json`。
+
+
+## 2026-10-31 R29：真实单条核验与脚本来源守卫
+
+新增evaluate_single_claims.py固定四请求对照；reverify_research_claims.py新增显式输出上限、验证覆盖参数、调用前后来源身份守卫，旧默认8192保留，对照明确4096。新目录复制SQLite，来源/实现/结论谱系不匹配即拒绝，失败保留，不隐藏重试。没有改动R28生产研究模块。
+
+两条真实结论×v4/v5共四请求均成功，6012已报Token，费用未知。方法单条v4仍误拒，v5获得支持；虚构未来工作在两种单条协议下均拒绝且entailment不支持。v4为1/2，v5为2/2，不证明普遍准确率、因果或人工验收。旧任务/旧表保留，不把子集产物拼为全量比较结果，也不隐式增加生产文档工具调用次数。
+
+相关测试32 passed /3.61s，新增10项；R28完整509 passed /501.85s为历史验证，生产模块摘要一致，本轮没有重复运行全量。命令、文件、预算和结果见 [R29记录](project/docs/research_single_verification.md)，测试摘要见 `project/backend/evaluation/results/research_single_tests_20261031.json`。无依赖、迁移、训练、前端或GitHub推送。
+
+
+## 2026-10-31 R30：跨论文案例与归属阻塞
+
+新增诊断--claim-file，验证文档范围、原文区间与Claim身份，且与--claim-id互斥。新增六请求的跨论文评测脚本、冻结案例摘要、失败保留及离线评分状态。六次v5请求均成功、8118已报Token、费用未知；五个案例最终及指定分项符合预期，FiD背景方法归属被错误支持，默认不切换。
+
+离线实际读取原引文、父片和前两个子片：当前引文与父片均从However,it开始，前文才提及Roberts等人方法；均在PDF第1页。只是定位，不代表归属错误已修复，不能用父片展开替代实际前文验证。追加的离线评分入口在当前报告返回expectation_mismatch/退出2/额外模型调用0，保存原请求及后续评分源码摘要，冻结案例不改。
+
+相关45 passed /5.65s，新增13项；生产研究模块摘要仍与R28的509项全量通过一致，本轮未重复全量。文件、命令、结果和限制见 [R30记录](project/docs/research_cross_paper_verification.md)。无依赖、业务迁移、索引激活、前端、训练或GitHub推送。
+
+
+## 2026-10-31 R31：有来源的核验前文窗口
+
+新增ContextPart、VerificationContext、build_context，以及CompletionSpec/API/CLI显式verification_context_policy。旧默认cited-chunk-v1及序列化身份保留，preceding-children-v1仅供v5，使用同文档最多两个前序子片，跨父片、最多6000字符、重复锚点安全降级，原引文support_ids不扩大。报告窗口持久化、批次策略校验/合并及ArtifactComposer来源复查已接通，无新依赖或迁移。
+
+先模块缺失红灯，后批次测试发现合并丢失新字段，修复后相关70 passed /26.06s。最终全量 `python -m pytest -o addopts='' -q --tb=short --show-capture=no`：549 passed /265.06s，无失败/跳过；本切片新增17项，覆盖R29/R30此前新增测试，全量比R28增加40项。源码摘要见 `project/backend/evaluation/results/research_context_tests_20261031.json`。
+
+真实四请求三成功一ConnectTimeout，5209已报Token，失败用量/货币未知。FiD归属负例旧窗口仍接受，新窗口1241字符补足前文后拒绝；新窗口正例未获判断，不能证明无退化或人工质量通过。旧引用/产物/索引和默认保留，无active切换或GitHub推送，完整记录见 [R31记录](project/docs/research_verification_context.md)。
+
+
+## 2026-10-31 R32：新窗口六例复测与运行入口
+
+在R31实现与提示词不变时，以完整模块清单/源码/任务/复核脚本摘要冻结控制，六条相同DPR/FiD案例单条v5新窗口均成功，最终及指定分项6/6符合开发预期，15258已报Token，费用未知。三个正例全部支持、三个负例全部拒绝，补齐上次正例ConnectTimeout；旧网络失败和R30语义错误不改。只是开发观察，不证明人工质量或普遍无回归。
+
+诊断脚本新增显式上下文策略和互斥控制报告入口；既有端到端试点增加计划、检索、核验及输出上限参数，旧默认保留，配置早期校验，Completion调用上限绑定TaskBudget，查询Embedding有独立有限上限。运行报告明确质量门槛false和所选策略。入口已准备，本轮未执行新端到端研究任务或追加模型请求。
+
+相关44 passed /2.22s，新增10项；生产实现与R31完整549项通过记录摘要一致，本轮未重复全量。命令、文件、六例结果和下一切片见 [R32记录](project/docs/research_context_suite.md)。无依赖、迁移、默认切换、前端、训练或GitHub推送。
+
+
+## R33：新任务端到端、有界恢复与来源复核（2026-11-01）
+
+保留R28–R32及用户artifacts。按R32入口对DPR/FiD/REALM重新查询、抽取与逐篇核验，复用经绑定校验的旧文档向量。首轮6次Completion的最后REALM核验ReadTimeout，DPR/FiD检查点保留；不把失败记录改成成功。新增`resume_research_comparison.py`，仅在新SQLite副本对末篇网络失败显式恢复一次，随后合并/产物；拒绝语义错误、付费步骤未完成、预算不足、缺报告或凭据重定向。
+
+恢复成功；累计12/13步、7/8次Completion（6成功1超时），3批查询Embedding，无新增文档Embedding。已报Token合计36863，失败请求用量与费用未知。成功报告、原JSON和向量不变，Claim/引用/上下文/正式Artifact离线重建一致。执行后追加提供商绑定检查，原执行脚本摘要归档，最终测试源码摘要另存，无额外付费复跑。
+
+机器产物partial，12条中6条支持6缺口。Agent逐条来源复核发现REALM方法引文未支持所述训练目标，结果38.5/52.0遗漏CC-News条件；只从另存展示稿撤回2条，保留原机器判断和Artifact。展示稿4条/8待确认，未经人工验收。另记DPR数据集/FiD结果疑似误拒、DPR结果百分点问题、错误引用与背景归属；质量门槛仍false，不能将六例开发测试通过外推到新任务质量。
+
+最终相关24 passed /3.62s，新增11项，无失败/跳过；生产模块摘要与R31一致，未重复549项历史全量。无依赖、业务库访问、默认策略切换、前端、Neo4j、训练或GitHub推送。完整命令、实际文件、4份公开结果和下一切片见 [R33记录](project/docs/research_context_end_to_end.md)。下一步修复本次声明引用匹配及条件核验，先验证语义收益，不追加索引设施。

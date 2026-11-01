@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-31",
+  "environment": "rag4-py3.11",
+  "scope": "trial/diagnostic scripts and tests; production research implementation unchanged",
+  "command": "python -m pytest tests/test_research_pilot_options.py tests/test_cross_paper_experiment.py tests/test_verification_context.py tests/test_verification_claim_file.py tests/test_verification_single_replay.py tests/test_context_experiment.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "44 passed in 2.22s",
+  "passed": 44,
+  "failed": 0,
+  "skipped": 0,
+  "new_regression_cases": 10,
+  "full_suite_rerun": false,
+  "prior_full_suite": "549 passed in 265.06s (0:04:25)",
+  "prior_full_record_sha256": "5b16a1512ac02cc9fdaa18d6c11edc16b5bab5342b45a6158378a3e763c47087",
+  "unchanged_production_sha256": {
+    "app/api/v1/research.py": "a96ed4d64fede6c764f0d95d9613adde88f2075231d21566a5b31c313eb0d082",
+    "app/research/artifacts.py": "34f977ff04696371d9a7078b6b84e7762e1a997a042787928f9fb2956e0ffc17",
+    "app/research/model.py": "02b1d0743788f02e96511c935b114a3bf15180144f245b444c9dfddf4dd58f05",
+    "app/research/tasks.py": "c183e4c44ae27a53d65055a8cee982e60e613fb12b84c738a9486de95c8ec2fc",
+    "app/research/tools.py": "ee7af484579d9dea03961ca777ddc670c3e96ba5abf588a1956ad0d4fa85d46a",
+    "app/research/verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b"
+  },
+  "changed_source_sha256": {
+    "scripts/evaluate_cross_paper_claims.py": "4aca67d49325b755aa6c48175078e77b0634fca1fbd43f913e11b1af9077e4c7",
+    "scripts/evaluate_research_comparison.py": "18c5a811709eddaacc1e50e245cae1b9020b2863150f6edb198331125a1adcef",
+    "tests/test_cross_paper_experiment.py": "00b8d85f692566c6524241f9b5ac318aaee4a24d30aef485e1c6f8a3d3938522",
+    "tests/test_research_pilot_options.py": "87ede6206bb50ca2d562c35b5bec3ce9389c43ee2bae251debe3c424adced7cd"
+  },
+  "offline_case_score": {
+    "diagnostic_status": "development_expectations_met",
+    "exit_code": 0,
+    "extra_model_calls": 0
+  },
+  "quality_gate_passed": false,
+  "end_to_end_trial_executed": false
+}

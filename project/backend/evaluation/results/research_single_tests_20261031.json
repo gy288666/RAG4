@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-31",
+  "environment": "rag4-py3.11",
+  "scope": "diagnostic tooling and tests; production modules unchanged from R28",
+  "command": "python -m pytest tests/test_verification_single_replay.py tests/test_single_claim_experiment.py tests/test_verification_facets.py tests/test_verification_handles.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "32 passed in 3.61s",
+  "passed": 32,
+  "failed": 0,
+  "skipped": 0,
+  "new_regression_cases": 10,
+  "full_suite_rerun": false,
+  "prior_full_suite": "509 passed in 501.85s (0:08:21)",
+  "prior_full_suite_record_sha256": "8db256278a43c28d88802ce12f2e2c7d25830c7638ea9d3578bbb444ca4631b7",
+  "unchanged_production_sha256": {
+    "app/api/v1/research.py": "c25fc88888bf014588341c31ba1bcfcab3273dd06dff8f0e6f1a75a9f0e45016",
+    "app/research/artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+    "app/research/model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+    "app/research/tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b"
+  },
+  "changed_source_sha256": {
+    "scripts/reverify_research_claims.py": "f2049726ee9d16183a0ee282a4999a0c2b87652a5206c06c9073846d8f6fb506",
+    "scripts/evaluate_single_claims.py": "4c6e69a75f4ce4e10df22313cba19ba08ce0e1e312b344d2e09be18027264352",
+    "tests/test_verification_single_replay.py": "87b0770d7314131023eb3268c27c6edd7dd520c8cd423d00d57b0e2024038273",
+    "tests/test_single_claim_experiment.py": "dee805db3aa74ae8aed688f8aacf17c9e63f8c71b99c5a31d89742d488260e04"
+  },
+  "quality_gate_passed": false
+}

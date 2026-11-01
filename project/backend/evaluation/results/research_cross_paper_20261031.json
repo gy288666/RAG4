@@ -1,0 +1,1533 @@
+{
+  "schema": "cross-paper-claim-diagnostic-v1",
+  "max_requests": 6,
+  "protocol": "facet-handles-v5",
+  "quality_gate_passed": false,
+  "annotation_status": "development_ai_expectations",
+  "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+  "control_tests_sha256": "f0608317b7576663dc544c1ca055fe4cac26094d09046b989453c5fadec043ae",
+  "fixture_sha256": "fdba57cf9c08ea865b409e3230f50561f60aa7b3e27793a66d9b89f8824984b1",
+  "cases": [
+    {
+      "case_id": "dpr_qualified_result",
+      "source_claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+      "claim": {
+        "claim_id": "claim_ef28825dcf2b89c01d2953e5ce53182078813b3c8b75a29215875d6702c11c42",
+        "document_id": "dpr",
+        "facet": "result",
+        "statement": "在Natural Questions开发集上，使用1,000个训练样本的DPR已经优于BM25。",
+        "citation": {
+          "chunk_id": "chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a",
+          "char_start": 0,
+          "char_end": 587,
+          "quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage."
+        }
+      },
+      "expected": "supported",
+      "required_checks": {
+        "conditions": "supported"
+      }
+    },
+    {
+      "case_id": "dpr_omitted_conditions",
+      "source_claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+      "claim": {
+        "claim_id": "claim_e8ca52ebdba3048edd66a6f23acd217d62101509fc47a35a8670b444e79ccaff",
+        "document_id": "dpr",
+        "facet": "result",
+        "statement": "DPR在所有数据集上均优于BM25，不受训练样本数量和评估集影响。",
+        "citation": {
+          "chunk_id": "chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a",
+          "char_start": 0,
+          "char_end": 587,
+          "quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage."
+        }
+      },
+      "expected": "not_supported",
+      "required_checks": {
+        "conditions": "not_supported"
+      }
+    },
+    {
+      "case_id": "dpr_explicit_limitation",
+      "source_claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+      "claim": {
+        "claim_id": "claim_688e28b4b9dacc91df3088a1aef758bd77348cdefb22292b0c9565b7541dbdfd",
+        "document_id": "dpr",
+        "facet": "limitation",
+        "statement": "在缺少给定段落时，SQuAD的许多问题缺少上下文，因此它并非理想的开放域问答数据集。",
+        "citation": {
+          "chunk_id": "chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2",
+          "char_start": 0,
+          "char_end": 486,
+          "quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+        }
+      },
+      "expected": "supported",
+      "required_checks": {
+        "conditions": "supported",
+        "entailment": "supported"
+      }
+    },
+    {
+      "case_id": "dpr_mixed_scope",
+      "source_claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+      "claim": {
+        "claim_id": "claim_fab6d06a63eae40b5309057e66e8bbc4c157c018065b49b68a659c6bc750a408",
+        "document_id": "dpr",
+        "facet": "limitation",
+        "statement": "在缺少给定段落时，SQuAD的许多问题缺少上下文，因此DPR无法处理任何开放域问答数据集。",
+        "citation": {
+          "chunk_id": "chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2",
+          "char_start": 0,
+          "char_end": 486,
+          "quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+        }
+      },
+      "expected": "not_supported",
+      "required_checks": {
+        "entailment": "not_supported"
+      }
+    },
+    {
+      "case_id": "fid_own_method",
+      "source_claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+      "claim": {
+        "claim_id": "claim_015b260786c140d66422d09646052c454f3f0ac4f4563507038a7f947f260d7b",
+        "document_id": "fid",
+        "facet": "method",
+        "statement": "Fusion-in-Decoder在编码器中独立处理各段落，在解码器中联合处理段落表示。",
+        "citation": {
+          "chunk_id": "chunk_e6227d6e214b5fd71ca1e29c73b6a4db5f377add2938c1c8e2f613d4e4b2577f",
+          "char_start": 0,
+          "char_end": 1509,
+          "quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. (2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. "
+        }
+      },
+      "expected": "supported",
+      "required_checks": {
+        "attribution": "supported",
+        "conditions": "supported"
+      }
+    },
+    {
+      "case_id": "fid_wrong_attribution",
+      "source_claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+      "claim": {
+        "claim_id": "claim_2fbc7994c71690dd209c3a8b15f304151b41cb8e4de88e778f869e707e09e8ee",
+        "document_id": "fid",
+        "facet": "limitation",
+        "statement": "Fusion-in-Decoder本身必须把所有信息存入模型权重，因而需要数十亿参数且查询和训练成本昂贵。",
+        "citation": {
+          "chunk_id": "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b",
+          "char_start": 0,
+          "char_end": 549,
+          "quote": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist."
+        }
+      },
+      "expected": "not_supported",
+      "required_checks": {
+        "attribution": "not_supported"
+      }
+    }
+  ],
+  "calls": [
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 939,
+        "completion_tokens": 404,
+        "total_tokens": 1343
+      },
+      "elapsed_ms": 13965,
+      "case_id": "dpr_qualified_result"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 927,
+        "completion_tokens": 195,
+        "total_tokens": 1122
+      },
+      "elapsed_ms": 7049,
+      "case_id": "dpr_omitted_conditions"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 872,
+        "completion_tokens": 381,
+        "total_tokens": 1253
+      },
+      "elapsed_ms": 13112,
+      "case_id": "dpr_explicit_limitation"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 877,
+        "completion_tokens": 268,
+        "total_tokens": 1145
+      },
+      "elapsed_ms": 11571,
+      "case_id": "dpr_mixed_scope"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1499,
+        "completion_tokens": 474,
+        "total_tokens": 1973
+      },
+      "elapsed_ms": 19864,
+      "case_id": "fid_own_method"
+    },
+    {
+      "operation": "verify_facets",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 906,
+        "completion_tokens": 376,
+        "total_tokens": 1282
+      },
+      "elapsed_ms": 12529,
+      "case_id": "fid_wrong_attribution"
+    }
+  ],
+  "runs": [
+    {
+      "case_id": "dpr_qualified_result",
+      "exit_code": 0,
+      "report_sha256": "70ac22d86de115990eb05e01167f549f6a4eeadf091df6543fdb89172bf1c092",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_ef28825dcf2b89c01d2953e5ce53182078813b3c8b75a29215875d6702c11c42"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "09c76438e45d6c56cc08d33be555f874a52f6bf7dad9a17658007f997fd4a939",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_ef28825dcf2b89c01d2953e5ce53182078813b3c8b75a29215875d6702c11c42",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_ef28825dcf2b89c01d2953e5ce53182078813b3c8b75a29215875d6702c11c42",
+              "attribution": {
+                "status": "supported",
+                "reason": "具体提及了使用1,000个训练样本的DPR在Natural Questions开发集上优于BM25。",
+                "support_quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage.",
+                "support_ids": [
+                  "support_36aa88062cd9bb788547b08d151ca8c58a792b9d41757107d64e07757c109ccf"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "明确指出了实验条件，包括使用的数据集和训练样本数量。",
+                "support_quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage.",
+                "support_ids": [
+                  "support_36aa88062cd9bb788547b08d151ca8c58a792b9d41757107d64e07757c109ccf"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "该陈述是直接从提供的文本中得出的，无需进一步推理。",
+                "support_quote": "The results are measured on the de-\nvelopment set of Natural Questions. Our DPR trained\nusing 1,000 examples already outperforms BM25.\ntiple datasets, TREC, the smallest dataset of the\nﬁve, beneﬁts greatly from more training examples.\nIn contrast, Natural Questions and WebQuestions\nimprove modestly and TriviaQA degrades slightly.\nResults can be improved further in some cases by\ncombining DPR with BM25 in both single- and\nmulti-dataset settings.\nWe conjecture that the lower performance on\nSQuAD is due to two reasons. First, the annota-\ntors wrote questions after seeing the passage.",
+                "support_ids": [
+                  "support_36aa88062cd9bb788547b08d151ca8c58a792b9d41757107d64e07757c109ccf"
+                ]
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_62324cf9b4b9f8b23ecd1af8f09dbcc81c8137957c1b1c71015c03521d4570eb",
+        "knowledge_gaps": 11,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 939,
+              "completion_tokens": 404,
+              "total_tokens": 1343
+            },
+            "elapsed_ms": 13965
+          }
+        ]
+      },
+      "expected": "supported",
+      "actual": "supported",
+      "verdict_matches": true,
+      "checks": {
+        "attribution": "supported",
+        "conditions": "supported",
+        "entailment": "supported"
+      },
+      "checks_match": true
+    },
+    {
+      "case_id": "dpr_omitted_conditions",
+      "exit_code": 0,
+      "report_sha256": "098a0ad7a45da441735227b6642130b94769e2623f6eeef45af329a1b39580a6",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_e8ca52ebdba3048edd66a6f23acd217d62101509fc47a35a8670b444e79ccaff"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "3349fd7010b8f1d01122aa58acfffa261b72a20b641a2655722e9d6d7ebcb169",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_e8ca52ebdba3048edd66a6f23acd217d62101509fc47a35a8670b444e79ccaff",
+              "status": "insufficient",
+              "reason": "attribution:no_support_selected: 未明确指出DPR在所有数据集上均优于BM25; conditions:no_support_selected: 未明确指出DPR不受训练样本数量和评估集影响; entailment:no_support_selected: 未同时支持所有三个子断言"
+            }
+          ],
+          "supported": 0,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_e8ca52ebdba3048edd66a6f23acd217d62101509fc47a35a8670b444e79ccaff",
+              "attribution": {
+                "status": "insufficient",
+                "reason": "no_support_selected: 未明确指出DPR在所有数据集上均优于BM25",
+                "support_quote": ""
+              },
+              "conditions": {
+                "status": "insufficient",
+                "reason": "no_support_selected: 未明确指出DPR不受训练样本数量和评估集影响",
+                "support_quote": ""
+              },
+              "entailment": {
+                "status": "insufficient",
+                "reason": "no_support_selected: 未同时支持所有三个子断言",
+                "support_quote": ""
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_f84124920b95b8d46d7a89f0db6882731a890a480635fcf0c90e9da92f936b32",
+        "knowledge_gaps": 12,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 927,
+              "completion_tokens": 195,
+              "total_tokens": 1122
+            },
+            "elapsed_ms": 7049
+          }
+        ]
+      },
+      "expected": "not_supported",
+      "actual": "insufficient",
+      "verdict_matches": true,
+      "checks": {
+        "attribution": "insufficient",
+        "conditions": "insufficient",
+        "entailment": "insufficient"
+      },
+      "checks_match": true
+    },
+    {
+      "case_id": "dpr_explicit_limitation",
+      "exit_code": 0,
+      "report_sha256": "4eaa1ae3dc8807e613f216089a029b3bb61fd906cee13220fc345bc19085cc37",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_688e28b4b9dacc91df3088a1aef758bd77348cdefb22292b0c9565b7541dbdfd"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "b03a4d5ff999476feb0e3b986b503f3c653ade3b4efb872c7a760171359da714",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_688e28b4b9dacc91df3088a1aef758bd77348cdefb22292b0c9565b7541dbdfd",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_688e28b4b9dacc91df3088a1aef758bd77348cdefb22292b0c9565b7541dbdfd",
+              "attribution": {
+                "status": "supported",
+                "reason": "明确指出许多问题在缺少给定段落时缺少上下文。",
+                "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_4a781ea948725b87555bacb78a10ed63780c236a83f38eaad3519ea649395e99"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "明确指出许多问题在缺少给定段落时缺少上下文。",
+                "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_4a781ea948725b87555bacb78a10ed63780c236a83f38eaad3519ea649395e99"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "明确指出许多问题在缺少给定段落时缺少上下文。",
+                "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_4a781ea948725b87555bacb78a10ed63780c236a83f38eaad3519ea649395e99"
+                ]
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_8d94bad29f95ed206f3ed16209c4c63009160788decf0f4a6f114fc143f6a14c",
+        "knowledge_gaps": 11,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 872,
+              "completion_tokens": 381,
+              "total_tokens": 1253
+            },
+            "elapsed_ms": 13112
+          }
+        ]
+      },
+      "expected": "supported",
+      "actual": "supported",
+      "verdict_matches": true,
+      "checks": {
+        "attribution": "supported",
+        "conditions": "supported",
+        "entailment": "supported"
+      },
+      "checks_match": true
+    },
+    {
+      "case_id": "dpr_mixed_scope",
+      "exit_code": 0,
+      "report_sha256": "980f00ae327986ae37b3b47437f1948109e4a4146990e3ff1eaa92174797e34b",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_fab6d06a63eae40b5309057e66e8bbc4c157c018065b49b68a659c6bc750a408"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "149c3095aac4cf79131cd74e982cb3ef1c97688ae0bbdea5059cbe39cfefa9ae",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_fab6d06a63eae40b5309057e66e8bbc4c157c018065b49b68a659c6bc750a408",
+              "status": "insufficient",
+              "reason": "attribution:no_support_selected: 未提供DPR无法处理开放域问答数据集的具体证据。; entailment:no_support_selected: 未提供DPR无法处理开放域问答数据集的具体证据。"
+            }
+          ],
+          "supported": 0,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_fab6d06a63eae40b5309057e66e8bbc4c157c018065b49b68a659c6bc750a408",
+              "attribution": {
+                "status": "insufficient",
+                "reason": "no_support_selected: 未提供DPR无法处理开放域问答数据集的具体证据。",
+                "support_quote": ""
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "SQuAD的问题在缺少给定段落时缺乏上下文。",
+                "support_quote": ", 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_6770c1e078d66eabba7cdf5bf8e60241c6c14baa87ee05b83f14a9b84ebd5e85"
+                ]
+              },
+              "entailment": {
+                "status": "insufficient",
+                "reason": "no_support_selected: 未提供DPR无法处理开放域问答数据集的具体证据。",
+                "support_quote": ""
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_65e1b1f7205c4aeb804f29e7962cd10238d24cbd95a3862d4fc1429daeb641b3",
+        "knowledge_gaps": 12,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 877,
+              "completion_tokens": 268,
+              "total_tokens": 1145
+            },
+            "elapsed_ms": 11571
+          }
+        ]
+      },
+      "expected": "not_supported",
+      "actual": "insufficient",
+      "verdict_matches": true,
+      "checks": {
+        "attribution": "insufficient",
+        "conditions": "supported",
+        "entailment": "insufficient"
+      },
+      "checks_match": true
+    },
+    {
+      "case_id": "fid_own_method",
+      "exit_code": 0,
+      "report_sha256": "1d7298f78236a7505d2003e160fc51304cbbb7af876370d42b7a9f10dd86ed8f",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_015b260786c140d66422d09646052c454f3f0ac4f4563507038a7f947f260d7b"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "d0493a1ca767deb457028c8b110a34fab07ec22cb4c80bd6b800bfe5b33513da",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_015b260786c140d66422d09646052c454f3f0ac4f4563507038a7f947f260d7b",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_015b260786c140d66422d09646052c454f3f0ac4f4563507038a7f947f260d7b",
+              "attribution": {
+                "status": "supported",
+                "reason": "源文本明确说明了Fusion-in-Decoder在编码器中独立处理段落，在解码器中联合处理段落表示。",
+                "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+                "support_ids": [
+                  "support_ace04bae0698eea7bad0d3132e63627aba0a84e14f4de4455b467341d197b9d3"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "源文本描述了Fusion-in-Decoder的具体机制，符合方法声明的范围。",
+                "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. ",
+                "support_ids": [
+                  "support_ace04bae0698eea7bad0d3132e63627aba0a84e14f4de4455b467341d197b9d3"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "源文本详细描述了Fusion-in-Decoder的机制，支持整体声明。",
+                "support_quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.\nBy processing passages independently in the en-\ncoder, but jointly in the decoder, this method differs\nfrom Min et al. (2020) and Lewis et al. (2020b).\nProcessing passages independently in the encoder\nallows to scale to large number of contexts, as it\nonly performs self attention over one context at a\ntime. This means that the computation time of the\nmodel grows linearly with the number of passages,\ninstead of quadratically. On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. ",
+                "support_ids": [
+                  "support_ace04bae0698eea7bad0d3132e63627aba0a84e14f4de4455b467341d197b9d3",
+                  "support_85582ee909d57943db1da1e402a895ff58eaf1f00d86c4ce85002d3c0034f7be"
+                ]
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_1f67cf2c2d776d9f8e07193f4359d2499f37d336484e5e61ebc69cb04262cb93",
+        "knowledge_gaps": 11,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 1499,
+              "completion_tokens": 474,
+              "total_tokens": 1973
+            },
+            "elapsed_ms": 19864
+          }
+        ]
+      },
+      "expected": "supported",
+      "actual": "supported",
+      "verdict_matches": true,
+      "checks": {
+        "attribution": "supported",
+        "conditions": "supported",
+        "entailment": "supported"
+      },
+      "checks_match": true
+    },
+    {
+      "case_id": "fid_wrong_attribution",
+      "exit_code": 0,
+      "report_sha256": "6319837a81ce814dd0ece639aa8462db4cd0b830e10bc2bbbddf9a5ed719ac7b",
+      "replay": {
+        "schema": "research-source-checks-replay-v1",
+        "annotation_status": "machine_review_only",
+        "quality_gate_passed": false,
+        "business_database_modified": false,
+        "max_model_calls": 1,
+        "source_task_sha256": "ac9e5c0d0da057f82fd24553af6285ab46bc746f857a9ac51b7e2019ed383ce4",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "completion": {
+          "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "timeout_seconds": 60,
+          "max_output_tokens": 4096,
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "json_object",
+          "verification_protocol": "facet-handles-v5"
+        },
+        "claim_ids": [
+          "claim_2fbc7994c71690dd209c3a8b15f304151b41cb8e4de88e778f869e707e09e8ee"
+        ],
+        "diagnostic_subset": true,
+        "old_verification": {
+          "verifier_version": "exact-source-numeric-and-model-v2",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aa04a1ebe3145963f7257aac7e9eb61380bfdd4b8193ed55e48373c8a3495101",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by mentioning that the embedding is optimized for maximizing inner products of the question and relevant passage vectors."
+            },
+            {
+              "claim_id": "claim_cbdd927dcefa11d7dd9acf7518bb21ca23bfa9d4e0d925fcf11c9df3d41aea4e",
+              "status": "insufficient",
+              "reason": "The quote does not explicitly mention the datasets used, only that DPR outperforms previous state-of-the-art on four out of five datasets."
+            },
+            {
+              "claim_id": "claim_fa0c99ddbb813f5ad1cd55cec564ab9c261a467ded727d34d256625f1c36874e",
+              "status": "insufficient",
+              "reason": "The quote mentions that DPR-based models outperform previous state-of-the-art on four out of five datasets with 1% to 12% differences in exact match accuracy, but does not specify the exact datasets or the 1% to 12% improvements."
+            },
+            {
+              "claim_id": "claim_7f57b5a1e3e98ae04f40da6109048ad642aec3ad77cf9c492661a4347314d002",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by stating that many questions lack context in absence of the provided paragraph, which is a characteristic of the SQuAD dataset."
+            },
+            {
+              "claim_id": "claim_bc942a19bc29d90f6859ad69afe3452602622acfa0f2f21eaac70a68a94710ee",
+              "status": "supported",
+              "reason": "The quote supports the claim by explaining that passages are processed independently in the encoder but jointly in the decoder, which allows for handling large numbers of passages."
+            },
+            {
+              "claim_id": "claim_91de24d07dc1c41aff00b9d310b63bc682fa86adef8bf3c6de86dc4fbfc98dcd",
+              "status": "insufficient",
+              "reason": "The quote does not specify the exact datasets used in the experiments, only that the method obtained competitive results on several benchmarks."
+            },
+            {
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "status": "supported",
+              "reason": "The quote supports the claim by stating that the method requires models containing billions of parameters, which makes it expensive to query and train."
+            },
+            {
+              "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method sets new state-of-the-art results on TriviaQA and NaturalQuestions benchmarks."
+            },
+            {
+              "claim_id": "claim_de9c1c7d770c764af8ed687c5c92978d35a18bcfe55b8a989415e2b0917938d9",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that REALM uses a retrieval-based approach to train a retriever."
+            },
+            {
+              "claim_id": "claim_8290121c628ff5b208feaa78ab7438399af5b92b3b1d31799697f0f610db0a9d",
+              "status": "insufficient",
+              "reason": "The quote does not mention the specific datasets used in the experiments, only that the method was evaluated on NQ’s development set."
+            },
+            {
+              "claim_id": "claim_fa8741ec9889d74c556cd72002b5eb610d511425560a31485ad3e7de46b4daf9",
+              "status": "supported",
+              "reason": "The quote directly supports the claim by providing the exact match and zero-shot retrieval recall@5 scores for REALM on the NQ development set."
+            },
+            {
+              "claim_id": "claim_545eddecce0ee6374466df736e06a1d4fc9e8fd16a662be167e1f81406f3bc21",
+              "status": "supported",
+              "reason": "The quote supports the claim by discussing the performance differences of REALM on different pre-training corpora and the need to further study the contributions of the encoder and retriever."
+            }
+          ],
+          "supported": 6,
+          "total": 12,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ]
+        },
+        "code_sha256": {
+          "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+          "artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+          "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+          "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+          "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+          "model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+          "protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+          "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+          "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+          "tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+          "tools.py": "78da40bb33cf51661afbcbab90f4ac5ae29c87df52f3e40461eb492179e155be",
+          "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+          "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+        },
+        "claim_file_sha256": "e2618741e35c6403b981a189eaf6da887a5e862be101d1e23876b2d76db20a00",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_2fbc7994c71690dd209c3a8b15f304151b41cb8e4de88e778f869e707e09e8ee",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_2fbc7994c71690dd209c3a8b15f304151b41cb8e4de88e778f869e707e09e8ee",
+              "attribution": {
+                "status": "supported",
+                "reason": "明确指出需要数十亿参数",
+                "support_quote": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist.",
+                "support_ids": [
+                  "support_1c0105708f8ea34e2296b10ddce1bd83402b45983cbb74a2f76f42dcb9480b06"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "明确指出查询和训练成本昂贵",
+                "support_quote": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist.",
+                "support_ids": [
+                  "support_1c0105708f8ea34e2296b10ddce1bd83402b45983cbb74a2f76f42dcb9480b06"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "所有信息需要存储在权重中，这使得模型查询和训练成本昂贵",
+                "support_quote": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist.",
+                "support_ids": [
+                  "support_1c0105708f8ea34e2296b10ddce1bd83402b45983cbb74a2f76f42dcb9480b06"
+                ]
+              }
+            }
+          ]
+        },
+        "artifact_id": "artifact_7d2393d113ce420f8f41427e7ca8a7396837af85033e36066c9d91e75c56e846",
+        "knowledge_gaps": 11,
+        "calls": [
+          {
+            "operation": "verify_facets",
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "version": "research-operator-v1",
+            "extraction_protocol": "source-handles-v2",
+            "response_format": "json_object",
+            "verification_protocol": "facet-handles-v5",
+            "status": "succeeded",
+            "usage": {
+              "prompt_tokens": 906,
+              "completion_tokens": 376,
+              "total_tokens": 1282
+            },
+            "elapsed_ms": 12529
+          }
+        ]
+      },
+      "expected": "not_supported",
+      "actual": "supported",
+      "verdict_matches": false,
+      "checks": {
+        "attribution": "supported",
+        "conditions": "supported",
+        "entailment": "supported"
+      },
+      "checks_match": false
+    }
+  ],
+  "max_output_tokens": 4096,
+  "script_sha256": "07c234298cd55bee6ee24b128e238dad9d6059dea5a328a7234999d7b0ec9360",
+  "replay_script_sha256": "fe56ec48d8d87f2e5a62060c4fb62f27a1461869e7b46c032acf96ab7aea3048",
+  "frozen_production_sha256": {
+    "app/api/v1/research.py": "c25fc88888bf014588341c31ba1bcfcab3273dd06dff8f0e6f1a75a9f0e45016",
+    "app/research/artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+    "app/research/model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+    "app/research/tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b"
+  },
+  "limitations": [
+    "Six AI-authored cases from two already available papers; not a blind holdout or human validation",
+    "One call per case, no v4 comparison in this experiment; do not infer general improvement",
+    "No new extraction or end-to-end comparison; default production policy is unchanged"
+  ],
+  "offline_failure_inspection": {
+    "annotation_status": "source_inspection_not_model_judgment",
+    "case_id": "fid_wrong_attribution",
+    "cited_chunk": {
+      "chunk_id": "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b",
+      "document_id": "fid",
+      "text": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist.",
+      "chunk_index": 4,
+      "chunking_version": "rag4-structured-v1",
+      "title": null,
+      "section_path": [],
+      "parent_chunk_id": "chunk_2f4800f99b39f16f0dfb8418a62812f2e81d3727d85214306d5fb99422bbbe3f",
+      "is_parent": false,
+      "page_start": 1,
+      "page_end": 1,
+      "table_metadata": [],
+      "formula_metadata": [],
+      "source_locator": {
+        "source": {
+          "uri": "document:fid",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-0",
+            "char_start": 1731,
+            "char_end": 2280,
+            "page_start": 1,
+            "page_end": 1
+          }
+        ]
+      },
+      "token_count": 549
+    },
+    "parent_chunk": {
+      "chunk_id": "chunk_2f4800f99b39f16f0dfb8418a62812f2e81d3727d85214306d5fb99422bbbe3f",
+      "document_id": "fid",
+      "text": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist. \nBorn in Maida \nVale, London…\nWhere was Alan \nTuring born?\nGenerative\nseq2seq model\nMaida Vale, \nLondon\nFigure 1: A simple approach to open domain question\nanswering. First, it retrieves support text passages from\nan external source of knowledge such as Wikipedia.\nThen, a generative encoder-decoder model produces\nthe answer, conditioned on the question and the re-\ntrieved passages. This approach scales well with the\nnumber of retrieved passages, as the performance keeps\nimproving when retrieving up to one hundred passages.\nsupport documents, before extracting the answer\nfrom these documents. Different retrieval tech-\nniques have been considered, either using sparse\nrepresentations based on TF/IDF or using dense\nembeddings (Guu et al., 2020; Karpukhin et al.,\n2020). The models which extract the answers are\noften based on contextualized word representations\nsuch as ELMo or BERT (Peters et al., 2018; De-\nvlin et al., 2019), and predict a span as answer.\nAggregating and combining evidence from mul-\ntiple passages is not straightforward when using\nextractive models, and multiple techniques have\nbeen proposed to address this limitation (Clark and\nGardner, 2018; Min et al., 2019a).",
+      "chunk_index": 1,
+      "chunking_version": "rag4-structured-v1",
+      "title": null,
+      "section_path": [],
+      "parent_chunk_id": null,
+      "is_parent": true,
+      "page_start": 1,
+      "page_end": 1,
+      "table_metadata": [],
+      "formula_metadata": [],
+      "source_locator": {
+        "source": {
+          "uri": "document:fid",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-0",
+            "char_start": 1731,
+            "char_end": 3474,
+            "page_start": 1,
+            "page_end": 1
+          }
+        ]
+      },
+      "token_count": 1743
+    },
+    "preceding_chunks": [
+      {
+        "chunk_id": "chunk_2f79d46828f22935cab56cb4ed8a16f20c680f093a6e9dd1a410f1c90d485ee1",
+        "document_id": "fid",
+        "text": "This is evidence that\nsequence-to-sequence models offers a ﬂexible\nframework to efﬁciently aggregate and com-\nbine evidence from multiple passages.\n1\nIntroduction\nRecently, several works have shown that factual\ninformation can be extracted from large scale\nlanguage models trained on vast quantities of\ndata (Radford et al., 2019; Petroni et al., 2019;\nJiang et al., 2019; Talmor et al., 2019). Building\non that observation and the advances in pretrain-\ning of natural language processing models, Roberts\net al. (2020) introduced a generative model for open\ndomain question answering.",
+        "chunk_index": 2,
+        "chunking_version": "rag4-structured-v1",
+        "title": null,
+        "section_path": [],
+        "parent_chunk_id": "chunk_890423ab8d2acbeef12b4b8664a38d8b7b45640f0e80cc15688abec03789b289",
+        "is_parent": false,
+        "page_start": 1,
+        "page_end": 1,
+        "table_metadata": [],
+        "formula_metadata": [],
+        "source_locator": {
+          "source": {
+            "uri": "document:fid",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-0",
+              "char_start": 1041,
+              "char_end": 1625,
+              "page_start": 1,
+              "page_end": 1
+            }
+          ]
+        },
+        "token_count": 584
+      },
+      {
+        "chunk_id": "chunk_48aea18fd456a96fdfe0b2d35db1b48b8d5646603fd6bb6a91ceec97125b7bd2",
+        "document_id": "fid",
+        "text": "Without relying on\nexternal knowledge, this method obtained compet-\nitive results on several benchmarks.",
+        "chunk_index": 3,
+        "chunking_version": "rag4-structured-v1",
+        "title": null,
+        "section_path": [],
+        "parent_chunk_id": "chunk_890423ab8d2acbeef12b4b8664a38d8b7b45640f0e80cc15688abec03789b289",
+        "is_parent": false,
+        "page_start": 1,
+        "page_end": 1,
+        "table_metadata": [],
+        "formula_metadata": [],
+        "source_locator": {
+          "source": {
+            "uri": "document:fid",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-0",
+              "char_start": 1626,
+              "char_end": 1730,
+              "page_start": 1,
+              "page_end": 1
+            }
+          ]
+        },
+        "token_count": 104
+      }
+    ],
+    "finding": "The quote starts However, it. Its parent also starts there. Two preceding children describe Roberts et al. (2020) and no-external-knowledge models; current verification context is only the cited child. Parent expansion alone would not recover the antecedent.",
+    "quality_fix_verified": false,
+    "extra_model_calls": 0
+  },
+  "reported_tokens": 8118,
+  "currency_cost": "unknown",
+  "summary": {
+    "completed_requests": 6,
+    "successful_requests": 6,
+    "verdict_matches": 5,
+    "verdict_and_required_checks_match": 5,
+    "positive_cases": 3,
+    "false_accepts": 1,
+    "false_rejects": 0
+  },
+  "diagnostic_status": "expectation_mismatch",
+  "offline_exit_code": 2,
+  "postprocess_script_sha256": "a17df0228eaccdc345688372d76b43834eefc0e2d0661f5f439962e90ee7c560",
+  "postprocess_note": "Added offline status/exit-code scoring after inference. Frozen cases regenerated identically; prompt, model and source code unchanged. No additional model calls."
+}

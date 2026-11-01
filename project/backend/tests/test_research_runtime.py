@@ -87,15 +87,19 @@ def test_wrong_credentials_endpoint_or_disabled_owner_cannot_execute(published, 
     assert disabled.status == "failed" and not disabled.claims
 
 
-@pytest.mark.parametrize("protocol", ["numeric-model-v2", "source-handles-v4"])
-def test_create_api_and_step_use_frozen_owned_version(client, user_headers, published, storage, protocol):
+@pytest.mark.parametrize("protocol,verification_context_policy", [
+    ('numeric-model-v2','cited-chunk-v1'),('source-handles-v4','cited-chunk-v1'),
+    ('facet-handles-v5','cited-chunk-v1'),('facet-handles-v5','preceding-children-v1')])
+def test_create_api_and_step_use_frozen_owned_version(client, user_headers, published, storage, protocol,verification_context_policy):
     owner, task, version, _ = published
     body = {"index_version_id": version.id, "document_ids": [s.document_id for s in task.sources], "goal": "比较文献"}
     if protocol != "numeric-model-v2":
         body["verification_protocol"] = protocol
+    if verification_context_policy!='cited-chunk-v1':body['verification_context_policy']=verification_context_policy
     created = client.post("/api/v1/research-tasks", headers=user_headers, json=body)
     assert created.status_code == 200, created.json()
     assert created.json()["data"]["completion"]["verification_protocol"] == protocol
+    assert created.json()['data']['completion'].get('verification_context_policy','cited-chunk-v1')==verification_context_policy
     task_id = created.json()["data"]["id"]
     step = client.post(f"/api/v1/research-tasks/{task_id}/run", headers=user_headers)
     assert step.status_code == 200 and step.json()["data"]["steps"][0]["status"] == "succeeded"

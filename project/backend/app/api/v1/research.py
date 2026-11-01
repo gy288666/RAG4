@@ -10,6 +10,7 @@ from app.core.response import APIException, BadRequest, NotFound, success
 from app.models.user import User
 from app.research.agent import TaskConflict
 from app.research.model import CompletionSpec
+from app.research.verification_context import VerificationContextPolicy
 from app.research.runtime import configured_agent, create_task
 from app.research.store import SQLResearchTaskStore
 from app.research.tasks import TaskBudget, PlanVersion, ContextPolicy, CandidatePolicy
@@ -30,7 +31,8 @@ class CreateRequest(BaseModel):
     candidate_policy: CandidatePolicy = "vector-v1"
     extraction_protocol: Literal["literal-quote-v1", "source-handles-v2"] = "source-handles-v2"
     response_format: Literal["text", "json_object"] = "text"
-    verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4"] = "numeric-model-v2"
+    verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4", "facet-handles-v5"] = "numeric-model-v2"
+    verification_context_policy: VerificationContextPolicy='cited-chunk-v1'
 
 
 class ControlRequest(BaseModel):
@@ -57,7 +59,8 @@ def create(body: CreateRequest, user: User = Depends(get_current_user), db: Sess
         budget=body.budget, plan_version=body.plan_version, context_policy=body.context_policy,
         candidate_policy=body.candidate_policy, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
             model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
-            response_format=body.response_format, verification_protocol=body.verification_protocol)).model_dump(mode="json"))
+            response_format=body.response_format, verification_protocol=body.verification_protocol,
+            verification_context_policy=body.verification_context_policy)).model_dump(mode="json"))
 
 
 @router.get("", summary="查询自己的研究任务")

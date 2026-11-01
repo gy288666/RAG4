@@ -16,6 +16,7 @@ from pydantic import Field, model_serializer
 from app.chunking.models import Identifier, Snapshot, SourceLocator, SourceSpan, content_id
 from .evidence import EvidenceBundle, EvidenceCorpus
 from .graph import Citation
+from .verification_context import VerificationContext, VerificationContextPolicy, build_context
 from .protocol import validate_response
 
 Facet = Literal["method", "dataset", "result", "limitation"]
@@ -183,18 +184,23 @@ class HandleJudgment(Snapshot):
 
 
 class VerificationReport(Snapshot):
-    verifier_version: Literal["exact-source-and-model-v1", "exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4"] = "exact-source-numeric-and-model-v2"
+    verifier_version: Literal["exact-source-and-model-v1", "exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4", "exact-facet-handles-v5"] = "exact-source-numeric-and-model-v2"
     annotation_status: Literal["machine_review_only"] = "machine_review_only"
     verdicts: tuple[Verdict, ...]
     supported: int
     total: int
     warnings: tuple[str, ...] = ()
     assessments: tuple[ClaimAssessment, ...] = ()
+    context_policy: VerificationContextPolicy='cited-chunk-v1'
+    contexts: tuple[VerificationContext,...]=Field(default=(),max_length=20)
 
     @model_serializer(mode="wrap")
     def preserve_historical_wire_format(self, handler):
         payload = handler(self)
-        if self.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+        if self.context_policy=='cited-chunk-v1':
+            payload.pop('context_policy',None)
+            payload.pop('contexts',None)
+        if self.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4", "exact-facet-handles-v5"}:
             payload.pop("assessments", None)
         return payload
 
@@ -325,10 +331,14 @@ class EvidenceVerifier:
         if len(claims) > 20 or len({c.claim_id for c in claims}) != len(claims):
             raise ValueError("Invalid verification scope")
         protocol = getattr(self.model, "verification_protocol", "numeric-model-v2")
-        if protocol not in {"numeric-model-v2", "source-checks-v3", "source-handles-v4"}:
+        if protocol not in {"numeric-model-v2", "source-checks-v3", "source-handles-v4", "facet-handles-v5"}:
             raise ValueError("Unknown verification protocol")
-        handles = protocol == "source-handles-v4"
-        checked = protocol in {"source-checks-v3", "source-handles-v4"}
+        handles = protocol in {"source-handles-v4", "facet-handles-v5"}
+        checked = protocol in {"source-checks-v3", "source-handles-v4", "facet-handles-v5"}
+        context_policy=getattr(self.model,'verification_context_policy','cited-chunk-v1')
+        if context_policy not in {'cited-chunk-v1','preceding-children-v1'} or (context_policy!='cited-chunk-v1' and protocol!='facet-handles-v5'):
+            raise ValueError('Invalid verification context policy')
+        contexts=[]
         valid, invalid, assessments = [], [], ()
         for claim in claims:
             try:
@@ -350,10 +360,19 @@ class EvidenceVerifier:
                  "context": corpus.chunks[c.citation.chunk_id].text} for c in valid]}
             if checked:
                 claims_by_id = {c.claim_id: c for c in valid}
-                operation = "verify_handles" if handles else "verify_checked"
+                operation = "verify_facets" if protocol == "facet-handles-v5" else "verify_handles" if handles else "verify_checked"
                 if handles:
                     for item in payload["claims"]:
                         item["sources"] = verification_sources(claims_by_id[item["claim_id"]])
+                        if protocol == "facet-handles-v5":
+                            from .verification_policy import requirements_for
+                            item["requirements"] = requirements_for(item["facet"]).model_dump(mode="json")
+                            if context_policy=='preceding-children-v1':
+                                context=build_context(corpus,claims_by_id[item['claim_id']])
+                                contexts.append(context)
+                                item['context']=context.text
+                                item['context_id']=context.context_id
+                                item['context_sources']=[p.model_dump(mode='json') for p in context.parts]
                         del item["quote"]  # One authoritative source catalog, no copied quote required.
                 assessments = validate_response(HandleJudgment if handles else CheckedJudgment,
                     self.model.generate(operation, payload), operation).assessments
@@ -372,7 +391,8 @@ class EvidenceVerifier:
                 status="insufficient", reason="judge_did_not_verify_claim")) for c in valid]
         else:
             verdicts = invalid
-        return VerificationReport(verifier_version="exact-source-handles-v4" if handles else "exact-source-checks-v3" if checked else "exact-source-numeric-and-model-v2",
+        return VerificationReport(verifier_version="exact-facet-handles-v5" if protocol == "facet-handles-v5" else "exact-source-handles-v4" if handles else "exact-source-checks-v3" if checked else "exact-source-numeric-and-model-v2",
+            context_policy=context_policy,contexts=tuple(contexts),
             assessments=assessments, verdicts=tuple(verdicts), supported=sum(v.status == "supported" for v in verdicts),
             total=len(claims), warnings=("literal_numeric_values_checked_no_unit_conversion",
                 "semantic_support_is_machine_judgment_requires_human_review"))
@@ -444,7 +464,7 @@ class ComparisonArtifact(Snapshot):
             excluded.add("completion_status")
             excluded.add("citation_sources")
         payload = self.model_dump(mode="json", exclude=excluded)
-        if self.verification.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+        if self.verification.verifier_version not in {"exact-source-checks-v3", "exact-source-handles-v4", "exact-facet-handles-v5"}:
             payload["verification"].pop("assessments", None)
         return content_id("artifact_", payload)
 
@@ -461,14 +481,24 @@ class ArtifactComposer:
     """
     def compose(self, corpus, goal, document_ids, titles, claims, verification):
         corpus.require_scope(corpus.user_id, document_ids)
-        if verification.verifier_version not in {"exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4"}:
+        if verification.verifier_version not in {"exact-source-numeric-and-model-v2", "exact-source-checks-v3", "exact-source-handles-v4", "exact-facet-handles-v5"}:
             raise ValueError("Historical verifier results must be reverified before composing a new artifact")
         verdicts = {v.claim_id: v for v in verification.verdicts}
         if len(verdicts) != len(verification.verdicts) or set(verdicts) != {c.claim_id for c in claims}:
             raise ValueError("Verification does not cover exactly the supplied claims")
         if verification.total != len(claims) or verification.supported != sum(v.status == "supported" for v in verdicts.values()):
             raise ValueError("Verification counters mismatch")
-        if verification.verifier_version in {"exact-source-checks-v3", "exact-source-handles-v4"}:
+        if verification.context_policy=='preceding-children-v1':
+            if verification.verifier_version!='exact-facet-handles-v5':raise ValueError('Invalid context verifier')
+            by_claim={c.claim_id:c for c in claims}
+            contexts={c.claim_id:c for c in verification.contexts}
+            if len(contexts)!=len(verification.contexts) or not contexts.keys()<=by_claim.keys():
+                raise ValueError('Invalid verification contexts')
+            for context in verification.contexts:context.validate_source(corpus,by_claim[context.claim_id])
+            if any(v.status=='supported' and v.claim_id not in contexts for v in verdicts.values()):
+                raise ValueError('Supported claim missing verification context')
+        elif verification.contexts:raise ValueError('Unexpected verification contexts')
+        if verification.verifier_version in {"exact-source-checks-v3", "exact-source-handles-v4", "exact-facet-handles-v5"}:
             assessments = {a.claim_id: a for a in verification.assessments}
             if len(assessments) != len(verification.assessments) or not set(assessments) <= set(verdicts):
                 raise ValueError("Invalid verification assessments")
@@ -476,7 +506,7 @@ class ArtifactComposer:
                 assessment = assessments.get(claim.claim_id)
                 if verdicts[claim.claim_id].status == "supported" and (assessment is None or assessment.verdict(claim).status != "supported"):
                     raise ValueError("Supported claim failed source checks")
-                if verification.verifier_version == "exact-source-handles-v4" and verdicts[claim.claim_id].status == "supported":
+                if verification.verifier_version in {"exact-source-handles-v4", "exact-facet-handles-v5"} and verdicts[claim.claim_id].status == "supported":
                     if any(not getattr(assessment, name).support_ids for name in ("attribution", "conditions", "entailment")):
                         raise ValueError("Supported claim missing source handles")
         for c in claims:

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-31",
+  "environment": "rag4-py3.11",
+  "working_directory": "project/backend",
+  "base_commit": "709bf5f47ebf4d8d2572cfc9eb300ba426f56317",
+  "command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "result": "509 passed in 501.85s (0:08:21)",
+  "passed": 509,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 501.85,
+  "new_regression_cases": 15,
+  "targeted_result": "55 passed in 44.68s before two final cases, both included in full run",
+  "initial_red_results": [
+    "Captured R26 method.conditions and limitation.entailment mismatch",
+    "8 failed, 1 passed in 4.56s"
+  ],
+  "quality_gate_passed": false,
+  "raw_log_sha256": "84ec5d042ed5b2330151c051411ad4af53c70a6d143961baa7a7de621863e5b9",
+  "changed_source_sha256": {
+    "app/api/v1/research.py": "c25fc88888bf014588341c31ba1bcfcab3273dd06dff8f0e6f1a75a9f0e45016",
+    "app/research/artifacts.py": "439677b964315949b8e283e90feab132b800be35a57d9c327bb05390f8870867",
+    "app/research/model.py": "49d07990b3d407d12143056eb68366b67f44232440c425ee905bec8f4492bfc5",
+    "app/research/tasks.py": "702c26eac9c5c0b9026349f175622df4b72f53b2db07e90f2f198e56f7f97557",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+    "scripts/evaluate_verification_facets.py": "9bbf91c7a250cc3fd8d2131815ef1e55da35573353499fc487e93620acdd8ee6",
+    "scripts/reverify_research_claims.py": "39f27c97ed4f581d86290c65db142866e2c71c891d399a8b629eea73d818667b",
+    "tests/test_research_runtime.py": "8823d9bccac4ce4c47469060a0d1b25bbc04d5bf881aa3c17431aa69caea2586",
+    "tests/test_research_verification_batches.py": "ee4642d5ce56b34b0f43cce2cc7579becc4069cdee2715f33458be4372ff0726",
+    "tests/test_verification_facets.py": "3d34cd63285b3a0d45168293bd4a45df434965d8eb2dce1808edaa436e77bb0c"
+  }
+}

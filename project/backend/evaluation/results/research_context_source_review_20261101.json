@@ -1,0 +1,422 @@
+{
+  "date": "2026-11-01",
+  "annotation_status": "assistant_source_inspection_not_human",
+  "quality_gate_passed": false,
+  "source_task_sha256": "ef23d0d86b9157fad14acbc30c397055b4aa988836ef27ecb5731c8b4e46c2ba",
+  "raw_machine_artifact_id": "artifact_39b334e553fa83883e1afa1576f7dd674d9b6d491ade9adad57ec5e205cd3288",
+  "raw_machine_supported": 6,
+  "assistant_draft_displayed": 4,
+  "assistant_draft_pending_cells": 8,
+  "machine_verdicts_modified": false,
+  "production_verifier_fixed": false,
+  "claim_reviews": [
+    {
+      "claim": {
+        "claim_id": "claim_f655993b18d47508e7c042b6c8637720608074acb8991408fe43324e0df17968",
+        "document_id": "dpr",
+        "facet": "method",
+        "statement": "采用基于BERT的双编码器架构，优化嵌入以最大化问题和相关段落向量的内积。",
+        "citation": {
+          "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+          "char_start": 0,
+          "char_end": 572,
+          "quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_f655993b18d47508e7c042b6c8637720608074acb8991408fe43324e0df17968",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "source_consistent",
+      "display_in_assistant_draft": true,
+      "inspection_note": "引文明确支持BERT双编码器与内积训练目标。",
+      "artifact_source": {
+        "claim_id": "claim_f655993b18d47508e7c042b6c8637720608074acb8991408fe43324e0df17968",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "source_locator": {
+          "source": {
+            "uri": "document:dpr",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-1",
+              "char_start": 544,
+              "char_end": 1116,
+              "page_start": 2,
+              "page_end": 2
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 2,
+        "page_end": 2
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+        "document_id": "dpr",
+        "facet": "dataset",
+        "statement": "使用Natural Questions、TriviaQA、WebQuestions、CuratedTREC和SQuAD等数据集进行实验。",
+        "citation": {
+          "chunk_id": "chunk_08b388117abd998a67cb6ccd8ba5386df173ef5845d90006c13316829c8ab41e",
+          "char_start": 493,
+          "char_end": 1522,
+          "quote": "Dataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 源文仅提供了部分数据集名称，未明确列出所有提及的数据集。; conditions:no_support_selected: 源文未明确列出所有提及的数据集，无法验证其完整性。; entailment:no_support_selected: 源文未明确列出所有提及的数据集，无法验证其完整性。"
+      },
+      "inspection_status": "apparent_false_rejection",
+      "display_in_assistant_draft": false,
+      "inspection_note": "Table 1及相邻文字列有五个数据集；模型声称名称不全，待独立确认误拒，暂不恢复展示。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_3595e9cfc4d1f5f696cef02aaefed0e197232c36f1c06ae11d41260480928b60",
+        "document_id": "dpr",
+        "facet": "result",
+        "statement": "DPR模型在四个数据集上优于之前的最佳结果，准确匹配精度提高了1%到12%。",
+        "citation": {
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "char_start": 0,
+          "char_end": 244,
+          "quote": "Overall, our\nDPR-based models outperform the previous state-\nof-the-art results on four out of the ﬁve datasets,\nwith 1% to 12% absolute differences in exact match\naccuracy. It is interesting to contrast our results to\nthose of ORQA (Lee et al."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_3595e9cfc4d1f5f696cef02aaefed0e197232c36f1c06ae11d41260480928b60",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 源文仅提到DPR模型在四个数据集上优于之前的结果，但未具体说明准确匹配精度的提升范围。; conditions:no_support_selected: 源文未具体说明准确匹配精度的提升范围，无法验证其完整性。; entailment:no_support_selected: 源文未具体说明准确匹配精度的提升范围，无法验证其完整性。"
+      },
+      "inspection_status": "unit_and_scope_review_required",
+      "display_in_assistant_draft": false,
+      "inspection_note": "引文明确有four out of five和absolute EM差1–12；模型否认数字不准确，但中文提高1%–12%仍需澄清绝对百分点与相对提升。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_5d8324c9bac3281706852b13ba7f6e9e19a09e309b16a0d7ee63730d7ae256b2",
+        "document_id": "dpr",
+        "facet": "limitation",
+        "statement": "SQuAD数据集上的表现较差，原因在于问题是在看到段落后由注释者编写的，导致缺乏上下文。",
+        "citation": {
+          "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+          "char_start": 0,
+          "char_end": 572,
+          "quote": "By leveraging the now\nstandard BERT pretrained model (Devlin et al.,\n2019) and a dual-encoder architecture (Bromley\net al., 1994), we focus on developing the right\ntraining scheme using a relatively small number\nof question and passage pairs. Through a series\nof careful ablation studies, our ﬁnal solution is\nsurprisingly simple: the embedding is optimized\nfor maximizing inner products of the question and\nrelevant passage vectors, with an objective compar-\ning all pairs of questions and passages in a batch.\nOur Dense Passage Retriever (DPR) is exception-\nally strong."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_5d8324c9bac3281706852b13ba7f6e9e19a09e309b16a0d7ee63730d7ae256b2",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 源文未明确指出SQuAD数据集表现较差的具体原因。; conditions:no_support_selected: 源文未明确指出SQuAD数据集表现较差的具体原因。; entailment:no_support_selected: 源文未明确指出SQuAD数据集表现较差的具体原因。"
+      },
+      "inspection_status": "wrong_citation",
+      "display_in_assistant_draft": false,
+      "inspection_note": "引用选成BERT双编码器方法段，不支持SQuAD较差原因；应修抽取引用匹配。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_415a9347c8b4a1f263d63a20b2edde8af68f2d99180bd3dfc097aeb19816926b",
+        "document_id": "fid",
+        "facet": "method",
+        "statement": "该方法通过将问题与检索到的段落和标题连接起来，然后通过编码器独立处理每个段落，最后通过解码器生成答案。",
+        "citation": {
+          "chunk_id": "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+          "char_start": 0,
+          "char_end": 551,
+          "quote": "The model takes as input the question, as well as\nthe support passages, and generates the answer.\nMore precisely, each retrieved passage and its title\nare concatenated with the question, and processed\nindependently from other passages by the encoder.\nWe add special tokens question:, title: and\ncontext: before the question, title and text of\neach passage. Finally, the decoder performs atten-\n1lucene.apache.org\n2spacy.io\n3github.com/facebookresearch/faiss\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_415a9347c8b4a1f263d63a20b2edde8af68f2d99180bd3dfc097aeb19816926b",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "source_consistent",
+      "display_in_assistant_draft": true,
+      "inspection_note": "引文明确支持标题/问题/段落连接、逐段编码与解码生成。",
+      "artifact_source": {
+        "claim_id": "claim_415a9347c8b4a1f263d63a20b2edde8af68f2d99180bd3dfc097aeb19816926b",
+        "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+        "source_locator": {
+          "source": {
+            "uri": "document:fid",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-2",
+              "char_start": 1765,
+              "char_end": 2316,
+              "page_start": 3,
+              "page_end": 3
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 3,
+        "page_end": 3
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "claim_01a2a0ee389637d223fe5476e9d32dbd7053d490e360dc5a8bef0029d956cdf4",
+        "document_id": "fid",
+        "facet": "dataset",
+        "statement": "实验使用了NaturalQuestions、TriviaQA和SQuAD数据集。",
+        "citation": {
+          "chunk_id": "chunk_22a811a741f0f9f8f60bbfd1d1b79e83337994f5ff5c716858129adcd109db9e",
+          "char_start": 0,
+          "char_end": 549,
+          "quote": "On the other hand, pro-\ncessing passages jointly in the decoder allows to\nbetter aggregate evidence from multiple passages.\n4\nExperiments\nIn this section, we report empirical evaluations of\nFusion-in-Decoder for open domain QA.\nDatasets.\nWe consider the following datasets,\nand use the same setting as Lee et al. (2019):\n• NaturalQuestions (Kwiatkowski et al., 2019)\ncontains questions corresponding to Google\nsearch queries. The open-domain version of\nthis dataset is obtained by discarding answers\nwith more than 5 tokens.\n• TriviaQA (Joshi et al."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_01a2a0ee389637d223fe5476e9d32dbd7053d490e360dc5a8bef0029d956cdf4",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未提供具体数据集名称。; conditions:no_support_selected: 未提供具体数据集名称。; entailment:no_support_selected: 未提供具体数据集名称。"
+      },
+      "inspection_status": "incomplete_citation",
+      "display_in_assistant_draft": false,
+      "inspection_note": "当前引文未支持SQuAD，不能展示完整三数据集声明。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "document_id": "fid",
+        "facet": "result",
+        "statement": "Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。",
+        "citation": {
+          "chunk_id": "chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a",
+          "char_start": 0,
+          "char_end": 574,
+          "quote": "875\nQuestion + Passage 1\nencoder\nQuestion + Passage 2\nencoder\nQuestion + Passage N\nencoder\ndecoder\nAnswer\nconcat\n…\n…\n…\n…\nFigure 2: Architecture of the Fusion-in-Decoder method.\nrepresentations.\nThen, a sequence-to-sequence\nmodel generates the answer, taking as input the re-\ntrieved passages in addition to the question. While\nconceptually simple, this method sets new state-of-\nthe-art results on the TriviaQA and NaturalQues-\ntions benchmarks. In particular, we show that the\nperformance of our method signiﬁcantly improves\nwhen the number of retrieved passages increases."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未提供具体实验结果和基准测试数据。; conditions:no_support_selected: 未提供具体实验结果和基准测试数据。; entailment:no_support_selected: 未提供具体实验结果和基准测试数据。"
+      },
+      "inspection_status": "apparent_false_rejection",
+      "display_in_assistant_draft": false,
+      "inspection_note": "引文明言论文报告的TriviaQA和NaturalQuestions新SOTA；模型否认实验结果，待独立复核，不能解释为今日SOTA。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+        "document_id": "fid",
+        "facet": "limitation",
+        "statement": "该方法需要包含数十亿参数的模型，这使得查询和训练模型成本高昂。",
+        "citation": {
+          "chunk_id": "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b",
+          "char_start": 0,
+          "char_end": 549,
+          "quote": "However, it\nrequires models containing billions of parameters,\nsince all the information needs to be stored in the\nweights. This makes models expensive to query\nand train. In this paper, we investigate how much\nthis method could beneﬁt from having access to an\nexternal source of knowledge, such as Wikipedia.\nRetrieval based approaches were previously con-\nsidered in the context of open domain question\nanswering with extractive models (Chen et al.,\n2017). In that case, systems start by retrieving\nAlan Turing \nwas a British \ncomputer \nscientist."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_c8d58e97aac680353b42e74a410002e4980c5ceb8dd3adf3d68d99e8bd4613a3",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未提供具体模型参数数量。; conditions:no_support_selected: 未提供具体模型参数数量。; entailment:no_support_selected: 未提供具体模型参数数量。"
+      },
+      "inspection_status": "background_attribution_blocked",
+      "display_in_assistant_draft": false,
+      "inspection_note": "背景it的前文属于Roberts等人的方法；拒绝展示正确，但模型声称没有参数数量的理由不准确。",
+      "artifact_source": null
+    },
+    {
+      "claim": {
+        "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+        "document_id": "realm",
+        "facet": "method",
+        "statement": "REALM利用检索到的文档来提高语言模型的预测能力，通过优化边缘似然性来训练检索器。",
+        "citation": {
+          "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+          "char_start": 0,
+          "char_end": 1394,
+          "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n"
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "withdraw_wrong_citation",
+      "display_in_assistant_draft": false,
+      "inspection_note": "PDF第8页引文为概率示例和消融，未支持statement中的优化边缘似然训练目标；撤回展示，不判定论文本身没有该方法。",
+      "artifact_source": {
+        "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "source_locator": {
+          "source": {
+            "uri": "document:realm",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-7",
+              "char_start": 0,
+              "char_end": 1394,
+              "page_start": 8,
+              "page_end": 8
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 8,
+        "page_end": 8
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "claim_8fc9bc534baff43a74423b42d2427ddd1982c478f880433a594d034a8bc5a241",
+        "document_id": "realm",
+        "facet": "dataset",
+        "statement": "实验在NATURALQUESTIONS-OPEN、WEBQUESTIONS和CURATEDTREC等流行的开放问答基准上进行。",
+        "citation": {
+          "chunk_id": "chunk_c13c6a7bcd4c92624a4a042140f4931084760bcd4f51a58985868498009103b6",
+          "char_start": 0,
+          "char_end": 442,
+          "quote": "We evaluate on three popular Open-QA benchmarks\n(NATURALQUESTIONS-OPEN, WEBQUESTIONS, and CURAT-\nEDTREC) and compare to state-of-the-art Open-QA models,\nincluding both extremely large models that store knowledge\nimplicitly (such as T5) as well as previous approaches that\nalso use a knowledge retriever to access external knowledge,\nbut implement retrieval in a more heuristic fashion (Lee\net al., 2019; Min et al., 2019a; Asai et al., 2019)."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_8fc9bc534baff43a74423b42d2427ddd1982c478f880433a594d034a8bc5a241",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "source_consistent",
+      "display_in_assistant_draft": true,
+      "inspection_note": "引文明列NaturalQuestions-Open、WebQuestions、CuratedTREC。",
+      "artifact_source": {
+        "claim_id": "claim_8fc9bc534baff43a74423b42d2427ddd1982c478f880433a594d034a8bc5a241",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "source_locator": {
+          "source": {
+            "uri": "document:realm",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-1",
+              "char_start": 2940,
+              "char_end": 3382,
+              "page_start": 2,
+              "page_end": 2
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 2,
+        "page_end": 2
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+        "document_id": "realm",
+        "facet": "result",
+        "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。",
+        "citation": {
+          "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+          "char_start": 1170,
+          "char_end": 1796,
+          "quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "withdraw_missing_condition",
+      "display_in_assistant_draft": false,
+      "inspection_note": "PDF第7页Table 2的38.5/52.0属于REALM(X=CC-News)，原声明漏掉此条件；普通REALM行是38.2/38.5。",
+      "artifact_source": {
+        "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "source_locator": {
+          "source": {
+            "uri": "document:realm",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-6",
+              "char_start": 1170,
+              "char_end": 1796,
+              "page_start": 7,
+              "page_end": 7
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 7,
+        "page_end": 7
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "claim_c2b9f059c6957d6178a111df09053a8fe7a68093b1603be4e14818aba42d1275",
+        "document_id": "realm",
+        "facet": "limitation",
+        "statement": "REALM在预训练过程中需要通过整个知识库的检索步骤进行反向传播，这构成了显著的计算挑战。",
+        "citation": {
+          "chunk_id": "chunk_80cbd8afc75917477b7460452d09acdb9424fc63c5556d2ea57038850782e847",
+          "char_start": 552,
+          "char_end": 1633,
+          "quote": "Learning this model end-to-end requires\nbackpropagating through a retrieval step that considers an\nentire corpus of textual knowledge, as shown in Figure 1.\nThe key intuition of REALM is to train the retriever us-\ning a performance-based signal from unsupervised text:\na retrieval that improves the language model’s perplex-\nity is helpful and should be rewarded, while an un-\ninformative retrieval should be penalized.\nFor exam-\nple, in Figure 1, if the model needs to ﬁll the blank\nin “the\nat the top of the pyramid”, the re-\ntriever should be rewarded for selecting a document con-\ntaining “The pyramidion on top allows for less\nmaterial higher up the pyramid”. We achieve this\nbehavior by modeling our retrieve-then-predict approach\nas a latent variable language model and optimizing the\nmarginal likelihood.\nIncorporating a large-scale neural retrieval module during\npre-training constitutes a signiﬁcant computational chal-\nlenge, since the retriever must consider millions of candi-\ndate documents for each pre-training step, and we must\nbackpropagate through its decisions."
+        }
+      },
+      "machine_verdict": {
+        "claim_id": "claim_c2b9f059c6957d6178a111df09053a8fe7a68093b1603be4e14818aba42d1275",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "inspection_status": "source_consistent",
+      "display_in_assistant_draft": true,
+      "inspection_note": "引文明确说明端到端检索反传与海量候选带来的计算挑战。",
+      "artifact_source": {
+        "claim_id": "claim_c2b9f059c6957d6178a111df09053a8fe7a68093b1603be4e14818aba42d1275",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "source_locator": {
+          "source": {
+            "uri": "document:realm",
+            "media_type": null,
+            "used_ocr": false
+          },
+          "spans": [
+            {
+              "block_id": "block-1",
+              "char_start": 552,
+              "char_end": 1633,
+              "page_start": 2,
+              "page_end": 2
+            }
+          ]
+        },
+        "section_path": [],
+        "page_start": 2,
+        "page_end": 2
+      }
+    }
+  ]
+}
