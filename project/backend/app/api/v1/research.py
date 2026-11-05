@@ -1,5 +1,5 @@
 """Opt-in owner-scoped research. Each run request executes one bounded tool."""
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
 from typing import Literal
@@ -11,7 +11,8 @@ from app.models.user import User
 from app.research.agent import TaskConflict
 from app.research.model import CompletionSpec
 from app.research.verification_context import VerificationContextPolicy
-from app.research.runtime import configured_agent, create_task
+from app.research.result_conditions import ResultConditionPolicy
+from app.research.runtime import configured_agent, create_task, read_partial_artifact
 from app.research.store import SQLResearchTaskStore
 from app.research.tasks import TaskBudget, PlanVersion, ContextPolicy, CandidatePolicy
 from app.services import config_service
@@ -33,6 +34,7 @@ class CreateRequest(BaseModel):
     response_format: Literal["text", "json_object"] = "text"
     verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4", "facet-handles-v5"] = "numeric-model-v2"
     verification_context_policy: VerificationContextPolicy='cited-chunk-v1'
+    result_condition_policy: ResultConditionPolicy='model-only-v1'
 
 
 class ControlRequest(BaseModel):
@@ -60,7 +62,8 @@ def create(body: CreateRequest, user: User = Depends(get_current_user), db: Sess
         candidate_policy=body.candidate_policy, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
             model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
             response_format=body.response_format, verification_protocol=body.verification_protocol,
-            verification_context_policy=body.verification_context_policy)).model_dump(mode="json"))
+            verification_context_policy=body.verification_context_policy,
+            result_condition_policy=body.result_condition_policy)).model_dump(mode="json"))
 
 
 @router.get("", summary="查询自己的研究任务")
@@ -72,6 +75,12 @@ def listing(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0), 
 @router.get("/{task_id}", summary="查看计划、步骤、证据引用与产物")
 def detail(task_id: str, user: User = Depends(get_current_user)):
     return _handle(lambda: SQLResearchTaskStore().load(user.id, task_id).model_dump(mode="json"))
+
+
+@router.get('/{task_id}/partial-artifact', summary='只读查看失败任务的部分比较稿与原文来源')
+def partial_artifact(task_id: str, response: Response, expected_revision: int | None = Query(None,ge=0), user: User = Depends(get_current_user)):
+    response.headers['Cache-Control']='no-store'
+    return _handle(lambda: read_partial_artifact(user.id,task_id,expected_revision=expected_revision).model_dump(mode='json'))
 
 
 @router.post("/{task_id}/run", summary="执行一个工具并保存进度")

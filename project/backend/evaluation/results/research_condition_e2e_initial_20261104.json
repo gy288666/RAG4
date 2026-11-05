@@ -1,0 +1,1228 @@
+{
+  "date": "2026-11-04",
+  "quality_gate_passed": false,
+  "report": {
+    "schema_version": "research-comparison-result-v1",
+    "status": "failed",
+    "task_policies": {
+      "plan_version": "research-comparison-v2",
+      "context_policy": "local-window-v3",
+      "candidate_policy": "source-role-v3",
+      "verification_context_policy": "preceding-children-v1",
+      "result_condition_policy": "explicit-row-v1"
+    },
+    "started_at": "2026-11-04T15:03:34.907547+00:00",
+    "annotation_status": "machine_review_only",
+    "quality_gate_passed": false,
+    "cached_report_sha256": "ff2d80b89c5e506bd4d8b0a9f3eb933e0972efb426d6107c19665cefe779b88e",
+    "network": {
+      "siliconflow_no_proxy": false,
+      "caller_owned_connection_reuse": true
+    },
+    "network_retry_limit": 1,
+    "retry_events": [
+      {
+        "revision": 8,
+        "error_type": "ReadTimeout"
+      }
+    ],
+    "cached_embeddings": "reused document vectors, exact chunk ID/text match; no document embedding API calls",
+    "steps": [
+      {
+        "id": "search-0",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "dpr",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_3a3f1aeb3c7eb11edba3ef84c9c04048dc135d01bdb140f387d0c4cac530dfd6"
+          },
+          "evidence_ids": [
+            "evidence_435c51557d3fc47e8ee3a8c5369bcb4437b739caeb138274ac5c216afa91ccdd",
+            "evidence_adec1d84a94b7a1f8b96a9e726ff8839b89447caabe5c547824f1c44cae0414b",
+            "evidence_392c82414ef3716d791d59cd4a89391fa1c0464d27d331272136d701f5d924e6",
+            "evidence_bb53bb48b359b3f6bbfea7d8155326c0e26aeb5980bb27805b9ba597f34e5a01",
+            "evidence_12fe3e9b5abd95710fa22f5b027f10d96dea80cb53a5dc7f0c8accdc8b32d26b",
+            "evidence_2dd2fec7d257034db42b65165aedb956abf983d4f85d0018fec0439fb89e9ea2",
+            "evidence_9e5d245edaecf629b4abe9ce890026c472133b44ac8fa4fe0816fab8b479c8c0",
+            "evidence_5f35f5080c91b9fa0c5079b91422f4840efc64a1c6ac8d47a6a1bea24d9b5710",
+            "evidence_1fff621da1bdcbe5e389bd9118232fb20782a7d356a6339ea482aa0ed6eed0a7"
+          ],
+          "warnings": [
+            "compact_parent_window",
+            "context_expansion_budget_reserved",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 11275,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:03:54.915131+00:00",
+        "finished_at": "2026-11-04T15:04:06.222500+00:00"
+      },
+      {
+        "id": "search-1",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "fid",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_e877c0b374d33161f939e64e8210e0219045a94506788103ce01853076e42ab2"
+          },
+          "evidence_ids": [
+            "evidence_656c53778417c0df7553fcfa31ecccad4d777bf0a202514ca25bc440fc2aff50",
+            "evidence_b910d66cf43c2c0347a4f4eeb3fd8aca251eb9eb301368cc5ab4d5ccf0b87fc3",
+            "evidence_053c244540e98565e163d47cf3096943128a3a4fe75407e3974fd84778755266",
+            "evidence_05f893f55695caaec005567a229766188e95d1907ae60c5ad7555d2a5ce23ddd",
+            "evidence_894c6f827b3db8526d33fb07fec36578a037405f5b24982fb60b76bd3045ea68",
+            "evidence_9e1bc586582235b947a81f3b419021b109f0e3ba6614f202ff0fd340daa8bf6b",
+            "evidence_0f30c3220f68ffae55c8f9d2910f69b7d937118fc842188640a9f21cd536966a",
+            "evidence_b8de24e5efb5514b4722166c072fba74f95c9fb34bf0b5dc35d13abea4e9954f",
+            "evidence_c18ab280882897cbcddc7582094120a14fc45352e7e605ea311015c1e640ece5"
+          ],
+          "warnings": [
+            "context_expansion_budget_reserved",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 4779,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:04:06.235852+00:00",
+        "finished_at": "2026-11-04T15:04:11.024905+00:00"
+      },
+      {
+        "id": "search-2",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "realm",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_713b7137ee7e2986c1b0f742b71bb741622b21c1fc290a01f21798de688fdc55"
+          },
+          "evidence_ids": [
+            "evidence_00acfa856c77b2772a42504b50f4e8277830f25b8ea508643625cb280a2cd7d1",
+            "evidence_6f1b1bf47b153a2bfe5fa944d3f68c5fe0b12e4c97d17c85c533aa643e76d276",
+            "evidence_dc4be5e21bdf062863662bc203a50179d8e3ef0845d1683ef4cb41c69f7fd4b9",
+            "evidence_a55ed4fa3155c24d34c83bd925e34d274d20f7663a9d633ecc98be17071215a9",
+            "evidence_908eb9684a117000b1f64a2502ef8bc17905d60ffa65e22dc8a93b0413c87f16",
+            "evidence_4a23c9515e72d23f5fcce19f591109b0f31aad71fb053a774b61d22190786d1f",
+            "evidence_8219b1174b387565651fa026a5b4b79e8fff743556d720870e4a4fa815ce6b3d",
+            "evidence_cab71bccb8d3be0087c12449651a9d69efd05c13a71877e6f0f834364ea460f1",
+            "evidence_c4470e8402691f135c7d6956413fa4cc09b6e69b63b50274cdb256c9739dcca2"
+          ],
+          "warnings": [
+            "compact_parent_window",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 6133,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:04:11.039146+00:00",
+        "finished_at": "2026-11-04T15:04:17.179765+00:00"
+      },
+      {
+        "id": "analyse-0",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "dpr"
+        },
+        "dependencies": [
+          "search-0"
+        ],
+        "status": "failed",
+        "result": {
+          "status": "failed",
+          "data": {},
+          "evidence_ids": [],
+          "warnings": [
+            "response_schema_invalid:extract_cited:relations.1.predicate:literal_error"
+          ],
+          "elapsed_ms": 26033,
+          "error_code": "research_tool_failed",
+          "error_type": "ValidationError",
+          "model_calls": [
+            {
+              "operation": "extract_cited",
+              "model_id": "Qwen/Qwen2.5-7B-Instruct",
+              "version": "research-operator-v1",
+              "extraction_protocol": "source-handles-v2",
+              "response_format": "json_object",
+              "verification_protocol": "facet-handles-v5",
+              "status": "succeeded",
+              "usage": {
+                "prompt_tokens": 2542,
+                "completion_tokens": 560,
+                "total_tokens": 3102
+              },
+              "verification_context_policy": "preceding-children-v1",
+              "result_condition_policy": "explicit-row-v1",
+              "prompt_sha256": "45d2fd19a40c8d48e7c5803a362b0713485c5427a96d5090daa6b89ce7c8a290",
+              "elapsed_ms": 23023
+            }
+          ]
+        },
+        "started_at": "2026-11-04T15:05:20.460455+00:00",
+        "finished_at": "2026-11-04T15:05:46.504103+00:00"
+      },
+      {
+        "id": "analyse-1",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "fid"
+        },
+        "dependencies": [
+          "search-1"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "analyse-2",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "realm"
+        },
+        "dependencies": [
+          "search-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-0",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "dpr"
+        },
+        "dependencies": [
+          "analyse-0"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-1",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "fid"
+        },
+        "dependencies": [
+          "analyse-1"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-2",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "realm"
+        },
+        "dependencies": [
+          "analyse-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify",
+        "objective": "检查全部文档核验报告并合并，不调用模型",
+        "tool_name": "merge_verification",
+        "arguments": {},
+        "dependencies": [
+          "verify-0",
+          "verify-1",
+          "verify-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "compose",
+        "objective": "交付含可核对引用和知识缺口的比较表",
+        "tool_name": "compose_artifact",
+        "arguments": {},
+        "dependencies": [
+          "verify"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      }
+    ],
+    "activation_rehearsal": [
+      [
+        "version_18e4dfcdbe2b6c0401dd6d80",
+        1
+      ],
+      [
+        "version_18e4dfce72ccff6049cd9632",
+        2
+      ],
+      [
+        "version_18e4dfcdbe2b6c0401dd6d80",
+        3
+      ],
+      [
+        null,
+        4
+      ]
+    ],
+    "error_type": null,
+    "limitations": [
+      "SQLite experiment, not a MySQL production deployment",
+      "No human citation support audit",
+      "Development corpus, not independent training holdout",
+      "Model judgments are fallible; no comparable performance ranking",
+      "Graph relations are source-backed hypotheses, not certified semantic facts",
+      "Previous retrieval report did not seal raw vector values; cache digest frozen at this execution"
+    ],
+    "cost": "unknown",
+    "executed_source_sha256": {
+      "app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83",
+      "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+      "app/research/artifacts.py": "7eb1f162465ab39556c4e3177de44e9683757dce89f38d4c326581858ff41875",
+      "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+      "app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+      "app/research/lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+      "app/research/model.py": "b4b58c5d0bbf7965aa87cfd86e094994a349e0a29c7917d63cd9b1e31ab203dd",
+      "app/research/protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+      "app/research/result_conditions.py": "126e012548d9e4b1768c45ccc3647a33a1dc3ed5bb7b7129304b1c5c7df16833",
+      "app/research/runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+      "app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+      "app/research/tasks.py": "12aea92571216f27b5c97f461af0690a5310726b35d5239ed2526d7372285582",
+      "app/research/tools.py": "c803a399fc457e5994caa245ee30daae1a763d5bc9e792902a3d98a10269e2e4",
+      "app/research/verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+      "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+      "scripts/evaluate_research_comparison.py": "3f127caf1c66c446dda1b20bbd17fffb13f1de0bddfc5faffa936b3e02758d6c",
+      "app/services/index_version_service.py": "40fd5f4307651f16a8ef7e50bb30584f8ee87588e545a27eadca4f585a61f12d"
+    },
+    "sources": [
+      {
+        "document_id": "dpr",
+        "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+        "url": "https://aclanthology.org/2020.emnlp-main.550/",
+        "pdf_url": "https://aclanthology.org/2020.emnlp-main.550.pdf",
+        "file_name": "dpr.pdf",
+        "sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+        "pages": 13,
+        "license": "CC-BY-4.0",
+        "license_url": "https://aclanthology.org/2020.emnlp-main.550/"
+      },
+      {
+        "document_id": "fid",
+        "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering",
+        "url": "https://aclanthology.org/2021.eacl-main.74/",
+        "pdf_url": "https://aclanthology.org/2021.eacl-main.74.pdf",
+        "file_name": "fid.pdf",
+        "sha256": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175",
+        "pages": 7,
+        "license": "CC-BY-4.0",
+        "license_url": "https://aclanthology.org/2021.eacl-main.74/"
+      },
+      {
+        "document_id": "realm",
+        "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+        "url": "https://proceedings.mlr.press/v119/guu20a.html",
+        "pdf_url": "https://proceedings.mlr.press/v119/guu20a/guu20a.pdf",
+        "file_name": "realm.pdf",
+        "sha256": "653e9bf290eabefa71d08dc0b1170486336b7d9e31d832921e8305fd78f8d416",
+        "pages": 10,
+        "license": "CC-BY-4.0",
+        "license_url": "https://proceedings.mlr.press/pmlr-license-agreement.html"
+      }
+    ],
+    "pilot_sha256": "88b18b7869157ed612bcd26ab5f49ce78b9699f7b7055c3539248035961bd62e",
+    "cached_vectors_sha256": "f20d9c6e10105b330f31439227b11040d20252e13c7988fa7c2d68608121d4a4",
+    "cached_vector_file_sha256": {
+      "col_user_1__rag4_e3a8ec87.json": "9b4ca09d8832b5a79a59e395eb3387643e5f067ad07743232c2e040825dec1ac"
+    },
+    "chunk_sets": [
+      {
+        "document_id": "dpr",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "parser_version": "rag3-parser-v1",
+        "chunking_version": "rag4-structured-v1"
+      },
+      {
+        "document_id": "fid",
+        "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+        "parser_version": "rag3-parser-v1",
+        "chunking_version": "rag4-structured-v1"
+      },
+      {
+        "document_id": "realm",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "parser_version": "rag3-parser-v1",
+        "chunking_version": "rag4-structured-v1"
+      }
+    ],
+    "completion_spec": {
+      "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "timeout_seconds": 60,
+      "max_output_tokens": 4096,
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "verification_context_policy": "preceding-children-v1",
+      "result_condition_policy": "explicit-row-v1"
+    },
+    "embedding_spec": {
+      "provider": "remote",
+      "endpoint": "https://api.siliconflow.cn/v1/embeddings",
+      "model_id": "Qwen/Qwen3-Embedding-8B",
+      "version": "pilot-remote-v1",
+      "dimension": 4096,
+      "timeout_seconds": 30
+    },
+    "call_limits": {
+      "completion": 8,
+      "embedding": 4
+    },
+    "duration_ms": 131621,
+    "embedding_calls": [
+      {
+        "inputs": 4,
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 166,
+          "total_tokens": 166
+        },
+        "duration_ms": 6740
+      },
+      {
+        "inputs": 4,
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 166,
+          "total_tokens": 166
+        },
+        "duration_ms": 1054
+      },
+      {
+        "inputs": 4,
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 166,
+          "total_tokens": 166
+        },
+        "duration_ms": 1779
+      }
+    ],
+    "completion_calls": [
+      {
+        "operation": "extract_cited",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "failed",
+        "usage": {},
+        "verification_context_policy": "preceding-children-v1",
+        "result_condition_policy": "explicit-row-v1",
+        "prompt_sha256": "45d2fd19a40c8d48e7c5803a362b0713485c5427a96d5090daa6b89ce7c8a290",
+        "error_type": "ReadTimeout",
+        "elapsed_ms": 60008
+      },
+      {
+        "operation": "extract_cited",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 2542,
+          "completion_tokens": 560,
+          "total_tokens": 3102
+        },
+        "verification_context_policy": "preceding-children-v1",
+        "result_condition_policy": "explicit-row-v1",
+        "prompt_sha256": "45d2fd19a40c8d48e7c5803a362b0713485c5427a96d5090daa6b89ce7c8a290",
+        "elapsed_ms": 23023
+      }
+    ],
+    "task_id": "research_18e4dfcfbb4ec830aa6a127d",
+    "task_status": "failed",
+    "model_calls_reserved": 2,
+    "tool_calls_used": 5,
+    "condition_summary": {
+      "policy": "explicit-row-v1",
+      "enabled": true,
+      "report_source": "document_checkpoints",
+      "result_claim_count": 0,
+      "audited_result_count": 0,
+      "status_counts": {
+        "passed": 0,
+        "missing": 0,
+        "unknown": 0,
+        "not_applicable": 0
+      },
+      "blocked_claim_ids": [],
+      "unassessed_result_claim_ids": [],
+      "verification_pending_result_claim_ids": [],
+      "semantic_quality_inferred": false
+    }
+  },
+  "task": {
+    "schema_version": "research-comparison-v2",
+    "id": "research_18e4dfcfbb4ec830aa6a127d",
+    "user_id": 1,
+    "goal": "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+    "index_version_id": "version_18e4dfcdbe2b6c0401dd6d80",
+    "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+    "sources": [
+      {
+        "document_id": "dpr",
+        "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+        "source_sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+        "title": "dpr.pdf"
+      },
+      {
+        "document_id": "fid",
+        "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+        "source_sha256": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175",
+        "title": "fid.pdf"
+      },
+      {
+        "document_id": "realm",
+        "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+        "source_sha256": "653e9bf290eabefa71d08dc0b1170486336b7d9e31d832921e8305fd78f8d416",
+        "title": "realm.pdf"
+      }
+    ],
+    "completion": {
+      "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "timeout_seconds": 60,
+      "max_output_tokens": 4096,
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "verification_context_policy": "preceding-children-v1",
+      "result_condition_policy": "explicit-row-v1"
+    },
+    "context_policy": "local-window-v3",
+    "candidate_policy": "source-role-v3",
+    "budget": {
+      "max_steps": 13,
+      "max_model_calls": 8,
+      "max_context_chars": 6000
+    },
+    "status": "failed",
+    "revision": 11,
+    "steps": [
+      {
+        "id": "search-0",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "dpr",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_3a3f1aeb3c7eb11edba3ef84c9c04048dc135d01bdb140f387d0c4cac530dfd6"
+          },
+          "evidence_ids": [
+            "evidence_435c51557d3fc47e8ee3a8c5369bcb4437b739caeb138274ac5c216afa91ccdd",
+            "evidence_adec1d84a94b7a1f8b96a9e726ff8839b89447caabe5c547824f1c44cae0414b",
+            "evidence_392c82414ef3716d791d59cd4a89391fa1c0464d27d331272136d701f5d924e6",
+            "evidence_bb53bb48b359b3f6bbfea7d8155326c0e26aeb5980bb27805b9ba597f34e5a01",
+            "evidence_12fe3e9b5abd95710fa22f5b027f10d96dea80cb53a5dc7f0c8accdc8b32d26b",
+            "evidence_2dd2fec7d257034db42b65165aedb956abf983d4f85d0018fec0439fb89e9ea2",
+            "evidence_9e5d245edaecf629b4abe9ce890026c472133b44ac8fa4fe0816fab8b479c8c0",
+            "evidence_5f35f5080c91b9fa0c5079b91422f4840efc64a1c6ac8d47a6a1bea24d9b5710",
+            "evidence_1fff621da1bdcbe5e389bd9118232fb20782a7d356a6339ea482aa0ed6eed0a7"
+          ],
+          "warnings": [
+            "compact_parent_window",
+            "context_expansion_budget_reserved",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 11275,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:03:54.915131+00:00",
+        "finished_at": "2026-11-04T15:04:06.222500+00:00"
+      },
+      {
+        "id": "search-1",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "fid",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_e877c0b374d33161f939e64e8210e0219045a94506788103ce01853076e42ab2"
+          },
+          "evidence_ids": [
+            "evidence_656c53778417c0df7553fcfa31ecccad4d777bf0a202514ca25bc440fc2aff50",
+            "evidence_b910d66cf43c2c0347a4f4eeb3fd8aca251eb9eb301368cc5ab4d5ccf0b87fc3",
+            "evidence_053c244540e98565e163d47cf3096943128a3a4fe75407e3974fd84778755266",
+            "evidence_05f893f55695caaec005567a229766188e95d1907ae60c5ad7555d2a5ce23ddd",
+            "evidence_894c6f827b3db8526d33fb07fec36578a037405f5b24982fb60b76bd3045ea68",
+            "evidence_9e1bc586582235b947a81f3b419021b109f0e3ba6614f202ff0fd340daa8bf6b",
+            "evidence_0f30c3220f68ffae55c8f9d2910f69b7d937118fc842188640a9f21cd536966a",
+            "evidence_b8de24e5efb5514b4722166c072fba74f95c9fb34bf0b5dc35d13abea4e9954f",
+            "evidence_c18ab280882897cbcddc7582094120a14fc45352e7e605ea311015c1e640ece5"
+          ],
+          "warnings": [
+            "context_expansion_budget_reserved",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 4779,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:04:06.235852+00:00",
+        "finished_at": "2026-11-04T15:04:11.024905+00:00"
+      },
+      {
+        "id": "search-2",
+        "objective": "定位该论文的方法、数据集、结果与局限",
+        "tool_name": "search_evidence",
+        "arguments": {
+          "document_id": "realm",
+          "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。"
+        },
+        "dependencies": [],
+        "status": "succeeded",
+        "result": {
+          "status": "succeeded",
+          "data": {
+            "bundle_id": "bundle_713b7137ee7e2986c1b0f742b71bb741622b21c1fc290a01f21798de688fdc55"
+          },
+          "evidence_ids": [
+            "evidence_00acfa856c77b2772a42504b50f4e8277830f25b8ea508643625cb280a2cd7d1",
+            "evidence_6f1b1bf47b153a2bfe5fa944d3f68c5fe0b12e4c97d17c85c533aa643e76d276",
+            "evidence_dc4be5e21bdf062863662bc203a50179d8e3ef0845d1683ef4cb41c69f7fd4b9",
+            "evidence_a55ed4fa3155c24d34c83bd925e34d274d20f7663a9d633ecc98be17071215a9",
+            "evidence_908eb9684a117000b1f64a2502ef8bc17905d60ffa65e22dc8a93b0413c87f16",
+            "evidence_4a23c9515e72d23f5fcce19f591109b0f31aad71fb053a774b61d22190786d1f",
+            "evidence_8219b1174b387565651fa026a5b4b79e8fff743556d720870e4a4fa815ce6b3d",
+            "evidence_cab71bccb8d3be0087c12449651a9d69efd05c13a71877e6f0f834364ea460f1",
+            "evidence_c4470e8402691f135c7d6956413fa4cc09b6e69b63b50274cdb256c9739dcca2"
+          ],
+          "warnings": [
+            "compact_parent_window",
+            "parent_budget_exceeded"
+          ],
+          "elapsed_ms": 6133,
+          "error_code": null,
+          "error_type": null,
+          "model_calls": []
+        },
+        "started_at": "2026-11-04T15:04:11.039146+00:00",
+        "finished_at": "2026-11-04T15:04:17.179765+00:00"
+      },
+      {
+        "id": "analyse-0",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "dpr"
+        },
+        "dependencies": [
+          "search-0"
+        ],
+        "status": "failed",
+        "result": {
+          "status": "failed",
+          "data": {},
+          "evidence_ids": [],
+          "warnings": [
+            "response_schema_invalid:extract_cited:relations.1.predicate:literal_error"
+          ],
+          "elapsed_ms": 26033,
+          "error_code": "research_tool_failed",
+          "error_type": "ValidationError",
+          "model_calls": [
+            {
+              "operation": "extract_cited",
+              "model_id": "Qwen/Qwen2.5-7B-Instruct",
+              "version": "research-operator-v1",
+              "extraction_protocol": "source-handles-v2",
+              "response_format": "json_object",
+              "verification_protocol": "facet-handles-v5",
+              "status": "succeeded",
+              "usage": {
+                "prompt_tokens": 2542,
+                "completion_tokens": 560,
+                "total_tokens": 3102
+              },
+              "verification_context_policy": "preceding-children-v1",
+              "result_condition_policy": "explicit-row-v1",
+              "prompt_sha256": "45d2fd19a40c8d48e7c5803a362b0713485c5427a96d5090daa6b89ce7c8a290",
+              "elapsed_ms": 23023
+            }
+          ]
+        },
+        "started_at": "2026-11-04T15:05:20.460455+00:00",
+        "finished_at": "2026-11-04T15:05:46.504103+00:00"
+      },
+      {
+        "id": "analyse-1",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "fid"
+        },
+        "dependencies": [
+          "search-1"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "analyse-2",
+        "objective": "从原文提取四类候选陈述及有来源的关系",
+        "tool_name": "compare_evidence",
+        "arguments": {
+          "document_id": "realm"
+        },
+        "dependencies": [
+          "search-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-0",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "dpr"
+        },
+        "dependencies": [
+          "analyse-0"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-1",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "fid"
+        },
+        "dependencies": [
+          "analyse-1"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify-2",
+        "objective": "核验该论文至多四条结论并保存独立报告",
+        "tool_name": "verify_document",
+        "arguments": {
+          "document_id": "realm"
+        },
+        "dependencies": [
+          "analyse-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "verify",
+        "objective": "检查全部文档核验报告并合并，不调用模型",
+        "tool_name": "merge_verification",
+        "arguments": {},
+        "dependencies": [
+          "verify-0",
+          "verify-1",
+          "verify-2"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "id": "compose",
+        "objective": "交付含可核对引用和知识缺口的比较表",
+        "tool_name": "compose_artifact",
+        "arguments": {},
+        "dependencies": [
+          "verify"
+        ],
+        "status": "pending",
+        "result": null,
+        "started_at": null,
+        "finished_at": null
+      }
+    ],
+    "model_calls_used": 2,
+    "tool_calls_used": 5,
+    "bundles": [
+      {
+        "bundle_id": "bundle_3a3f1aeb3c7eb11edba3ef84c9c04048dc135d01bdb140f387d0c4cac530dfd6",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "user_id": 1,
+        "selector_version": "evidence-window-v3",
+        "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+        "options": {
+          "document_ids": [
+            "dpr"
+          ],
+          "top_k": 10,
+          "max_items": 10,
+          "max_context_chars": 6000,
+          "expand_parents": true,
+          "include_graph": true,
+          "context_policy": "local-window-v3"
+        },
+        "items": [
+          {
+            "evidence_id": "evidence_435c51557d3fc47e8ee3a8c5369bcb4437b739caeb138274ac5c216afa91ccdd",
+            "chunk_id": "chunk_c47bf8646c0196d48f5e31cc53c50868dd795c20fc9e80749bc5e4a8a679a040",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_a548fb063562d2436ced8c92cb956a1ce4619cd1f01e6b0fad1407336fac850c"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_adec1d84a94b7a1f8b96a9e726ff8839b89447caabe5c547824f1c44cae0414b",
+            "chunk_id": "chunk_08b388117abd998a67cb6ccd8ba5386df173ef5845d90006c13316829c8ab41e",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_5998dffd214e2299963fa640f49cc2e87f15fe295276b3c90a347a56a34bdbd2"
+            ],
+            "channels": [
+              "vector"
+            ],
+            "context_start": 493,
+            "context_end": 1522
+          },
+          {
+            "evidence_id": "evidence_392c82414ef3716d791d59cd4a89391fa1c0464d27d331272136d701f5d924e6",
+            "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_bb53bb48b359b3f6bbfea7d8155326c0e26aeb5980bb27805b9ba597f34e5a01",
+            "chunk_id": "chunk_deace7fc9045c51ef37ed927e60420e6bf79af62f3e4ba4d72b1b53fa0551ebd",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_deace7fc9045c51ef37ed927e60420e6bf79af62f3e4ba4d72b1b53fa0551ebd"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_12fe3e9b5abd95710fa22f5b027f10d96dea80cb53a5dc7f0c8accdc8b32d26b",
+            "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_2dd2fec7d257034db42b65165aedb956abf983d4f85d0018fec0439fb89e9ea2",
+            "chunk_id": "chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_ae2d1119118d5189767009fd51898013603c626bf9076b2c124fe85214a62a0a"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_9e5d245edaecf629b4abe9ce890026c472133b44ac8fa4fe0816fab8b479c8c0",
+            "chunk_id": "chunk_b502041c8bae564ff6a12ca4395ff8f3d44c9d50ab7b74a269a5924da3ecac63",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_b502041c8bae564ff6a12ca4395ff8f3d44c9d50ab7b74a269a5924da3ecac63"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_5f35f5080c91b9fa0c5079b91422f4840efc64a1c6ac8d47a6a1bea24d9b5710",
+            "chunk_id": "chunk_7cf3f4d4b27ce4ff6eedc84d9f169f0e9cda5cd195c7efd5f50ca9f5238c8018",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_b8cf6db2ee0da618a711572c30dddd005127232040c8b220b42a1e72ed972aa0"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_1fff621da1bdcbe5e389bd9118232fb20782a7d356a6339ea482aa0ed6eed0a7",
+            "chunk_id": "chunk_9b1a9934b26552f513c984b34720e86d903b6603fad2a312f1f33c42fc237836",
+            "chunk_set_id": "chunkset_22dd8662c3449d5954fde88c3251f537b6d95c3946e68c9bf29c5f4c6df42b58",
+            "matched_child_ids": [
+              "chunk_384b446f76c23943a7c96689ef7227dc48758c5fce313f888c4cecfb09f3806b"
+            ],
+            "channels": [
+              "vector"
+            ],
+            "context_start": 1010,
+            "context_end": 1714
+          }
+        ],
+        "relation_ids": [],
+        "warnings": [
+          "compact_parent_window",
+          "context_expansion_budget_reserved",
+          "parent_budget_exceeded"
+        ],
+        "context_chars": 5902,
+        "elapsed_ms": 8198
+      },
+      {
+        "bundle_id": "bundle_e877c0b374d33161f939e64e8210e0219045a94506788103ce01853076e42ab2",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "user_id": 1,
+        "selector_version": "evidence-window-v3",
+        "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+        "options": {
+          "document_ids": [
+            "fid"
+          ],
+          "top_k": 10,
+          "max_items": 10,
+          "max_context_chars": 6000,
+          "expand_parents": true,
+          "include_graph": true,
+          "context_policy": "local-window-v3"
+        },
+        "items": [
+          {
+            "evidence_id": "evidence_656c53778417c0df7553fcfa31ecccad4d777bf0a202514ca25bc440fc2aff50",
+            "chunk_id": "chunk_64ea3925145187d4b0c987ddfa7adda830923b1251462ae1faad8aa76a8043ab",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_517c9e6ea8bb0dfa3fcea508804a64df718dbebe2b135a380cba4076f0a1b4ce"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_b910d66cf43c2c0347a4f4eeb3fd8aca251eb9eb301368cc5ab4d5ccf0b87fc3",
+            "chunk_id": "chunk_22a811a741f0f9f8f60bbfd1d1b79e83337994f5ff5c716858129adcd109db9e",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_22a811a741f0f9f8f60bbfd1d1b79e83337994f5ff5c716858129adcd109db9e"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_053c244540e98565e163d47cf3096943128a3a4fe75407e3974fd84778755266",
+            "chunk_id": "chunk_48aea18fd456a96fdfe0b2d35db1b48b8d5646603fd6bb6a91ceec97125b7bd2",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_48aea18fd456a96fdfe0b2d35db1b48b8d5646603fd6bb6a91ceec97125b7bd2"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_05f893f55695caaec005567a229766188e95d1907ae60c5ad7555d2a5ce23ddd",
+            "chunk_id": "chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_894c6f827b3db8526d33fb07fec36578a037405f5b24982fb60b76bd3045ea68",
+            "chunk_id": "chunk_436251de9ff298ae741c1d0a727d613985118ce448787fdb8debb851b6875103",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_436251de9ff298ae741c1d0a727d613985118ce448787fdb8debb851b6875103"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_9e1bc586582235b947a81f3b419021b109f0e3ba6614f202ff0fd340daa8bf6b",
+            "chunk_id": "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_0f30c3220f68ffae55c8f9d2910f69b7d937118fc842188640a9f21cd536966a",
+            "chunk_id": "chunk_c174475afab2a9bf3874615a444e12467e9620e5265507c626ceebe5c99c10c4",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_c174475afab2a9bf3874615a444e12467e9620e5265507c626ceebe5c99c10c4"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_b8de24e5efb5514b4722166c072fba74f95c9fb34bf0b5dc35d13abea4e9954f",
+            "chunk_id": "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_c18ab280882897cbcddc7582094120a14fc45352e7e605ea311015c1e640ece5",
+            "chunk_id": "chunk_01ad96e41caf77b4dd0339360d962d21439c00b684dcdce3db9afe447b02c0bd",
+            "chunk_set_id": "chunkset_64651d35e3d08624e5fcba6fda853018b6f2fd87848bc5a174d572ae7969817d",
+            "matched_child_ids": [
+              "chunk_01ad96e41caf77b4dd0339360d962d21439c00b684dcdce3db9afe447b02c0bd"
+            ],
+            "channels": [
+              "vector"
+            ]
+          }
+        ],
+        "relation_ids": [],
+        "warnings": [
+          "context_expansion_budget_reserved",
+          "parent_budget_exceeded"
+        ],
+        "context_chars": 5749,
+        "elapsed_ms": 1737
+      },
+      {
+        "bundle_id": "bundle_713b7137ee7e2986c1b0f742b71bb741622b21c1fc290a01f21798de688fdc55",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "user_id": 1,
+        "selector_version": "evidence-window-v3",
+        "query": "method model encoder training datasets results evaluation limitations 比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+        "options": {
+          "document_ids": [
+            "realm"
+          ],
+          "top_k": 10,
+          "max_items": 10,
+          "max_context_chars": 6000,
+          "expand_parents": true,
+          "include_graph": true,
+          "context_policy": "local-window-v3"
+        },
+        "items": [
+          {
+            "evidence_id": "evidence_00acfa856c77b2772a42504b50f4e8277830f25b8ea508643625cb280a2cd7d1",
+            "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_97525fb48bc2bb2fbdf9974c664caaca0585ded6e17bda78ca3926f4d13aa7e1"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_6f1b1bf47b153a2bfe5fa944d3f68c5fe0b12e4c97d17c85c533aa643e76d276",
+            "chunk_id": "chunk_dd6513cc00f1a47e7259fe19087662e6c56ca15d887891a5e8e5d35679b93728",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_dd6513cc00f1a47e7259fe19087662e6c56ca15d887891a5e8e5d35679b93728"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_dc4be5e21bdf062863662bc203a50179d8e3ef0845d1683ef4cb41c69f7fd4b9",
+            "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_a55ed4fa3155c24d34c83bd925e34d274d20f7663a9d633ecc98be17071215a9",
+            "chunk_id": "chunk_cba7a298f43ccc620d38d675c4eda0e22653587a19b5205dddee1ec2b7bcb508",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_cba7a298f43ccc620d38d675c4eda0e22653587a19b5205dddee1ec2b7bcb508"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_908eb9684a117000b1f64a2502ef8bc17905d60ffa65e22dc8a93b0413c87f16",
+            "chunk_id": "chunk_80cbd8afc75917477b7460452d09acdb9424fc63c5556d2ea57038850782e847",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_6f34aff0091afdf63b51789b4b7be60f6e5142e7975318ca9dde36bbf5792ea2",
+              "chunk_809535800bc7f2e4682e21fd18982fd7a6bc843a53145a892bffed43986ca4e6"
+            ],
+            "channels": [
+              "vector"
+            ],
+            "context_start": 552,
+            "context_end": 1633
+          },
+          {
+            "evidence_id": "evidence_4a23c9515e72d23f5fcce19f591109b0f31aad71fb053a774b61d22190786d1f",
+            "chunk_id": "chunk_c13c6a7bcd4c92624a4a042140f4931084760bcd4f51a58985868498009103b6",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_c13c6a7bcd4c92624a4a042140f4931084760bcd4f51a58985868498009103b6"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_8219b1174b387565651fa026a5b4b79e8fff743556d720870e4a4fa815ce6b3d",
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_fc58b5432be75214e2550ef8cbe432afe0065e4bf58254375e97ab130a514d8f"
+            ],
+            "channels": [
+              "vector"
+            ],
+            "context_start": 1170,
+            "context_end": 1796
+          },
+          {
+            "evidence_id": "evidence_cab71bccb8d3be0087c12449651a9d69efd05c13a71877e6f0f834364ea460f1",
+            "chunk_id": "chunk_fc8a55931fc21fa7e80f1c41f469872d9427b00a56d0d99ede9525a468ccb93b",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_fc8a55931fc21fa7e80f1c41f469872d9427b00a56d0d99ede9525a468ccb93b"
+            ],
+            "channels": [
+              "vector"
+            ]
+          },
+          {
+            "evidence_id": "evidence_c4470e8402691f135c7d6956413fa4cc09b6e69b63b50274cdb256c9739dcca2",
+            "chunk_id": "chunk_7692ca6a99cd0cd73ca0a8907756489efb1c603fa60834fc4e36bbd98bf39680",
+            "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+            "matched_child_ids": [
+              "chunk_7692ca6a99cd0cd73ca0a8907756489efb1c603fa60834fc4e36bbd98bf39680"
+            ],
+            "channels": [
+              "vector"
+            ]
+          }
+        ],
+        "relation_ids": [],
+        "warnings": [
+          "compact_parent_window",
+          "parent_budget_exceeded"
+        ],
+        "context_chars": 5919,
+        "elapsed_ms": 2996
+      }
+    ],
+    "claims": [],
+    "relations": [],
+    "verification": null,
+    "verification_batches": [],
+    "artifact": null,
+    "error_code": "research_tool_failed"
+  },
+  "report_sha256": "5eb21f5d4d93b19a927c0528ba1b5902aea3cde74ccd146829e026c21136878f",
+  "task_sha256": "8d60fc6acacfdbf6b3dc3265668e925a1e5ad29ea8c77293741ce73ecdc2423b",
+  "note": "Initial live run failed on optional relation predicate validation after one network retry. Original output is retained."
+}

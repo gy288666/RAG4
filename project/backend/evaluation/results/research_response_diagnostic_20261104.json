@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-04",
+  "schema": "research-response-contract-diagnostic-v1",
+  "quality_gate_passed": false,
+  "historical_ValueError_root_cause_established": false,
+  "live_report": {
+    "schema": "research-source-checks-replay-v1",
+    "annotation_status": "machine_review_only",
+    "quality_gate_passed": false,
+    "business_database_modified": false,
+    "max_model_calls": 1,
+    "source_task_sha256": "2c7d5757fb16ff9afa6f27689014f84090bc985536aa17ef37e06bf5ae326dbe",
+    "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+    "completion": {
+      "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "version": "research-operator-v1",
+      "timeout_seconds": 60,
+      "max_output_tokens": 4096,
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "verification_context_policy": "preceding-children-v1",
+      "result_condition_policy": "explicit-row-v1"
+    },
+    "claim_ids": [
+      "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+      "claim_28d134fc4e6b3e5ef1fb134c403cd3ca874e0781f6b697f83a27d6152ef0f497",
+      "claim_358353400734364b0199fa8ba0d54e1d1593e04f95f327dc4eaf269a7e4e0043",
+      "claim_649c2644091de60760739902639475cb1fe7a8920e2e7e3b48e811102ecd0a3a"
+    ],
+    "diagnostic_subset": true,
+    "old_verification": null,
+    "code_sha256": {
+      "agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+      "artifacts.py": "bdeea5da15ad72ada9e5eae9da1735c7f972bec651929a0886a65075fc4c1abe",
+      "evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+      "graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+      "lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+      "model.py": "b4b58c5d0bbf7965aa87cfd86e094994a349e0a29c7917d63cd9b1e31ab203dd",
+      "protocol.py": "e62946e6aec7fc7cfeed6fd560b814e14dbea31484069828b0bdaf869328cbe5",
+      "result_conditions.py": "126e012548d9e4b1768c45ccc3647a33a1dc3ed5bb7b7129304b1c5c7df16833",
+      "runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+      "store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+      "tasks.py": "c70adce206647a8a6e7993016a0cc5be7c274087b3e901eca15183ddf42ba96f",
+      "tools.py": "014d91874b0980ac09fcad6107ca750be0ad5bfac476987060db4110f5983bcb",
+      "verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+      "verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+      "__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+    },
+    "status": "failed",
+    "error_type": "RuntimeError",
+    "diagnostics": [],
+    "calls": [
+      {
+        "operation": "verify_facets",
+        "model_id": "Qwen/Qwen2.5-7B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "failed",
+        "usage": {},
+        "verification_context_policy": "preceding-children-v1",
+        "result_condition_policy": "explicit-row-v1",
+        "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+        "error_type": "ConnectTimeout",
+        "elapsed_ms": 5548
+      }
+    ]
+  },
+  "connection_probe": {
+    "date": "2026-11-04",
+    "endpoint": "https://api.siliconflow.cn/v1/models",
+    "proxy_configuration_present": false,
+    "siliconflow_in_no_proxy": false,
+    "checks": [
+      {
+        "trust_environment": true,
+        "status": "http_response",
+        "http_status": 200,
+        "elapsed_ms": 4494
+      },
+      {
+        "trust_environment": false,
+        "status": "http_response",
+        "http_status": 200,
+        "elapsed_ms": 5428
+      }
+    ],
+    "completion_requests": 0,
+    "system_proxy_modified": false,
+    "note": "Two sequential GET probes, not a causal or chat-completion reliability test; no proxy URLs or credentials retained"
+  },
+  "independent_request_cap": 1,
+  "old_task_budget_modified": false,
+  "old_task_status": "failed",
+  "original_partial_artifact_identity_unchanged": true,
+  "outcome": "ConnectTimeout before receiving a response; no live identity or batch diagnosis was reached. Controlled regressions validate safe diagnostics only.",
+  "reported_tokens": 0,
+  "usage_missing": true,
+  "monetary_cost_known": false,
+  "model_response_retained": false,
+  "script_sha256": "79e162d77aadfea51a5cc9961f58bd66b66a6179cc8b143f8cc262eabd287256"
+}

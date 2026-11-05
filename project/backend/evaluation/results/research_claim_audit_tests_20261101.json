@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-01",
+  "full_command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "full_result": "577 passed in 233.94s (0:03:53)",
+  "full_passed": 577,
+  "full_failed": 0,
+  "full_skipped": 0,
+  "full_scope_note": "Full suite collected before adding the offline invalid-support-ID scoring regression. Production model source unchanged afterwards; final targeted run includes that additional test. Final collection would contain 578 cases.",
+  "final_targeted_command": "python -m pytest tests/test_claim_audit.py tests/test_research_pilot_options.py tests/test_verification_facets.py tests/test_research_verification_batches.py -o addopts='' -q --tb=short --show-capture=no",
+  "final_targeted_result": "33 passed in 2.35s",
+  "new_test_cases": 8,
+  "source_sha256": {
+    "app/research/model.py": "fb24f62b7e04b4fb74137365cf1dbe6499ffb6cdd4822a014627b3d39c448d43",
+    "scripts/evaluate_research_comparison.py": "dd07bd3acb3afd17719060c2f492bf14709cc54523120672dee23330778cca36",
+    "scripts/evaluate_claim_audit.py": "fb7c790f57cd71947605013848ab7b02495e3a93bc6ba01f82544120db04acad",
+    "tests/test_claim_audit.py": "e450c0b92a7ae2cec618a8db82e575f89d18bd400729135e8ee13b5ce0a8e15e"
+  },
+  "quality_gate_passed": false,
+  "candidate_promoted": false
+}

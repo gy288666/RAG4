@@ -42,6 +42,40 @@ def batched(workflow):
     return task, corpus, store, model, ResearchAgent(store, context), context
 
 
+def test_condition_audits_survive_batch_merge_sql_restart_and_artifact(workflow):
+    task,*rest=workflow
+    task=task.model_copy(update={'completion':task.completion.model_copy(update={'result_condition_policy':'explicit-row-v1'})})
+    task,_,store,model,agent,context=batched((task,*rest))
+    model.result_condition_policy='explicit-row-v1'
+    original=model.generate
+    def results(operation,payload):
+        response=original(operation,payload)
+        if operation=='extract':
+            for claim in response['claims']:claim['facet']='result'
+        return response
+    model.generate=results
+    done=finish(agent,task)
+    assert done.status=='completed'
+    assert done.verification.result_condition_policy=='explicit-row-v1'
+    assert len(done.verification.condition_audits)==3
+    assert all(a.status=='not_applicable' for a in done.verification.condition_audits)
+    assert store.load(done.user_id,done.id).artifact==done.artifact
+    assert done.artifact.verification.condition_audits==done.verification.condition_audits
+    batch=done.verification_batches[0]
+    with pytest.raises(ValueError,match='scope'):
+        batch.model_copy(update={'verification':batch.verification.model_copy(update={'result_condition_policy':'model-only-v1'})}).validate_scope(done)
+    audit=batch.verification.condition_audits[0]
+    for change in ({'claim_id':'foreign'},{'corpus_id':'foreign'},{'audit_id':'forged'},{'status':'unknown'}):
+        invalid=batch.verification.model_copy(update={'condition_audits':(audit.model_copy(update=change),)})
+        with pytest.raises(ValueError):batch.model_copy(update={'verification':invalid}).validate_scope(done)
+    with pytest.raises(ValueError):
+        batch.model_copy(update={'verification':batch.verification.model_copy(update={'condition_audits':()})}).validate_scope(done)
+    from app.research.tools import comparison_tools
+    downgraded=done.model_copy(update={'verification':done.verification.model_copy(update={
+        'result_condition_policy':'model-only-v1','condition_audits':()})})
+    assert comparison_tools().execute('compose_artifact',context(downgraded),{}).status=='failed'
+
+
 def test_document_batches_complete_and_only_then_merge(workflow):
     task, _, store, model, agent, context = batched(workflow)
     for _ in range(7):task = agent.step(task.user_id, task.id)

@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-04",
+  "command": "python -m pytest tests/test_response_contract_diagnostics.py tests/test_verification_single_replay.py tests/test_research_verification_batches.py tests/test_failed_partial_export.py tests/test_verification_handles.py tests/test_verification_facets.py tests/test_result_condition_integration.py tests/test_research_verification_checks.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "99 passed in 10.43s",
+  "passed": 99,
+  "failed": 0,
+  "skipped": 0,
+  "new_test_cases": 27,
+  "full_suite_rerun": false,
+  "historical_full_suite": "R37: 641 passed in 524.75s before its 10 export tests",
+  "final_collection_expected": 678,
+  "source_sha256": {
+    "app/research/protocol.py": "e62946e6aec7fc7cfeed6fd560b814e14dbea31484069828b0bdaf869328cbe5",
+    "app/research/artifacts.py": "bdeea5da15ad72ada9e5eae9da1735c7f972bec651929a0886a65075fc4c1abe",
+    "app/research/tasks.py": "c70adce206647a8a6e7993016a0cc5be7c274087b3e901eca15183ddf42ba96f",
+    "app/research/tools.py": "014d91874b0980ac09fcad6107ca750be0ad5bfac476987060db4110f5983bcb",
+    "scripts/reverify_research_claims.py": "79e162d77aadfea51a5cc9961f58bd66b66a6179cc8b143f8cc262eabd287256",
+    "tests/test_response_contract_diagnostics.py": "b01af944e274245557f5c78a39dba08551c1544ea40e2cb9ac81ea9e2178ed7a"
+  },
+  "quality_gate_passed": false
+}

@@ -15,6 +15,19 @@ from test_chunking_integration import storage, upload
 from test_research_agent import FakeModel, finish
 
 
+def test_api_freezes_explicit_result_condition_policy(client,user_headers,published,storage):
+    owner,task,version,_=published
+    body={'index_version_id':version.id,'document_ids':[s.document_id for s in task.sources],
+          'goal':'compare','result_condition_policy':'explicit-row-v1'}
+    response=client.post('/api/v1/research-tasks',headers=user_headers,json=body)
+    assert response.status_code==200
+    created=response.json()['data']
+    assert created['completion']['result_condition_policy']=='explicit-row-v1'
+    assert SQLResearchTaskStore().load(owner,created['id']).completion.result_condition_policy=='explicit-row-v1'
+    body['result_condition_policy']='unknown'
+    assert client.post('/api/v1/research-tasks',headers=user_headers,json=body).status_code==400
+
+
 class Embedding:
     def __init__(self, **kwargs):
         pass

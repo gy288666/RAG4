@@ -9,7 +9,7 @@ from .artifacts import ArtifactComposer, EvidenceVerifier, VerificationReport, e
 from .evidence import EvidenceCorpus, HybridEvidenceEngine, RetrievalOptions
 from .graph import Citation, GraphRelation, MemoryGraphStore
 from .tasks import BundleRef, ResearchTask, ToolResult, VerificationBatch
-from .protocol import ResponseSchemaError
+from .protocol import ResponseContractError, ResponseSchemaError
 
 
 class SearchArgs(Snapshot):
@@ -117,9 +117,14 @@ def _verify_document(context, args):
     claims = tuple(c for c in context.task.claims if c.document_id == args.document_id)
     if len(claims) > 4:
         raise ValueError("Document verification exceeds four-claim limit")
-    report = EvidenceVerifier(context.model).verify(context.corpus, claims)
-    batch = VerificationBatch(document_id=args.document_id, claim_ids=tuple(c.claim_id for c in claims), verification=report)
-    batch.validate_scope(context.task)
+    try:
+        report = EvidenceVerifier(context.model).verify(context.corpus, claims)
+        batch = VerificationBatch(document_id=args.document_id, claim_ids=tuple(c.claim_id for c in claims), verification=report)
+        batch.validate_scope(context.task)
+    except ResponseSchemaError:
+        raise
+    except ValueError:
+        raise ResponseContractError('unclassified_document_validation','verify_document','batch') from None
     return ToolResult(status="succeeded", elapsed_ms=0, data={"batch": batch.model_dump(mode="json")}, warnings=report.warnings)
 
 
@@ -135,6 +140,8 @@ def _merge_verification(context, args):
         reports.append(batch.verification)
     report = VerificationReport(verifier_version=reports[0].verifier_version,
         context_policy=reports[0].context_policy,contexts=tuple(c for r in reports for c in r.contexts),
+        result_condition_policy=reports[0].result_condition_policy,
+        condition_audits=tuple(a for r in reports for a in r.condition_audits),
         verdicts=tuple(v for r in reports for v in r.verdicts),
         assessments=tuple(a for r in reports for a in r.assessments),
         total=sum(r.total for r in reports), supported=sum(r.supported for r in reports),
@@ -145,6 +152,8 @@ def _merge_verification(context, args):
 def _compose(context, args):
     if context.task.verification is None:
         raise ValueError("Verification required before composition")
+    if context.task.verification.result_condition_policy!=context.task.completion.result_condition_policy:
+        raise ValueError('Artifact condition policy differs from frozen task')
     artifact = ArtifactComposer().compose(context.corpus, context.task.goal,
         tuple(s.document_id for s in context.task.sources), {s.document_id: s.title for s in context.task.sources},
         context.task.claims, context.task.verification)

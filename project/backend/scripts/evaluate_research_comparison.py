@@ -27,6 +27,7 @@ def parse_options(argv=None):
     parser.add_argument("--cached-report-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", default="Qwen/Qwen3-30B-A3B-Instruct-2507")
+    parser.add_argument('--operator-version', choices=('research-operator-v1', 'research-facet-audit-v2'), default='research-operator-v1')
     parser.add_argument("--model-timeout", type=int, default=60, choices=range(1, 61))
     parser.add_argument("--extraction-protocol", choices=("literal-quote-v1", "source-handles-v2"), default="source-handles-v2")
     parser.add_argument("--response-format", choices=("text", "json_object"), default="json_object")
@@ -35,6 +36,7 @@ def parse_options(argv=None):
     parser.add_argument('--candidate-policy',choices=('vector-v1','lexical-fusion-v2','source-role-v3'),default='vector-v1')
     parser.add_argument('--verification-protocol',choices=('numeric-model-v2','source-checks-v3','source-handles-v4','facet-handles-v5'),default='numeric-model-v2')
     parser.add_argument('--verification-context-policy',choices=('cited-chunk-v1','preceding-children-v1'),default='cited-chunk-v1')
+    parser.add_argument('--result-condition-policy',choices=('model-only-v1','explicit-row-v1'),default='model-only-v1')
     parser.add_argument('--max-output-tokens',type=int,choices=(2048,4096,8192),default=2048)
     parser.add_argument("--retry-network-once", action="store_true",
         help="Explicitly resume at most one failed network step; consumes task/call budgets")
@@ -45,14 +47,49 @@ def completion_for(args):
     """Validate opt-in settings before credentials, SQL setup or provider use."""
     from app.research.model import CompletionSpec
     return CompletionSpec(endpoint='https://api.siliconflow.cn/v1/chat/completions',model_id=args.model,
+        version=args.operator_version,
         timeout_seconds=args.model_timeout,max_output_tokens=args.max_output_tokens,
         extraction_protocol=args.extraction_protocol,response_format=args.response_format,
-        verification_protocol=args.verification_protocol,verification_context_policy=args.verification_context_policy)
+        verification_protocol=args.verification_protocol,verification_context_policy=args.verification_context_policy,
+        result_condition_policy=args.result_condition_policy)
 
 
 def reject_options(message):
     print('error: '+message,file=sys.stderr)
     raise SystemExit(2)
+
+
+def condition_summary(task):
+    """Count final OR retained document audits, never both or semantic accuracy.
+
+    Missing audit coverage remains explicit during partial execution. This is
+    observation only; passing a literal condition is not a model/human verdict.
+    """
+    policy=task.completion.result_condition_policy
+    reports=([task.verification] if task.verification is not None else
+             [b.verification for b in task.verification_batches])
+    claims={c.claim_id for c in task.claims if c.facet=='result'}
+    audits={}
+    verdicts={}
+    for report in reports:
+        if report.result_condition_policy!=policy:
+            raise ValueError('Summary policy differs from frozen task')
+        for audit in report.condition_audits:
+            if (audit.claim_id in audits or audit.claim_id not in claims or audit.corpus_id!=task.corpus_id
+                    or audit.audit_id!=audit.expected_id()):
+                raise ValueError('Summary audit scope or identity differs')
+            audits[audit.claim_id]=audit
+        for verdict in report.verdicts:
+            if verdict.claim_id in verdicts:raise ValueError('Summary has duplicate verdicts')
+            verdicts[verdict.claim_id]=verdict
+    statuses={name:sum(a.status==name for a in audits.values())
+              for name in ('passed','missing','unknown','not_applicable')}
+    return {'policy':policy,'enabled':policy=='explicit-row-v1','report_source':'merged' if task.verification is not None else 'document_checkpoints',
+            'result_claim_count':len(claims),'audited_result_count':len(audits),'status_counts':statuses,
+            'blocked_claim_ids':sorted(cid for cid,v in verdicts.items() if cid in claims and v.reason.startswith('result_condition_')),
+            'unassessed_result_claim_ids':sorted(claims-audits.keys()),
+            'verification_pending_result_claim_ids':sorted(claims-verdicts.keys()),
+            'semantic_quality_inferred':False}
 
 
 def main():
@@ -97,7 +134,8 @@ def main():
 
     report = {"schema_version": "research-comparison-result-v1", "status": "running",
         "task_policies":{'plan_version':args.plan_version,'context_policy':args.context_policy,
-            'candidate_policy':args.candidate_policy,'verification_context_policy':args.verification_context_policy},
+            'candidate_policy':args.candidate_policy,'verification_context_policy':args.verification_context_policy,
+            'result_condition_policy':args.result_condition_policy},
         "started_at": datetime.now(timezone.utc).isoformat(), "annotation_status": "machine_review_only",
         "quality_gate_passed": False,
         "cached_report_sha256": args.cached_report_sha256,
@@ -122,6 +160,7 @@ def main():
         if task:
             report["task_id"], report["task_status"] = task.id, task.status
             report["model_calls_reserved"], report["tool_calls_used"] = task.model_calls_used, task.tool_calls_used
+            report['condition_summary']=condition_summary(task)
         (output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
     try:

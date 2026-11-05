@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-04",
+  "command": "python -m pytest tests/test_partial_artifact_api.py tests/test_research_runtime.py tests/test_research_agent.py tests/test_research_verification_batches.py tests/test_failed_partial_export.py tests/test_response_contract_diagnostics.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "102 passed in 115.66s (0:01:55)",
+  "passed": 102,
+  "failed": 0,
+  "skipped": 0,
+  "new_test_cases": 16,
+  "full_suite_rerun": false,
+  "historical_full_suite": "R37: 641 passed in 524.75s; not current full coverage",
+  "final_collection_expected": 694,
+  "source_sha256": {
+    "app/research/partial.py": "4aaa7a7e3927d882feea9c5674b272df7a6ccae64f77cd23ed62cafee2ef0f80",
+    "app/research/runtime.py": "14c44cd8dcb759ab58574e6088a82dc86ba1d24a554085b4bc5c4b92b6ff6d62",
+    "app/api/v1/research.py": "cc5b4ee83ed73147e824cce4d9f02b285b42a8be996a6a6640b4cf7fd4d2c061",
+    "scripts/export_research_partial.py": "ea53c900cea0ddd8ded89cabdbea7695958e8e6cc537b929820b4f419da239d6",
+    "scripts/check_partial_artifact_api.py": "b50324baa3357aff1533ba5ffc98b97be008d0036b3f45a96f3725d6ac3d4250",
+    "tests/test_partial_artifact_api.py": "e90bf34d34515ca6a4b0afd2090ffe86446c5d91735af8aeee9f18fca7e66b5a"
+  },
+  "quality_gate_passed": false,
+  "paid_model_calls": 0
+}

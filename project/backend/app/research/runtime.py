@@ -1,5 +1,7 @@
 """Phase 2 snapshot adapter for research; never activates or rebuilds indexes."""
 from hashlib import file_digest
+import logging
+from time import perf_counter
 
 from sqlalchemy import select
 
@@ -23,6 +25,37 @@ from .model import CompletionSpec, JsonResearchModel
 from .store import SQLResearchTaskStore
 from .tasks import ResearchTask, SourceBinding, TaskBudget, comparison_plan
 from .tools import ToolContext
+
+logger = logging.getLogger(__name__)
+
+
+def read_partial_artifact(user_id, task_id, *, expected_revision=None, vector_store=None, task_store=None):
+    """Owner/state checks precede adapters; sources and revision are rechecked.
+
+    No runtime model configuration, provider calls, task writes or activation.
+    A concurrent revision change yields conflict rather than an obsolete view.
+    """
+    from .agent import TaskConflict
+    from .partial import build_partial_view
+    started=perf_counter()
+    tasks=task_store if task_store is not None else SQLResearchTaskStore()
+    task=tasks.load(user_id,task_id)
+    if (task.status!='failed' or task.verification is not None or task.artifact is not None
+            or (expected_revision is not None and expected_revision!=task.revision)):
+        raise TaskConflict('Partial artifact is unavailable for this task state/revision')
+    store=vector_store if vector_store is not None else get_vector_store()
+    documents=tuple(s.document_id for s in task.sources)
+    def scope():
+        corpus,bindings,_=_load_scope(user_id,task.index_version_id,documents,store)
+        if corpus.corpus_id!=task.corpus_id or bindings!=task.sources:
+            raise ValueError('Partial artifact source snapshot changed')
+        return corpus
+    view=build_partial_view(task,scope())
+    scope()  # Detect observed source drift while rendering the view.
+    if tasks.load(user_id,task_id)!=task:
+        raise TaskConflict('Research checkpoint changed while reading partial artifact')
+    logger.info('research_partial_view view_id=%s elapsed_ms=%d',view.view_id,round((perf_counter()-started)*1000))
+    return view
 
 
 def _source_binding(user_id, document_id, chunk_set_id):

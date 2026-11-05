@@ -1,0 +1,749 @@
+{
+  "date": "2026-11-01",
+  "schema": "research-model-audit-record-v1",
+  "annotation_status": "development_ai_expectations_not_human",
+  "quality_gate_passed": false,
+  "candidate_promotion_allowed": false,
+  "model_listing": {
+    "date": "2026-11-01",
+    "endpoint": "https://api.siliconflow.cn/v1/models",
+    "http_status": 200,
+    "response_sha256": "dcb803328505f08f7f42046955bbfa592ec6e68a2a8d93608804c63ee928d965",
+    "listed_model_count": 98,
+    "candidates": [
+      "deepseek-ai/DeepSeek-V3.2",
+      "Pro/deepseek-ai/DeepSeek-V3.2",
+      "deepseek-ai/DeepSeek-V3.1-Terminus",
+      "Pro/deepseek-ai/DeepSeek-V3.1-Terminus",
+      "deepseek-ai/DeepSeek-V3",
+      "Pro/deepseek-ai/DeepSeek-V3",
+      "Qwen/Qwen3-32B",
+      "Qwen/Qwen2.5-72B-Instruct-128K",
+      "Qwen/Qwen2.5-72B-Instruct",
+      "LoRA/Qwen/Qwen2.5-72B-Instruct"
+    ],
+    "pricing_verified": false,
+    "availability_note": "Listed by provider; completion access not yet tested"
+  },
+  "live_report": {
+    "schema": "model-only-claim-audit-v1",
+    "date": "2026-11-01",
+    "quality_gate_passed": false,
+    "annotation_status": "development_ai_expectations",
+    "max_requests": 4,
+    "cases": [
+      {
+        "case_id": "realm_method",
+        "claim": {
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "document_id": "realm",
+          "facet": "method",
+          "statement": "REALM利用检索到的文档来提高语言模型的预测能力，通过优化边缘似然性来训练检索器。",
+          "citation": {
+            "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+            "char_start": 0,
+            "char_end": 1394,
+            "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n"
+          }
+        },
+        "expected": "not_supported",
+        "required_checks": {
+          "entailment": "not_supported"
+        }
+      },
+      {
+        "case_id": "realm_result",
+        "claim": {
+          "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+          "document_id": "realm",
+          "facet": "result",
+          "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。",
+          "citation": {
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "char_start": 1170,
+            "char_end": 1796,
+            "quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32."
+          }
+        },
+        "expected": "not_supported",
+        "required_checks": {
+          "conditions": "not_supported"
+        }
+      },
+      {
+        "case_id": "dpr_dataset",
+        "claim": {
+          "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+          "document_id": "dpr",
+          "facet": "dataset",
+          "statement": "使用Natural Questions、TriviaQA、WebQuestions、CuratedTREC和SQuAD等数据集进行实验。",
+          "citation": {
+            "chunk_id": "chunk_08b388117abd998a67cb6ccd8ba5386df173ef5845d90006c13316829c8ab41e",
+            "char_start": 493,
+            "char_end": 1522,
+            "quote": "Dataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1."
+          }
+        },
+        "expected": "supported",
+        "required_checks": {
+          "entailment": "supported"
+        }
+      },
+      {
+        "case_id": "fid_result",
+        "claim": {
+          "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+          "document_id": "fid",
+          "facet": "result",
+          "statement": "Fusion-in-Decoder方法在TriviaQA和NaturalQuestions基准测试上取得了新的SOTA结果。",
+          "citation": {
+            "chunk_id": "chunk_395c512a9a5b9f2f32e08fd5de3399c2bf9c643061bf2d0f4c67b3d130e2041a",
+            "char_start": 0,
+            "char_end": 574,
+            "quote": "875\nQuestion + Passage 1\nencoder\nQuestion + Passage 2\nencoder\nQuestion + Passage N\nencoder\ndecoder\nAnswer\nconcat\n…\n…\n…\n…\nFigure 2: Architecture of the Fusion-in-Decoder method.\nrepresentations.\nThen, a sequence-to-sequence\nmodel generates the answer, taking as input the re-\ntrieved passages in addition to the question. While\nconceptually simple, this method sets new state-of-\nthe-art results on the TriviaQA and NaturalQues-\ntions benchmarks. In particular, we show that the\nperformance of our method signiﬁcantly improves\nwhen the number of retrieved passages increases."
+          }
+        },
+        "expected": "supported",
+        "required_checks": {
+          "entailment": "supported"
+        }
+      }
+    ],
+    "runs": [
+      {
+        "case_id": "realm_method",
+        "version": "research-operator-v1",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+              "attribution": {
+                "status": "supported",
+                "reason": "REALM方法由本文提出并描述。",
+                "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+                "support_ids": [
+                  "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "描述了利用检索文档提高预测能力，并通过优化边缘似然性训练检索器。",
+                "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+                "support_ids": [
+                  "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd",
+                  "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "所有条件都得到了支持，REALM确实利用检索文档并通过优化边缘似然性训练检索器。",
+                "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+                "support_ids": [
+                  "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd",
+                  "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+                ]
+              }
+            }
+          ],
+          "context_policy": "preceding-children-v1",
+          "contexts": [
+            {
+              "context_id": "verification_context_6c4da8ada99f482bd853d815e9e7ea75f41babf277dce877756ca20a8bda95a8",
+              "policy": "preceding-children-v1",
+              "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+              "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+              "document_id": "realm",
+              "parts": [
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+                    "char_start": 0,
+                    "char_end": 495,
+                    "quote": "The improvement of REALM over ORQA is purely due\nto better pre-training. The results also indicate that our\nmethod of pre-training can be applied both on (1) the single-\ncorpus setting (X = Wikipedia, Z = Wikipedia), or (2) the\nseparate-corpus setting (X = CC-News, Z = Wikipedia).\nCompared to other retrieval-based systems (Asai et al., 2019;\nMin et al., 2019a;b) which often retrieve from 20 to 80\ndocuments, our system gets the overall best performance\nwhile only retrieving 5 documents.\n4.5."
+                  }
+                },
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+                    "char_start": 0,
+                    "char_end": 241,
+                    "quote": "Analysis\nIn Table 2 we present results for NaturalQuestions-Open\nafter ablating critical components of REALM. In addition\nto the end-to-end results, we also report how often the gold\nanswer appears in the top-5 retrievals before applying any"
+                  }
+                },
+                {
+                  "role": "cited",
+                  "citation": {
+                    "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+                    "char_start": 0,
+                    "char_end": 1770,
+                    "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\nMasking scheme\nWe compare our salient span masking\nscheme (Section 3.4) with (1) random token masking intro-\nduced in BERT (Devlin et al., 2018) and (2) random span\nmasking proposed by SpanBERT (Joshi et al., 2019). While\nsuch salient span masking has not been shown to be impact-\nful in previous work with standard BERT training (Joshi\net al., 2019), it is crucial for REALM."
+                  }
+                }
+              ],
+              "context_chars": 2510,
+              "warnings": []
+            }
+          ]
+        },
+        "score": {
+          "rows": [
+            {
+              "case_id": "realm_method",
+              "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+              "expected": "not_supported",
+              "actual": "supported",
+              "verdict_matches": false,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "supported",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "entailment": "not_supported"
+              },
+              "checks_match": false,
+              "invalid_support_checks": [],
+              "semantic_match": false
+            }
+          ],
+          "matched": 0,
+          "semantic_matched": 0,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "realm_result",
+        "version": "research-operator-v1",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+              "attribution": {
+                "status": "supported",
+                "reason": "REALM (X = CC-News) is the correct model variant.",
+                "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32.",
+                "support_ids": [
+                  "support_17dbd145fad62a864032bd7e80312e9d42f4bcf270060fad2cc085fe66fb38ab"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "NQ开发集, 精确匹配, 零样本检索召回@5, REALM (X = CC-News) 符合条件.",
+                "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32.",
+                "support_ids": [
+                  "support_17dbd145fad62a864032bd7e80312e9d42f4bcf270060fad2cc085fe66fb38ab"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "38.5和52.0的数值与表中的结果一致。",
+                "support_quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32.",
+                "support_ids": [
+                  "support_17dbd145fad62a864032bd7e80312e9d42f4bcf270060fad2cc085fe66fb38ab"
+                ]
+              }
+            }
+          ],
+          "context_policy": "preceding-children-v1",
+          "contexts": [
+            {
+              "context_id": "verification_context_282fc25c44fb0f2e6b5fa4dc999fd0b85fdd1357f0112d7231553bdf8db7cd77",
+              "policy": "preceding-children-v1",
+              "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+              "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+              "document_id": "realm",
+              "parts": [
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_75fb2f619e4e7c27cddf83acad3051e9314cb889eb1a361364b34ed0cb68f1ec",
+                    "char_start": 0,
+                    "char_end": 539,
+                    "quote": "For each example, we retrieve and marginalize over\n8 candidate documents, including the null document ∅.\nWe experiment with two choices of the pre-training corpus\nX: (1) Wikipedia, which is identical to the knowledge cor-\npus Z, and (2) CC-News, our reproduction of the corpus of\nEnglish news proposed by Liu et al. (2019).\nFine-tuning\nWe follow the ORQA (Lee et al., 2019) ﬁne-\ntuning approach but initialized with the pre-trained REALM\ncomponents. The knowledge corpus is derived from the\nDecember 20, 2018 snapshot of English Wikipedia."
+                  }
+                },
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_4979773f124389e66840fcc27dfae8fa922e006f19963efefbc7a9a80b1f7624",
+                    "char_start": 0,
+                    "char_end": 366,
+                    "quote": "Doc-\numents are greedily split into chunks of up to 288 BERT\nwordpieces, resulting in just over 13 million retrieval candi-\n4We initially conducted our own T5 experiments using the\ncode from https://tinyurl.com/t5-openqa-colab (Raffel et al., 2019).\nWe now report results from the concurrent work of Roberts et al.\n(2020), which has an improved ﬁne-tuning procedure."
+                  }
+                },
+                {
+                  "role": "cited",
+                  "citation": {
+                    "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                    "char_start": 0,
+                    "char_end": 1796,
+                    "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 1. Test results on Open-QA benchmarks. The number of train/test examples are shown in paretheses below each benchmark.\nPredictions are evaluated with exact match against any reference answer. Sparse retrieval denotes methods that use sparse features such as\nTF-IDF and BM25. Our model, REALM, outperforms all existing systems.\nName\nArchitectures\nPre-training\nNQ\n(79k/4k)\nWQ\n(3k/2k)\nCT\n(1k /1k)\n# params\nBERT-Baseline (Lee et al., 2019)\nSparse Retr.+Transformer\nBERT\n26.5\n17.7\n21.3\n110m\nT5 (base) (Roberts et al., 2020)\nTransformer Seq2Seq\nT5 (Multitask)\n27.0\n29.1\n-\n223m\nT5 (large) (Roberts et al., 2020)\nTransformer Seq2Seq\nT5 (Multitask)\n29.8\n32.2\n-\n738m\nT5 (11b) (Roberts et al., 2020)\nTransformer Seq2Seq\nT5 (Multitask)\n34.5\n37.4\n-\n11318m\nDrQA (Chen et al., 2017)\nSparse Retr.+DocReader\nN/A\n-\n20.7\n25.7\n34m\nHardEM (Min et al., 2019a)\nSparse Retr.+Transformer\nBERT\n28.1\n-\n-\n110m\nGraphRetriever (Min et al., 2019b)\nGraphRetriever+Transformer\nBERT\n31.8\n31.6\n-\n110m\nPathRetriever (Asai et al., 2019)\nPathRetriever+Transformer\nMLM\n32.6\n-\n-\n110m\nORQA (Lee et al., 2019)\nDense Retr.+Transformer\nICT+BERT\n33.3\n36.4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32."
+                  }
+                }
+              ],
+              "context_chars": 2705,
+              "warnings": []
+            }
+          ]
+        },
+        "score": {
+          "rows": [
+            {
+              "case_id": "realm_result",
+              "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+              "expected": "not_supported",
+              "actual": "supported",
+              "verdict_matches": false,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "supported",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "conditions": "not_supported"
+              },
+              "checks_match": false,
+              "invalid_support_checks": [],
+              "semantic_match": false
+            }
+          ],
+          "matched": 0,
+          "semantic_matched": 0,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "dpr_dataset",
+        "version": "research-operator-v1",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "status": "succeeded",
+        "verification": {
+          "verifier_version": "exact-facet-handles-v5",
+          "annotation_status": "machine_review_only",
+          "verdicts": [
+            {
+              "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+              "status": "supported",
+              "reason": "all_source_checks_supported"
+            }
+          ],
+          "supported": 1,
+          "total": 1,
+          "warnings": [
+            "literal_numeric_values_checked_no_unit_conversion",
+            "semantic_support_is_machine_judgment_requires_human_review"
+          ],
+          "assessments": [
+            {
+              "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+              "attribution": {
+                "status": "supported",
+                "reason": "文中明确提到使用了这些数据集进行实验。",
+                "support_quote": "Dataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_2b13b25a793f7a78ed11bc9f0d338e4be1f0dc13e7304feb63b9abf2e74f46ec",
+                  "support_b599828ac4f18fc9a32e4eeec5b9dfb4f540fd09419b4013d6ac1f3ae61d494b"
+                ]
+              },
+              "conditions": {
+                "status": "supported",
+                "reason": "文中详细描述了每个数据集的来源和用途，符合条件。",
+                "support_quote": "Dataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_2b13b25a793f7a78ed11bc9f0d338e4be1f0dc13e7304feb63b9abf2e74f46ec",
+                  "support_b599828ac4f18fc9a32e4eeec5b9dfb4f540fd09419b4013d6ac1f3ae61d494b"
+                ]
+              },
+              "entailment": {
+                "status": "supported",
+                "reason": "文中明确列出了这些数据集，并且描述了它们的使用情况。",
+                "support_quote": "Dataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.",
+                "support_ids": [
+                  "support_2b13b25a793f7a78ed11bc9f0d338e4be1f0dc13e7304feb63b9abf2e74f46ec",
+                  "support_b599828ac4f18fc9a32e4eeec5b9dfb4f540fd09419b4013d6ac1f3ae61d494b"
+                ]
+              }
+            }
+          ],
+          "context_policy": "preceding-children-v1",
+          "contexts": [
+            {
+              "context_id": "verification_context_a8b1f3ea01742dc164efee2e41b465c2d2a900c72ef2ee949a52504b2c73ef05",
+              "policy": "preceding-children-v1",
+              "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+              "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+              "document_id": "dpr",
+              "parts": [
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_94095de81b5ad3ecf0f19b1aef115fb8572a3e1327772ef1532597a8e694208c",
+                    "char_start": 0,
+                    "char_end": 482,
+                    "quote": "5\nEach passage is also prepended with the title of the\nWikipedia article where the passage is from, along\nwith an [SEP] token.\n4.2\nQuestion Answering Datasets\nWe use the same ﬁve QA datasets and train-\ning/dev/testing splitting method as in previous\nwork (Lee et al., 2019). Below we brieﬂy describe\neach dataset and refer readers to their paper for the\ndetails of data preparation.\nNatural Questions (NQ) (Kwiatkowski et al.,\n2019) was designed for end-to-end question an-\nswering."
+                  }
+                },
+                {
+                  "role": "preceding",
+                  "citation": {
+                    "chunk_id": "chunk_b75eaf6f1bdf1b7a2118c2afef84b017bf15e6564a1eadafbc6c0744bd097779",
+                    "char_start": 0,
+                    "char_end": 153,
+                    "quote": "The questions were mined from real\nGoogle search queries and the answers were spans\nin Wikipedia articles identiﬁed by annotators.\nTriviaQA (Joshi et al."
+                  }
+                },
+                {
+                  "role": "cited",
+                  "citation": {
+                    "chunk_id": "chunk_08b388117abd998a67cb6ccd8ba5386df173ef5845d90006c13316829c8ab41e",
+                    "char_start": 0,
+                    "char_end": 1741,
+                    "quote": ", 2017) contains a set of trivia\nquestions with answers that were originally scraped\nfrom the Web.\nWebQuestions (WQ) (Berant et al., 2013) consists\nof questions selected using Google Suggest API,\nwhere the answers are entities in Freebase.\nCuratedTREC (TREC) (Baudiˇs and ˇSediv`y,\n2015) sources questions from TREC QA tracks\n5However, Wang et al. (2019) also propose splitting docu-\nments into overlapping passages, which we do not ﬁnd advan-\ntageous compared to the non-overlapping version.\nDataset\nTrain\nDev\nTest\nNatural Questions\n79,168\n58,880\n8,757\n3,610\nTriviaQA\n78,785\n60,413\n8,837\n11,313\nWebQuestions\n3,417\n2,474\n361\n2,032\nCuratedTREC\n1,353\n1,125\n133\n694\nSQuAD\n78,713\n70,096\n8,886\n10,570\nTable 1: Number of questions in each QA dataset. The\ntwo columns of Train denote the original training ex-\namples in the dataset and the actual questions used for\ntraining DPR after ﬁltering. See text for more details.\nas well as various Web sources and is intended for\nopen-domain QA from unstructured corpora.\nSQuAD v1.1 (Rajpurkar et al., 2016) is a popu-\nlar benchmark dataset for reading comprehension.\nAnnotators were presented with a Wikipedia para-\ngraph, and asked to write questions that could be\nanswered from the given text. Although SQuAD\nhas been used previously for open-domain QA re-\nsearch, it is not ideal because many questions lack\ncontext in absence of the provided paragraph. We\nstill include it in our experiments for providing\na fair comparison to previous work and we will\ndiscuss more in Section 5.1.\nSelection of positive passages\nBecause only\npairs of questions and answers are provided in\nTREC, WebQuestions and TriviaQA6, we use the\nhighest-ranked passage from BM25 that contains\nthe answer as the positive passage."
+                  }
+                }
+              ],
+              "context_chars": 2380,
+              "warnings": []
+            }
+          ]
+        },
+        "score": {
+          "rows": [
+            {
+              "case_id": "dpr_dataset",
+              "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+              "expected": "supported",
+              "actual": "supported",
+              "verdict_matches": true,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "supported",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "entailment": "supported"
+              },
+              "checks_match": true,
+              "invalid_support_checks": [],
+              "semantic_match": true
+            }
+          ],
+          "matched": 1,
+          "semantic_matched": 1,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "fid_result",
+        "version": "research-operator-v1",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "status": "failed",
+        "error_type": "RuntimeError"
+      }
+    ],
+    "calls": [
+      {
+        "operation": "verify_facets",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 2916,
+          "completion_tokens": 509,
+          "total_tokens": 3425
+        },
+        "verification_context_policy": "preceding-children-v1",
+        "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+        "elapsed_ms": 18294,
+        "case_id": "realm_method"
+      },
+      {
+        "operation": "verify_facets",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 3392,
+          "completion_tokens": 394,
+          "total_tokens": 3786
+        },
+        "verification_context_policy": "preceding-children-v1",
+        "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+        "elapsed_ms": 15721,
+        "case_id": "realm_result"
+      },
+      {
+        "operation": "verify_facets",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "succeeded",
+        "usage": {
+          "prompt_tokens": 2870,
+          "completion_tokens": 556,
+          "total_tokens": 3426
+        },
+        "verification_context_policy": "preceding-children-v1",
+        "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+        "elapsed_ms": 20556,
+        "case_id": "dpr_dataset"
+      },
+      {
+        "operation": "verify_facets",
+        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+        "version": "research-operator-v1",
+        "extraction_protocol": "source-handles-v2",
+        "response_format": "json_object",
+        "verification_protocol": "facet-handles-v5",
+        "status": "failed",
+        "usage": {},
+        "verification_context_policy": "preceding-children-v1",
+        "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+        "error_type": "ConnectTimeout",
+        "elapsed_ms": 5049,
+        "case_id": "fid_result"
+      }
+    ],
+    "original_source_sha256": "6c59b023cadd0f054c69d681a0a9831440c5b6bbd0dee24347a6bb9a85eba03f",
+    "source_task_sha256": "ef23d0d86b9157fad14acbc30c397055b4aa988836ef27ecb5731c8b4e46c2ba",
+    "vector_sha256": {
+      "col_user_1__staging_build_18e3d8fbd9edb610e6_4335b6a3.json": "0d3c002ec4baaa9ae9055e31b7c4d6984bbbe1014baf78a8ace066d083dd1d02",
+      "col_user_1__staging_build_18e3d8fc244688cca5_e5da12a8.json": "06f926d7cc7b95b0f4d32b7480027c2b21be107ce1a1cca52b2ee5aae65da369",
+      "col_user_1__staging_build_18e3d8fc49a80d486f_5c1b4d60.json": "f6cfbcf75e2ff2e8ebe20bd8e099955b0e1b19194213271a43677595c0c84686"
+    },
+    "code_sha256": {
+      "scripts/evaluate_claim_audit.py": "7bc39cdd7faa086b6062b32f476674a9f9db8605b1be6fa705e410e73838840c",
+      "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+      "app/research/artifacts.py": "34f977ff04696371d9a7078b6b84e7762e1a997a042787928f9fb2956e0ffc17",
+      "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+      "app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+      "app/research/lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+      "app/research/model.py": "fb24f62b7e04b4fb74137365cf1dbe6499ffb6cdd4822a014627b3d39c448d43",
+      "app/research/protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+      "app/research/runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+      "app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+      "app/research/tasks.py": "c183e4c44ae27a53d65055a8cee982e60e613fb12b84c738a9486de95c8ec2fc",
+      "app/research/tools.py": "ee7af484579d9dea03961ca777ddc670c3e96ba5abf588a1956ad0d4fa85d46a",
+      "app/research/verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+      "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+      "app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+    },
+    "limitations": [
+      "Four previously inspected development cases, not a blind or human holdout",
+      "Historical single-claim control, not a simultaneous randomized trial; provider drift remains possible",
+      "Only model ID changes; no extraction, activation or automatic retry"
+    ],
+    "treatment_model": "Qwen/Qwen2.5-72B-Instruct",
+    "treatment_completion": {
+      "endpoint": "https://api.siliconflow.cn/v1/chat/completions",
+      "model_id": "Qwen/Qwen2.5-72B-Instruct",
+      "version": "research-operator-v1",
+      "timeout_seconds": 60,
+      "max_output_tokens": 4096,
+      "extraction_protocol": "source-handles-v2",
+      "response_format": "json_object",
+      "verification_protocol": "facet-handles-v5",
+      "verification_context_policy": "preceding-children-v1"
+    },
+    "control_report_sha256": "1a0e5e950bd290468c66aadff4ec1af6665ce44e90c725d6c45ace5a55137e82",
+    "model_catalog_sha256": "9486752e9cd11a322ecf1c451534b03db6630c7769a3ccd69b1e310abac7c9a3",
+    "control_scores": [
+      {
+        "case_id": "realm_method",
+        "score": {
+          "rows": [
+            {
+              "case_id": "realm_method",
+              "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+              "expected": "not_supported",
+              "actual": "supported",
+              "verdict_matches": false,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "supported",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "entailment": "not_supported"
+              },
+              "checks_match": false,
+              "invalid_support_checks": [],
+              "semantic_match": false
+            }
+          ],
+          "matched": 0,
+          "semantic_matched": 0,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "realm_result",
+        "score": {
+          "rows": [
+            {
+              "case_id": "realm_result",
+              "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+              "expected": "not_supported",
+              "actual": "insufficient",
+              "verdict_matches": true,
+              "checks": {
+                "attribution": "insufficient",
+                "conditions": "insufficient",
+                "entailment": "insufficient"
+              },
+              "required_checks": {
+                "conditions": "not_supported"
+              },
+              "checks_match": true,
+              "invalid_support_checks": [
+                "attribution",
+                "conditions",
+                "entailment"
+              ],
+              "semantic_match": false
+            }
+          ],
+          "matched": 1,
+          "semantic_matched": 0,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "dpr_dataset",
+        "score": {
+          "rows": [
+            {
+              "case_id": "dpr_dataset",
+              "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+              "expected": "supported",
+              "actual": "supported",
+              "verdict_matches": true,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "supported",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "entailment": "supported"
+              },
+              "checks_match": true,
+              "invalid_support_checks": [],
+              "semantic_match": true
+            }
+          ],
+          "matched": 1,
+          "semantic_matched": 1,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      },
+      {
+        "case_id": "fid_result",
+        "score": {
+          "rows": [
+            {
+              "case_id": "fid_result",
+              "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+              "expected": "supported",
+              "actual": "insufficient",
+              "verdict_matches": false,
+              "checks": {
+                "attribution": "supported",
+                "conditions": "insufficient",
+                "entailment": "supported"
+              },
+              "required_checks": {
+                "entailment": "supported"
+              },
+              "checks_match": true,
+              "invalid_support_checks": [],
+              "semantic_match": false
+            }
+          ],
+          "matched": 0,
+          "semantic_matched": 0,
+          "total": 1,
+          "quality_gate_passed": false
+        }
+      }
+    ],
+    "source_vectors_unchanged": true
+  },
+  "live_report_sha256": "5fa19cecfb35c0f790065ce9561e9979ed76b60504fe815095debd8e1fbff40a",
+  "diagnostic_status": "execution_failed_with_unresolved_false_acceptances",
+  "counts": {
+    "model_listing_get_requests": 1,
+    "completion_requests": 4,
+    "completion_successes": 3,
+    "completion_failures": 1,
+    "matched_among_4_cases": 1,
+    "unjudged_cases": 1,
+    "reported_tokens": 10637,
+    "failed_request_usage_known": false,
+    "monetary_cost_known": false,
+    "new_embeddings": 0,
+    "new_extractions": 0
+  },
+  "decision": "Do not promote. Both REALM false acceptances persist; FiD positive has no judgment after ConnectTimeout. No retries.",
+  "integrity_checks": {
+    "task_json_unchanged": true,
+    "source_vectors_unchanged": true,
+    "executed_script_and_research_hashes_match": true,
+    "business_database_accessed": false
+  },
+  "limitations": [
+    "Historical control, not simultaneous randomized comparison",
+    "Four previously inspected AI development expectations; no independent human validation",
+    "No new extraction or end-to-end artifact was generated",
+    "No claim that every larger model fails; only this endpoint/model/settings trial is recorded"
+  ]
+}

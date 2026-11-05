@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-04",
+  "full_command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "full_result": "641 passed in 524.75s (0:08:44)",
+  "full_passed": 641,
+  "full_scope": "Includes final production optional-relation fix and bounded repair; new partial-export CLI/10 tests added after collection. Production code unchanged since full run.",
+  "final_targeted_command": "python -m pytest tests/test_failed_partial_export.py tests/test_optional_relations.py tests/test_extraction_repair.py tests/test_condition_summary.py -o addopts='' -q --tb=short --show-capture=no",
+  "final_targeted_result": "31 passed in 5.17s",
+  "new_test_cases": 31,
+  "final_collection_expected": 651,
+  "source_sha256": {
+    "app/research/artifacts.py": "39360db22c56a29d016131e4b62cfbd5d598015862f6d3635fa7049082646b31",
+    "scripts/evaluate_research_comparison.py": "3f127caf1c66c446dda1b20bbd17fffb13f1de0bddfc5faffa936b3e02758d6c",
+    "scripts/resume_research_comparison.py": "482590e29af9751504c04d2e7434c212fc0f6723909571296e2e357565c66244",
+    "scripts/export_research_partial.py": "2f5e75b09269ecbf353f33774f66c13a3636bb206457e5e3494a9955e01df901",
+    "tests/test_condition_summary.py": "6f4cb2c6348b132299960583c26ce0260a3a2ed5d6a450b3278085976c8920bf",
+    "tests/test_optional_relations.py": "fc43e4338df761d134a65abac45bc2a5225351e0399fdc0cef2d9f73afd22479",
+    "tests/test_extraction_repair.py": "726cf98b47bdc98f53bf7ed65961cb1691b9f71c59e3b0e37c1c0552acef2816",
+    "tests/test_failed_partial_export.py": "cb51857e7c36667ad05bc7fcd8fda6cc2ee6d7e5af0abc75e3d626b666215695"
+  },
+  "quality_gate_passed": false
+}

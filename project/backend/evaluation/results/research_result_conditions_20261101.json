@@ -1,0 +1,551 @@
+{
+  "date": "2026-11-01",
+  "quality_gate_passed": false,
+  "report": {
+    "schema": "offline-result-condition-audit-v1",
+    "quality_gate_passed": false,
+    "annotation_status": "deterministic_literal_audit_not_human_or_semantic_validation",
+    "source_task_sha256": "ef23d0d86b9157fad14acbc30c397055b4aa988836ef27ecb5731c8b4e46c2ba",
+    "vector_sha256": {
+      "col_user_1__staging_build_18e3d8fbd9edb610e6_4335b6a3.json": "0d3c002ec4baaa9ae9055e31b7c4d6984bbbe1014baf78a8ace066d083dd1d02",
+      "col_user_1__staging_build_18e3d8fc244688cca5_e5da12a8.json": "06f926d7cc7b95b0f4d32b7480027c2b21be107ce1a1cca52b2ee5aae65da369",
+      "col_user_1__staging_build_18e3d8fc49a80d486f_5c1b4d60.json": "f6cfbcf75e2ff2e8ebe20bd8e099955b0e1b19194213271a43677595c0c84686"
+    },
+    "source_task_id": "research_18e3d8fd83563794df02cbea",
+    "model_calls": 0,
+    "embedding_calls": 0,
+    "business_database_accessed": false,
+    "source_inputs_unchanged": true,
+    "audits": [
+      {
+        "audit_id": "conditionaudit_ec34cbea9d1b8fc6c9141b48b79df3249bfdc9e176f67301860143960e109ee1",
+        "policy": "explicit-row-v1",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "claim_id": "claim_3595e9cfc4d1f5f696cef02aaefed0e197232c36f1c06ae11d41260480928b60",
+        "status": "unknown",
+        "reason": "numeric_row_not_located",
+        "row": null,
+        "missing_conditions": [],
+        "warnings": [
+          "literal_row_assignments_only_not_semantic_proof"
+        ]
+      },
+      {
+        "audit_id": "conditionaudit_94a3a7ef60cc4034947f4bc1aee17842b68faab395a6b270c1b70f37fe56fd75",
+        "policy": "explicit-row-v1",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "claim_id": "claim_c6592ec061e83c009c0111d018b211e133190e0efbbaabc3ddbe24fd27e42f4a",
+        "status": "not_applicable",
+        "reason": "not_a_numeric_result",
+        "row": null,
+        "missing_conditions": [],
+        "warnings": [
+          "literal_row_assignments_only_not_semantic_proof"
+        ]
+      },
+      {
+        "audit_id": "conditionaudit_b708734ac656c652baffeaa8cffc00cde97169fdd5dcb96821c27cf97f3c52b4",
+        "policy": "explicit-row-v1",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+        "status": "missing",
+        "reason": "explicit_row_condition_omitted",
+        "row": {
+          "row_id": "resultrow_8bb5f77add8d861dc9794d1192d2e26e2acbddb83372606105f354a74f9e1b1f",
+          "selector_version": "vertical-assignment-row-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "document_id": "realm",
+          "source": {
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "char_start": 1603,
+            "char_end": 1632,
+            "quote": "REALM (X = CC-News)\n38.5\n52.0"
+          },
+          "label": {
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "char_start": 1603,
+            "char_end": 1622,
+            "quote": "REALM (X = CC-News)"
+          },
+          "values": [
+            {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1623,
+              "char_end": 1627,
+              "quote": "38.5"
+            },
+            {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1628,
+              "char_end": 1632,
+              "quote": "52.0"
+            }
+          ],
+          "conditions": [
+            {
+              "symbol": "X",
+              "value": {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1614,
+                "char_end": 1621,
+                "quote": "CC-News"
+              }
+            }
+          ],
+          "qualifiers_complete": true
+        },
+        "missing_conditions": [
+          "CC-News"
+        ],
+        "warnings": [
+          "literal_row_assignments_only_not_semantic_proof"
+        ]
+      }
+    ],
+    "row_source_locator": {
+      "claim_id": "claim_973de239025be3fcd73889104b3b74662646e0ff5dcbd1682d3ea521f97dec5f",
+      "chunk_set_id": "chunkset_84436d96d4af1cef1cf0dc39991b5c7c43e8c431915cb1b85d1a243e01e9c7d4",
+      "source_locator": {
+        "source": {
+          "uri": "document:realm",
+          "media_type": null,
+          "used_ocr": false
+        },
+        "spans": [
+          {
+            "block_id": "block-6",
+            "char_start": 1603,
+            "char_end": 1632,
+            "page_start": 7,
+            "page_end": 7
+          }
+        ]
+      },
+      "section_path": [],
+      "page_start": 7,
+      "page_end": 7
+    },
+    "blocked_claim": {
+      "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+      "document_id": "realm",
+      "facet": "result",
+      "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。",
+      "citation": {
+        "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+        "char_start": 1170,
+        "char_end": 1796,
+        "quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32."
+      }
+    },
+    "blocked_verification": {
+      "verifier_version": "exact-facet-handles-v5",
+      "annotation_status": "machine_review_only",
+      "verdicts": [
+        {
+          "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+          "status": "insufficient",
+          "reason": "result_condition_missing:explicit_row_condition_omitted"
+        }
+      ],
+      "supported": 0,
+      "total": 1,
+      "warnings": [
+        "literal_numeric_values_checked_no_unit_conversion",
+        "semantic_support_is_machine_judgment_requires_human_review"
+      ],
+      "assessments": [],
+      "context_policy": "preceding-children-v1",
+      "contexts": [],
+      "result_condition_policy": "explicit-row-v1",
+      "condition_audits": [
+        {
+          "audit_id": "conditionaudit_b708734ac656c652baffeaa8cffc00cde97169fdd5dcb96821c27cf97f3c52b4",
+          "policy": "explicit-row-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+          "status": "missing",
+          "reason": "explicit_row_condition_omitted",
+          "row": {
+            "row_id": "resultrow_8bb5f77add8d861dc9794d1192d2e26e2acbddb83372606105f354a74f9e1b1f",
+            "selector_version": "vertical-assignment-row-v1",
+            "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+            "document_id": "realm",
+            "source": {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1603,
+              "char_end": 1632,
+              "quote": "REALM (X = CC-News)\n38.5\n52.0"
+            },
+            "label": {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1603,
+              "char_end": 1622,
+              "quote": "REALM (X = CC-News)"
+            },
+            "values": [
+              {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1623,
+                "char_end": 1627,
+                "quote": "38.5"
+              },
+              {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1628,
+                "char_end": 1632,
+                "quote": "52.0"
+              }
+            ],
+            "conditions": [
+              {
+                "symbol": "X",
+                "value": {
+                  "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                  "char_start": 1614,
+                  "char_end": 1621,
+                  "quote": "CC-News"
+                }
+              }
+            ],
+            "qualifiers_complete": true
+          },
+          "missing_conditions": [
+            "CC-News"
+          ],
+          "warnings": [
+            "literal_row_assignments_only_not_semantic_proof"
+          ]
+        }
+      ]
+    },
+    "blocked_artifact": {
+      "artifact_id": "artifact_54d2dd6ffdb515876cd09340935e1f6236c7d9b19334237b7fbe2bb6aff6dedb",
+      "composer_version": "comparison-table-v2",
+      "completion_status": "partial",
+      "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+      "goal": "比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。",
+      "rows": [
+        {
+          "document_id": "dpr",
+          "title": "dpr.pdf",
+          "cells": [
+            {
+              "facet": "method",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "dataset",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "result",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "limitation",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            }
+          ]
+        },
+        {
+          "document_id": "fid",
+          "title": "fid.pdf",
+          "cells": [
+            {
+              "facet": "method",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "dataset",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "result",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "limitation",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            }
+          ]
+        },
+        {
+          "document_id": "realm",
+          "title": "realm.pdf",
+          "cells": [
+            {
+              "facet": "method",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "dataset",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "result",
+              "status": "uncertain",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "result_condition_missing:explicit_row_condition_omitted"
+              ]
+            },
+            {
+              "facet": "limitation",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            }
+          ]
+        }
+      ],
+      "citations": [],
+      "citation_sources": [],
+      "verification": {
+        "verifier_version": "exact-facet-handles-v5",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+            "status": "insufficient",
+            "reason": "result_condition_missing:explicit_row_condition_omitted"
+          }
+        ],
+        "supported": 0,
+        "total": 1,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review"
+        ],
+        "assessments": [],
+        "context_policy": "preceding-children-v1",
+        "contexts": [],
+        "result_condition_policy": "explicit-row-v1",
+        "condition_audits": [
+          {
+            "audit_id": "conditionaudit_b708734ac656c652baffeaa8cffc00cde97169fdd5dcb96821c27cf97f3c52b4",
+            "policy": "explicit-row-v1",
+            "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+            "claim_id": "claim_33debb2d1fcf885bb03980f1717f0f9bb06e098d0d02fb7263e5116d97462592",
+            "status": "missing",
+            "reason": "explicit_row_condition_omitted",
+            "row": {
+              "row_id": "resultrow_8bb5f77add8d861dc9794d1192d2e26e2acbddb83372606105f354a74f9e1b1f",
+              "selector_version": "vertical-assignment-row-v1",
+              "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+              "document_id": "realm",
+              "source": {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1603,
+                "char_end": 1632,
+                "quote": "REALM (X = CC-News)\n38.5\n52.0"
+              },
+              "label": {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1603,
+                "char_end": 1622,
+                "quote": "REALM (X = CC-News)"
+              },
+              "values": [
+                {
+                  "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                  "char_start": 1623,
+                  "char_end": 1627,
+                  "quote": "38.5"
+                },
+                {
+                  "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                  "char_start": 1628,
+                  "char_end": 1632,
+                  "quote": "52.0"
+                }
+              ],
+              "conditions": [
+                {
+                  "symbol": "X",
+                  "value": {
+                    "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                    "char_start": 1614,
+                    "char_end": 1621,
+                    "quote": "CC-News"
+                  }
+                }
+              ],
+              "qualifiers_complete": true
+            },
+            "missing_conditions": [
+              "CC-News"
+            ],
+            "warnings": [
+              "literal_row_assignments_only_not_semantic_proof"
+            ]
+          }
+        ]
+      },
+      "knowledge_gaps": [
+        "dpr:method:missing",
+        "dpr:dataset:missing",
+        "dpr:result:missing",
+        "dpr:limitation:missing",
+        "fid:method:missing",
+        "fid:dataset:missing",
+        "fid:result:missing",
+        "fid:limitation:missing",
+        "realm:method:missing",
+        "realm:dataset:missing",
+        "realm:result:uncertain",
+        "realm:limitation:missing"
+      ],
+      "warnings": [
+        "machine_review_only",
+        "cross_paper_results_not_directly_comparable"
+      ],
+      "markdown": "# 文献比较\n\n比较三篇论文的方法、数据集、结果和局限，注明实验条件；证据不足明确列出，禁止直接性能排名。\n\n| 文献 | 方法 | 数据集 | 结果 | 局限 |\n| --- | --- | --- | --- | --- |\n| dpr.pdf | 证据未检出 | 证据未检出 | 证据未检出 | 证据未检出 |\n| fid.pdf | 证据未检出 | 证据未检出 | 证据未检出 | 证据未检出 |\n| realm.pdf | 证据未检出 | 证据未检出 | 待核验 | 证据未检出 |\n\n引用由原文定位及模型核验；仍需人工复核。实验条件未统一，本表不作性能排名。\n\n引用：\n\n知识缺口：\ndpr:method:missing\ndpr:dataset:missing\ndpr:result:missing\ndpr:limitation:missing\nfid:method:missing\nfid:dataset:missing\nfid:result:missing\nfid:limitation:missing\nrealm:method:missing\nrealm:dataset:missing\nrealm:result:uncertain\nrealm:limitation:missing\n"
+    },
+    "qualified_counterfactual": {
+      "claim": {
+        "claim_id": "claim_f35ffb78d1209e39aa5be2b7729f4bd5fcb0caf13ed5501c313debf778301250",
+        "document_id": "realm",
+        "facet": "result",
+        "statement": "在NQ开发集上，REALM在精确匹配和零样本检索召回@5上分别达到38.5和52.0。（预训练语料X=CC-News）",
+        "citation": {
+          "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+          "char_start": 1170,
+          "char_end": 1796,
+          "quote": "4\n30.1\n330m\nORQA (more ﬁne-tune epochs)\nDense Retr.+Transformer\nICT+BERT\n34.8\n35.4\n28.7\n330m\nOurs (X = Wikipedia, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n39.2\n40.2\n46.8\n330m\nOurs (X = CC-News, Z = Wikipedia)\nDense Retr.+Transformer\nREALM\n40.4\n40.7\n42.9\n330m\nTable 2. Ablation experiments on NQ’s development set. Unless\notherwise stated, the pre-training corpus X is Wikipedia.\nAblation\nExact\nMatch\nZero-shot\nRetrieval\nRecall@5\nREALM (X = CC-News)\n38.5\n52.0\nREALM\n38.2\n38.5\nREALM retriever+Baseline encoder\n37.4\n38.5\nBaseline retriever+REALM encoder\n35.3\n13.9\nBaseline (ORQA)\n31.3\n13.9\nREALM with random uniform masks\n32."
+        }
+      },
+      "audit": {
+        "audit_id": "conditionaudit_50a0c9c93176a17a5cd847c8e8e8e8215f4aede9a333b23e99da09daca7d0379",
+        "policy": "explicit-row-v1",
+        "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+        "claim_id": "claim_f35ffb78d1209e39aa5be2b7729f4bd5fcb0caf13ed5501c313debf778301250",
+        "status": "passed",
+        "reason": "all_explicit_row_assignments_retained",
+        "row": {
+          "row_id": "resultrow_8bb5f77add8d861dc9794d1192d2e26e2acbddb83372606105f354a74f9e1b1f",
+          "selector_version": "vertical-assignment-row-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "document_id": "realm",
+          "source": {
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "char_start": 1603,
+            "char_end": 1632,
+            "quote": "REALM (X = CC-News)\n38.5\n52.0"
+          },
+          "label": {
+            "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+            "char_start": 1603,
+            "char_end": 1622,
+            "quote": "REALM (X = CC-News)"
+          },
+          "values": [
+            {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1623,
+              "char_end": 1627,
+              "quote": "38.5"
+            },
+            {
+              "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+              "char_start": 1628,
+              "char_end": 1632,
+              "quote": "52.0"
+            }
+          ],
+          "conditions": [
+            {
+              "symbol": "X",
+              "value": {
+                "chunk_id": "chunk_298cacd23db026735850d2cf89c96ee69dc163997ae5cb6929c043ae868bd256",
+                "char_start": 1614,
+                "char_end": 1621,
+                "quote": "CC-News"
+              }
+            }
+          ],
+          "qualifiers_complete": true
+        },
+        "missing_conditions": [],
+        "warnings": [
+          "literal_row_assignments_only_not_semantic_proof"
+        ]
+      },
+      "semantic_verification_performed": false,
+      "published_as_supported": false
+    },
+    "code_sha256": {
+      "scripts/audit_result_conditions.py": "5293669366b6030d05a8d30bb9d2f0440e3a24e2fe5a9f36d6555197657b88de",
+      "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+      "app/research/artifacts.py": "7eb1f162465ab39556c4e3177de44e9683757dce89f38d4c326581858ff41875",
+      "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+      "app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+      "app/research/lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+      "app/research/model.py": "b4b58c5d0bbf7965aa87cfd86e094994a349e0a29c7917d63cd9b1e31ab203dd",
+      "app/research/protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+      "app/research/result_conditions.py": "126e012548d9e4b1768c45ccc3647a33a1dc3ed5bb7b7129304b1c5c7df16833",
+      "app/research/runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+      "app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+      "app/research/tasks.py": "12aea92571216f27b5c97f461af0690a5310726b35d5239ed2526d7372285582",
+      "app/research/tools.py": "c803a399fc457e5994caa245ee30daae1a763d5bc9e792902a3d98a10269e2e4",
+      "app/research/verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+      "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+      "app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+    }
+  },
+  "report_sha256": "99181d5ec117a447a5bd57d9a8319cc89ca384f1d2d5d72a609f969ccfaf4495",
+  "scope": "Offline exact-source replay, not a new extraction or semantic quality test"
+}

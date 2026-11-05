@@ -78,3 +78,6 @@ python -m pytest tests/test_research_checkpoint_recovery.py tests/test_research_
 ## 下一入口与停止条件
 
 下一切片直接围绕本次12条新声明修复claim–citation匹配和必要实验条件核验，优先解决REALM两条错误接受及DPR/FiD疑似误拒；保留此轮原始失败，预期独立复核后冻结。先做针对性契约回归，再以明确调用上限验证语义收益和误拒，不新增核验协议来替代质量证据，不扩展索引基础设施。比较表、20题、独立人工验收和使用路径尚未完成，Phase 1–5不能标为全部验收通过。
+
+
+后续R34（2026-11-01）：已对四条原声明完成有界配对提示词诊断，未解决两条错误接受，不切换默认，见 [R34记录](research_claim_audit.md)。

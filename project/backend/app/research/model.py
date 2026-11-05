@@ -9,6 +9,7 @@ from pydantic import Field, field_validator, model_serializer, model_validator
 
 from app.chunking.models import Identifier, Snapshot
 from .verification_context import VerificationContextPolicy
+from .result_conditions import ResultConditionPolicy
 
 
 class CompletionSpec(Snapshot):
@@ -22,15 +23,19 @@ class CompletionSpec(Snapshot):
     response_format: Literal["text", "json_object"] = "text"
     verification_protocol: Literal["numeric-model-v2", "source-checks-v3", "source-handles-v4", "facet-handles-v5"] = "numeric-model-v2"
     verification_context_policy: VerificationContextPolicy='cited-chunk-v1'
+    result_condition_policy: ResultConditionPolicy='model-only-v1'
 
     @model_serializer(mode='wrap')
     def preserve_context_default(self,handler):
         payload=handler(self)
         if self.verification_context_policy=='cited-chunk-v1':payload.pop('verification_context_policy',None)
+        if self.result_condition_policy=='model-only-v1':payload.pop('result_condition_policy',None)
         return payload
 
     @model_validator(mode='after')
     def context_protocol(self):
+        if self.version == 'research-facet-audit-v2' and self.verification_protocol != 'facet-handles-v5':
+            raise ValueError('Facet audit prompt requires facet-handles-v5')
         if self.verification_context_policy!='cited-chunk-v1' and self.verification_protocol!='facet-handles-v5':
             raise ValueError('Preceding context requires facet-handles-v5')
         return self
@@ -79,6 +84,27 @@ Check every claim independently. Exact quotation alone does not imply support. R
 }
 
 
+FACET_AUDIT_V2 = PROMPTS['verify_facets'] + '''
+Before assigning any supported check, actually locate the words or table cells that establish THIS claim:
+1. Decompose the statement into separate factual assertions. A mechanism description, an example probability calculation, an ablation result and a training objective are different assertions. Evidence for one cannot stand in for the others. Reject the whole conjunction when any assertion lacks cited support, even if surrounding context explains it.
+2. For a numerical result, align its values to ONE row and its headers/caption first. Compare every material row modifier with the statement, including pretraining source, model variant, evaluation split and units. An omitted row modifier makes conditions insufficient; a matching number or document name does not repair this. Read nearby lines in flattened PDF tables together without moving values to another row.
+3. For datasets, read all named entries in table headers, rows and caption as well as prose; line breaks do not erase names. Check the actual list, never assert a name is absent without inspecting all supplied source windows.
+4. A qualitative claim that the paper reports state-of-the-art performance on named benchmarks can be supported by the paper explicitly saying so. Do not demand numerical scores or a table for a claim that contains no numbers. This establishes what the paper reports, not a current external ranking.
+Each reason must mention a concrete observed match or mismatch, such as the actual row modifier or missing assertion. Never copy the statement or requirements as a substitute for checking it. Source IDs only locate text; selecting a long window does not prove every assertion in it.
+Keep the original JSON schema, all three mandatory checks and the supplied-source-only rule.'''
+
+
+def prompt_for(spec, operation):
+    """Opt-in revision bound to the already persisted operator version.
+
+    Existing task versions and operations retain their original prompts. No
+    inference, hidden extra call or source-specific exception is introduced.
+    """
+    if spec.version == 'research-facet-audit-v2' and operation == 'verify_facets':
+        return FACET_AUDIT_V2
+    return PROMPTS[operation]
+
+
 class JsonResearchModel:
     def __init__(self, spec: CompletionSpec, *, api_key: str, max_calls: int = 8, transport=None, client=None):
         if not api_key or type(max_calls) is not int or not 1 <= max_calls <= 20:
@@ -99,8 +125,13 @@ class JsonResearchModel:
     def verification_context_policy(self):
         return self.spec.verification_context_policy
 
+    @property
+    def result_condition_policy(self):
+        return self.spec.result_condition_policy
+
     def generate(self, operation, payload):
         import json
+        import hashlib
         if operation not in PROMPTS or len(self.calls) >= self.max_calls:
             raise RuntimeError("research_model_budget_or_operation_rejected")
         encoded = json.dumps(payload, ensure_ascii=False, allow_nan=False)
@@ -112,7 +143,11 @@ class JsonResearchModel:
             "status": "running", "usage": {}}
         if self.spec.verification_context_policy!='cited-chunk-v1':
             entry['verification_context_policy']=self.spec.verification_context_policy
+        if self.spec.result_condition_policy!='model-only-v1':
+            entry['result_condition_policy']=self.spec.result_condition_policy
         self.calls.append(entry)
+        prompt = prompt_for(self.spec, operation)
+        entry['prompt_sha256'] = hashlib.sha256(prompt.encode('utf-8')).hexdigest()
         started = perf_counter()
         try:
             manager = nullcontext(self.client) if self.client is not None else httpx.Client(
@@ -123,7 +158,7 @@ class JsonResearchModel:
                     json={"model": self.spec.model_id, "stream": False, "temperature": 0,
                         **({"response_format": {"type": "json_object"}} if self.spec.response_format == "json_object" else {}),
                         "max_tokens": self.spec.max_output_tokens,
-                        "messages": [{"role": "system", "content": PROMPTS[operation]}, {"role": "user", "content": encoded}]})
+                        "messages": [{"role": "system", "content": prompt}, {"role": "user", "content": encoded}]})
                 response.raise_for_status()
                 if len(response.content) > 256000:
                     raise ValueError("response_too_large")

@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-01",
+  "full_command": "python -m pytest -o addopts='' -q --tb=short --show-capture=no",
+  "full_result": "619 passed in 521.81s (0:08:41)",
+  "full_passed": 619,
+  "full_scope_note": "Full collection/import preceded the final condition-name punctuation case and batch audit scope hardening. The final source is covered by the targeted run below; no claim of a 620-case full run.",
+  "earlier_api_inclusive_targeted_result": "62 passed in 56.64s (before final batch audit scope assertions)",
+  "final_targeted_command": "python -m pytest tests/test_result_conditions.py tests/test_result_condition_integration.py tests/test_research_verification_batches.py tests/test_research_pilot_options.py -o addopts='' -q --tb=short --show-capture=no",
+  "final_targeted_result": "42 passed in 5.69s",
+  "failed": 0,
+  "skipped": 0,
+  "new_test_cases": 31,
+  "final_collection_expected": 620,
+  "source_sha256": {
+    "app/research/result_conditions.py": "126e012548d9e4b1768c45ccc3647a33a1dc3ed5bb7b7129304b1c5c7df16833",
+    "app/research/model.py": "b4b58c5d0bbf7965aa87cfd86e094994a349e0a29c7917d63cd9b1e31ab203dd",
+    "app/research/artifacts.py": "7eb1f162465ab39556c4e3177de44e9683757dce89f38d4c326581858ff41875",
+    "app/research/tasks.py": "12aea92571216f27b5c97f461af0690a5310726b35d5239ed2526d7372285582",
+    "app/research/tools.py": "c803a399fc457e5994caa245ee30daae1a763d5bc9e792902a3d98a10269e2e4",
+    "app/api/v1/research.py": "32d052d39c794822318d18e73969fd62e0f5c03a36c61093a26b23fe26153931",
+    "scripts/evaluate_research_comparison.py": "cf3e518ad58c9ce1585f7582b6c9bac4f3e0ff1c2346c07960dfebb7372afb9e",
+    "scripts/audit_result_conditions.py": "5293669366b6030d05a8d30bb9d2f0440e3a24e2fe5a9f36d6555197657b88de",
+    "tests/test_result_conditions.py": "4afce8e5011829e7da709044614a59faf69740e369e1cfd675b9b6c296ba08e3",
+    "tests/test_result_condition_integration.py": "26ec14df104d1f1c9e9411043b8ef6a1ee961f427a17eb01685c0b551e8a5b99",
+    "tests/test_research_verification_batches.py": "22739045ebfdc983f3f6253a99f6d7f5ba2bac1a76de6e1d4e5d00edb3390c86",
+    "tests/test_research_runtime.py": "07434e97ec261b8851c598780ccc771b35d96dc9153d4c6825f09875b15a4283"
+  },
+  "quality_gate_passed": false,
+  "paid_model_calls": 0
+}

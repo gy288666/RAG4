@@ -45,6 +45,16 @@ def load_claim_file(path, corpus, document_ids):
     return claim
 
 
+def complete_document_scope(task, claims):
+    """A batch probe must reproduce a complete original document, not a subset."""
+    documents={c.document_id for c in claims}
+    if len(documents)!=1:raise ValueError('Document batch probe requires exactly one document')
+    document=next(iter(documents))
+    if tuple(claims)!=tuple(c for c in task.claims if c.document_id==document):
+        raise ValueError('Document batch probe requires all original document claims')
+    return document
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", type=Path, required=True)
@@ -58,6 +68,7 @@ def main():
     parser.add_argument("--max-output-tokens",type=int,choices=(2048,4096,8192),default=8192,
         help="Explicit cap for controlled comparisons; historical default unchanged")
     parser.add_argument('--verification-context-policy',choices=('cited-chunk-v1','preceding-children-v1'))
+    parser.add_argument('--validate-document-batch',action='store_true',help='Also validate the complete original document batch after judgment')
     args = parser.parse_args()
     key = os.environ["RAG4_EVAL_API_KEY"]
     args.output.mkdir(parents=True, exist_ok=False)
@@ -80,6 +91,7 @@ def main():
     corpus=frozen_corpus(task,vectors)
     if args.claim_file:
         claims=(load_claim_file(args.claim_file,corpus,tuple(s.document_id for s in task.sources)),)
+    batch_document=complete_document_scope(task,claims) if args.validate_document_batch else None
     spec = verification_spec(task.completion,args.protocol,args.max_output_tokens,args.verification_context_policy)
     model = JsonResearchModel(spec, api_key=key, max_calls=1)
     report = {"schema": "research-source-checks-replay-v1", "annotation_status": "machine_review_only",
@@ -94,6 +106,10 @@ def main():
         report['claim_file_sha256']=hashlib.sha256(args.claim_file.read_bytes()).hexdigest()
     try:
         verification = EvidenceVerifier(model).verify(corpus, claims)
+        if batch_document is not None:
+            from app.research.tasks import VerificationBatch
+            VerificationBatch(document_id=batch_document,claim_ids=tuple(c.claim_id for c in claims),verification=verification).validate_scope(task)
+            report['document_batch_validated']=True
         corpus=frozen_corpus(task,vectors)
         artifact = ArtifactComposer().compose(corpus, task.goal, tuple(s.document_id for s in task.sources),
             {s.document_id: s.title for s in task.sources}, claims, verification)

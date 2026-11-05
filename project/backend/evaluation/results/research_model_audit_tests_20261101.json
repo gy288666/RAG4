@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-01",
+  "command": "python -m pytest tests/test_model_audit.py tests/test_claim_audit.py tests/test_research_pilot_options.py tests/test_verification_facets.py tests/test_research_verification_batches.py tests/test_research_checkpoint_recovery.py -o addopts='' -q --tb=short --show-capture=no",
+  "result": "55 passed in 7.89s",
+  "passed": 55,
+  "failed": 0,
+  "skipped": 0,
+  "new_test_cases": 11,
+  "full_suite_rerun": false,
+  "historical_full_suite": "R34: 577 passed in 233.94s, before its extra offline-scoring test",
+  "production_source_sha256": {
+    "app/research/agent.py": "26a07274e074431188f3fa55fc496b65d743f4fdbdb06056f7610384148ae7ee",
+    "app/research/artifacts.py": "34f977ff04696371d9a7078b6b84e7762e1a997a042787928f9fb2956e0ffc17",
+    "app/research/evidence.py": "6b40b01f8772e2b1ad651a741db9d3c3b47c3c7073c21538fb6ccd9f38e49fbc",
+    "app/research/graph.py": "bc48b90a00ff514596bfe2c4c023bc9ddbfeba1a44d7a8b42724235ad0264490",
+    "app/research/lexical.py": "26ab8df3dbd3c69d53b8ee0932829def60ec7784a607b14e6ef22e235b639fb1",
+    "app/research/model.py": "fb24f62b7e04b4fb74137365cf1dbe6499ffb6cdd4822a014627b3d39c448d43",
+    "app/research/protocol.py": "3c178123e4c09b7a516743d587a5082280b6d3d3680d68b3c0da9279509cc364",
+    "app/research/runtime.py": "f79b5322122330c2c45e0f08e69b4ccbe4a58c71aec4bd766532ab2331291bba",
+    "app/research/store.py": "ba2d8f2729c8053bc716565eaa66f2ac9ba8f8f823b87543ace537d5289a9d3c",
+    "app/research/tasks.py": "c183e4c44ae27a53d65055a8cee982e60e613fb12b84c738a9486de95c8ec2fc",
+    "app/research/tools.py": "ee7af484579d9dea03961ca777ddc670c3e96ba5abf588a1956ad0d4fa85d46a",
+    "app/research/verification_context.py": "fb752b9433a93ab79f654b3f3a59a5892ea9519b12dc34b2d0cefb9f7720e5b7",
+    "app/research/verification_policy.py": "177d71f18af7f4b52f915f7b34abbb2d665a2dc6428347c2af914368b787d13b",
+    "app/research/__init__.py": "f6a9d189975893a165d0d1592d184cbc0e3516212389684f0948361227895b83"
+  },
+  "changed_source_sha256": {
+    "scripts/evaluate_claim_audit.py": "7bc39cdd7faa086b6062b32f476674a9f9db8605b1be6fa705e410e73838840c",
+    "tests/test_model_audit.py": "028a657a1e864beb0fadee98c6f952f1743392d08f96bbc679560f96a1ce6e2c"
+  },
+  "quality_gate_passed": false,
+  "model_promoted": false
+}

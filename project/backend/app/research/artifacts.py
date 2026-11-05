@@ -17,7 +17,8 @@ from app.chunking.models import Identifier, Snapshot, SourceLocator, SourceSpan,
 from .evidence import EvidenceBundle, EvidenceCorpus
 from .graph import Citation
 from .verification_context import VerificationContext, VerificationContextPolicy, build_context
-from .protocol import validate_response
+from .result_conditions import ResultConditionAudit, ResultConditionPolicy, audit_result_conditions
+from .protocol import ResponseSchemaError, check_response_ids, validate_response
 
 Facet = Literal["method", "dataset", "result", "limitation"]
 FACETS = ("method", "dataset", "result", "limitation")
@@ -70,7 +71,9 @@ class CitedAnalysisDraft(Snapshot):
     # Bound wire candidates separately from the four-facet domain output.
     # A duplicated facet must not discard valid candidates for other facets.
     claims: tuple[CitedClaim, ...] = Field(default=(), max_length=8)
-    relations: tuple[CitedRelation, ...] = Field(default=(), max_length=2)
+    # Optional wire hints are validated independently after required claims.
+    # Keep the envelope/count bound strict; never repair predicates or IDs.
+    relations: tuple[dict, ...] = Field(default=(), max_length=2)
 
 
 class Verdict(Snapshot):
@@ -193,10 +196,15 @@ class VerificationReport(Snapshot):
     assessments: tuple[ClaimAssessment, ...] = ()
     context_policy: VerificationContextPolicy='cited-chunk-v1'
     contexts: tuple[VerificationContext,...]=Field(default=(),max_length=20)
+    result_condition_policy: ResultConditionPolicy='model-only-v1'
+    condition_audits: tuple[ResultConditionAudit,...]=Field(default=(),max_length=20)
 
     @model_serializer(mode="wrap")
     def preserve_historical_wire_format(self, handler):
         payload = handler(self)
+        if self.result_condition_policy=='model-only-v1':
+            payload.pop('result_condition_policy',None)
+            payload.pop('condition_audits',None)
         if self.context_policy=='cited-chunk-v1':
             payload.pop('context_policy',None)
             payload.pop('contexts',None)
@@ -313,7 +321,12 @@ def _extract_cited(model, corpus, document_id, bundle, goal):
             citation=Citation(chunk_id=item.chunk.chunk_id, char_start=start, char_end=end, quote=item.chunk.text[start:end]))
         claims.append(claim.model_copy(update={"claim_id": claim.expected_id(corpus.corpus_id)}))
         seen.add(candidate.facet)
-    for relation in draft.relations:
+    for raw_relation in draft.relations:
+        try:
+            relation=validate_response(CitedRelation,raw_relation,'extract_relation')
+        except ResponseSchemaError as error:
+            warnings.extend('draft_relation_rejected:'+d for d in error.diagnostics)
+            continue
         if relation.citation_id not in catalog:
             warnings.append("draft_relation_rejected:unknown_citation")
             continue
@@ -339,6 +352,10 @@ class EvidenceVerifier:
         if context_policy not in {'cited-chunk-v1','preceding-children-v1'} or (context_policy!='cited-chunk-v1' and protocol!='facet-handles-v5'):
             raise ValueError('Invalid verification context policy')
         contexts=[]
+        condition_policy=getattr(self.model,'result_condition_policy','model-only-v1')
+        if condition_policy not in {'model-only-v1','explicit-row-v1'}:
+            raise ValueError('Invalid result condition policy')
+        condition_audits=[]
         valid, invalid, assessments = [], [], ()
         for claim in claims:
             try:
@@ -348,6 +365,13 @@ class EvidenceVerifier:
                 if not _numbers(claim.statement) <= _numbers(claim.citation.quote):
                     invalid.append(Verdict(claim_id=claim.claim_id, status="insufficient", reason="numeric_value_not_in_quote"))
                     continue
+                if condition_policy=='explicit-row-v1' and claim.facet=='result':
+                    audit=audit_result_conditions(corpus,claim)
+                    condition_audits.append(audit)
+                    if audit.status not in {'passed','not_applicable'}:
+                        invalid.append(Verdict(claim_id=claim.claim_id,status='insufficient',
+                            reason='result_condition_'+audit.status+':'+audit.reason))
+                        continue
                 valid.append(claim)
             except ValueError:
                 invalid.append(Verdict(claim_id=claim.claim_id, status="insufficient", reason="source_integrity_failed"))
@@ -376,16 +400,14 @@ class EvidenceVerifier:
                         del item["quote"]  # One authoritative source catalog, no copied quote required.
                 assessments = validate_response(HandleJudgment if handles else CheckedJudgment,
                     self.model.generate(operation, payload), operation).assessments
-                if len({a.claim_id for a in assessments}) != len(assessments) or any(a.claim_id not in claims_by_id for a in assessments):
-                    raise ValueError("Judge returned duplicate or unknown claim IDs")
+                check_response_ids(claims_by_id,(a.claim_id for a in assessments),operation,'assessments')
                 if handles:
                     assessments = tuple(a.resolve(claims_by_id[a.claim_id]) for a in assessments)
                 judged = Judgment(verdicts=tuple(a.verdict(claims_by_id[a.claim_id]) for a in assessments))
             else:
                 judged = validate_response(Judgment, self.model.generate("verify", payload), "verify")
             ids = {c.claim_id for c in valid}
-            if len({v.claim_id for v in judged.verdicts}) != len(judged.verdicts) or any(v.claim_id not in ids for v in judged.verdicts):
-                raise ValueError("Judge returned duplicate or unknown claim IDs")
+            check_response_ids(ids,(v.claim_id for v in judged.verdicts),'verify' if not checked else operation,'verdicts')
             mapping = {v.claim_id: v for v in judged.verdicts}
             verdicts = invalid + [mapping.get(c.claim_id, Verdict(claim_id=c.claim_id,
                 status="insufficient", reason="judge_did_not_verify_claim")) for c in valid]
@@ -393,6 +415,7 @@ class EvidenceVerifier:
             verdicts = invalid
         return VerificationReport(verifier_version="exact-facet-handles-v5" if protocol == "facet-handles-v5" else "exact-source-handles-v4" if handles else "exact-source-checks-v3" if checked else "exact-source-numeric-and-model-v2",
             context_policy=context_policy,contexts=tuple(contexts),
+            result_condition_policy=condition_policy,condition_audits=tuple(condition_audits),
             assessments=assessments, verdicts=tuple(verdicts), supported=sum(v.status == "supported" for v in verdicts),
             total=len(claims), warnings=("literal_numeric_values_checked_no_unit_conversion",
                 "semantic_support_is_machine_judgment_requires_human_review"))
@@ -488,6 +511,20 @@ class ArtifactComposer:
             raise ValueError("Verification does not cover exactly the supplied claims")
         if verification.total != len(claims) or verification.supported != sum(v.status == "supported" for v in verdicts.values()):
             raise ValueError("Verification counters mismatch")
+        if verification.result_condition_policy=='explicit-row-v1':
+            by_claim={c.claim_id:c for c in claims}
+            audits={a.claim_id:a for a in verification.condition_audits}
+            if len(audits)!=len(verification.condition_audits) or not audits.keys()<=by_claim.keys():
+                raise ValueError('Invalid result condition audit scope')
+            for audit in verification.condition_audits:
+                audit.validate_source(corpus,by_claim[audit.claim_id])
+            for claim in claims:
+                if claim.facet=='result' and verdicts[claim.claim_id].status=='supported':
+                    audit=audits.get(claim.claim_id)
+                    if audit is None or audit.status not in {'passed','not_applicable'}:
+                        raise ValueError('Supported result failed deterministic condition gate')
+        elif verification.condition_audits:
+            raise ValueError('Unexpected result condition audits')
         if verification.context_policy=='preceding-children-v1':
             if verification.verifier_version!='exact-facet-handles-v5':raise ValueError('Invalid context verifier')
             by_claim={c.claim_id:c for c in claims}

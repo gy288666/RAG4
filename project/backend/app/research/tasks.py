@@ -8,6 +8,7 @@ from .artifacts import Claim, ComparisonArtifact, VerificationReport
 from .evidence import EvidenceBundle, EvidenceCorpus, EvidenceItem, RetrievalOptions
 from .graph import GraphRelation
 from .model import CompletionSpec
+from .protocol import ResponseContractError
 
 
 class TaskBudget(Snapshot):
@@ -113,13 +114,31 @@ class VerificationBatch(Snapshot):
         report = self.verification
         version = {"numeric-model-v2": "exact-source-numeric-and-model-v2",
             "source-checks-v3": "exact-source-checks-v3", "source-handles-v4": "exact-source-handles-v4", "facet-handles-v5": "exact-facet-handles-v5"}[task.completion.verification_protocol]
+        def reject(code):
+            raise ResponseContractError(code,'verify_document','batch',
+                {'expected':len(expected),'received':len(report.verdicts),'unique':len({v.claim_id for v in report.verdicts})})
         if (self.document_id not in {s.document_id for s in task.sources} or self.claim_ids != expected
-                or len(set(expected)) != len(expected) or len(expected) > 4
-                or len(report.verdicts) != len(expected) or {v.claim_id for v in report.verdicts} != set(expected)
-                or report.total != len(expected) or report.supported != sum(v.status == "supported" for v in report.verdicts)
-                or report.verifier_version != version
-                or report.context_policy != task.completion.verification_context_policy):
-            raise ValueError("Verification batch scope or protocol mismatch")
+                or len(set(expected)) != len(expected) or len(expected) > 4):reject('batch_scope')
+        if len(report.verdicts)!=len(expected) or {v.claim_id for v in report.verdicts}!=set(expected):reject('batch_verdict_coverage')
+        if report.total!=len(expected) or report.supported!=sum(v.status=='supported' for v in report.verdicts):reject('batch_counters')
+        if report.verifier_version!=version:reject('batch_protocol')
+        if (report.context_policy!=task.completion.verification_context_policy
+                or report.result_condition_policy!=task.completion.result_condition_policy):reject('batch_policy')
+        audits={a.claim_id:a for a in report.condition_audits}
+        if (len(audits)!=len(report.condition_audits) or not audits.keys()<=set(expected)
+                or (report.result_condition_policy=='model-only-v1' and audits)
+                or any(a.corpus_id!=task.corpus_id or a.audit_id!=a.expected_id()
+                       or (a.row is not None and (a.row.corpus_id!=task.corpus_id
+                           or a.row.document_id!=self.document_id or a.row.row_id!=a.row.expected_id()))
+                       for a in report.condition_audits)):
+            reject('batch_condition_scope')
+        if report.result_condition_policy=='explicit-row-v1':
+            supported={v.claim_id for v in report.verdicts if v.status=='supported'}
+            for claim in task.claims:
+                if claim.claim_id in supported and claim.facet=='result':
+                    audit=audits.get(claim.claim_id)
+                    if audit is None or audit.status not in {'passed','not_applicable'}:
+                        reject('batch_condition_coverage')
 
 
 class ResearchTask(Snapshot):
