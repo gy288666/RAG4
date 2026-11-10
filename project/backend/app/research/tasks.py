@@ -9,6 +9,7 @@ from .evidence import EvidenceBundle, EvidenceCorpus, EvidenceItem, RetrievalOpt
 from .graph import GraphRelation
 from .model import CompletionSpec
 from .protocol import ResponseContractError
+from .claim_reviews import ClaimReviewEvent
 
 
 class TaskBudget(Snapshot):
@@ -98,6 +99,14 @@ class ResearchStep(Snapshot):
     finished_at: str | None = None
 
 
+class RetryEvent(Snapshot):
+    """Retain a finished attempt before an explicit, quota-preserving retry."""
+    failed_revision: int = Field(strict=True, ge=0)
+    tool_calls_used: int = Field(strict=True, ge=1)
+    model_calls_used: int = Field(strict=True, ge=0)
+    failed_step: ResearchStep
+
+
 PlanVersion = Literal["research-comparison-v1", "research-comparison-v2"]
 ContextPolicy = Literal["parent-floor-v2", "local-window-v3"]
 CandidatePolicy = Literal["vector-v1", "lexical-fusion-v2", "source-role-v3"]
@@ -166,9 +175,16 @@ class ResearchTask(Snapshot):
     artifact: ComparisonArtifact | None = None
     error_code: str | None = None
 
+    retry_events: tuple[RetryEvent, ...] = Field(default=(), max_length=24)
+    claim_reviews: tuple[ClaimReviewEvent, ...] = Field(default=(), max_length=100)
+
     @model_serializer(mode="wrap")
     def preserve_historical_format(self, handler):
         payload = handler(self)
+        if not self.retry_events:
+            payload.pop('retry_events', None)
+        if not self.claim_reviews:
+            payload.pop('claim_reviews', None)
         if self.schema_version == "research-comparison-v1":
             payload.pop("verification_batches", None)
         if self.context_policy == "parent-floor-v2":

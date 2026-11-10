@@ -1,0 +1,78 @@
+{
+  "schema_version": "literature-acceptance-result-v1",
+  "pack_sha256": "d8457b09f3bbfdf1b70ffe5699e99454f6587f4310d1d06b4b5fa0deae4ff3cb",
+  "status": "incomplete",
+  "scope": "citation-and-gap-subgate",
+  "subgate_passed": false,
+  "quality_gate_passed": false,
+  "questions": 20,
+  "answered": 0,
+  "reviewed": 0,
+  "answers_correct": 0,
+  "supported_claims": 0,
+  "total_claims": 0,
+  "citation_support_rate": null,
+  "correct_gaps": 0,
+  "required_gaps": 4,
+  "missing_answers": [
+    "q01",
+    "q02",
+    "q03",
+    "q04",
+    "q05",
+    "q06",
+    "q07",
+    "q08",
+    "q09",
+    "q10",
+    "q11",
+    "q12",
+    "q13",
+    "q14",
+    "q15",
+    "q16",
+    "q17",
+    "q18",
+    "q19",
+    "q20"
+  ],
+  "pending_reviews": [],
+  "answerable_abstentions": [],
+  "independent_human_attested": false,
+  "held_out_evaluation": false,
+  "remaining_product_gates": [
+    "Three-paper comparison artifact coverage",
+    "Matched RAG3 comparison: two fixed cross-paper failures, no regression",
+    "Frozen runtime budgets and usage/latency accounting"
+  ],
+  "limitations": [
+    "Reviewer independence is declared, not authenticated",
+    "Quote presence does not prove semantic support",
+    "AI-draft labels and reused questions remain a development set",
+    "Artifact hashes are declared provenance; original exports must be audited"
+  ],
+  "date": "2026-11-10",
+  "mode": "offline_real_source_readiness_no_answers",
+  "provider_requests": 0,
+  "embedding_requests": 0,
+  "source_documents_verified": 3,
+  "source_anchors_verified": 27,
+  "pilot_sha256": "7f8400b736c47d6fd30636f5695e32a528957d8d1ea04a2365b53c72a37369c5",
+  "executed_source_sha256": {
+    "app/evaluation/acceptance.py": "da759f49b26dbe7476f7fbf430e5fa89ac15e6c8e9a0790a3218c1cebad9144d",
+    "app/evaluation/literature.py": "d1c9f0039aff6d4287437aba967e020df0e89b47643368476e70468971f76648",
+    "app/services/parser_service.py": "b6ea0879cf31dd490328ed461fa74141b46ffd27b228ae3294bbbc1e6a08f12d",
+    "scripts/evaluate_literature_acceptance.py": "f1af160887c68cec099ae1d57ac6e189467b1d1b9c887b69d2bb2f4546e1332e"
+  },
+  "parsed_sha256": {
+    "dpr": "49c03f135f2aded281e21f1de886fbbb8e889f7dd5111ebfbf4a3f4aaa92aa29",
+    "fid": "64f66860d8acfa3666f56fffda4a36147209389fc0aa74a8454655e11ea85637",
+    "realm": "e87ed7ac7a27bd06e00741e88257467daf101421535aa3a554074bae830c58be"
+  },
+  "tests": {
+    "command": "python -m pytest tests/test_literature_acceptance.py tests/test_literature_pilot.py -o addopts='' -q --tb=short",
+    "passed": 43,
+    "duration_seconds": 5.35,
+    "full_suite": false
+  }
+}

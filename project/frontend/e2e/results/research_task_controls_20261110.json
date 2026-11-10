@@ -1,0 +1,188 @@
+{
+  "date": "2026-11-10",
+  "quality_gate_passed": false,
+  "typescript_and_build": "passed",
+  "backend_tests": {
+    "passed": 34,
+    "elapsed_seconds": 37.02
+  },
+  "browser": {
+    "execution": [
+      {
+        "name": "pause resume and explicit cancellation never execute a tool",
+        "passed": true
+      },
+      {
+        "name": "control 409 locks without resubmission",
+        "passed": true
+      },
+      {
+        "name": "control 500 locks without resubmission",
+        "passed": true
+      },
+      {
+        "name": "late control response does not replace a newly selected task",
+        "passed": true
+      },
+      {
+        "name": "one click is one revision-fenced attempt, never an automatic loop",
+        "passed": true
+      },
+      {
+        "name": "409 blocks another attempt until explicit state refresh",
+        "passed": true
+      },
+      {
+        "name": "network uncertainty never resubmits and running checkpoint stays blocked",
+        "passed": true
+      },
+      {
+        "name": "leaving task ignores its late execution response",
+        "passed": true
+      },
+      {
+        "name": "insufficient budget disables execution without consuming a step",
+        "passed": true
+      },
+      {
+        "name": "paused task exposes no execution or implicit recovery",
+        "passed": true
+      },
+      {
+        "name": "mobile execution budgets and action remain readable",
+        "passed": true
+      },
+      {
+        "name": "desktop execution budget and action",
+        "passed": true
+      },
+      {
+        "name": "explicit recovery retains budget/history and does not run automatically",
+        "passed": true
+      },
+      {
+        "name": "recovery blocked: insufficient_budget",
+        "passed": true
+      },
+      {
+        "name": "recovery blocked: unaccounted_history",
+        "passed": true
+      },
+      {
+        "name": "recovery revision conflict requires refresh and never resubmits",
+        "passed": true
+      },
+      {
+        "name": "changed source prevents recovery confirmation",
+        "passed": true
+      },
+      {
+        "name": "late recovery decision cannot overwrite another task",
+        "passed": true
+      },
+      {
+        "name": "mobile recovery conditions and confirmation fit viewport",
+        "passed": true
+      }
+    ],
+    "real_http_synthetic": [
+      {
+        "name": "real login, owned version, preview and pending create",
+        "passed": true
+      },
+      {
+        "name": "real pause and resume preserve zero usage and do not execute a tool",
+        "passed": true
+      },
+      {
+        "name": "eleven explicit steps, SQL artifact and exact source excerpt",
+        "passed": true
+      },
+      {
+        "name": "real download revalidates SQL revision and excludes the withdrawn claim from Markdown",
+        "passed": true
+      },
+      {
+        "name": "real review withdraw reset retain, SQL history, reload, immutable machine artifact and unchanged usage",
+        "passed": true
+      },
+      {
+        "name": "stale HTTP revision conflicts after completed run",
+        "passed": true
+      },
+      {
+        "name": "second real login cannot discover or execute owner task",
+        "passed": true
+      },
+      {
+        "name": "anonymous real HTTP reads and execution require JWT",
+        "passed": true
+      },
+      {
+        "name": "real failed verification retains two reports and read-only partial artifact",
+        "passed": true
+      },
+      {
+        "name": "changed retained source rejects partial reread without stale citations",
+        "passed": true
+      },
+      {
+        "name": "explicit recovery retains failed attempt, reports and quotas without running",
+        "passed": true
+      }
+    ]
+  },
+  "live_audit": {
+    "metrics": {
+      "completion_attempts": 12,
+      "completion_failures": 1,
+      "embedding_batches": 9,
+      "external_provider_calls": 0
+    },
+    "tasks": [
+      {
+        "id": "research_18e6b2f2200c75649459636a",
+        "goal": "Compare synthetic fixture methods with a retained failure",
+        "status": "pending",
+        "revision": 19,
+        "tool_calls_used": 9,
+        "model_calls_used": 6,
+        "verification_batches": 2,
+        "artifact_attached": false,
+        "retry_events": 1,
+        "claim_reviews": 0
+      },
+      {
+        "id": "research_18e6b2f078861738f07d6846",
+        "goal": "Compare synthetic fixture methods with source citations",
+        "status": "completed",
+        "revision": 27,
+        "tool_calls_used": 11,
+        "model_calls_used": 6,
+        "verification_batches": 3,
+        "artifact_attached": true,
+        "retry_events": 0,
+        "claim_reviews": 3
+      }
+    ],
+    "active_state": [
+      null,
+      0
+    ],
+    "retained_vectors_unchanged": true,
+    "baseline_record_count": 3,
+    "baseline_unchanged": true
+  },
+  "code_sha256": {
+    "src/components/ResearchControlPanel.tsx": "0b2606c7842ee1eeceb118147b8f002c355a09bcffc053f491c39a938e7af756",
+    "src/pages/ResearchPage.tsx": "9087adcf032f62ecf69314c97ebc0170f1c5cc8cd8fa003cc2a04ff4e7a43208",
+    "src/api/research.ts": "a4be8926a3c3eab9fd3acb3c5deb9ee312d681a0845260f3f9b70c85396ce967",
+    "e2e/research-run.mjs": "a9f9c2051747650a796c4dc2d48c67f97a84dea47e7f90b122fd7a896bcbf5ca",
+    "e2e/research-live.mjs": "19e6a96bc59af994c45dc486671b64fcf155b9bfd54fabc4cb68284905565057"
+  },
+  "limitations": [
+    "Existing backend controls retained, not a scheduler or immediate provider interruption.",
+    "Generic failed resume is not exposed in UI; historical recovery constraints retained.",
+    "No independent semantic quality acceptance; no full backend suite run."
+  ]
+}

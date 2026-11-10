@@ -47,7 +47,7 @@ def validate_response(schema, payload, operation):
     except ValidationError as error:
         fields = {"claims", "relations", "verdicts", "facet", "statement", "citation_id", "evidence_id",
             "quote", "subject", "predicate", "object", "claim_id", "status", "reason",
-            "assessments", "attribution", "conditions", "entailment", "support_quote", "support_ids"}
+            "assessments", "assertion_id", "attribution", "conditions", "entailment", "support_quote", "support_ids"}
         codes = {"missing", "extra_forbidden", "too_long", "tuple_type", "string_type", "string_too_long",
             "string_too_short", "literal_error", "model_type", "dict_type"}
         diagnostics = []

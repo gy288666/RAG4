@@ -8,7 +8,7 @@ from pydantic import Field,model_validator
 from app.chunking.models import Identifier,Snapshot,content_id
 from .graph import Citation
 
-VerificationContextPolicy=Literal['cited-chunk-v1','preceding-children-v1']
+VerificationContextPolicy=Literal['cited-chunk-v1','preceding-children-v1','cited-support-v2']
 
 
 class ContextClaim(Protocol):
@@ -24,7 +24,7 @@ class ContextPart(Snapshot):
 
 class VerificationContext(Snapshot):
     context_id: Identifier
-    policy: Literal['preceding-children-v1']='preceding-children-v1'
+    policy: Literal['preceding-children-v1','cited-support-v2']='preceding-children-v1'
     corpus_id: Identifier
     claim_id: Identifier
     document_id: Identifier
@@ -46,18 +46,26 @@ class VerificationContext(Snapshot):
         return content_id('verification_context_',self.model_dump(mode='json',exclude={'context_id'}))
 
     def validate_source(self,corpus,claim: ContextClaim):
-        if self!=build_context(corpus,claim):
+        if self!=build_context(corpus,claim,policy=self.policy):
             raise ValueError('Verification context differs from frozen source selection')
 
 
-def build_context(corpus,claim: ContextClaim) -> VerificationContext:
-    """At most two immediate preceding children plus the cited source slice.
+def build_context(corpus,claim: ContextClaim, *, policy='preceding-children-v1') -> VerificationContext:
+    """Select bounded attribution context, or opt into exact-citation diagnostics.
 
     Cross-parent adjacency is intentional. Never skip an oversized nearest
     predecessor to borrow an unrelated distant one. No corpus-wide retrieval.
+    cited-support-v2 omits all expansion; attribution may need omitted context.
     """
+    if policy not in {'preceding-children-v1','cited-support-v2'}:
+        raise ValueError('Unknown source-addressed context policy')
     corpus.require_scope(corpus.user_id,(claim.document_id,))
     claim.citation.validate_source(corpus,claim.document_id)
+    if policy=='cited-support-v2':
+        result=VerificationContext(context_id='pending',policy=policy,corpus_id=corpus.corpus_id,
+            claim_id=claim.claim_id,document_id=claim.document_id,
+            parts=(ContextPart(role='cited',citation=claim.citation),),context_chars=len(claim.citation.quote))
+        return result.model_copy(update={'context_id':result.expected_id()})
     chunk=corpus.chunks[claim.citation.chunk_id]
     cited=claim.citation if len(chunk.text)>4000 else Citation(
         chunk_id=chunk.chunk_id,char_start=0,char_end=len(chunk.text),quote=chunk.text)

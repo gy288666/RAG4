@@ -67,7 +67,7 @@ def main():
     parser.add_argument("--protocol", choices=("source-checks-v3", "source-handles-v4", "facet-handles-v5"), default="source-checks-v3")
     parser.add_argument("--max-output-tokens",type=int,choices=(2048,4096,8192),default=8192,
         help="Explicit cap for controlled comparisons; historical default unchanged")
-    parser.add_argument('--verification-context-policy',choices=('cited-chunk-v1','preceding-children-v1'))
+    parser.add_argument('--verification-context-policy',choices=('cited-chunk-v1','preceding-children-v1','cited-support-v2'))
     parser.add_argument('--validate-document-batch',action='store_true',help='Also validate the complete original document batch after judgment')
     args = parser.parse_args()
     key = os.environ["RAG4_EVAL_API_KEY"]

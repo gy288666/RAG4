@@ -1,0 +1,24 @@
+{
+  "milestone": "R42",
+  "date": "2026-11-06",
+  "backend": {
+    "command": "python -m pytest tests/test_research_run_revision.py tests/test_research_preview.py tests/test_research_runtime.py tests/test_research_agent.py tests/test_research_goal_preview.py tests/test_partial_artifact_api.py -o addopts='' -q --tb=short",
+    "passed": 97,
+    "elapsed_seconds": 195.61,
+    "new_tests": 15,
+    "full_suite_run": false
+  },
+  "frontend": {
+    "typecheck": "npm run lint: passed",
+    "build": "npm run build: passed",
+    "execution": { "command": "node e2e/research-run.mjs", "passed": 8, "fixture_mode": "synthetic intercepted API" },
+    "reading": { "command": "node e2e/research.mjs", "passed": 12, "fixture_mode": "intercepted real frozen R37/R39 responses" },
+    "creation": { "command": "node e2e/research-create.mjs", "passed": 9, "fixture_mode": "synthetic intercepted API" },
+    "screenshots_inspected": ["desktop execution", "mobile execution"],
+    "live_business_backend_tested": false
+  },
+  "external_model_calls": 0,
+  "new_dependencies": [],
+  "quality_gate_passed": false,
+  "limitations": ["legacy bodyless run does not enforce client revision", "no automatic execution/retry or recovery UI", "page exit does not cancel server calls", "no real browser-to-business-HTTP acceptance", "human semantic acceptance incomplete"]
+}

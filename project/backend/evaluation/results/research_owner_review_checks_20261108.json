@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-08",
+  "code_sha256": {
+    "app/research/claim_reviews.py": "e4a1685c4e9476fd3721080e09cefd4f9b2c35ab2ab81eb83ece97d60e9c635d",
+    "app/research/tasks.py": "e8c95c4238e157fd5343e2f59e3fd180ef338a6305194dce20768f63f60b875c",
+    "app/research/agent.py": "396d6c187f037c62a51ebe04904a996c46c65668903bc836e3bae1fc9e41bcd0",
+    "app/research/store.py": "fdff9556a1457193c0b03eb1a56f329324a355211959c4e8e5788126a9e56bfc",
+    "app/research/runtime.py": "7bf84728dbdbd0bc4357f2f3eafd75247749d9e2238b672cc632b593378e7557",
+    "app/api/v1/research.py": "9e41485d314b9be7af4e9c03dd45ee8831c9952d82cd276adf240f37747125c9",
+    "tests/test_claim_reviews.py": "ea8f72a9e9d9534f8452d0e169add36dd15f877854744e62c0c350e21bc9e1b9",
+    "tests/test_claim_review_api.py": "ed3904c355b2c70b8ddcdbaab8502b9dea41006adfc302dc347e74fa1224e951"
+  },
+  "primary_tests": {
+    "passed": 144,
+    "elapsed_seconds": 248.0,
+    "files": [
+      "test_claim_review_api.py",
+      "test_claim_reviews.py",
+      "test_research_agent.py",
+      "test_research_run_revision.py",
+      "test_research_explicit_retry.py",
+      "test_research_verification_batches.py",
+      "test_partial_artifact_api.py",
+      "test_research_runtime.py"
+    ]
+  },
+  "new_test_instances": 43,
+  "full_suite_run": false,
+  "frontend_run": false,
+  "provider_requests": 0,
+  "embedding_requests": 0,
+  "quality_gate_passed": false,
+  "additional_tests": {
+    "passed": 27,
+    "elapsed_seconds": 55.82,
+    "files": [
+      "test_research_preview.py",
+      "test_research_goal_preview.py"
+    ]
+  },
+  "distinct_related_tests_passed": 171
+}

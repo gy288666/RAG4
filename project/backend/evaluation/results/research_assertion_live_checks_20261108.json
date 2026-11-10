@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-08",
+  "code_sha256_final_after_diagnostics": {
+    "app/research/model.py": "8c60aa35ac5c52a1a488d83486fc83c025e70ac8863ac0c3dc158ef14198dd0e",
+    "scripts/compare_verification_scope.py": "81eeec3fb7dee40fc9d48ad4752c4241181a296b434af14adca525ab0c1c27a3",
+    "tests/test_model_json_diagnostics.py": "caef0828d2fbe308e9824595890d1f4d92990daf040fc7f63b111bb0fad59734",
+    "tests/test_assertion_live_comparison.py": "bee70dae70ae3e0eee46929abbcbea9dbf5c74da2dc2c0ba4b215fcc50ef2d2b"
+  },
+  "final_related_tests": {
+    "passed": 221,
+    "elapsed_seconds": 65.62,
+    "full_suite": false
+  },
+  "new_test_instances": 18,
+  "actual_completion_requests": 2,
+  "semantic_cases_completed": 0,
+  "quality_gate_passed": false,
+  "notes": [
+    "Initial live run predates safe JSON boundary diagnostics; missing details cannot be reconstructed.",
+    "Prompt and user payload hashes match across both actual requests; only response_format was explicitly changed in the wire options."
+  ]
+}

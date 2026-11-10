@@ -1,0 +1,299 @@
+{
+  "date": "2026-11-09",
+  "milestone": "R53 reviewed export and original snapshot comparison",
+  "quality_gate_passed": false,
+  "new_dependencies": [],
+  "typescript_check": "passed",
+  "production_build": "passed",
+  "export_unit_tests": {
+    "passed": 10
+  },
+  "browser_checks": {
+    "review_and_export": [
+      {
+        "name": "withdraw reset retain preserve history, original source and revision fence",
+        "passed": true
+      },
+      {
+        "name": "blank reason disabled and mobile layout fits",
+        "passed": true
+      },
+      {
+        "name": "unsaved decisions stay local and export uses the last saved snapshot",
+        "passed": true
+      },
+      {
+        "name": "downloads keep reviewed original and audit material distinct and recheck each snapshot",
+        "passed": true
+      },
+      {
+        "name": "400 export revalidation prevents download and blocks stale view",
+        "passed": true
+      },
+      {
+        "name": "409 export revalidation prevents download and blocks stale view",
+        "passed": true
+      },
+      {
+        "name": "late export after navigation produces no file for the new task",
+        "passed": true
+      },
+      {
+        "name": "review writes and snapshot downloads are mutually disabled while pending",
+        "passed": true
+      },
+      {
+        "name": "400 write locks and hides uncertain comparison until refresh",
+        "passed": true
+      },
+      {
+        "name": "409 write locks and hides uncertain comparison until refresh",
+        "passed": true
+      },
+      {
+        "name": "lost response may be committed, refresh discovers it without a second write",
+        "passed": true
+      },
+      {
+        "name": "read failure never falls back to machine artifact",
+        "passed": true
+      },
+      {
+        "name": "mismatched source artifact rejected before displaying conclusions",
+        "passed": true
+      },
+      {
+        "name": "inconsistent cell rejected despite matching task and artifact IDs",
+        "passed": true
+      },
+      {
+        "name": "inconsistent status rejected despite matching task and artifact IDs",
+        "passed": true
+      },
+      {
+        "name": "late write after task navigation cannot paint old review into new task",
+        "passed": true
+      }
+    ],
+    "reading": [
+      {
+        "name": "real failed task, steps, exact citation, focus and GET-only",
+        "passed": true
+      },
+      {
+        "name": "mobile table scrolls inside viewport",
+        "passed": true
+      },
+      {
+        "name": "source change suppresses partial conclusions",
+        "passed": true
+      },
+      {
+        "name": "conflict refresh uses new revision without stale artifact",
+        "passed": true
+      },
+      {
+        "name": "empty owned task list",
+        "passed": true
+      },
+      {
+        "name": "401 clears session and returns to login",
+        "passed": true
+      },
+      {
+        "name": "anonymous protected route does not fetch research",
+        "passed": true
+      },
+      {
+        "name": "completed snapshot does not request failed partial view",
+        "passed": true
+      },
+      {
+        "name": "source excerpt is escaped text",
+        "passed": true
+      },
+      {
+        "name": "pagination fetches summaries without per-row detail calls",
+        "passed": true
+      },
+      {
+        "name": "list failure can be retried",
+        "passed": true
+      },
+      {
+        "name": "switching task ignores delayed old partial response",
+        "passed": true
+      },
+      {
+        "name": "unfinished verification is not presented as missing paper evidence",
+        "passed": true
+      }
+    ],
+    "execution": [
+      {
+        "name": "one click is one revision-fenced attempt, never an automatic loop",
+        "passed": true
+      },
+      {
+        "name": "409 blocks another attempt until explicit state refresh",
+        "passed": true
+      },
+      {
+        "name": "network uncertainty never resubmits and running checkpoint stays blocked",
+        "passed": true
+      },
+      {
+        "name": "leaving task ignores its late execution response",
+        "passed": true
+      },
+      {
+        "name": "insufficient budget disables execution without consuming a step",
+        "passed": true
+      },
+      {
+        "name": "paused task exposes no execution or implicit recovery",
+        "passed": true
+      },
+      {
+        "name": "mobile execution budgets and action remain readable",
+        "passed": true
+      },
+      {
+        "name": "desktop execution budget and action",
+        "passed": true
+      },
+      {
+        "name": "explicit recovery retains budget/history and does not run automatically",
+        "passed": true
+      },
+      {
+        "name": "recovery blocked: insufficient_budget",
+        "passed": true
+      },
+      {
+        "name": "recovery blocked: unaccounted_history",
+        "passed": true
+      },
+      {
+        "name": "recovery revision conflict requires refresh and never resubmits",
+        "passed": true
+      },
+      {
+        "name": "changed source prevents recovery confirmation",
+        "passed": true
+      },
+      {
+        "name": "late recovery decision cannot overwrite another task",
+        "passed": true
+      },
+      {
+        "name": "mobile recovery conditions and confirmation fit viewport",
+        "passed": true
+      }
+    ],
+    "real_http_synthetic_documents": [
+      {
+        "name": "real login, owned version, preview and pending create",
+        "passed": true
+      },
+      {
+        "name": "eleven explicit steps, SQL artifact and exact source excerpt",
+        "passed": true
+      },
+      {
+        "name": "real download revalidates SQL revision and excludes the withdrawn claim from Markdown",
+        "passed": true
+      },
+      {
+        "name": "real review withdraw reset retain, SQL history, reload, immutable machine artifact and unchanged usage",
+        "passed": true
+      },
+      {
+        "name": "stale HTTP revision conflicts after completed run",
+        "passed": true
+      },
+      {
+        "name": "second real login cannot discover or execute owner task",
+        "passed": true
+      },
+      {
+        "name": "anonymous real HTTP reads and execution require JWT",
+        "passed": true
+      },
+      {
+        "name": "real failed verification retains two reports and read-only partial artifact",
+        "passed": true
+      },
+      {
+        "name": "changed retained source rejects partial reread without stale citations",
+        "passed": true
+      },
+      {
+        "name": "explicit recovery retains failed attempt, reports and quotas without running",
+        "passed": true
+      }
+    ]
+  },
+  "browser_total": 54,
+  "live_audit": {
+    "metrics": {
+      "completion_attempts": 12,
+      "completion_failures": 1,
+      "embedding_batches": 9,
+      "external_provider_calls": 0
+    },
+    "tasks": [
+      {
+        "id": "research_18e654d61aac5d0ca2e86013",
+        "goal": "Compare synthetic fixture methods with a retained failure",
+        "status": "pending",
+        "revision": 19,
+        "tool_calls_used": 9,
+        "model_calls_used": 6,
+        "verification_batches": 2,
+        "artifact_attached": false,
+        "retry_events": 1,
+        "claim_reviews": 0
+      },
+      {
+        "id": "research_18e654d4a0a848504a8ad8f1",
+        "goal": "Compare synthetic fixture methods with source citations",
+        "status": "completed",
+        "revision": 25,
+        "tool_calls_used": 11,
+        "model_calls_used": 6,
+        "verification_batches": 3,
+        "artifact_attached": true,
+        "retry_events": 0,
+        "claim_reviews": 3
+      }
+    ],
+    "active_state": [
+      null,
+      0
+    ],
+    "retained_vectors_unchanged": true,
+    "baseline_record_count": 3,
+    "baseline_unchanged": true
+  },
+  "code_sha256": {
+    "src/utils/reviewExport.ts": "388f69db311f75d80de7c1d9e01236cc9b159cfb9ff18d8e4967fa49a4a83ce3",
+    "src/components/ResearchReviewExport.tsx": "8731fb48e928c57e21c8ccb2967df886409e6564fdb5d4f58b9b4c82ea8b6e55",
+    "src/components/ResearchClaimReviewPanel.tsx": "37216061599b82a86859be8ed6229f22e3c6b96e75c74a0408b42c94ab0c3fdf",
+    "src/pages/ResearchPage.tsx": "ba26a536b8a7be65307cc932f68978fcc818de6f2943c9e4f291835052c6c158",
+    "src/styles/research.css": "3788c8502e95906572328e32752fd22caf7fe63ecc3d31219d5e528eb9c3e883",
+    "e2e/review-export.unit.mjs": "39d683825ebe25e60b37a0111bcc4a52c7542c9e2793b1c3dd0b6f56b9739202",
+    "e2e/research-review.mjs": "13b09437337a518b786b6a68bcbc5a3b56c41aa403900893efcd33a46658a4be",
+    "e2e/research-live.mjs": "3622e9ae5d575c3a74705fe23b819f005a8b8e26dbd171ff2c9ad79967ab7341"
+  },
+  "limitations": [
+    "Completed review snapshots only; no failed partial export.",
+    "Browser contract fixtures use reconstructed R51 sources; actual HTTP uses isolated synthetic documents and simulated provider transport.",
+    "Audit JSON and explicitly historical original exports retain withdrawn material by design; current reviewed Markdown excludes it as a finding/reference.",
+    "No independent semantic quality acceptance or new assertion protocol promotion."
+  ],
+  "local_screenshots": [
+    "e2e/shots/research-review/export-comparison.png",
+    "e2e/shots/research-review/export-mobile.png"
+  ]
+}

@@ -1,5 +1,6 @@
 """Owner-scoped SQL checkpoint CAS; model calls never hold SQL transactions."""
 import hashlib
+import json
 
 from sqlalchemy import func, select, update
 
@@ -11,6 +12,21 @@ from .tasks import ResearchTask
 
 def digest(value):
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _goal_preview(row):
+    """A cheap owned-row label, never a substitute for full checkpoint validation."""
+    if digest(row.payload_json)!=row.payload_sha256:return None
+    try:
+        payload=json.loads(row.payload_json)
+        if (not isinstance(payload,dict) or
+                (payload.get('id'),payload.get('user_id'),payload.get('status'),payload.get('revision'))!=
+                (row.id,row.user_id,row.status,row.revision)):
+            return None
+        goal=payload.get('goal')
+        return goal[:160] if isinstance(goal,str) else None
+    except (ValueError,TypeError):
+        return None
 
 
 class SQLResearchTaskStore:
@@ -44,6 +60,20 @@ class SQLResearchTaskStore:
         if len(payload) > 1_000_000:
             raise ValueError("Research checkpoint size budget exceeded")
         with session_scope() as db:
+            row=db.get(ResearchTaskRecord,task.id)
+            if row is None or row.user_id!=task.user_id or row.revision!=expected_revision:
+                raise TaskConflict('Research checkpoint revision changed')
+            if digest(row.payload_json)!=row.payload_sha256:
+                raise ValueError('Research checkpoint integrity failed')
+            old_payload=json.loads(row.payload_json)
+            if not isinstance(old_payload,dict):raise ValueError('Invalid research checkpoint')
+            if task.claim_reviews or old_payload.get('claim_reviews'):
+                previous=ResearchTask.model_validate_json(row.payload_json)
+                validate_task_plan(previous)
+                if (len(task.claim_reviews)!=len(previous.claim_reviews)+1
+                        or task.claim_reviews[:-1]!=previous.claim_reviews
+                        or task.model_dump(exclude={'revision','claim_reviews'})!=previous.model_dump(exclude={'revision','claim_reviews'})):
+                    raise ValueError('Owner reviews must append one event without rewriting the completed task')
             changed = db.execute(update(ResearchTaskRecord).where(ResearchTaskRecord.id == task.id,
                 ResearchTaskRecord.user_id == task.user_id, ResearchTaskRecord.revision == expected_revision).values(
                 status=task.status, revision=task.revision, payload_json=payload, payload_sha256=digest(payload))).rowcount
@@ -59,4 +89,5 @@ class SQLResearchTaskStore:
             total = db.scalar(select(func.count()).select_from(ResearchTaskRecord).where(scope))
             rows = db.scalars(select(ResearchTaskRecord).where(scope).order_by(
                 ResearchTaskRecord.created_at.desc(), ResearchTaskRecord.id.desc()).offset(offset).limit(limit)).all()
-            return [{"id": r.id, "status": r.status, "revision": r.revision} for r in rows], total
+            return [{"id": r.id, "status": r.status, "revision": r.revision,
+                     "goal_preview": _goal_preview(r)} for r in rows], total

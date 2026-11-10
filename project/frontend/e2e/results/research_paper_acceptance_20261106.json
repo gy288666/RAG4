@@ -1,0 +1,28 @@
+{
+  "milestone": "R44",
+  "date": "2026-11-06",
+  "browser_command": "node e2e/research-paper.mjs --allow-live",
+  "api_interception": false,
+  "source_papers": ["dpr", "fid", "realm"],
+  "new_task_id": "research_18e5ac69ce68573054a1ac4e",
+  "task_status": "failed",
+  "task_revision": 4,
+  "task_completed": false,
+  "tool_attempts": 2,
+  "completion_attempts": 0,
+  "limits": { "embedding_requests": 3, "completion_requests": 8, "automatic_network_retries": 0, "stop_after_first_failed_step": true },
+  "provider_calls": [
+    { "path": "/v1/embeddings", "http_status": 200, "elapsed_ms": 5244, "usage": { "total_tokens": 166, "prompt_tokens": 166, "completion_tokens": 0 } },
+    { "path": "/v1/embeddings", "error_type": "ConnectTimeout", "elapsed_ms": 5042, "usage": {} }
+  ],
+  "money_cost": "unknown",
+  "new_claims": 0,
+  "partial_gaps": 12,
+  "old_task_database_vectors_and_active_unchanged": true,
+  "browser_uncaught_errors": 0,
+  "production_fix": "unverified partial-document cells display 未完成核验 instead of implying missing paper evidence",
+  "tests": { "backend_passed": 31, "backend_elapsed_seconds": 31.76, "new_backend_tests": 13, "browser_reading_passed": 13, "new_browser_tests": 1, "typecheck": "passed", "build": "passed", "full_suite_run": false },
+  "quality_gate_passed": false,
+  "human_semantic_review_completed": false,
+  "new_dependencies": []
+}

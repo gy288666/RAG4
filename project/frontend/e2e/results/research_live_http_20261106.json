@@ -1,0 +1,40 @@
+{
+  "milestone": "R43",
+  "date": "2026-11-06",
+  "live_browser": {
+    "command": "node e2e/research-live.mjs",
+    "checks_passed": 7,
+    "api_response_interception": false,
+    "login_state_injection": false,
+    "backend": "real Uvicorn/FastAPI on loopback with isolated SQLite and LocalVectorStore",
+    "data": "three synthetic TXT fixtures, two real test logins",
+    "model": "real JsonResearchModel parser with offline httpx.MockTransport",
+    "completed_task": { "revision": 22, "tool_calls": 11, "simulated_completion_attempts": 6, "citations": 3, "gaps": 9 },
+    "failed_task": { "revision": 18, "tool_calls": 9, "simulated_completion_attempts": 6, "retained_verification_batches": 2, "partial_citations": 2, "partial_gaps": 10, "artifact_attached": false },
+    "stale_run_status": 409,
+    "foreign_task_read_run_partial_status": 404,
+    "anonymous_task_read_run_status": 401,
+    "changed_source_partial_status": 400,
+    "baseline_record_count": 3,
+    "baseline_digest_unchanged": true,
+    "retained_vector_digests_unchanged": true,
+    "active_state": [null, 0],
+    "total_simulated_completion_attempts": 12,
+    "injected_completion_failures": 1,
+    "local_embedding_batches_including_builds": 9,
+    "external_provider_calls": 0,
+    "browser_uncaught_exceptions": 0,
+    "graceful_fixture_server_exit_code": 0,
+    "temporary_data_retained": true,
+    "screenshots_inspected": ["completed artifact and source", "failed partial artifact"]
+  },
+  "backend": {
+    "command": "python -m pytest tests/test_live_fixture_safety.py tests/test_research_run_revision.py tests/test_research_preview.py -o addopts='' -q --tb=short",
+    "passed": 40, "elapsed_seconds": 83.28, "new_tests": 3, "full_suite_run": false
+  },
+  "frontend": { "typecheck": "npm run lint: passed", "production_build": "npm run build: passed" },
+  "new_dependencies": [],
+  "business_database_accessed": false,
+  "real_model_semantic_acceptance": false,
+  "quality_gate_passed": false
+}

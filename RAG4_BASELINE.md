@@ -1,5 +1,109 @@
 # RAG4 基线记录
 
+## R40–R56 GitHub交付检查（2026-11-10）
+
+发布范围为工作区执行/恢复/控制、来源审阅与导出、保留失败的有界核验实验和真实20题答案/待审阅包。发布前另复验后端相关124项/142.16s、前端类型/构建和10项导出单测通过，暂存文件与凭据/JSON/差异检查通过。用户artifacts和本地运行数据不提交，未新增模型调用或修改默认索引。开发阶段“未推送”是历史状态，不代表本次GitHub交付状态；独立人工质量、部署和训练门槛仍未通过。
+
+## R56：真实双组20题答案（2026-11-10）
+
+新增隔离的freeze_inputs/run和export_review评测脚本，以同一现有RAG提示、Qwen2.5-7B-Instruct及参数，复用核对后的旧/新切分检索缓存，首次请求前冻结40次/单次30秒/600秒准入预算。40次实际尝试、39份正文；RAG3 20/20，RAG4 19/20，q19 RemoteProtocolError未重试。241324ms，已报告82336 tokens；失败用量、费用未知，0新增Embedding。
+
+独立原始产物、实际来源和待标注模板可进入R55后续审阅；不自动猜测事实/拒答或补写缺失，仍是incomplete，质量未通过。66项相关测试通过/12.16s（新增23），结束后来源/缓存/原任务/执行代码摘要一致。未改生产服务/默认策略/业务库/索引，无依赖或推送。见 [R56文件、命令、限制和失败候选](project/docs/research_paired_answers.md)。
+
+## R55：20题冻结审阅与离线评分（2026-11-10）
+
+新增 `app/evaluation/acceptance.py` 的答案/声明/引用/人工判断类型及prepare/score，命令行导出不可覆盖的冻结包、待填审阅和评分报告。绑定题目/PDF/解析/执行代码摘要；逐题完整、语义回答正确、引用支持至少90%、缺口4/4方可通过子门槛，完整产品quality_gate仍不自动通过。人工独立性仅声明，不能认证；原始产物摘要也须人工对照。
+
+命令 `python -m pytest tests/test_literature_acceptance.py tests/test_literature_pilot.py -o addopts='' -q --tb=short`：**43 passed /5.35s**。真实三份PDF、页数和全部20题开发锚点核对通过；缺实际逐题答案和独立人工审阅，报告incomplete，支持率未知，不把0已确认缺口题当作实测拒答失败。0模型/Embedding，无依赖/迁移/业务数据或默认策略改动，未推送。见 [接口与复现](project/docs/research_literature_acceptance.md)。
+
+## R54：工作区生命周期控制（2026-11-10）
+
+R54工作区任务控制：暂停/继续/取消、明确取消确认、revision与预算响应校验、失败锁定和迟到响应屏障。类型/构建、19组执行浏览器检查、11组真实HTTP合成文献检查及34项后端回归通过；外部模型0，未改后端生产状态机或业务数据。旧历史恢复限制保留，未推送。详见 [R54记录](project/docs/research_task_controls.md)。
+
+## R53：审阅稿导出与原机器稿对照（2026-11-09）
+
+新增research-review-export-v1纯文件构造及界面：当前稿Markdown从结构化已保存审阅生成，排除撤下结论/引用，不信任存储Markdown；原机器快照与包含撤下材料的审计JSON独立标识/文件名。下载前按revision重读来源并核对view_id，400/409/失败/离页不下载，读写互斥，未保存表单不入稿；身份和引用保留，原服务数据不写。
+
+类型/构建、10导出单测、54浏览器组（审阅/导出16、阅读13、执行15、真实HTTP合成文献10）通过；真实下载内容、SQL历史/原Artifact/预算/向量/active保全通过，外部模型0。首轮元数据转义1红后用JSON代码块修复，无新增依赖/后端生产改动/业务库/训练/推送，非独立语义验收或后端全量。R40–R53未提交，用户artifacts保留。文件/命令/回退和限制见 [R53记录](project/docs/research_review_export.md)。
+
+## R52：阅读台审阅交互与不确定结果屏障（2026-11-08）
+
+前端完成任务按revision读取review，展示保留/撤下/reset、原文、原因/时间历史；只有显式提交才POST，绑定原机器Artifact和当前版本。校验任务/稿件/事件前缀/状态/单元格，加载失败不回退旧稿，不确定保存隐藏比较表并锁定，刷新核对不重发，迟到响应不污染新任务。原机器数据、RAG3与失败部分稿只读路径保留，个人意见不作为独立gold。
+
+类型/生产构建通过；新审阅10、阅读13、执行15、真实HTTP合成文献9，共47组浏览器检查，另fixture安全3 passed /3.76s。真实SQL保存withdraw/reset/retain和重载、越权404、原稿/预算/调用量/向量/active保全通过；整套fixture仅本地transport模拟生成，外部提供方调用0。一个并发尝试停滞未计通过，最终串行验证、生命周期加界限，根因未知。不称真实三论文新模型或独立人工质量验收，无新依赖/业务库/训练/推送，R40–R52未提交。源码/命令/界面边界见 [R52记录](project/docs/research_owner_review_ui.md)。
+
+## R51：所有者结论审阅后端与追加存储保护（2026-11-08）
+
+新增ClaimReviewEvent/Item/View、GET review和POST claims/{claim_id}/review：JWT本人对completed原稿结论保留/撤下/重置；身份/UTC时间由服务器给定，100事件和既有1MB上限，原机器稿/核验/步骤/预算不改。来源前后复验、revision CAS、历史链及SQL历史前缀/完成快照保护；撤下仅限制新视图，不把保留意见当独立金标准。新Task字段为空时省略，真实旧payload字节兼容。
+
+新增43项，最终相关144 passed /248.00s，Local/Chroma权限、来源、并发和历史改写覆盖；存储保护先2红后修复。真实三论文新SQLite副本经开发JWT/ASGI HTTP，25→26撤下后3条/9缺口，旧稿4条/8缺口；新进程重载后reset/withdraw至28，历史三条，源Task/SQL/向量及active保全。不是生产登录或用户本人确认，0模型/Embedding，无依赖/迁移/业务库/训练/推送，非全量/前端。前端尚未接入，R40–R51未提交，用户artifacts保留。文件/命令/回退限制见 [R51记录](project/docs/research_owner_review.md)。
+
+## R50：真实返回失败保留与严格JSON安全诊断（2026-11-08）
+
+coverage-v1固定REALM正负、DPR正例、FiD归属负例，逐断言结果也纳入开发门禁。首例text返回HTTP200/3693已报tokens后JSONDecodeError，按技术错误停止，其余三例未执行。先补诊断回归，再显式同一负例json_object探测，ReadTimeout/usage未知；本轮2 Completion、0 Embedding/自动重试、0可用语义结果，总费用未知。不能补写首个响应形状或认定JSON模式效果/网络根因，不晋级或默认接入。
+
+新增CLI显式单例/格式选择、首次请求前落盘计划及失败账本安全阶段/字符数/JSON错误位置/前缀分类；严格解码不剥围栏/修复/放宽重复字段。新增18项，最终221 passed /65.62s，非全量/前端；原任务/SQLite/向量和旧稿均保留。无依赖/迁移/业务库/训练/推送，R40–R50未提交。文件、命令、两份失败原记录及限制见 [R50记录](project/docs/research_assertion_live.md)。下一片核对实际缺失的结论级来源审阅/撤下记录，停止扩诊断设施，研究质量仍未通过。
+
+## R49：逐断言覆盖接口与保守产物（2026-11-08）
+
+新增StatementAssertion/AssertionPlan/AssertionReview/AssertionPublication及显式单请求核验/发布接口：绑定完整原声明字符范围和版本身份，缺失/不足不放行，未知/重复身份拒绝，来源编号不扩张；新审阅只能限制原报告，不能提升旧拒绝。model新增verify_assertions操作和版本账本，旧协议/Task/API默认不改，调用方须预留一次调用，不隐式重跑旧核验。领域词汇同步CONTEXT。
+
+新增31项，相关140 passed /66.81s，另63 passed /7.12s，共203项不重叠回归通过；未跑全量/前端。在新SQLite副本显式适配R48判断做受控回放，原REALM复合句支持1→0、引用为空，旧报告保留；注明表述/编号变换，不冒充新模型判断。0付费Completion/Embedding，原任务/SQL/向量摘要不变，无依赖/迁移/业务库/训练/推送。原语义错误未宣称修复，新协议真实验收和Task接入待完成。文件/命令/限制见 [R49记录](project/docs/research_assertion_coverage.md)，R40–R49未提交，用户artifacts保留。
+
+## R48：单断言对照与开发诊断门禁（2026-11-08）
+
+在原来源新SQLite副本固定四例：完整声明误接受、同引用预测断言支持、同引用训练目标不足、覆盖目标的新引用支持；4 Completion均200，0 Embedding/重试，reported12615 tokens、金额未知。仅支持继续调查复合声明覆盖遗漏，不能认定唯一根因或通用拆句修复。原任务/SQL/向量摘要、机器产物和审阅稿保留，生产核验协议/默认不改。
+
+比较CLI新增assertions-v1和显式fail-on-draft-mismatch；区分执行失败2与开发预期不符3，不能用HTTP成功冒充质量通过，缺失/重复行也不通过。新增12测试，最终相关109 passed /60.20s，非全量或前端；无依赖/迁移/业务库访问/训练/推送。接口、真实文件、命令、完整四Claim/typed报告与下一片见 [R48记录](project/docs/research_verification_assertions.md)。R40–R48未提交，用户artifacts保留，研究质量仍未通过。
+
+## R47：引用上下文对照、不晋级新策略（2026-11-08）
+
+新增显式诊断策略 cited-support-v2、上下文身份/来源与成品策略一致性保护、固定四例八请求对照脚本。先检查载荷，DPR五数据集都在来源中，排除该样本传输丢失。8次Completion均200，0 Embedding/重试，已报20352 tokens、金额未知。前序上下文符合Agent开发预期3/4、误接受1；仅引文2/4、误接受2，FiD归属负例退化，不晋级、不切换默认。REALM错误引用两策略均放行，根因仍待确认；DPR逐条成功不证明批量误拒修复。
+
+最终相关97 passed /57.61s，新增9项实例；未重跑全量或前端。原任务/SQLite/向量摘要不变，原机器稿和保守审阅稿保留。无依赖、迁移、业务库访问、训练或推送；R40–R47仍未提交。接口、实际文件、命令、逐项账本及下一入口见 [R47记录](project/docs/research_verification_scope.md)。四例标签非独立人工金标准，研究质量仍未通过。
+
+## R46：真实三论文恢复完成与来源复核（2026-11-08）
+
+在R44新副本通过浏览器真实登录/核对/确认恢复，原DPR检索、预算和失败快照保留，失败4→待执行5→completed25；工具12/13、生成6/8。窗口2 Embedding/6 Completion全200、0重试，reported31650 tokens、金额未知；原任务JSON/SQL/向量、副本向量和active均不变。机器4支持/8缺口；原PDF视觉复核发现REALM方法引用不覆盖训练目标，保守审阅副本仅留3条/9缺口，不改原报告/Artifact、不声称独立人工质量。
+
+新增验收retry-copy/安全快照名及2/6上限，11项新回归，相关59 passed /53.51s、Node语法/真实浏览器保全断言通过。冻结同陈述不同引用正负Claim并离线验证来源身份，未追加请求；疑似误拒留待复核。实际文件/命令见 [R46记录](project/docs/research_real_recovery.md)。无生产逻辑/依赖/迁移/业务库变动或全量执行，用户artifacts保留；R40–R46未提交/推送。R37历史ValueError未复现但根因未知。
+
+## R45：已结束网络失败的显式恢复准备（2026-11-07）
+
+新增RetryDecision、RetryEvent、ResearchTask可选历史与GET/POST /research-tasks/{id}/retry；仅允许可解释CAS历史、结束时间、明确网络错误、覆盖余下计划的预算及来源复验均通过的failed任务。确认只改pending，失败快照、计数、预算、声明和成功核验报告保留；空历史不改变旧JSON序列化，无表结构迁移。旧control兼容且仍要求操作者确认旧调用已停；新界面不开放paused/running/不明历史自动恢复。
+
+相关121 passed /174.46s（新增20项），执行15/阅读13/创建9场景、真实隔离HTTP8组和类型/构建通过。真实HTTP仅合成资料/本地模拟模型，恢复18→19且工具9/生成6不变、2报告与失败快照保留，基线/向量/active不变。首批浏览器超时/停滞独立重跑通过，未认定根因或修复登录。实际R44 JSON纯准入可用但未来源API复验/SQL恢复；R37拒绝。本轮0在线请求，无依赖/迁移/全量，保留用户artifacts；R40–R45未提交/推送。详见 [R45记录](project/docs/research_explicit_retry.md)。
+
+## R44：真实论文有预算验收与未核验提示（2026-11-06）
+
+新增AcceptanceTransport（仅允许硅基流动指定HTTPS端点，失败也占配额）、显式--allow-live的实验副本服务和浏览器验收脚本。真实DPR/FiD/REALM任务由当前界面创建，最多3查询Embedding/8生成且首败即停；实际2次Embedding，首个200/166tokens、第二个ConnectTimeout/5042ms，0生成，failed/revision4。原任务/SQL/向量、副本向量及active不变。费用未知，语义验收未进入。
+
+真实失败暴露未核验文献误示“未检出证据”，修正为“未完成核验”并说明不能推断论文缺证据。新增场景先红后绿，最终阅读13场景通过；相关pytest31 passed /31.76s，新增13项守卫回归，类型/构建通过。命令、文件和公开结果见 [R44记录](project/docs/research_real_paper_acceptance.md)。没有新依赖、迁移、全量或业务MySQL访问，保留用户artifacts；R40–R44未提交/推送。
+
+## R43：隔离浏览器真实HTTP闭环（2026-11-06）
+
+新增独立测试服务、无API拦截/登录态注入的Chrome联调脚本和3项根目录安全测试。全新临时SQLite/Local索引、合成文献、本地MockTransport，走真实应用解析/核验/SQL/产物路径。7组通过：登录/版本/预览/创建，11步完成和精确原文，旧revision409，第二账号404，匿名401，失败两报告/部分稿，来源变化400撤下旧引用。审计原3条上传基线及保留向量摘要不变，active=[null,0]，远程提供商调用0。
+
+相关40 passed /83.28s（新增3项），npm run lint/build通过，非全量或业务库/真实模型验收。命令和文件见 [R43记录](project/docs/research_live_http_acceptance.md)。无依赖、迁移或生产代码改动，临时数据保留，用户artifacts不动；R40–R43未提交/推送。真实论文语义与完整工作区仍未验收。
+
+## R42：显式单步执行与状态核对（2026-11-06）
+
+新增可选RunRequest.expected_revision与领取前检查，保留无请求体旧客户端兼容；新页面每次显式点击携带revision，阻止顺序迟到请求多领下一步。CAS领取和控制后迟到结果屏障保持。执行区显示步骤与预算，网络失败/409要求刷新核对，running禁重复执行，离页忽略旧响应且不冒充服务端取消。没有恢复控件、自动循环或可靠调度。
+
+新增后端15项，首轮15 passed /34.25s，最终相关97 passed /195.61s；类型/构建、执行浏览器8、阅读12/创建9场景通过，命令见 [R42记录](project/docs/research_single_step_execution.md)。浏览器拦截API而非真实业务联调；生成模型计数不含Embedding。不访问业务MySQL或模型API，无依赖/迁移/全量执行/提交/推送。保留用户artifacts；R40–R42尚未提交。完整工作区及人工质量验收仍未完成。
+
+## R41：文献选择和计划确认创建（2026-11-05）
+
+新增POST /research-tasks/preview、prepare_task/task_preview和可选expected_preview_id；预览不持久化/执行，确认创建重新验证来源和摘要，不一致409无写入。旧创建默认与调用兼容保留。前端新增/research/new，从本人保留版本选择3–5篇，输入目标、查看服务端步骤/预算、显式保存pending；没有run按钮或隐式模型执行。
+
+相关命令与实际文件见 [R41记录](project/docs/research_task_creation.md)：后端82 passed /172.45s，新增22项，Local/Chroma；npm run lint/build与创建9/阅读12浏览器场景通过。浏览器拦截API（创建为合成契约，读取为真实冻结响应），非业务库联调。无依赖、迁移、全量回归或业务模型调用。R40–R41未提交/推送；保留用户artifacts。摘要不保证跨请求幂等；完整执行界面与人工质量验收仍缺。
+
+## R40：已有研究任务阅读入口（2026-11-04）
+
+在a945864基线上新增登录保护的研究阅读台和只读客户端类型/API，展示本人任务、版本/状态/步骤、失败部分稿、缺口及原文页码。列表增加可空goal_preview（最多160字符，摘要/身份检查）；无迁移或依赖。旧上传/聊天路径及active默认不改，用户artifacts保留。
+
+后端命令 `python -m pytest tests/test_research_goal_preview.py tests/test_research_agent.py tests/test_partial_artifact_api.py -q`：40项通过，新增5项；`npm run lint`、`npm run build`及`node e2e/research.mjs`均通过，浏览器12场景。浏览器使用R37/R39真实冻结响应拦截API，非业务库/生产账号联调；截图检查桌面、手机与原文。0模型调用，未重跑后端全量，未提交/推送。文件、限制与后续入口见 [R40详细记录](project/docs/research_reading_workspace.md)。完整工作区及人工质量验收仍未完成。
+
 > 记录日期：2026-09-14
 
 > 最近代码交付：2026-09-16，`4b0e1dd feat: implement RAG4 structured chunking engine` 已按用户请求推送至 GitHub main。下文 Phase 1 中“未提交/推送”描述的是开发完成、发布之前的时点；发布后的过程与当前进度见 [开发过程记录](project/docs/development_process.md)。

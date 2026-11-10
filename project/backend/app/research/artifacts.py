@@ -349,7 +349,7 @@ class EvidenceVerifier:
         handles = protocol in {"source-handles-v4", "facet-handles-v5"}
         checked = protocol in {"source-checks-v3", "source-handles-v4", "facet-handles-v5"}
         context_policy=getattr(self.model,'verification_context_policy','cited-chunk-v1')
-        if context_policy not in {'cited-chunk-v1','preceding-children-v1'} or (context_policy!='cited-chunk-v1' and protocol!='facet-handles-v5'):
+        if context_policy not in {'cited-chunk-v1','preceding-children-v1','cited-support-v2'} or (context_policy!='cited-chunk-v1' and protocol!='facet-handles-v5'):
             raise ValueError('Invalid verification context policy')
         contexts=[]
         condition_policy=getattr(self.model,'result_condition_policy','model-only-v1')
@@ -391,8 +391,8 @@ class EvidenceVerifier:
                         if protocol == "facet-handles-v5":
                             from .verification_policy import requirements_for
                             item["requirements"] = requirements_for(item["facet"]).model_dump(mode="json")
-                            if context_policy=='preceding-children-v1':
-                                context=build_context(corpus,claims_by_id[item['claim_id']])
+                            if context_policy in {'preceding-children-v1','cited-support-v2'}:
+                                context=build_context(corpus,claims_by_id[item['claim_id']],policy=context_policy)
                                 contexts.append(context)
                                 item['context']=context.text
                                 item['context_id']=context.context_id
@@ -525,13 +525,15 @@ class ArtifactComposer:
                         raise ValueError('Supported result failed deterministic condition gate')
         elif verification.condition_audits:
             raise ValueError('Unexpected result condition audits')
-        if verification.context_policy=='preceding-children-v1':
+        if verification.context_policy in {'preceding-children-v1','cited-support-v2'}:
             if verification.verifier_version!='exact-facet-handles-v5':raise ValueError('Invalid context verifier')
             by_claim={c.claim_id:c for c in claims}
             contexts={c.claim_id:c for c in verification.contexts}
             if len(contexts)!=len(verification.contexts) or not contexts.keys()<=by_claim.keys():
                 raise ValueError('Invalid verification contexts')
-            for context in verification.contexts:context.validate_source(corpus,by_claim[context.claim_id])
+            for context in verification.contexts:
+                if context.policy!=verification.context_policy:raise ValueError('Verification context policy mismatch')
+                context.validate_source(corpus,by_claim[context.claim_id])
             if any(v.status=='supported' and v.claim_id not in contexts for v in verdicts.values()):
                 raise ValueError('Supported claim missing verification context')
         elif verification.contexts:raise ValueError('Unexpected verification contexts')

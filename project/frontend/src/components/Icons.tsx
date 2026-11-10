@@ -41,6 +41,10 @@ export function LibraryIcon(props: IconProps) {
   );
 }
 
+export function ResearchIcon(props: IconProps) {
+  return <Base {...props}><path d="M4 4h11v16H4zM8 8h4M8 12h4M8 16h2M18 6h2v14H7" /></Base>;
+}
+
 export function UsersIcon(props: IconProps) {
   return (
     <Base {...props}>

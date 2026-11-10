@@ -23,10 +23,23 @@ def now():
 
 
 def validate_task_plan(task):
+    from .claim_reviews import validate_review_history
+    validate_review_history(task)
     expected = comparison_plan(task.sources, task.goal, version=task.schema_version)
     fields = {"id", "objective", "tool_name", "arguments", "dependencies"}
     if [s.model_dump(include=fields) for s in task.steps] != [s.model_dump(include=fields) for s in expected]:
         raise ValueError("Task plan differs from approved comparison policy")
+    approved = {s.id: s.model_dump(include=fields) for s in expected}
+    for index, event in enumerate(task.retry_events):
+        prior = event.failed_step
+        if (prior.id not in approved or prior.model_dump(include=fields) != approved[prior.id]
+                or prior.status != 'failed' or prior.result is None or prior.result.status != 'failed'
+                or prior.started_at is None or prior.finished_at is None
+                or event.failed_revision != 2 * event.tool_calls_used + index
+                or event.failed_revision > task.revision or event.tool_calls_used > task.tool_calls_used
+                or event.model_calls_used > task.model_calls_used
+                or index and event.failed_revision <= task.retry_events[index - 1].failed_revision):
+            raise ValueError('Retry attempt history differs from approved checkpoint policy')
     calls = 2 * len(task.sources) if task.schema_version == "research-comparison-v2" else len(task.sources) + 1
     if len(expected) > task.budget.max_steps or calls > task.budget.max_model_calls:
         raise ValueError("Budget cannot cover the comparison plan")
@@ -78,8 +91,10 @@ class ResearchAgent:
         self.store, self.context_factory = store, context_factory
         self.registry = registry or comparison_tools()
 
-    def step(self, user_id, task_id):
+    def step(self, user_id, task_id, *, expected_revision=None):
         task = self.store.load(user_id, task_id)
+        if expected_revision is not None and task.revision != expected_revision:
+            raise TaskConflict("Task revision changed before execution")
         validate_task_plan(task)
         if task.status in {"completed", "cancelled", "paused", "failed"}:
             return task

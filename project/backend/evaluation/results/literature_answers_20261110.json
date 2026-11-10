@@ -1,0 +1,3268 @@
+{
+  "schema_version": "literature-paired-answer-result-v1",
+  "scope": "chunking-policy-only",
+  "manifest_sha256": "9f46615aa3413971a6cfa2a872c81c71ffd12aa77b6ec34316acd08d8f9abb81",
+  "started_at": "2026-11-10T14:32:27.149565+00:00",
+  "status": "incomplete",
+  "quality_gate_passed": false,
+  "human_reviewed": 0,
+  "cost": "unknown",
+  "elapsed_ms": 241324,
+  "attempted": 40,
+  "succeeded": 39,
+  "stop_reason": null,
+  "finished_at": "2026-11-10T14:36:28.469027+00:00",
+  "reported_usage": {
+    "prompt_tokens": 75320,
+    "completion_tokens": 7016,
+    "total_tokens": 82336
+  },
+  "usage_missing_rows": [
+    37
+  ],
+  "rows": [
+    {
+      "slot": 0,
+      "question_id": "q01",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1854,
+        "completion_tokens": 132,
+        "total_tokens": 1986
+      },
+      "answer": "DPR 使用了两个独立的 BERT 网络作为编码器，每个网络的表示提取方式是在 [CLS] 标记处获取输出，因此每个向量的维度 \\(d = 768\\)。\n\n参考来源：\n[3] 《dpr.pdf》—— 第 3 页/段落：虽然原则上问题和段落编码器可以由任何神经网络实现，但在本文中我们使用了两个独立的 BERT 网络（基础、未分大小写）并取 [CLS] 标记的表示作为输出，因此 \\(d = 768\\)。",
+      "request_sha256": "c685df430c43d5838dbfc4963985e9fa12e8b152fb15faa965d5b97966ad14f6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4264,
+      "question": "DPR 的编码器网络、表示提取方式及维数是什么？",
+      "artifact_sha256": "5e2f1597ec0cf2936484aa0841b341a028af4efc16c4134599b70a375988093e",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:18",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:16",
+          "page": 2
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:20",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:9",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:4",
+          "page": 1
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:37",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:101",
+          "page": 12
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:75",
+          "page": 9
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:25",
+          "page": 3
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:15",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 1,
+      "question_id": "q01",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1579,
+        "completion_tokens": 116,
+        "total_tokens": 1695
+      },
+      "answer": "DPR 使用了两个 BERT 网络来生成密集向量表示。具体来说，这些网络是基于 BERT 的 base 版本且不区分大小写（uncased），在 [CLS] 标记处提取表示，因此向量的维度 \\(d = 768\\)。\n\n参考来源：\n[3] 《dpr.pdf》—— 第 3 页/段落：Inference 部分，提到 DPR 使用两个 BERT 网络，且 \\(d = 768\\)。",
+      "request_sha256": "608029f30bd96d3da84b8b51e5d03511bd2e065c0eeb7f43d326ada9801ce8a2",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 3092,
+      "question": "DPR 的编码器网络、表示提取方式及维数是什么？",
+      "artifact_sha256": "ed78a4fdc7ea7f17448943f66fd9d5707eec8375b6b3bccff046080c8da60003",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_91a6564660e370a32fce62c10121594dbaa905e35917c7caf2a0099eb428c77e",
+          "page": 2
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_bcca328688207528178036c331423dd0ba06cf55823c330d9be73c0d8ab2f644",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "chunk_dbb911bebf91ec219e34d92835fa50bbff26c4a281308d71717fb7331f8940c1",
+          "page": 3
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0edcb5bfa8af5590a3742ef011f1150a10362f3f2123912299f1fee9ad03d8ee",
+          "page": 2
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_befbb70f47b8babe3be1c41c291b6b7c11365dda43159a75d98fb3d8c5eb24ac",
+          "page": 1
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_edf70fb2edb24814c9ec8d61523ca4cc24601fef1c9ffde36bf92a922879ba0e",
+          "page": 5
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_820f5166b4ebf342bc0937a5474d66f1961ef267dc9eca2bae40c928312d3d6f",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "question_id": "q02",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1687,
+        "completion_tokens": 90,
+        "total_tokens": 1777
+      },
+      "answer": "DPR 的最优训练方案使用来自同一小批量的黄金负样本和一个 BM25 负样本。具体来说，使用来自同一小批量的黄金负样本可以提高计算效率并实现出色的性能。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 8 页/段落：我们的最佳模型使用来自同一小批量的黄金负样本和一个 BM25 负样本。",
+      "request_sha256": "6adf076b207291094252e86f2aa44fd2dcdd7ae617cdaefd99d2754926e372bd",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4420,
+      "question": "DPR 的最优训练方案使用哪些负样本？",
+      "artifact_sha256": "a30fedec28efaf01d8fac9d21c714e444aa5ca7ba3adb264c48905212749ae49",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_edf70fb2edb24814c9ec8d61523ca4cc24601fef1c9ffde36bf92a922879ba0e",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_8a2969ceff1d95244ad58a70d8f918284f21216e009637d3560026f9e0811bc8",
+          "page": 9
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b78e9cffa53686b29162a012301dbf94b87083af8aa1dc201b8d57b6057c9eea",
+          "page": 6
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_9f420fc859d2a17ac5586b876a2c68507fcc3b733795b48668518920c73991b0",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_127ad8dd6c045fd82eca3fad1fa1c48e0e0fb21301f83f911d3d70804bac1fc0",
+          "page": 6
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_45159b7f28297c64072a995f1dbeb60f930714142c24673e8c575d130ad089ea",
+          "page": 12
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_e62c5b21224c69296d3fc2536e58cf379f71ce8c94ee7dda5c03c25d94562c42",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_3188b6fc1407baee45666a135c9d32afd4c782495ee1e1b5f4d60c94f10835ab",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_e62b129de67908b6b7edfdeb61a2f0ee9c7db757127937fe410c4a189e8ba5de",
+          "page": 4
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_4f75aebe712e6e36660768b019926c67922da738e979df5728d89d1caa531227",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "question_id": "q02",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1860,
+        "completion_tokens": 82,
+        "total_tokens": 1942
+      },
+      "answer": "DPR 的最优训练方案使用来自同一小批量的黄金负样本（即来自同一小批量的其他问题的相关段落），并额外使用一个 BM25 负样本。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 6 页/段落：Our best model uses gold passages from the same mini-batch and one BM25 negative passage.",
+      "request_sha256": "555132affc1c2a86c1fbb9efb89d1b7d120b63eb8d22d3259cc0856b87e225db",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4840,
+      "question": "DPR 的最优训练方案使用哪些负样本？",
+      "artifact_sha256": "f9cf9973723c2e670f7f97e127ced8eda044fa3083caf6a4bd45abd235497e31",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:75",
+          "page": 9
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:37",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:98",
+          "page": 12
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:9",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:45",
+          "page": 6
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:25",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:99",
+          "page": 12
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:49",
+          "page": 6
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:46",
+          "page": 6
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:27",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "question_id": "q03",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1951,
+        "completion_tokens": 52,
+        "total_tokens": 2003
+      },
+      "answer": "根据现有资料无法回答该问题。背景资料中提到使用固定长度的文本段落进行检索，并且发现固定长度的段落在这两项任务中表现更好，但没有具体说明段落的长度或是否重叠。[1]",
+      "request_sha256": "25f7c34170f633d347d34655ded1a76f08f9fbf8ae676a0861a02a217147ec48",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 1522,
+      "question": "DPR 的基本检索单元长度是多少，是否重叠？",
+      "artifact_sha256": "cea9f27d0334915cdcf01578397f99c3b29210c71f6f731ffa75f3baa3db3707",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:16",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:101",
+          "page": 12
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:53",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:15",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:18",
+          "page": 3
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:31",
+          "page": 4
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:52",
+          "page": 6
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:37",
+          "page": 5
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:98",
+          "page": 12
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:40",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "question_id": "q03",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1644,
+        "completion_tokens": 115,
+        "total_tokens": 1759
+      },
+      "answer": "根据现有资料无法回答该问题。文档中提到使用固定长度的段落表现更好，但没有具体说明段落的长度或是否重叠。\n---\n参考来源：\n[1] 《dpr.pdf》—— 第 2 页/段落：The ideal size and boundary of a text passage are functions of both the retriever and reader. We also experimented with natural paragraphs in our preliminary trials and found that using fixed-length passages performs better in both retrieval and final QA accuracy, as observed by Wang et al. (2019).",
+      "request_sha256": "3439dab4866c4fc638f98d1b07575e9def0edc156f879f35370c09a09bf54046",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5990,
+      "question": "DPR 的基本检索单元长度是多少，是否重叠？",
+      "artifact_sha256": "c9935f5dcc11b36762566e186229c759d590318d80986577a753a6b289aa8ff5",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_91a6564660e370a32fce62c10121594dbaa905e35917c7caf2a0099eb428c77e",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_533bf6f0ee023e55f479c50e3286d22628271a41097c06c5d0072dfa2d8e61dd",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0edcb5bfa8af5590a3742ef011f1150a10362f3f2123912299f1fee9ad03d8ee",
+          "page": 2
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_d9311ee9eaae1fa11fc269187f613c6721c7d589d497600c7607a7c841cb3aa9",
+          "page": 12
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_edf70fb2edb24814c9ec8d61523ca4cc24601fef1c9ffde36bf92a922879ba0e",
+          "page": 5
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_30b1bfd19232d5d1aafd3ae5142ddc0f7a6dc2f9557f23b8514255e1ed76bf00",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 6,
+      "question_id": "q04",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1900,
+        "completion_tokens": 190,
+        "total_tokens": 2090
+      },
+      "answer": "DPR 的 top-k retrieval accuracy 衡量的是检索器返回的 top k 个段落中有多少包含了正确答案的比例。具体来说，对于固定数量的 k，检索器可以独立地在 top-k 检索准确性上进行评估，这是指在问题中正确答案包含在检索器返回的 top k 个段落中的问题所占的比例。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 2 页/段落：Formally speaking, a retriever R : (q, C) →CF 是一个函数，它接受一个问题 q 和一个语料库 C 作为输入，并返回一个较小的过滤文本集 CF ⊂C，其中 |CF| = k ≪|C|。对于固定的 k，检索器可以在 top-k 检索准确性上进行独立评估，这是指 CF 中包含正确答案的问题所占的比例。",
+      "request_sha256": "233d377ef1e58cd4bf4100ed4ae1ab72771cba09c12384578406fec3bf7e6e3a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5028,
+      "question": "DPR 的 top-k retrieval accuracy 衡量什么？",
+      "artifact_sha256": "65a88bac0433eb6d8979abcf9f1f7cea1dc3f86f503065d34a37d7aa65b616c0",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_30b1bfd19232d5d1aafd3ae5142ddc0f7a6dc2f9557f23b8514255e1ed76bf00",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_d754ada247984159e9be56adb8f624a1cbf8250cd6c25497add70f693e2a8b36",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_86a6622ee451979bfed05f78cfe319f9de425663e2545425339f18317df1134e",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+          "page": 4
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a7702307456e71207af55dff4282a3843ed83dbfe407210760e9c0c4be5c939",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b502041c8bae564ff6a12ca4395ff8f3d44c9d50ab7b74a269a5924da3ecac63",
+          "page": 12
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_08f6a059ba298d74e6412862f18a2aafa6c1fea75a40444cd4b3c22ef1eb3f91",
+          "page": 6
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0edcb5bfa8af5590a3742ef011f1150a10362f3f2123912299f1fee9ad03d8ee",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 7,
+      "question_id": "q04",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2288,
+        "completion_tokens": 122,
+        "total_tokens": 2410
+      },
+      "answer": "DPR 的 top-k retrieval accuracy 衡量的是检索系统在测试集上返回的 top k 个检索片段中包含正确答案的比例。具体来说，它表示在 top 20 或 top 100 检索片段中，有多少片段包含正确答案。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 5 页/段落：Table 2: Top-20 & Top-100 retrieval accuracy on test sets, measured as the percentage of top 20/100 retrieved passages that contain the answer.",
+      "request_sha256": "9bc536f1743cc5788e253960ad72fc5145cb9202ab3e084aa9fba140ef4170fd",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4224,
+      "question": "DPR 的 top-k retrieval accuracy 衡量什么？",
+      "artifact_sha256": "50a0944922f06fcbbcd936c4e12a845d3ee86aec384924a0a3bf6c99924c37ff",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:36",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:40",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:102",
+          "page": 12
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:103",
+          "page": 12
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:14",
+          "page": 2
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:52",
+          "page": 6
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:101",
+          "page": 12
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:53",
+          "page": 7
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:39",
+          "page": 5
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:15",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 8,
+      "question_id": "q05",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1922,
+        "completion_tokens": 140,
+        "total_tokens": 2062
+      },
+      "answer": "在FiD方法中，编码阶段独立处理问题、标题和多个段落。具体来说，每个段落都会被编码器独立处理，而问题也会被编码。每个段落的编码表示随后会被连接起来，作为解码器的输入，解码器会对这些表示进行注意力操作，从而融合证据。\n\n参考来源：\n[1] 《fid.pdf》—— 第 3 页/段落：Finally, the decoder performs atten-\ntion over the concatenation of the resulting repre-\nsentations of all the retrieved passages. The model\nthus performs evidence fusion in the decoder only,\nand we refer to it as Fusion-in-Decoder.",
+      "request_sha256": "7303de1cd17a84941731f16d07e0b27795c15bb4cc64127a542fef45eb830f51",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6906,
+      "question": "FiD 编码阶段如何处理问题、标题和多个段落？",
+      "artifact_sha256": "7a50856035c5dac52ede50256702d9e1da51dd4df3262dc8be0208b57de90eff",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "fid:20",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:28",
+          "page": 4
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:12",
+          "page": 2
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "fid:21",
+          "page": 3
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:34",
+          "page": 4
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "fid:8",
+          "page": 2
+        },
+        {
+          "index": 7,
+          "document_id": "fid",
+          "chunk_id": "fid:27",
+          "page": 4
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:0",
+          "page": 1
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:29",
+          "page": 4
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:13",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 9,
+      "question_id": "q05",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1793,
+        "completion_tokens": 258,
+        "total_tokens": 2051
+      },
+      "answer": "在FiD模型中，编码阶段处理问题、标题和多个段落的方式如下：\n\n1. 每个检索到的段落及其标题都会与问题连接起来。\n2. 在编码器中，这些段落和标题被独立处理，而不是作为一个整体。\n3. 在连接问题、标题和段落文本之前，会添加特殊的标记：question:、title:和context:。\n\n这种处理方式允许模型独立地处理每个段落，但联合地处理它们以进行解码阶段的证据融合。这种方法与Min et al. (2020)和Lewis et al. (2020b)的方法不同，因为它在编码器中独立处理段落，在解码器中联合处理段落。\n\n---\n参考来源：\n[1] 《fid.pdf》—— 第 3 页/段落：The model takes as input the question, as well as the support passages, and generates the answer.\n[2] 《fid.pdf》—— 第 3 页/段落：By processing passages independently in the encoder, but jointly in the decoder, this method differs from Min et al. (2020) and Lewis et al. (2020b)。",
+      "request_sha256": "2277fdfa315490acb26f38606f106212c167e68cab9c9b096490e8ff5a4bc37d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4710,
+      "question": "FiD 编码阶段如何处理问题、标题和多个段落？",
+      "artifact_sha256": "4c4638724516d4b5e7c8380f1a096232932b72a5abda3c596b507d843eb5bd2a",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "chunk_9e9f2389159b62171bd3858698b67932231e4371601c92b5062a1f403d783752",
+          "page": 3
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0a04823d640b511ac035cd6679bc60eae6ce5aaa74a86e42097a8562235381ad",
+          "page": 4
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_91a6564660e370a32fce62c10121594dbaa905e35917c7caf2a0099eb428c77e",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "chunk_22a811a741f0f9f8f60bbfd1d1b79e83337994f5ff5c716858129adcd109db9e",
+          "page": 3
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+          "page": 4
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_94095de81b5ad3ecf0f19b1aef115fb8572a3e1327772ef1532597a8e694208c",
+          "page": 4
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_175d2d6fadcd49f180774c15d24ca824deb5d25d8b71296c7c87dccdd373cc13",
+          "page": 2
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+          "page": 12
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "chunk_f29aec0758a2028a8a639fa7e122b3a6a2bbb261f5e78f6d786cccf903c886e0",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "slot": 10,
+      "question_id": "q06",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1368,
+        "completion_tokens": 79,
+        "total_tokens": 1447
+      },
+      "answer": "FiD 使用两种模型规模进行初始化，分别是 base 模型和 large 模型，它们分别包含 220M 和 770M 参数。\n\n参考来源：\n[1] 《fid.pdf》—— 第 4 页：We consider two model sizes, base and large, containing respectively 220M and 770M parameters.",
+      "request_sha256": "b07adbd3c4535d6b9e6f4eef943b8417a4b7f48bf9060af7c2151962e582d867",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 1914,
+      "question": "FiD 初始化模型及 base/large 参数规模是什么？",
+      "artifact_sha256": "ea146b3f6c2d54910eed66ad6a5f7f4803991a329ef3e26b501d6668d7b78a82",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "chunk_a8177f3b11a83d33eead724468f8a999731cfb075ae4cdf8e267044053a76235",
+          "page": 4
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "chunk_d51caa8bb77279154065a30b3fa5f57ee4d51726983a9f1ba921758de849836d",
+          "page": 4
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_5d6ea3be6b56c6b7df152e036fc41f5afdad444c84e7fc30c8b9fdbbdeed26ae",
+          "page": 6
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_9973d83fe373df7b56b1f404c7895a9150005b57390845a6c2d575267aa48ace",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_bcca328688207528178036c331423dd0ba06cf55823c330d9be73c0d8ab2f644",
+          "page": 3
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_af43c77c26caf34463d384e1651868152ff05fda9a7c8a554cf3e691c42ebb8b",
+          "page": 1
+        },
+        {
+          "index": 7,
+          "document_id": "fid",
+          "chunk_id": "chunk_8ef642c8ce7933ca8155ddaeb35ae69519df4c9b3c94f9cd1797aebf02e786a3",
+          "page": 5
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "chunk_9e9f2389159b62171bd3858698b67932231e4371601c92b5062a1f403d783752",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "fid",
+          "chunk_id": "chunk_c521eacd1bb667d96c29b8f8aa4b44630f6edd4a8ac5c582b53db26f179cf2e8",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "chunk_9f008840edc28100d7057172f76c767cfaaffe2883243e753d527462729ba2d0",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "slot": 11,
+      "question_id": "q06",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2353,
+        "completion_tokens": 119,
+        "total_tokens": 2472
+      },
+      "answer": "FiD 初始化模型使用了预训练的 T5 模型，并考虑了 base 和 large 两种模型规模，分别包含 220M 和 770M 参数。\n\n参考来源：\n[1] 《fid.pdf》—— 第 4 页/段落：We initialize our models with the pretrained T5 models (Raffel et al., 2020), available in the HuggingFace Transformers library.4 We consider two model sizes, base and large, containing respectively 220M and 770M parameters.",
+      "request_sha256": "f4f477c46242bba78b348d0fc78a346a1e1713421c505f1dd35546fc2c5b8b5c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 2509,
+      "question": "FiD 初始化模型及 base/large 参数规模是什么？",
+      "artifact_sha256": "ac197b2f2175759bd1212d2593257e8be87d6d58631628a0d0d4da94fa65d528",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "fid:25",
+          "page": 4
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:53",
+          "page": 6
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:57",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:61",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:57",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:17",
+          "page": 2
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:92",
+          "page": 11
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:70",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 12,
+      "question_id": "q07",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1953,
+        "completion_tokens": 135,
+        "total_tokens": 2088
+      },
+      "answer": "REALM 的 salient span masking 重点掩蔽包含世界知识的片段，例如“United Kingdom”或“July 1969”。这种掩码方式旨在聚焦那些需要世界知识才能预测缺失词的问题。\n\n参考来源：\n[1] 《realm.pdf》—— 第 5 页/段落：during REALM pre-training, we want to focus on examples x that require world knowledge to predict the masked tokens. As explained in Section 2, some MLM spans only require local context. To focus on problems that require world knowledge, we mask salient spans such as “United Kingdom” or “July 1969”.",
+      "request_sha256": "b141ea6fac7107735945915b1b9f543f1f3385eb6856f8b3d784790acd76667c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4251,
+      "question": "REALM 的 salient span masking 重点掩码什么？",
+      "artifact_sha256": "67b4c0bdd9a843fd590ee49e9b9bca6cedb3556dedfead9cceb41e57c7c9b80f",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:39",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:67",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "realm:66",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:40",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:64",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:21",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:27",
+          "page": 4
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:69",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:70",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 13,
+      "question_id": "q07",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1418,
+        "completion_tokens": 105,
+        "total_tokens": 1523
+      },
+      "answer": "REALM 的 salient span masking 重点掩蔽那些需要世界知识来预测遮蔽词的示例。具体来说，掩蔽策略包括命名实体（如“United Kingdom”）和日期（如“July 1969”）。\n\n参考来源：\n[1] 《realm.pdf》—— 第 5 页/段落：Salient span masking 段落描述了掩蔽策略，特别提到了需要世界知识的示例，如命名实体和日期。",
+      "request_sha256": "8d0157f2f17f1fdea6171ba1e993a600cbea0b1e854ef8ab858b2a18967dd1e4",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 3280,
+      "question": "REALM 的 salient span masking 重点掩码什么？",
+      "artifact_sha256": "bee49c350c95f484298878a013cc90305d2e50411b3595d3c0d63501003a32ce",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_7f0beb1b3cf3f587db3d992a2492ba8f22111a4461ebd49d91597f6c6e6a0fb7",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_97525fb48bc2bb2fbdf9974c664caaca0585ded6e17bda78ca3926f4d13aa7e1",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_61d87f67bc0c5c3722264091da2b3db60c60893ae5dc792298a9ac04f88be27b",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_b17bcfe0d79f7a10ec40ee0601067def2b8d0070e4c2db5d9255226e90201ce2",
+          "page": 8
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_5e105b90c43e65a0d5a732f0b3b3bfc38911303808bcc47d912dc0b49c2447fe",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "chunk_990ac79d0f05c3da083fb2b3ada85d856bb78f5d618c127df18adca81cd0b676",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_02588228599b318df8a16b659546dce8b2b2eabf889ddbc44c6b0880523cbd76",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_e20af5690a9a79178627be438617361245d8ff930c58dea544707c423271984a",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "chunk_4fe5511dfd8c8e0a40bf5a1159afccaf3e037b6b4c8297ae11c60253d3510674",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "slot": 14,
+      "question_id": "q08",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1417,
+        "completion_tokens": 548,
+        "total_tokens": 1965
+      },
+      "answer": "根据现有资料无法回答该问题。文档中没有提供关于 REALM 微调知识库候选切片长度和单位的具体信息。\n---\n参考来源：\n[1] 《realm.pdf》—— 第 2 页/段落：我们通过在开放域问答（Open-QA）任务上微调预训练的 REALM 模型来评估我们的方法，Open-QA 是自然语言处理中知识密集度最高的任务之一。\n[2] 《realm.pdf》—— 第 7 页/段落：与所有系统中最直接的比较是 Lee 等人（2019）的 ORQA，其中微调设置和训练数据相同。\n[3] 《realm.pdf》—— 第 7 页/段落：32。\n[4] 《realm.pdf》—— 第 1 页/段落：为了捕捉更多的世界知识，必须训练越来越大的网络，这可能是极其缓慢或昂贵的。\n[5] 《realm.pdf》—— 第 4 页/段落：REALM：检索增强语言模型预训练，它通过在无监督语言建模任务上联合预训练知识检索器和知识增强编码器来增强语言模型（MLM）损失。\n[6] 《realm.pdf》—— 第 7 页/段落：Name Architectures Pre-training NQ (79k/4k) WQ (3k/2k) CT (1k /1k) # params BERT-Baseline (Lee et al., 2019) Sparse Retr.+Transformer BERT 26.5 17.7 21.3 110m T5 (base) (Roberts et al. , 2019), it is crucial for REALM.\n[7] 《realm.pdf》—— 第 8 页/段落：。\n[8] 《realm.pdf》—— 第 8 页/段落：REALM：检索增强语言模型预训练\n[9] 《realm.pdf》—— 第 3 页/段落：对于预训练，任务是掩码语言建模：x 是来自预训练语料库 X 的一个句子，其中一些标记被掩码，模型必须预测这些缺失标记的值，y。\n[10] 《realm.pdf》—— 第 2 页/段落：在语言建模文献中，最近邻语言模型（Khandelwal 等，2019）（kNN-LM）检索相似的 LM 示例以提高记忆。",
+      "request_sha256": "84e388c268eb9694179257e74ee16bdfc16251cafb43219849787a967bc46de7",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 17999,
+      "question": "REALM 微调知识库候选切片长度和单位是什么？",
+      "artifact_sha256": "f67deafed335ea79d71b13d3d4ed6a2bbf9f50c8b22c1fff6cc47f624324dce0",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_560f8676544b649b7928a84aec8f4dfcbe22bb0087f18314647860dbd4f310d6",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_61d87f67bc0c5c3722264091da2b3db60c60893ae5dc792298a9ac04f88be27b",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_1601f3e19821a6317d3dfd57f1614f08db2ea950712d10f4bbde6218c33b284a",
+          "page": 1
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_4fe5511dfd8c8e0a40bf5a1159afccaf3e037b6b4c8297ae11c60253d3510674",
+          "page": 4
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_b17bcfe0d79f7a10ec40ee0601067def2b8d0070e4c2db5d9255226e90201ce2",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_5e105b90c43e65a0d5a732f0b3b3bfc38911303808bcc47d912dc0b49c2447fe",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_e20af5690a9a79178627be438617361245d8ff930c58dea544707c423271984a",
+          "page": 3
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "chunk_6e0354d1eb0dd8cb457b52dba0b5ac87f13e3a3207f1a9990cf8bfa133eb88a5",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 15,
+      "question_id": "q08",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2161,
+        "completion_tokens": 339,
+        "total_tokens": 2500
+      },
+      "answer": "根据现有资料无法回答该问题。文档中没有提供关于REALM微调时知识库候选切片长度和单位的具体信息。\n---\n参考来源：\n[1] 《realm.pdf》—— 第 3 页/段落：预训练和微调过程中，REALM学习输入x到可能输出y的概率分布。\n[2] 《realm.pdf》—— 第 7 页/段落：展示了REALM在Open-QA基准测试中的测试结果。\n[3] 《realm.pdf》—— 第 8 页/段落：展示了REALM利用检索到的文档来更好地预测遮蔽词的例子。\n[4] 《realm.pdf》—— 第 7 页/段落：描述了微调推理过程中的候选文档数量。\n[5] 《realm.pdf》—— 第 7 页/段落：展示了在NQ开发集上的消融实验结果。\n[6] 《realm.pdf》—— 第 4 页/段落：描述了REALM的整体框架。\n[7] 《realm.pdf》—— 第 2 页/段落：介绍了REALM与现有Open-QA模型的比较。\n[8] 《realm.pdf》—— 第 2 页/段落：描述了REALM在Open-Domain Question Answering任务上的应用。\n[9] 《realm.pdf》—— 第 1 页/段落：介绍了REALM的背景和目标。\n[10] 《realm.pdf》—— 第 8 页/段落：描述了REALM作为语言模型上下文扩展的工作。",
+      "request_sha256": "28ff127c5d1e81a8e8da4cb03af3548da01b926d464a412dab7b4dc0194f691a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 8139,
+      "question": "REALM 微调知识库候选切片长度和单位是什么？",
+      "artifact_sha256": "118fd1b9df19938221071fea613030d72175bd35d1b53e51fdda9e48d7cb5126",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:21",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "realm:64",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:59",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:58",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:27",
+          "page": 4
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:13",
+          "page": 2
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:12",
+          "page": 2
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:0",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:70",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 16,
+      "question_id": "q09",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1739,
+        "completion_tokens": 232,
+        "total_tokens": 1971
+      },
+      "answer": "DPR 和 FiD 在编码输入的处理方式上有所不同。DPR 使用不同的编码器将输入问题映射到一个 d 维向量，并检索与问题向量最接近的段落向量。而在 FiD 中，段落是独立处理的，在编码器中单独处理，在解码器中联合处理。因此，DPR 的问题和段落是拼接的，而 FiD 的段落是独立处理的。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 3 页/段落：At run-time, DPR applies a different encoder EQ(·) that maps the input question to a d-dimensional vector, and retrieves k passages of which vectors are the closest to the question vector.\n[2] 《fid.pdf》—— 第 3 页/段落：By processing passages independently in the encoder, but jointly in the decoder, this method differs from Min et al. (2020) and Lewis et al. (2020b). Processing passages independently in the encoder allows to scale to large number of contexts, as it",
+      "request_sha256": "a1a704341a5c35bf13abd25d32ce542ef8c738665803d522d9324273a4a9ad03",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 9694,
+      "question": "比较 DPR 与 FiD 的编码输入，问题和段落是否拼接？",
+      "artifact_sha256": "e7579829b8369f7094500dfea22b543743806c6e1d77123010e659c0cd916147",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:18",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:4",
+          "page": 1
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:101",
+          "page": 12
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:35",
+          "page": 4
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:98",
+          "page": 12
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:16",
+          "page": 2
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:53",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:34",
+          "page": 4
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:110",
+          "page": 13
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "fid:20",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "slot": 17,
+      "question_id": "q09",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1610,
+        "completion_tokens": 177,
+        "total_tokens": 1787
+      },
+      "answer": "DPR 和 FiD 在编码输入时都会将问题和段落进行拼接。\n\n在 DPR 中，每个检索到的段落及其标题都会与问题一起拼接，并独立地由编码器处理 [4]。\n\n在 FiD 中，模型将问题以及支持段落作为输入，并生成答案。具体来说，每个检索到的段落及其标题都会与问题一起拼接，并独立地由编码器处理 [4]。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 4 页/段落：每个检索到的段落及其标题都会与问题一起拼接，并独立地由编码器处理\n[2] 《fid.pdf》—— 第 3 页/段落：每个检索到的段落及其标题都会与问题一起拼接，并独立地由编码器处理",
+      "request_sha256": "dae2b5a43a524339232ef36845353c3159b474e55343c173a216a8f58ca86429",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6673,
+      "question": "比较 DPR 与 FiD 的编码输入，问题和段落是否拼接？",
+      "artifact_sha256": "508bd76cd2173ab8fa828e2f41f64d5f9ae15db1c3fcd76d63f58c0ce296a1f0",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_91a6564660e370a32fce62c10121594dbaa905e35917c7caf2a0099eb428c77e",
+          "page": 2
+        },
+        {
+          "index": 3,
+          "document_id": "fid",
+          "chunk_id": "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+          "page": 4
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "chunk_89a159d4afec26ad285d27ef340b7380b7e5cb151f2dfc33a15390ff91401ff7",
+          "page": 3
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+          "page": 12
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_45159b7f28297c64072a995f1dbeb60f930714142c24673e8c575d130ad089ea",
+          "page": 12
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_22ccae1ac2605817e4bb575245654bfb6b17ef52b1476e1aa5fb668e4b38d79f",
+          "page": 13
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+          "page": 4
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+          "page": 8
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "slot": 18,
+      "question_id": "q10",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1742,
+        "completion_tokens": 271,
+        "total_tokens": 2013
+      },
+      "answer": "DPR 和 REALM 在学习检索器时使用了不同的训练信号。DPR 主要关注学习一个强大的段落检索模型，通过问题和答案对来训练，而 REALM 则通过反向传播通过检索步骤来训练检索器，该步骤考虑了整个文本知识库。REALM 使用基于性能的信号从无监督文本中训练检索器，即提高语言模型困惑度的检索是有帮助的并且应该被奖励，而无信息的检索则应被惩罚。\n\n参考来源：\n[2] 《dpr.pdf》—— 第 8 页：While both methods include additional pretraining tasks and employ an expensive end-to-end training regime, DPR manages to outperform them on both NQ and TriviaQA, simply by focusing on learning a strong passage retrieval model using pairs of questions and answers.\n[1] 《realm.pdf》—— 第 2 页：Learning this model end-to-end requires backpropagating through a retrieval step that considers an entire corpus of textual knowledge, as shown in Figure 1. The key intuition of REALM is to train the retriever using a performance-based signal from unsupervised text: a retrieval that improves the language model’s perplexity is helpful and should be rewarded, while an uninformative retrieval should be penalized。",
+      "request_sha256": "2ad2ce96568cec097ffde09888c7a3021922c1fe6ef15302d281633034e008d1",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6125,
+      "question": "比较 DPR 和 REALM 学习检索器的训练信号。",
+      "artifact_sha256": "8f99fb332dd90e4cb0930caf45976660c10d2a88bb71f52439319ae52d06adbd",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_809535800bc7f2e4682e21fd18982fd7a6bc843a53145a892bffed43986ca4e6",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_07616150f674daa97c40599f018252e49d8e24a0de0b7eda33f0bb6eb8388378",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_f254334d3b07efbf9d6185abbba7cb48248333e15712ae27e746e97f17c19f14",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_628e6e7daac73db4e501e8a6c644e81f47991dc7baff133bbe92c44971935462",
+          "page": 5
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_70573eb97ca9264c557e6a350373ee179b191a7a0a46eb208b58734466be6fe9",
+          "page": 5
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_4fe5511dfd8c8e0a40bf5a1159afccaf3e037b6b4c8297ae11c60253d3510674",
+          "page": 4
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "chunk_9568be0d82313df5a7d0974c621a1478e43fa6f09bcda9045251d8c7aec77d83",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "slot": 19,
+      "question_id": "q10",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2236,
+        "completion_tokens": 131,
+        "total_tokens": 2367
+      },
+      "answer": "DPR 和 REALM 在学习检索器时采用不同的训练信号。DPR 主要关注学习一个强大的段落检索模型，通过使用问题和答案的配对来训练，而没有提及额外的预训练任务。相比之下，REALM 通过检索步骤的性能信号来训练检索器，即检索能够提高语言模型困惑度的检索是有益的，应该被奖励，而无信息的检索则应被惩罚[1]。\n\n参考来源：\n[1] 《realm.pdf》—— 第 2 页/段落：DPR 和 REALM 在学习检索器时采用不同的训练信号。",
+      "request_sha256": "542db9ff24db3b70e4904ec0a3d41713b8321867c0cd59b307f4119df30ca5df",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5549,
+      "question": "比较 DPR 和 REALM 学习检索器的训练信号。",
+      "artifact_sha256": "808e7df120a1141777ede56b71a0255162d104f28bb13ad9d9d1492ca7784029",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:50",
+          "page": 6
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:36",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:65",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:8",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:66",
+          "page": 8
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:35",
+          "page": 5
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:63",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:64",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 20,
+      "question_id": "q11",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2668,
+        "completion_tokens": 149,
+        "total_tokens": 2817
+      },
+      "answer": "根据现有资料无法回答该问题。提供的资料中没有明确提及 DPR、FiD 与 REALM 的切片长度具体数值，因此无法直接比较这些模型的切片长度。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 8 页/段落：讨论了 DPR 的切片长度设置，但未给出具体数值。\n[2] 《fid.pdf》—— 第 3 页/段落：提供了 FiD 模型的切片长度（288 词件），但未提及 DPR 和 REALM。\n[3] 《realm.pdf》—— 第 7 页/段落：未直接提及 REALM 的切片长度。",
+      "request_sha256": "439985b9cc036b2394a17e26d148bd4623ebc232f531f6f796b4d6b22a8d8809",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 2952,
+      "question": "DPR、FiD 与 REALM 的切片长度能只按数字直接比较吗？",
+      "artifact_sha256": "3964235752ef33713a6c8ff092408c81abb02b0d1a9159b8bad42e2bafeff728",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "realm:64",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:58",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:53",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:68",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:61",
+          "page": 7
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:59",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:16",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "slot": 21,
+      "question_id": "q11",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1904,
+        "completion_tokens": 165,
+        "total_tokens": 2069
+      },
+      "answer": "根据现有资料无法回答该问题，因为资料中没有提及FiD（可能指的是FID，即固定片段，但背景资料中未出现此缩写）的切片长度信息。资料主要讨论了DPR和REALM的切片长度，但未提供FiD的相关信息。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 8 页/段落：DPR处理每个问题最多100段文本，能够在一个32GB GPU上放入整个批次，保持延迟几乎与单段情况相同。\n[2] 《realm.pdf》—— 第 7 页/段落：REALM在预训练期间访问了额外的阅读理解数据，如SQuAD中的100,000+示例。",
+      "request_sha256": "52d48e3e20beb9d4ffa6b615226bf12da0306b7a532f155546d9a2941f71578c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 7672,
+      "question": "DPR、FiD 与 REALM 的切片长度能只按数字直接比较吗？",
+      "artifact_sha256": "380d391dc4367b70efe4028f29a73b627ce321c5a7f7f11448efc1da1952c512",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+          "page": 8
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_91a6564660e370a32fce62c10121594dbaa905e35917c7caf2a0099eb428c77e",
+          "page": 2
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+          "page": 7
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_5e105b90c43e65a0d5a732f0b3b3bfc38911303808bcc47d912dc0b49c2447fe",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+          "page": 7
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+          "page": 3
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b8b86aca6d3233a0b414e55b1c575975d3f82b131b49f69e175ca88923bb6100",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 22,
+      "question_id": "q12",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1691,
+        "completion_tokens": 174,
+        "total_tokens": 1865
+      },
+      "answer": "DPR 和 REALM 在文档索引更新方面有所不同。在预训练阶段，REALM 通过异步重新嵌入和重新索引所有文档来“刷新”索引，而 DPR 则专注于学习强大的段落检索模型，通过问题和答案的配对来实现。在微调阶段，REALM 只构建一次 MIPS 索引并保持不变，而 DPR 则直接使用问题和答案对进行端到端训练，以超越其他方法。\n\n参考来源：\n[1] 《realm.pdf》—— 第 5 页/段落：REALM 在预训练中使用异步刷新索引。\n[2] 《dpr.pdf》—— 第 8 页/段落：DPR 通过问题和答案的配对来学习强大的段落检索模型。",
+      "request_sha256": "7ac3cb9cd4905f1d46abe2be1a360a9bc96ec45eb2b56015ef6296ae73ea93ce",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6361,
+      "question": "比较 DPR 与 REALM 的文档索引更新，区分预训练和微调。",
+      "artifact_sha256": "f56040b733e06d7c84e6f48835d65ad89eba1fb2d3c3c04f1e887744ebdff60a",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_628e6e7daac73db4e501e8a6c644e81f47991dc7baff133bbe92c44971935462",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_64b8b8bcd5ca68abb7394fca520c83f6b14aa33edb8c5c1ddb90be3dffe4f54b",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_9568be0d82313df5a7d0974c621a1478e43fa6f09bcda9045251d8c7aec77d83",
+          "page": 6
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_f254334d3b07efbf9d6185abbba7cb48248333e15712ae27e746e97f17c19f14",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_f22276551dc35706e60f398953d902355ceaecb20ff4985718a3537354dc7761",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_07616150f674daa97c40599f018252e49d8e24a0de0b7eda33f0bb6eb8388378",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_e99918d76a0d9544794118f410b7d3c9425dab6bdd0799a211017fc2f95a497a",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "chunk_bb03c251825216f60b6815ee2fdd59e4be8aa63c802f762bf35c40e178be961d",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "slot": 23,
+      "question_id": "q12",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1873,
+        "completion_tokens": 232,
+        "total_tokens": 2105
+      },
+      "answer": "DPR 和 REALM 在文档索引更新方面有所不同，特别是在预训练和微调阶段。\n\n在预训练阶段，REALM 采用异步 MIPS 索引刷新机制。具体来说，训练器向索引构建器发送其参数的快照，然后继续训练，而索引构建器在后台使用这些参数构建新的索引。一旦索引构建完成，它会将新索引返回给训练器，然后过程重复。这种异步刷新机制仅用于预训练，而微调阶段则直接构建 MIPS 索引，不更新 Embeddoc，但仍然会微调 Embedinput，从而更新检索功能 [1]。\n\n相比之下，DPR 在预训练阶段和微调阶段都使用固定的索引，没有提到使用异步刷新机制 [4]。\n\n---\n参考来源：\n[1] 《realm.pdf》—— 第 5 页/段落：REALM pre-training with asynchronous MIPS refreshes.\n[4] 《dpr.pdf》—— 第 9 页/段落：DPR has also been used as an important mod-",
+      "request_sha256": "b61ff121a7c49139ffadadd75ba1ed7f2e978214a01de197b31c050020cfa767",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6970,
+      "question": "比较 DPR 与 REALM 的文档索引更新，区分预训练和微调。",
+      "artifact_sha256": "eef6174ece72af33f0d4b18ed7fb1be54e6f9785b8c4e0f0761b24a4f8a3f78c",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:35",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:36",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "realm:50",
+          "page": 6
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:74",
+          "page": 9
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:67",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:62",
+          "page": 7
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:68",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:38",
+          "page": 5
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:65",
+          "page": 8
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "slot": 24,
+      "question_id": "q13",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1879,
+        "completion_tokens": 348,
+        "total_tokens": 2227
+      },
+      "answer": "根据现有资料无法回答该问题。提供的背景资料中没有提及 FiD（可能是指Feature Importance Decomposition）的相关信息，也没有直接讨论如何表示无需外部知识以及 RAG4（假设为某种特定的RAG系统）的拒答机制。因此无法基于现有信息进行回答。\n\n参考来源：\n[1] 《realm.pdf》—— 第 2 页/段落：介绍了REALM模型如何融合检索和预测步骤。\n[2] 《realm.pdf》—— 第 3 页/段落：描述了REALM的预训练和微调过程。\n[3] 《realm.pdf》—— 第 7 页/表1：展示了REALM在Open-QA基准测试中的表现。\n[4] 《realm.pdf》—— 第 2 页/段落：概述了REALM模型的背景和目标。\n[5] 《realm.pdf》—— 第 9 页/段落：讨论了REALM未来的工作方向。\n[6] 《realm.pdf》—— 第 3 页/段落：描述了Open-QA系统的特征。\n[7] 《realm.pdf》—— 第 2 页/段落：介绍了REALM模型的预训练算法。\n[8] 《realm.pdf》—— 第 8 页/段落：展示了REALM利用检索文档进行预测的例子。\n[9] 《realm.pdf》—— 第 1 页/段落：概述了REALM模型的背景和目标。\n[10] 《realm.pdf》—— 第 8 页/段落：进一步解释了REALM如何利用检索文档进行预测。",
+      "request_sha256": "c081f912bf57b13b807692c10af181acd64e385967e0937adab32c3debea1910",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 7615,
+      "question": "FiD 如何融合段落，REALM 如何表示无需外部知识？能保证 RAG4 拒答吗？",
+      "artifact_sha256": "64b15fb01d8958996d4c016bfa8ae849de066caad4b8bff862005490c359aaee",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:13",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "realm:21",
+          "page": 3
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "realm:56",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:12",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:74",
+          "page": 9
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:18",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:7",
+          "page": 2
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:64",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:0",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:69",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 25,
+      "question_id": "q13",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1644,
+        "completion_tokens": 240,
+        "total_tokens": 1884
+      },
+      "answer": "根据现有资料无法回答该问题。提供的背景资料中没有提到 FiD（可能是指 Fusion of Diverse Information）的相关信息，也没有直接讨论如何表示无需外部知识以及 RAG4（可能是指 Retrieval-Augmented Generation）的具体机制。因此，无法基于现有信息回答这些问题。\n\n参考来源：\n[1] 《realm.pdf》—— 第 1 页/段落：介绍了 REALM 的有效性及与 Open-domain Question Answering 的比较。\n[2] 《realm.pdf》—— 第 2 页/段落：描述了 REALM 的预训练方法，强调了检索增强语言模型预训练的概念。\n[3] 《realm.pdf》—— 第 3 页/段落：讨论了 Open-QA 系统的背景和特点，以及如何利用文本知识库。\n[4] 《realm.pdf》—— 第 8 页/段落：展示了 REALM 如何利用检索到的文档来更好地预测缺失的标记。\n[5] 《realm.pdf》—— 第 9 页/段落：讨论了未来的工作方向，包括 REALM 类方法的进一步发展。",
+      "request_sha256": "5e65348b591e63bd69c399893ebfd6a8d8156c2e4d4feaa3785d6371e47d7f3f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5493,
+      "question": "FiD 如何融合段落，REALM 如何表示无需外部知识？能保证 RAG4 拒答吗？",
+      "artifact_sha256": "e5d222d396c10d6ac07b88a43a9e82ceccbbedb7d817b8e98328ea42e2357784",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_66e6b2aeaf163e5e9041c0da653a5bd95faa7a46e9d5b338874a909eaa409638",
+          "page": 1
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_977af3e2dbf681f586c5a50ac60755e623faeb863371e0a6de65e97d50d83277",
+          "page": 2
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "chunk_88fb8afde7d15107e7f8266701235c89d743cb07c743149dd96c8f2d9365ca90",
+          "page": 9
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "chunk_79880bef90aa8880dd9808be9b87717858fb37e535cd0f847c4e9f8579942370",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "chunk_560f8676544b649b7928a84aec8f4dfcbe22bb0087f18314647860dbd4f310d6",
+          "page": 2
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_0d5a002d8da528889805e2bbefff0010f49adeaa1e2895618a786d793d94ae37",
+          "page": 3
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_5e105b90c43e65a0d5a732f0b3b3bfc38911303808bcc47d912dc0b49c2447fe",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_e20af5690a9a79178627be438617361245d8ff930c58dea544707c423271984a",
+          "page": 3
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "chunk_4fe5511dfd8c8e0a40bf5a1159afccaf3e037b6b4c8297ae11c60253d3510674",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "slot": 26,
+      "question_id": "q14",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2495,
+        "completion_tokens": 95,
+        "total_tokens": 2590
+      },
+      "answer": "根据现有资料无法回答该问题，因为背景资料中没有提供 DPR 的 top-k 检索准确率与 FiD 的 EM（Exact Match）之间的直接对比信息。\n\n参考来源：\n[6] 《fid.pdf》—— 第 3 页/表：展示了不同模型在不同数据集上的 EM 和 F1 分数，但未提及 DPR 的 top-k 检索准确率与 FiD 的 EM 之间的关系。",
+      "request_sha256": "9f5e305f95295b54d1d159931dead003a4d21088b1e73a6da53a1438b9f7a7c4",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 2599,
+      "question": "DPR 的 top-k 检索准确率与 FiD 的 EM 是否相同？",
+      "artifact_sha256": "481c08b8416974b4617c3b566e150f980b71bafc7883d9cbf9eecfe8a6c9d1d9",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_d754ada247984159e9be56adb8f624a1cbf8250cd6c25497add70f693e2a8b36",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_30b1bfd19232d5d1aafd3ae5142ddc0f7a6dc2f9557f23b8514255e1ed76bf00",
+          "page": 2
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_86a6622ee451979bfed05f78cfe319f9de425663e2545425339f18317df1134e",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_3d3de4ef1842115b7aa2b19035cd51596aa1432ec5b3db6aab17efaeedb9cd3a",
+          "page": 1
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_c174475afab2a9bf3874615a444e12467e9620e5265507c626ceebe5c99c10c4",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+          "page": 4
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_1a2592334d27879d03f5ba1085e0ff3e52dbcbd8deee950fc61972ec2d15c7a7",
+          "page": 7
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_820f5166b4ebf342bc0937a5474d66f1961ef267dc9eca2bae40c928312d3d6f",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b8b86aca6d3233a0b414e55b1c575975d3f82b131b49f69e175ca88923bb6100",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 27,
+      "question_id": "q14",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2777,
+        "completion_tokens": 99,
+        "total_tokens": 2876
+      },
+      "answer": "根据现有资料无法回答该问题，因为背景资料中没有提供 DPR 的 top-k 检索准确率与 FiD 的 EM（Exact Match）之间的直接比较或对应关系。\n\n参考来源：\n[4] 《fid.pdf》—— 第 3 页/表：显示了不同模型在 NQ、TriviaQA 和 SQuAD Open 数据集上的 EM 和 F1 分数，但没有提及 DPR 的 top-k 检索准确率。",
+      "request_sha256": "3d45ec3d97b8d79341471add9583f6e635909e0cfedb9a5ae9cf8ac1dc072e72",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 2301,
+      "question": "DPR 的 top-k 检索准确率与 FiD 的 EM 是否相同？",
+      "artifact_sha256": "63916c6df5bec6e3e6a035c4eca05790b094bdb192bb0276e282d91082bf89f8",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:40",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:36",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:102",
+          "page": 12
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:103",
+          "page": 12
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:63",
+          "page": 8
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:52",
+          "page": 6
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:101",
+          "page": 12
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:53",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "slot": 28,
+      "question_id": "q15",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1907,
+        "completion_tokens": 159,
+        "total_tokens": 2066
+      },
+      "answer": "根据现有资料无法回答该问题。资料中并未提及 RAG4 的具体实现细节或需要保存的定位信息。参考文献主要讨论了不同模型和方法的检索和生成过程，但没有特别提到 RAG4 的证据保存机制。\n\n参考来源：\n[1] 《fid.pdf》—— 第 3 页/段落：描述了 Fusion-in-Decoder 方法如何处理和融合检索到的片段。\n[2] 《dpr.pdf》—— 第 2 页/段落：介绍了 Dense Passage Retriever (DPR) 如何高效检索相关片段。\n[3] 《fid.pdf》—— 第 1 页/段落：概述了生成模型如何处理检索到的片段以适应大量文档。",
+      "request_sha256": "b3c8d0686c4818d9ed0841f2e1a118d2f4edec152bd438b390522f24a00162c9",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 8892,
+      "question": "结合三篇的切片单位，推导 RAG4 比较证据应保存哪些定位信息。",
+      "artifact_sha256": "0a8f079dda25e3cc8fbea2c8b25cb01ee2dab68d62aa52198fbd691e6252b9d9",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:35",
+          "page": 4
+        },
+        {
+          "index": 3,
+          "document_id": "fid",
+          "chunk_id": "fid:20",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "fid:7",
+          "page": 1
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:74",
+          "page": 9
+        },
+        {
+          "index": 6,
+          "document_id": "realm",
+          "chunk_id": "realm:49",
+          "page": 6
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:63",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "fid:15",
+          "page": 2
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:15",
+          "page": 2
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "fid:2",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "slot": 29,
+      "question_id": "q15",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1672,
+        "completion_tokens": 209,
+        "total_tokens": 1881
+      },
+      "answer": "根据现有资料无法回答该问题。资料中提到了切片单位和如何进行检索，但没有具体说明RAG4（假设是指Retrieval-Augmented Generation）在比较证据时应保存哪些定位信息。因此无法直接推导出RAG4需要保存的具体定位信息。\n\n参考来源：\n[1] 《realm.pdf》—— 第 8 页/段落：通过联合学习检索器，REALM有能力依赖于词汇重叠之外的信息。\n[2] 《fid.pdf》—— 第 1 页/段落：序列到序列模型提供了一个灵活的框架，可以高效地聚合和结合来自多个段落的证据。\n[3] 《dpr.pdf》—— 第 2 页/段落：给定M个文本段落，我们的密集段落检索器（DPR）的目标是在低维度和连续的空间中索引所有段落，以便在运行时高效地检索与输入问题相关的前k个段落。",
+      "request_sha256": "636fe5a2ad89779c797e52a2e5a714e89644adaeb48a5081b5d42393319f3032",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5653,
+      "question": "结合三篇的切片单位，推导 RAG4 比较证据应保存哪些定位信息。",
+      "artifact_sha256": "35ef63b31c1f58d6f0e8a5bc636dd2c567d9bb236db649988a57c98cc820345e",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "chunk_e6afe214c6eb0b6bed2923c54b4c7973cfaeffbd9cee6b261f4f51f9df883aa5",
+          "page": 8
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "chunk_2d846256359f267df9b734897598fb032582d15087139d67a445c1d7ed66e0fe",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "realm",
+          "chunk_id": "chunk_88fb8afde7d15107e7f8266701235c89d743cb07c743149dd96c8f2d9365ca90",
+          "page": 9
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_175d2d6fadcd49f180774c15d24ca824deb5d25d8b71296c7c87dccdd373cc13",
+          "page": 2
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+          "page": 4
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0edcb5bfa8af5590a3742ef011f1150a10362f3f2123912299f1fee9ad03d8ee",
+          "page": 2
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "chunk_2f79d46828f22935cab56cb4ed8a16f20c680f093a6e9dd1a410f1c90d485ee1",
+          "page": 1
+        },
+        {
+          "index": 9,
+          "document_id": "fid",
+          "chunk_id": "chunk_e0e9b9e68ae136a5899dddc487eb1b63d97f3bbea1f197abd65a66e3528e017e",
+          "page": 2
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "chunk_ac02ad9719ad1d95c8ad38a13d5146e5577d012e1459fd80362c2662a77ab204",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "slot": 30,
+      "question_id": "q16",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1966,
+        "completion_tokens": 113,
+        "total_tokens": 2079
+      },
+      "answer": "根据现有资料无法回答该问题。资料中没有直接提到如何结合 DPR 的训练和 FiD 的融合来区分证据未召回与召回后回答错误的改进方法。因此，无法提供具体的改进措施来区分这两种情况。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 4 页/段落：描述了 DPR 的实验设置和评估方法。\n[2] 《fid.pdf》—— 第 3 页/段落：介绍了 Fusion-in-Decoder 方法及其在 TriviaQA 上的表现。",
+      "request_sha256": "c15016f24c806b130e760b06a117178d2446e9ff2bdd22ea0115347b50bcdb9d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 3614,
+      "question": "结合 DPR 的训练和 FiD 的融合，证据未召回与召回后回答错误应怎样区分改进？",
+      "artifact_sha256": "d57e672f321c39794af023e4dc7097a494e62c412bde887bed3f828eb1ff510e",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2c6d96e79752c61071a45a00347f68c7dc2264f5c953ada3663003a350f9bf41",
+          "page": 4
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+          "page": 12
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_45159b7f28297c64072a995f1dbeb60f930714142c24673e8c575d130ad089ea",
+          "page": 12
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_090800ff4a9bfa0e48f75fb86486774068651efbb5d13cc3c7f0d990bc03f653",
+          "page": 9
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+          "page": 4
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_d754ada247984159e9be56adb8f624a1cbf8250cd6c25497add70f693e2a8b36",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_22ccae1ac2605817e4bb575245654bfb6b17ef52b1476e1aa5fb668e4b38d79f",
+          "page": 13
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "chunk_01ad96e41caf77b4dd0339360d962d21439c00b684dcdce3db9afe447b02c0bd",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_820f5166b4ebf342bc0937a5474d66f1961ef267dc9eca2bae40c928312d3d6f",
+          "page": 1
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 31,
+      "question_id": "q16",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2568,
+        "completion_tokens": 157,
+        "total_tokens": 2725
+      },
+      "answer": "根据现有资料无法直接回答该问题，因为背景资料主要集中在DPR模型的训练、性能评估以及与其他模型的对比上，而未涉及FiD（可能指的是Fever Dataset）的具体应用或改进措施。此外，背景资料中也没有直接讨论证据未召回与召回后回答错误之间的区分及改进方法。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 4 页/段落：关于DPR模型的训练和性能评估\n[2] 《dpr.pdf》—— 第 8 页/段落：关于DPR模型与其他模型的对比结果\n[3] 《fid.pdf》—— 第 3 页/段落：关于不同模型在Fever Dataset上的表现",
+      "request_sha256": "18043e70e8c9ff9eb62b2e6741f622f92e4240203febd26f9c46a8acf0e3ee82",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4543,
+      "question": "结合 DPR 的训练和 FiD 的融合，证据未召回与召回后回答错误应怎样区分改进？",
+      "artifact_sha256": "388dbf4be2fcd23b19f54fbd57c119790f4a8e649e46364cc4bd44b4404e6b73",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:35",
+          "page": 4
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:98",
+          "page": 12
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:34",
+          "page": 4
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:75",
+          "page": 9
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:36",
+          "page": 5
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:65",
+          "page": 8
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:64",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:102",
+          "page": 12
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 32,
+      "question_id": "q17",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2606,
+        "completion_tokens": 359,
+        "total_tokens": 2965
+      },
+      "answer": "根据现有资料无法回答该问题。提供的资料主要集中在英文论文和数据集上的比较，没有明确提到中文论文的比较任务及其准确率。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 2 页/段落：讨论了Wang et al. (2019)和Roberts et al. (2020)的工作。\n[2] 《fid.pdf》—— 第 3 页/段落：提供了多种模型在不同数据集上的准确率比较。\n[3] 《dpr.pdf》—— 第 5 页/段落：展示了DPR在检索准确率上的表现。\n[4] 《fid.pdf》—— 第 3 页/段落：提供了Fusion-in-Decoder模型在TriviaQA数据集上的准确率。\n[5] 《dpr.pdf》—— 第 8 页/段落：展示了DPR在不同数据集上的最终问答准确率。\n[6] 《dpr.pdf》—— 第 8 页/段落：提供了DPR与其他模型在不同数据集上的准确率比较。\n[7] 《realm.pdf》—— 第 5 页/段落：描述了评估方法和基准。\n[8] 《dpr.pdf》—— 第 8 页/段落：比较了DPR与其他方法在多个开放域问答基准上的表现。\n[9] 《dpr.pdf》—— 第 9 页/段落：总结了研究结果和模型改进。\n[10] 《realm.pdf》—— 第 7 页/段落：展示了不同模型在NQ数据集上的零样本检索召回率。",
+      "request_sha256": "2a88970a71c5bed549d021a81c16ff98175e2e8dee1fbd93f1e960f0e88a46e9",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 10526,
+      "question": "三方法在同一中文论文比较任务上的准确率分别是多少？",
+      "artifact_sha256": "095cff40bd83717a21f43e75daf7bf001553d08fec06fefa4ed05ee0b2215c66",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:17",
+          "page": 2
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:36",
+          "page": 5
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "fid:17",
+          "page": 3
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "dpr:63",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "realm:44",
+          "page": 5
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:65",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:77",
+          "page": 9
+        },
+        {
+          "index": 10,
+          "document_id": "realm",
+          "chunk_id": "realm:58",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "slot": 33,
+      "question_id": "q17",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2196,
+        "completion_tokens": 65,
+        "total_tokens": 2261
+      },
+      "answer": "根据现有资料无法回答该问题，因为提供的资料主要集中在英文数据集上的比较结果，未明确提及中文论文比较任务的具体准确率数据。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 8 页\n[2] 《fid.pdf》—— 第 3 页",
+      "request_sha256": "c7b8f0b16e270a0b1679d80cc44174ec4429653a3644c8cdfcf8be4ef1d3843c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 2325,
+      "question": "三方法在同一中文论文比较任务上的准确率分别是多少？",
+      "artifact_sha256": "cb168dab5c2182b82d8d338ae68357337968f2dfd4d7962189cfb7e210807bbf",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "chunk_48aea18fd456a96fdfe0b2d35db1b48b8d5646603fd6bb6a91ceec97125b7bd2",
+          "page": 1
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_7c26619937004bef0a2fe48cde284a98182ce7409088600d41346f8f7140a31f",
+          "page": 8
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "chunk_84536f515b2d89bffda9feba815a8e4ab1834cd25b73a483efdc8fc647861f09",
+          "page": 6
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_d754ada247984159e9be56adb8f624a1cbf8250cd6c25497add70f693e2a8b36",
+          "page": 5
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_c174475afab2a9bf3874615a444e12467e9620e5265507c626ceebe5c99c10c4",
+          "page": 3
+        },
+        {
+          "index": 7,
+          "document_id": "realm",
+          "chunk_id": "chunk_3cdaddf9cc8704a6cc4977ed1ca48d7edc0dfad00956db6bbcd42573c2f5c91b",
+          "page": 10
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_cba7a298f43ccc620d38d675c4eda0e22653587a19b5205dddee1ec2b7bcb508",
+          "page": 5
+        },
+        {
+          "index": 9,
+          "document_id": "fid",
+          "chunk_id": "chunk_01ad96e41caf77b4dd0339360d962d21439c00b684dcdce3db9afe447b02c0bd",
+          "page": 3
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b8b86aca6d3233a0b414e55b1c575975d3f82b131b49f69e175ca88923bb6100",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 34,
+      "question_id": "q18",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1054,
+        "completion_tokens": 193,
+        "total_tokens": 1247
+      },
+      "answer": "根据现有资料无法回答该问题。提供的背景资料主要讨论了不同的问答系统和方法，但没有涉及关于“硅基流动”或相关费用的信息。因此无法根据现有信息回答您的问题。\n\n参考来源：\n[1] 《fid.pdf》—— 第 1 页\n[2] 《realm.pdf》—— 第 2 页\n[3] 《dpr.pdf》—— 第 3 页 至 第 10 页\n[4] 《dpr.pdf》—— 第 7 页\n[5] 《dpr.pdf》—— 第 8 页\n[6] 《fid.pdf》—— 第 1 页\n[7] 《dpr.pdf》—— 第 7 页\n[8] 《realm.pdf》—— 第 2 页\n[9] 《dpr.pdf》—— 第 7 页",
+      "request_sha256": "8ac7ace9f76c8c08e67eadce90c989dd93d50193c2cadb07c575da1fc731fc33",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 4616,
+      "question": "用硅基流动在用户电脑重现三方法，每次请求多少钱？",
+      "artifact_sha256": "2565fb5e8d465e98546406afc5ab787ca681f520053fcc9bc5945bce6e689ba0",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "chunk_8ef642c8ce7933ca8155ddaeb35ae69519df4c9b3c94f9cd1797aebf02e786a3",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_61d87f67bc0c5c3722264091da2b3db60c60893ae5dc792298a9ac04f88be27b",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_76142b7abdc3e0c8bec2ed76f971241daf2de1ca1866fce3b0d7297cc1b22b81",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_0f046d9e333bd30090236d916b157a33eaa9e2d3ff34662221cc3f9f8a386557",
+          "page": 10
+        },
+        {
+          "index": 5,
+          "document_id": "dpr",
+          "chunk_id": "chunk_a5556ee7c691a2f156531ed9efa3b8f0985637236ec155ffb9ad670f1b9b1e46",
+          "page": 8
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_48aea18fd456a96fdfe0b2d35db1b48b8d5646603fd6bb6a91ceec97125b7bd2",
+          "page": 1
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_5cccd776d2b423b2fcc33443b9a06c7700f70c83b9cbae38df56fb0ceb58e6b3",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "chunk_a9f939c677d51a1ec18415daee9dc71e6ae4f64f0bc9e87ce51d71f4bad9d9c7",
+          "page": 2
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_533bf6f0ee023e55f479c50e3286d22628271a41097c06c5d0072dfa2d8e61dd",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_2f6e0ec14e1bd821748815dd90287f4ed183f87d53305a9a8b1bc4f419437160",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "slot": 35,
+      "question_id": "q18",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1927,
+        "completion_tokens": 52,
+        "total_tokens": 1979
+      },
+      "answer": "根据现有资料无法回答该问题。提供的背景资料主要涉及DPR（Dense Passage Retrieval）和REALM在开放域问答中的应用、性能和优化方法，未提及与硅基流动或用户电脑重现三方法相关的信息。",
+      "request_sha256": "0b1c7401b54107b10c52bf7c1361eef78b906250a9c891541c7c692aa99136b0",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 1392,
+      "question": "用硅基流动在用户电脑重现三方法，每次请求多少钱？",
+      "artifact_sha256": "10e9b981ee484fde2fe1af96992db474a2b09061971f98f9fe6bdaa53118b774",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "realm",
+          "chunk_id": "realm:55",
+          "page": 6
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:18",
+          "page": 3
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "dpr:54",
+          "page": 7
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:0",
+          "page": 1
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "fid:34",
+          "page": 5
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "fid:33",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:55",
+          "page": 7
+        },
+        {
+          "index": 8,
+          "document_id": "realm",
+          "chunk_id": "realm:59",
+          "page": 7
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:77",
+          "page": 9
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:68",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "slot": 36,
+      "question_id": "q19",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1770,
+        "completion_tokens": 508,
+        "total_tokens": 2278
+      },
+      "answer": "根据现有资料无法直接回答哪种方法在同样模型规模、候选、样本与硬件下显著更好，因为背景资料中没有提供直接对比这些条件下的方法表现的具体信息。背景资料主要讨论了不同方法在开放域问答任务中的表现，但没有详细说明在完全相同的模型规模、候选数量、样本量和硬件条件下进行的直接对比实验结果。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 9 页/段落：讨论了DPR与其他方法在开放域问答数据集上的表现，但未具体说明在相同条件下进行的对比。\n[2] 《fid.pdf》—— 第 5 页/段落：讨论了简单检索支持段落的方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[3] 《fid.pdf》—— 第 4 页/段落：讨论了Fusion-in-Decoder方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[4] 《realm.pdf》—— 第 6 页/段落：讨论了REALM方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[5] 《realm.pdf》—— 第 7 页/段落：讨论了REALM方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[6] 《dpr.pdf》—— 第 8 页/段落：讨论了DPR方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[7] 《dpr.pdf》—— 第 8 页/段落：讨论了DPR方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[8] 《fid.pdf》—— 第 1 页/段落：讨论了简单检索支持段落的方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[9] 《realm.pdf》—— 第 7 页/段落：讨论了REALM方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。\n[10] 《dpr.pdf》—— 第 9 页/段落：讨论了DPR方法在开放域问答中的表现，但未具体说明在相同条件下进行的对比。",
+      "request_sha256": "2bfa741a63cab198ab67646605ab4d491f3bfc185fb446c5f93ad153d1eca29b",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 14387,
+      "question": "在同样模型规模、候选、样本与硬件下，哪种方法显著更好？",
+      "artifact_sha256": "926a6d4c4a9c6d6494f0d74e4f1ce37dbb21eb48e8057194740025e4b2682e39",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:77",
+          "page": 9
+        },
+        {
+          "index": 2,
+          "document_id": "fid",
+          "chunk_id": "fid:34",
+          "page": 5
+        },
+        {
+          "index": 3,
+          "document_id": "fid",
+          "chunk_id": "fid:28",
+          "page": 4
+        },
+        {
+          "index": 4,
+          "document_id": "realm",
+          "chunk_id": "realm:55",
+          "page": 6
+        },
+        {
+          "index": 5,
+          "document_id": "realm",
+          "chunk_id": "realm:59",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "dpr:65",
+          "page": 8
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:64",
+          "page": 8
+        },
+        {
+          "index": 8,
+          "document_id": "fid",
+          "chunk_id": "fid:1",
+          "page": 1
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "realm:61",
+          "page": 7
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "dpr:74",
+          "page": 9
+        }
+      ]
+    },
+    {
+      "slot": 37,
+      "question_id": "q19",
+      "variant": "rag4",
+      "status": "failed",
+      "usage": {},
+      "answer": null,
+      "request_sha256": "0269fc61a1865b6c61e31ad75dd4f15f706039d875620e9527f00927313495d2",
+      "error_type": "RemoteProtocolError",
+      "elapsed_ms": 19160,
+      "question": "在同样模型规模、候选、样本与硬件下，哪种方法显著更好？",
+      "artifact_sha256": "8297e992d1b9bb42839f914f62686ea198c076d7401cd9311087fddd15aff13c",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "fid",
+          "chunk_id": "chunk_517c9e6ea8bb0dfa3fcea508804a64df718dbebe2b135a380cba4076f0a1b4ce",
+          "page": 5
+        },
+        {
+          "index": 2,
+          "document_id": "realm",
+          "chunk_id": "chunk_9973d83fe373df7b56b1f404c7895a9150005b57390845a6c2d575267aa48ace",
+          "page": 7
+        },
+        {
+          "index": 3,
+          "document_id": "fid",
+          "chunk_id": "chunk_5be35c11756f45bf780a6615fdbb3caaebe64d8352ff58c71b57d690defb8f91",
+          "page": 4
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "chunk_07616150f674daa97c40599f018252e49d8e24a0de0b7eda33f0bb6eb8388378",
+          "page": 8
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "chunk_c521eacd1bb667d96c29b8f8aa4b44630f6edd4a8ac5c582b53db26f179cf2e8",
+          "page": 1
+        },
+        {
+          "index": 6,
+          "document_id": "dpr",
+          "chunk_id": "chunk_a548fb063562d2436ced8c92cb956a1ce4619cd1f01e6b0fad1407336fac850c",
+          "page": 9
+        },
+        {
+          "index": 7,
+          "document_id": "fid",
+          "chunk_id": "chunk_8fd1fd5cd66373d863e996c7da152654c0e357fcf4949f98acbd9a4daffc3938",
+          "page": 4
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_f76298a0c6feaf144660c3800efb5acef72d798f5243d3f18bdfb6c079a1c96a",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "realm",
+          "chunk_id": "chunk_5d6ea3be6b56c6b7df152e036fc41f5afdad444c84e7fc30c8b9fdbbdeed26ae",
+          "page": 6
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_8a2969ceff1d95244ad58a70d8f918284f21216e009637d3560026f9e0811bc8",
+          "page": 9
+        }
+      ]
+    },
+    {
+      "slot": 38,
+      "question_id": "q20",
+      "variant": "rag4",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1806,
+        "completion_tokens": 155,
+        "total_tokens": 1961
+      },
+      "answer": "根据现有资料无法回答该问题，因为提供的背景资料中没有提及使用 Qwen3 作为读者模型的相关信息。参考来源中提到的读者模型包括 BERT-base 模型等，但未涉及 Qwen3。因此无法判断在使用 Qwen3 作为读者模型时，哪篇论文的方法最好。\n\n参考来源：\n[1] 《dpr.pdf》—— 第 7 页/段落：描述了神经阅读器的工作流程。\n[2] 《dpr.pdf》—— 第 13 页/段落：讨论了训练方案对最终问答结果的影响。\n[3] 《dpr.pdf》—— 第 11 页/段落：介绍了 Rˆ3 方法。",
+      "request_sha256": "42bc78b0e3bf0c3e65c91605950a7b5deaa17bf39906211347bbe8f3ae48f5be",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 5623,
+      "question": "三论文用 Qwen3 作为读者模型时哪个方法最好？",
+      "artifact_sha256": "3e9eaf6e63bc5e1acbadb3023ec8848fc847d6cfb1e6e8d66dfbd764856bcbb4",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "chunk_cf204644f4883bbfaf6499c671f85c62501ae8d82277558922a1fc064de33b06",
+          "page": 7
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "chunk_22ccae1ac2605817e4bb575245654bfb6b17ef52b1476e1aa5fb668e4b38d79f",
+          "page": 13
+        },
+        {
+          "index": 3,
+          "document_id": "dpr",
+          "chunk_id": "chunk_6cfbbd42819fea48e5a0a1cf5802a35adcf33f686778ead5731a54a7316b0bc3",
+          "page": 11
+        },
+        {
+          "index": 4,
+          "document_id": "fid",
+          "chunk_id": "chunk_517c9e6ea8bb0dfa3fcea508804a64df718dbebe2b135a380cba4076f0a1b4ce",
+          "page": 5
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "chunk_6edabff9688e62e3acb30ec12912ffeaa040951fd7f9781dc2c38a111566ecb8",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "chunk_5f1c5ac9e849d53acf02d3405823d9635dacb0402fdf7952a97d5d61f1df67c7",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "chunk_3cb697181f7cfd7f1dce0c41dfea2bb6162da73c944666fd3758a0fb6f98d78b",
+          "page": 10
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "chunk_b68d459ec8836c00382a0c9770915cbebf9f2bfda2be26d337c94da6b055d715",
+          "page": 8
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "chunk_7c26619937004bef0a2fe48cde284a98182ce7409088600d41346f8f7140a31f",
+          "page": 8
+        },
+        {
+          "index": 10,
+          "document_id": "dpr",
+          "chunk_id": "chunk_607a2e4e2588d222e824ed1f546724fa43a382bc217e4a7200cbca87326c7774",
+          "page": 12
+        }
+      ]
+    },
+    {
+      "slot": 39,
+      "question_id": "q20",
+      "variant": "rag3",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2442,
+        "completion_tokens": 111,
+        "total_tokens": 2553
+      },
+      "answer": "根据提供的背景资料，没有直接提到 Qwen3 这个特定模型。不过，我们可以比较使用 DPR 模型作为读者时的表现。\n\n在文档 [3] 中的表格中，DPR 模型在 NQ 数据集上的精确匹配（EM）得分为 41.5。这表明使用 DPR 作为读者模型时，其表现较好。\n\n参考来源：\n[3] 《fid.pdf》—— 第 3 页/表：DPR 在 NQ 数据集上的 EM 得分",
+      "request_sha256": "bb8d844ad50f2bedaf05806764058f966f197481c0af88bc367ea415bf8b05a7",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "elapsed_ms": 6909,
+      "question": "三论文用 Qwen3 作为读者模型时哪个方法最好？",
+      "artifact_sha256": "12ae30614627089537a53d829f88debd4f89b9119fb22b4c3bb69f7236c28c8d",
+      "input_evidence": [
+        {
+          "index": 1,
+          "document_id": "dpr",
+          "chunk_id": "dpr:110",
+          "page": 13
+        },
+        {
+          "index": 2,
+          "document_id": "dpr",
+          "chunk_id": "dpr:67",
+          "page": 8
+        },
+        {
+          "index": 3,
+          "document_id": "fid",
+          "chunk_id": "fid:16",
+          "page": 3
+        },
+        {
+          "index": 4,
+          "document_id": "dpr",
+          "chunk_id": "dpr:94",
+          "page": 11
+        },
+        {
+          "index": 5,
+          "document_id": "fid",
+          "chunk_id": "fid:49",
+          "page": 7
+        },
+        {
+          "index": 6,
+          "document_id": "fid",
+          "chunk_id": "fid:36",
+          "page": 5
+        },
+        {
+          "index": 7,
+          "document_id": "dpr",
+          "chunk_id": "dpr:77",
+          "page": 9
+        },
+        {
+          "index": 8,
+          "document_id": "dpr",
+          "chunk_id": "dpr:17",
+          "page": 2
+        },
+        {
+          "index": 9,
+          "document_id": "dpr",
+          "chunk_id": "dpr:62",
+          "page": 8
+        },
+        {
+          "index": 10,
+          "document_id": "fid",
+          "chunk_id": "fid:17",
+          "page": 3
+        }
+      ]
+    }
+  ],
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "policy": {
+    "completion_limit": 40,
+    "timeout_seconds": 30,
+    "wall_budget_seconds": 600,
+    "max_tokens": 4096,
+    "temperature": 0.2,
+    "attempts_per_answer": 1,
+    "top_k": 10,
+    "max_context_chars": 6000,
+    "embedding_calls": 0,
+    "reranker": false,
+    "parent_expansion": false,
+    "graph": false
+  },
+  "provenance": {
+    "pilot_sha256": "7f8400b736c47d6fd30636f5695e32a528957d8d1ea04a2365b53c72a37369c5",
+    "retrieval_report_sha256": "ff2d80b89c5e506bd4d8b0a9f3eb933e0972efb426d6107c19665cefe779b88e",
+    "model_task_sha256": "d7a8c66148929a7f7d27724f4c2c60ad70e84f4497d88af2ce33384851b4e4fe",
+    "prompt_sha256": "ab181b9429c72a7fd3b1ff6026a8a3c405ce34e018f43e8dcec697a45cd56a46",
+    "source_sha256": {
+      "dpr": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+      "fid": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175",
+      "realm": "653e9bf290eabefa71d08dc0b1170486336b7d9e31d832921e8305fd78f8d416"
+    },
+    "executed_source_sha256": {
+      "scripts/evaluate_literature_answers.py": "9b84700bd5e5d5ddc1f9e42339a1d85d70a359133a8014f6b5ea32063ce5df6b",
+      "app/evaluation/literature.py": "d1c9f0039aff6d4287437aba967e020df0e89b47643368476e70468971f76648",
+      "app/services/prompts.py": "a2e87238f818761d5e6ccca7af259b62c279667f28b2660dc911333459964e28",
+      "app/services/chunking_service.py": "5e6d7ca388881f61aedf72a1312709044296701412e66276ac5f06b6015c1df6",
+      "app/services/parser_service.py": "b6ea0879cf31dd490328ed461fa74141b46ffd27b228ae3294bbbc1e6a08f12d",
+      "app/chunking/engine.py": "42b85a560c78ebc09c1b6b9d62402202e18e084a503f836976bf98a42fe3bf6b",
+      "app/chunking/adapter.py": "39881a79a0c0743577090705d013f4c52d0878a4aa9d06d132b8051664cb0e1f",
+      "app/chunking/models.py": "683af09173f916b0c23b59e9749efc0bd06ed22f7044a30b3b0a5059a79d2a5d"
+    }
+  },
+  "report_sha256": "800320b837d7eaae03d75d78f831222f54983add5aa1b2f02f736ff66854cad8",
+  "annotation_status": "pending",
+  "held_out_evaluation": false,
+  "answer_correctness": "unknown",
+  "gap_correctness": "unknown",
+  "limitations": [
+    "Development questions, not held-out data",
+    "Chunk policies differ in overlap; no isolated parent-context benefit",
+    "Cached dense retrieval, no live upload/Reranker/Agent execution",
+    "Plain answers require explicit claim annotation before R55 scoring",
+    "Successful generation does not establish answer/citation correctness"
+  ]
+}

@@ -7,7 +7,7 @@ from app.research.store import SQLResearchTaskStore
 from test_research_agent import workflow, finish
 
 
-@pytest.mark.parametrize('context_policy',['cited-chunk-v1','preceding-children-v1'])
+@pytest.mark.parametrize('context_policy',['cited-chunk-v1','preceding-children-v1','cited-support-v2'])
 def test_facet_protocol_batches_merge_and_reload_without_losing_assessments(workflow,context_policy):
     from test_verification_facets import FacetModel
     task,*rest=workflow
@@ -29,7 +29,7 @@ def test_facet_protocol_batches_merge_and_reload_without_losing_assessments(work
     assert done.verification.verifier_version=='exact-facet-handles-v5'
     assert len(done.verification.assessments)==3
     assert done.verification.context_policy==context_policy
-    assert len(done.verification.contexts)==(3 if context_policy=='preceding-children-v1' else 0)
+    assert len(done.verification.contexts)==(0 if context_policy=='cited-chunk-v1' else 3)
     assert store.load(done.user_id,done.id).artifact==done.artifact
 
 

@@ -1,0 +1,405 @@
+{
+  "date": "2026-11-08",
+  "mode": "controlled_fixture_replay_not_new_model_verification",
+  "quality_gate_passed": false,
+  "paid_requests": 0,
+  "embedding_requests": 0,
+  "fixture_generate_calls": 1,
+  "source_inputs_unchanged": true,
+  "source_input_sha256": {
+    "research_18e5ac69ce68573054a1ac4e.json": "d7a8c66148929a7f7d27724f4c2c60ad70e84f4497d88af2ce33384851b4e4fe",
+    "snapshot.sqlite": "769b25b4d4f058f1fe065fc60dd6562e0cd3d97a169489045a625557284c66e4",
+    "vectors\\col_user_1__staging_build_18e4dfcbe4c07af09c_18206a33.json": "0d3c002ec4baaa9ae9055e31b7c4d6984bbbe1014baf78a8ace066d083dd1d02",
+    "vectors\\col_user_1__staging_build_18e4dfcc86bd3640bc_bd1a30f6.json": "06f926d7cc7b95b0f4d32b7480027c2b21be107ce1a1cca52b2ee5aae65da369",
+    "vectors\\col_user_1__staging_build_18e4dfccdad50ff029_d01eefce.json": "f6cfbcf75e2ff2e8ebe20bd8e099955b0e1b19194213271a43677595c0c84686"
+  },
+  "r48_result_sha256": "8e21222a1d1ab9074435cdef8e92a4b465f20f8e8f46fc6b12a763b03db931db",
+  "transformations": [
+    {
+      "prior_case": "prediction_original_quote",
+      "prior_statement": "REALM利用检索到的文档来提高语言模型的预测能力。",
+      "assertion_range": {
+        "assertion_id": "assertion_56444b61cb29e68e3a8b30c5da2dbf09d92bf5ab98e7b166cd9dfd2d1f995534",
+        "char_start": 0,
+        "char_end": 26,
+        "text": "REALM利用检索到的文档来提高语言模型的预测能力，"
+      },
+      "note": "Explicit fixture reassignment retaining subject context, not a newly obtained verdict; support IDs readdressed by exact original window offsets/text."
+    },
+    {
+      "prior_case": "training_original_quote",
+      "prior_statement": "REALM通过优化边缘似然性来训练检索器。",
+      "assertion_range": {
+        "assertion_id": "assertion_fd75f2744eca4657557e61d7bc0dd39bc7b734b056c556913b9b2f04c4069bea",
+        "char_start": 26,
+        "char_end": 42,
+        "text": "通过优化边缘似然性来训练检索器。"
+      },
+      "note": "Explicit fixture reassignment retaining subject context, not a newly obtained verdict; support IDs readdressed by exact original window offsets/text."
+    }
+  ],
+  "baseline_supported": 1,
+  "restricted_supported": 0,
+  "publication": {
+    "publication_id": "assertion_publication_c853c1f124f03de30a141e2011af9235a55fc914f9fa453a2af7ef5240670094",
+    "version": "statement-ranges-v1",
+    "baseline": {
+      "verifier_version": "exact-facet-handles-v5",
+      "annotation_status": "machine_review_only",
+      "verdicts": [
+        {
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "status": "supported",
+          "reason": "all_source_checks_supported"
+        }
+      ],
+      "supported": 1,
+      "total": 1,
+      "warnings": [
+        "literal_numeric_values_checked_no_unit_conversion",
+        "semantic_support_is_machine_judgment_requires_human_review"
+      ],
+      "assessments": [
+        {
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "attribution": {
+            "status": "supported",
+            "reason": "REALM利用检索到的文档来提高语言模型的预测能力。",
+            "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+            "support_ids": [
+              "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+            ]
+          },
+          "conditions": {
+            "status": "supported",
+            "reason": "通过优化边缘似然性来训练检索器。",
+            "support_quote": "The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+            "support_ids": [
+              "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+            ]
+          },
+          "entailment": {
+            "status": "supported",
+            "reason": "REALM通过检索文档来提高预测能力。",
+            "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+            "support_ids": [
+              "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd",
+              "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+            ]
+          }
+        }
+      ],
+      "context_policy": "preceding-children-v1",
+      "contexts": [
+        {
+          "context_id": "verification_context_6c4da8ada99f482bd853d815e9e7ea75f41babf277dce877756ca20a8bda95a8",
+          "policy": "preceding-children-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "document_id": "realm",
+          "parts": [
+            {
+              "role": "preceding",
+              "citation": {
+                "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+                "char_start": 0,
+                "char_end": 495,
+                "quote": "The improvement of REALM over ORQA is purely due\nto better pre-training. The results also indicate that our\nmethod of pre-training can be applied both on (1) the single-\ncorpus setting (X = Wikipedia, Z = Wikipedia), or (2) the\nseparate-corpus setting (X = CC-News, Z = Wikipedia).\nCompared to other retrieval-based systems (Asai et al., 2019;\nMin et al., 2019a;b) which often retrieve from 20 to 80\ndocuments, our system gets the overall best performance\nwhile only retrieving 5 documents.\n4.5."
+              }
+            },
+            {
+              "role": "preceding",
+              "citation": {
+                "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+                "char_start": 0,
+                "char_end": 241,
+                "quote": "Analysis\nIn Table 2 we present results for NaturalQuestions-Open\nafter ablating critical components of REALM. In addition\nto the end-to-end results, we also report how often the gold\nanswer appears in the top-5 retrievals before applying any"
+              }
+            },
+            {
+              "role": "cited",
+              "citation": {
+                "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+                "char_start": 0,
+                "char_end": 1770,
+                "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\nMasking scheme\nWe compare our salient span masking\nscheme (Section 3.4) with (1) random token masking intro-\nduced in BERT (Devlin et al., 2018) and (2) random span\nmasking proposed by SpanBERT (Joshi et al., 2019). While\nsuch salient span masking has not been shown to be impact-\nful in previous work with standard BERT training (Joshi\net al., 2019), it is crucial for REALM."
+              }
+            }
+          ],
+          "context_chars": 2510,
+          "warnings": []
+        }
+      ],
+      "result_condition_policy": "explicit-row-v1",
+      "condition_audits": []
+    },
+    "reviews": [
+      {
+        "review_id": "assertion_review_4a833391656463377116f15fe9bb85e6df5f6561f563abeb21f81a97d9668c62",
+        "version": "statement-ranges-v1",
+        "plan": {
+          "plan_id": "assertion_plan_1589c2d96cb40ea7a50cf26f9243612a55aebc5641c3c2c3156457e2097a9dc5",
+          "version": "statement-ranges-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "statement": "REALM利用检索到的文档来提高语言模型的预测能力，通过优化边缘似然性来训练检索器。",
+          "assertions": [
+            {
+              "assertion_id": "assertion_56444b61cb29e68e3a8b30c5da2dbf09d92bf5ab98e7b166cd9dfd2d1f995534",
+              "char_start": 0,
+              "char_end": 26,
+              "text": "REALM利用检索到的文档来提高语言模型的预测能力，"
+            },
+            {
+              "assertion_id": "assertion_fd75f2744eca4657557e61d7bc0dd39bc7b734b056c556913b9b2f04c4069bea",
+              "char_start": 26,
+              "char_end": 42,
+              "text": "通过优化边缘似然性来训练检索器。"
+            }
+          ]
+        },
+        "context": {
+          "context_id": "verification_context_6c4da8ada99f482bd853d815e9e7ea75f41babf277dce877756ca20a8bda95a8",
+          "policy": "preceding-children-v1",
+          "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+          "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+          "document_id": "realm",
+          "parts": [
+            {
+              "role": "preceding",
+              "citation": {
+                "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+                "char_start": 0,
+                "char_end": 495,
+                "quote": "The improvement of REALM over ORQA is purely due\nto better pre-training. The results also indicate that our\nmethod of pre-training can be applied both on (1) the single-\ncorpus setting (X = Wikipedia, Z = Wikipedia), or (2) the\nseparate-corpus setting (X = CC-News, Z = Wikipedia).\nCompared to other retrieval-based systems (Asai et al., 2019;\nMin et al., 2019a;b) which often retrieve from 20 to 80\ndocuments, our system gets the overall best performance\nwhile only retrieving 5 documents.\n4.5."
+              }
+            },
+            {
+              "role": "preceding",
+              "citation": {
+                "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+                "char_start": 0,
+                "char_end": 241,
+                "quote": "Analysis\nIn Table 2 we present results for NaturalQuestions-Open\nafter ablating critical components of REALM. In addition\nto the end-to-end results, we also report how often the gold\nanswer appears in the top-5 retrievals before applying any"
+              }
+            },
+            {
+              "role": "cited",
+              "citation": {
+                "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+                "char_start": 0,
+                "char_end": 1770,
+                "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\nMasking scheme\nWe compare our salient span masking\nscheme (Section 3.4) with (1) random token masking intro-\nduced in BERT (Devlin et al., 2018) and (2) random span\nmasking proposed by SpanBERT (Joshi et al., 2019). While\nsuch salient span masking has not been shown to be impact-\nful in previous work with standard BERT training (Joshi\net al., 2019), it is crucial for REALM."
+              }
+            }
+          ],
+          "context_chars": 2510,
+          "warnings": []
+        },
+        "assessments": [
+          {
+            "assertion_id": "assertion_56444b61cb29e68e3a8b30c5da2dbf09d92bf5ab98e7b166cd9dfd2d1f995534",
+            "attribution": {
+              "status": "supported",
+              "reason": "REALM利用检索到的文档来提高语言模型的预测能力。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+              "support_ids": [
+                "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "REALM通过检索文档来提高预测能力，符合方法描述。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+              "support_ids": [
+                "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "REALM通过检索文档来提高预测能力，符合方法描述。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+              "support_ids": [
+                "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+              ]
+            }
+          },
+          {
+            "assertion_id": "assertion_fd75f2744eca4657557e61d7bc0dd39bc7b734b056c556913b9b2f04c4069bea",
+            "attribution": {
+              "status": "insufficient",
+              "reason": "no_support_selected: no_support_selected: 未提供REALM通过优化边缘似然性来训练检索器的具体证据。",
+              "support_quote": ""
+            },
+            "conditions": {
+              "status": "insufficient",
+              "reason": "no_support_selected: no_support_selected: 未提供关于训练阶段或范围的具体信息。",
+              "support_quote": ""
+            },
+            "entailment": {
+              "status": "insufficient",
+              "reason": "no_support_selected: no_support_selected: 未提供关于训练阶段或范围的具体信息。",
+              "support_quote": ""
+            }
+          }
+        ],
+        "annotation_status": "machine_review_only"
+      }
+    ],
+    "artifact": {
+      "artifact_id": "artifact_8d1edf30facd1cd330beee830a1ead4f202afcb82049e3e584b38a9185afeae0",
+      "composer_version": "comparison-table-v2",
+      "completion_status": "partial",
+      "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+      "goal": "Controlled replay of REALM compound coverage",
+      "rows": [
+        {
+          "document_id": "realm",
+          "title": "REALM",
+          "cells": [
+            {
+              "facet": "method",
+              "status": "uncertain",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "assertion_coverage_insufficient"
+              ]
+            },
+            {
+              "facet": "dataset",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "result",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            },
+            {
+              "facet": "limitation",
+              "status": "missing",
+              "statement": null,
+              "claim_ids": [],
+              "reasons": [
+                "retrieved_evidence_insufficient_not_proof_paper_omits_field"
+              ]
+            }
+          ]
+        }
+      ],
+      "citations": [],
+      "citation_sources": [],
+      "verification": {
+        "verifier_version": "exact-facet-handles-v5",
+        "annotation_status": "machine_review_only",
+        "verdicts": [
+          {
+            "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+            "status": "insufficient",
+            "reason": "assertion_coverage_insufficient"
+          }
+        ],
+        "supported": 0,
+        "total": 1,
+        "warnings": [
+          "literal_numeric_values_checked_no_unit_conversion",
+          "semantic_support_is_machine_judgment_requires_human_review",
+          "assertion_coverage_checked:statement-ranges-v1"
+        ],
+        "assessments": [
+          {
+            "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+            "attribution": {
+              "status": "supported",
+              "reason": "REALM利用检索到的文档来提高语言模型的预测能力。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. ",
+              "support_ids": [
+                "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd"
+              ]
+            },
+            "conditions": {
+              "status": "supported",
+              "reason": "通过优化边缘似然性来训练检索器。",
+              "support_quote": "The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+              ]
+            },
+            "entailment": {
+              "status": "supported",
+              "reason": "REALM通过检索文档来提高预测能力。",
+              "support_quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\n",
+              "support_ids": [
+                "support_36cf19e81371939377e315543d996c78df4226f7bda082c6abd62d8c14afa7dd",
+                "support_0a4d275c426f47aad2ab4774a973b9e240a4c5d24e321aa2431d393f72556f54"
+              ]
+            }
+          }
+        ],
+        "context_policy": "preceding-children-v1",
+        "contexts": [
+          {
+            "context_id": "verification_context_6c4da8ada99f482bd853d815e9e7ea75f41babf277dce877756ca20a8bda95a8",
+            "policy": "preceding-children-v1",
+            "corpus_id": "corpus_c7f2def98c221ebddc903429a93cded6f7b60cda519061b3ca4874352ef90e3b",
+            "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+            "document_id": "realm",
+            "parts": [
+              {
+                "role": "preceding",
+                "citation": {
+                  "chunk_id": "chunk_2efb0439d8f4941be5d36dcf18f0e95e1924bb82d2913b13a4c09b2164eb44b9",
+                  "char_start": 0,
+                  "char_end": 495,
+                  "quote": "The improvement of REALM over ORQA is purely due\nto better pre-training. The results also indicate that our\nmethod of pre-training can be applied both on (1) the single-\ncorpus setting (X = Wikipedia, Z = Wikipedia), or (2) the\nseparate-corpus setting (X = CC-News, Z = Wikipedia).\nCompared to other retrieval-based systems (Asai et al., 2019;\nMin et al., 2019a;b) which often retrieve from 20 to 80\ndocuments, our system gets the overall best performance\nwhile only retrieving 5 documents.\n4.5."
+                }
+              },
+              {
+                "role": "preceding",
+                "citation": {
+                  "chunk_id": "chunk_f10b31c79247918cb8b5095bf7f6025aad2112bf3b17af4be375cfe3845f0b80",
+                  "char_start": 0,
+                  "char_end": 241,
+                  "quote": "Analysis\nIn Table 2 we present results for NaturalQuestions-Open\nafter ablating critical components of REALM. In addition\nto the end-to-end results, we also report how often the gold\nanswer appears in the top-5 retrievals before applying any"
+                }
+              },
+              {
+                "role": "cited",
+                "citation": {
+                  "chunk_id": "chunk_42088e6da0fc40995d522a3d055de4d975c3bb0a54ca1000270f5c039dd118c2",
+                  "char_start": 0,
+                  "char_end": 1770,
+                  "quote": "REALM: Retrieval-Augmented Language Model Pre-Training\nTable 3. An example where REALM utilizes retrieved documents to better predict masked tokens. It assigns much higher probability\n(0.129) to the correct term, “Fermat”, compared to BERT. (Note that the blank corresponds to 3 BERT wordpieces.)\nx:\nAn equilateral triangle is easily constructed using a straightedge and compass, because 3 is a\nprime.\n(a)\nBERT\np(y = “Fermat” | x)\n= 1.1 × 10−14\n(No retrieval.)\n(b) REALM\np(y = “Fermat” | x, z) = 1.0\n(Conditional probability with document z =“257 is . . . a Fermat prime.\nThus a regular polygon with 257 sides is constructible with compass . . . ”)\n(c) REALM\np(y = “Fermat” | x)\n= 0.129\n(Marginal probability, marginalizing over top 8 retrieved documents.)\nﬁne-tuning. The latter metric more signiﬁcantly isolates the\ncontribution of improving the retriever during pre-training.\nEncoder or Retriever\nWe ﬁrst aim to determine whether\nREALM pre-training improves the retriever or the encoder,\nor both. To do so, we can reset the parameters of either\nthe retriever or the encoder to their baseline state before\nREALM pre-training, and feed that into ﬁne-tuning. Reset-\nting both the retriever and encoder reduces the system to\nour main baseline, ORQA. We ﬁnd that both the encoder\nand retriever beneﬁt from REALM training separately, but\nthe best result requires both components acting in unison.\nMasking scheme\nWe compare our salient span masking\nscheme (Section 3.4) with (1) random token masking intro-\nduced in BERT (Devlin et al., 2018) and (2) random span\nmasking proposed by SpanBERT (Joshi et al., 2019). While\nsuch salient span masking has not been shown to be impact-\nful in previous work with standard BERT training (Joshi\net al., 2019), it is crucial for REALM."
+                }
+              }
+            ],
+            "context_chars": 2510,
+            "warnings": []
+          }
+        ],
+        "result_condition_policy": "explicit-row-v1",
+        "condition_audits": []
+      },
+      "knowledge_gaps": [
+        "realm:method:uncertain",
+        "realm:dataset:missing",
+        "realm:result:missing",
+        "realm:limitation:missing"
+      ],
+      "warnings": [
+        "machine_review_only",
+        "cross_paper_results_not_directly_comparable"
+      ],
+      "markdown": "# 文献比较\n\nControlled replay of REALM compound coverage\n\n| 文献 | 方法 | 数据集 | 结果 | 局限 |\n| --- | --- | --- | --- | --- |\n| REALM | 待核验 | 证据未检出 | 证据未检出 | 证据未检出 |\n\n引用由原文定位及模型核验；仍需人工复核。实验条件未统一，本表不作性能排名。\n\n引用：\n\n知识缺口：\nrealm:method:uncertain\nrealm:dataset:missing\nrealm:result:missing\nrealm:limitation:missing\n"
+    }
+  }
+}

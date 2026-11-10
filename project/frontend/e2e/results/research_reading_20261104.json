@@ -1,0 +1,10 @@
+{
+  "milestone": "R40",
+  "date": "2026-11-04",
+  "backend": { "command": "python -m pytest tests/test_research_goal_preview.py tests/test_research_agent.py tests/test_partial_artifact_api.py -q", "passed": 40, "new_tests": 5, "exit_code": 0, "full_suite_run": false },
+  "frontend": { "typecheck": "npm run lint: passed", "production_build": "npm run build: passed", "browser_command": "node e2e/research.mjs", "browser": "installed Chrome / Playwright", "scenarios_passed": 12, "fixture_mode": "intercepted API based on frozen real R37 task and R39 partial view", "screenshots_inspected": ["desktop", "mobile", "source"], "live_business_backend_tested": false },
+  "model_calls": 0,
+  "new_dependencies": [],
+  "quality_gate_passed": false,
+  "limitations": ["read-only workspace slice", "no task creation/execution UI", "no full-page PDF viewer", "no human semantic acceptance", "historical R37 ValueError root cause unknown"]
+}

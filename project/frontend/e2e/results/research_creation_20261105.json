@@ -1,0 +1,28 @@
+{
+  "milestone": "R41",
+  "date": "2026-11-05",
+  "backend": {
+    "command": "python -m pytest tests/test_research_preview.py tests/test_research_runtime.py tests/test_research_agent.py tests/test_research_goal_preview.py tests/test_partial_artifact_api.py -o addopts='' -q --tb=short",
+    "passed": 82,
+    "elapsed_seconds": 172.45,
+    "new_tests": 22,
+    "storage_adapters": ["Local", "Chroma"],
+    "full_suite_run": false
+  },
+  "frontend": {
+    "typecheck": "npm run lint: passed",
+    "build": "npm run build: passed",
+    "creation_browser_command": "node e2e/research-create.mjs",
+    "creation_scenarios_passed": 9,
+    "creation_fixture_mode": "synthetic intercepted API contract",
+    "reading_browser_command": "node e2e/research.mjs",
+    "reading_scenarios_passed": 12,
+    "reading_fixture_mode": "intercepted real frozen R37/R39 responses",
+    "screenshots_inspected": ["desktop selection", "desktop preview", "mobile preview"],
+    "live_business_backend_tested": false
+  },
+  "external_model_calls": 0,
+  "new_dependencies": [],
+  "quality_gate_passed": false,
+  "limitations": ["pending creation only", "no execution controls or scheduler", "preview seal is not a durable idempotency key", "no live business-account browser acceptance or human semantic acceptance"]
+}

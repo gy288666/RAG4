@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-08",
+  "code_sha256": {
+    "app/research/assertions.py": "9b4db51d8df7f1a850119969640684b2419aee8526a6b60ed4c6d453acf5f5a9",
+    "app/research/model.py": "6b74f02f62864ef0e56dd9dd7fb8ba84b5b155a5f5f693ae08261a65a6039918",
+    "app/research/protocol.py": "62e5bba16bd060cc68424aa020b1802a368fe9e7bdb94bfdab0f8416547e2013",
+    "tests/test_assertion_coverage.py": "aa29ca79ae7ff2045878cab7361bbff44d9774c67dd4d39710b3b70d6b522619"
+  },
+  "primary_tests": {
+    "passed": 140,
+    "elapsed_seconds": 66.81
+  },
+  "new_test_instances": 31,
+  "paid_requests": 0,
+  "full_suite_run": false,
+  "quality_gate_passed": false,
+  "additional_tests": {
+    "passed": 63,
+    "elapsed_seconds": 7.12
+  },
+  "distinct_related_tests_passed": 203,
+  "primary_test_files": [
+    "test_assertion_coverage.py",
+    "test_verification_assertion_comparison.py",
+    "test_verification_support_context.py",
+    "test_verification_scope_comparison.py",
+    "test_verification_context.py",
+    "test_verification_facets.py",
+    "test_verification_handles.py",
+    "test_research_verification_checks.py",
+    "test_research_verification_batches.py",
+    "test_research_runtime.py",
+    "test_failed_partial_export.py",
+    "test_verification_claim_file.py"
+  ],
+  "additional_test_files": [
+    "test_response_contract_diagnostics.py",
+    "test_result_condition_integration.py",
+    "test_result_conditions.py",
+    "test_research_citations.py"
+  ]
+}

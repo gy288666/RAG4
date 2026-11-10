@@ -1,6 +1,6 @@
 """Opt-in owner-scoped research. Each run request executes one bounded tool."""
 from fastapi import APIRouter, Depends, Query, Response
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy.orm import Session
 from typing import Literal
 
@@ -12,7 +12,7 @@ from app.research.agent import TaskConflict
 from app.research.model import CompletionSpec
 from app.research.verification_context import VerificationContextPolicy
 from app.research.result_conditions import ResultConditionPolicy
-from app.research.runtime import configured_agent, create_task, read_partial_artifact
+from app.research.runtime import configured_agent, create_task, prepare_task, task_preview, read_partial_artifact, read_retry, retry_failed, read_claim_review, record_claim_review
 from app.research.store import SQLResearchTaskStore
 from app.research.tasks import TaskBudget, PlanVersion, ContextPolicy, CandidatePolicy
 from app.services import config_service
@@ -43,6 +43,36 @@ class ControlRequest(BaseModel):
     expected_revision: int = Field(strict=True, ge=0)
 
 
+class RunRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    expected_revision: int = Field(strict=True, ge=0)
+
+
+class ClaimReviewRequest(RunRequest):
+    source_artifact_id: str=Field(min_length=1,max_length=100)
+    decision: Literal['retain','withdraw','reset']
+    reason: str=Field(min_length=1,max_length=1000)
+
+    @field_validator('reason')
+    @classmethod
+    def nonblank(cls,value):
+        if not value.strip():raise ValueError('Review reason required')
+        return value
+
+
+class ConfirmCreateRequest(CreateRequest):
+    # Optional for historical CLI/API clients; the UI always confirms its preview.
+    expected_preview_id: str | None = Field(default=None, pattern='^[0-9a-f]{64}$')
+
+
+def _draft_arguments(body, config):
+    return dict(budget=body.budget, plan_version=body.plan_version, context_policy=body.context_policy,
+        candidate_policy=body.candidate_policy, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, 'chat/completions'),
+            model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
+            response_format=body.response_format, verification_protocol=body.verification_protocol,
+            verification_context_policy=body.verification_context_policy, result_condition_policy=body.result_condition_policy))
+
+
 def _handle(action):
     try:
         return success(action())
@@ -55,15 +85,18 @@ def _handle(action):
 
 
 @router.post("", summary="创建文献比较任务（不自动执行）")
-def create(body: CreateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def create(body: ConfirmCreateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     config = config_service.load_runtime_config(db)
     return _handle(lambda: create_task(user.id, body.index_version_id, body.document_ids, body.goal,
-        budget=body.budget, plan_version=body.plan_version, context_policy=body.context_policy,
-        candidate_policy=body.candidate_policy, completion=CompletionSpec(endpoint=build_endpoint(config.llm_base_url, "chat/completions"),
-            model_id=config.llm_model, extraction_protocol=body.extraction_protocol,
-            response_format=body.response_format, verification_protocol=body.verification_protocol,
-            verification_context_policy=body.verification_context_policy,
-            result_condition_policy=body.result_condition_policy)).model_dump(mode="json"))
+        expected_preview_id=body.expected_preview_id, **_draft_arguments(body, config)).model_dump(mode="json"))
+
+
+@router.post('/preview', summary='校验来源并预览固定计划（不创建任务或执行模型）')
+def preview(body: CreateRequest, response: Response, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    response.headers['Cache-Control'] = 'no-store'
+    config = config_service.load_runtime_config(db)
+    return _handle(lambda: task_preview(prepare_task(user.id, body.index_version_id, body.document_ids, body.goal,
+        **_draft_arguments(body, config))))
 
 
 @router.get("", summary="查询自己的研究任务")
@@ -84,8 +117,21 @@ def partial_artifact(task_id: str, response: Response, expected_revision: int | 
 
 
 @router.post("/{task_id}/run", summary="执行一个工具并保存进度")
-def run(task_id: str, user: User = Depends(get_current_user)):
-    return _handle(lambda: configured_agent().step(user.id, task_id).model_dump(mode="json"))
+def run(task_id: str, body: RunRequest | None = None, user: User = Depends(get_current_user)):
+    return _handle(lambda: configured_agent().step(user.id, task_id,
+        expected_revision=body.expected_revision if body is not None else None).model_dump(mode="json"))
+
+
+@router.get('/{task_id}/review',summary='查看自己的完成产物及结论审阅覆盖视图')
+def claim_review(task_id: str,response: Response,expected_revision: int|None=Query(None,ge=0),user: User=Depends(get_current_user)):
+    response.headers['Cache-Control']='no-store'
+    return _handle(lambda:read_claim_review(user.id,task_id,expected_revision=expected_revision).model_dump(mode='json'))
+
+
+@router.post('/{task_id}/claims/{claim_id}/review',summary='记录自己的结论保留/撤下/重置，不改原机器稿')
+def review_claim(task_id: str,claim_id: str,body: ClaimReviewRequest,response: Response,user: User=Depends(get_current_user)):
+    response.headers['Cache-Control']='no-store'
+    return _handle(lambda:record_claim_review(user.id,task_id,claim_id,**body.model_dump()).model_dump(mode='json'))
 
 
 @router.post("/{task_id}/control", summary="暂停、恢复或取消自己的任务")
@@ -94,3 +140,14 @@ def control(task_id: str, body: ControlRequest, user: User = Depends(get_current
     from app.research.agent import ResearchAgent
     return _handle(lambda: ResearchAgent(SQLResearchTaskStore(), None).control(user.id, task_id,
         body.action, body.expected_revision).model_dump(mode="json"))
+
+
+@router.get('/{task_id}/retry', summary='只读核对已结束网络失败的恢复准入')
+def retry_info(task_id: str, response: Response, user: User = Depends(get_current_user)):
+    response.headers['Cache-Control'] = 'no-store'
+    return _handle(lambda: read_retry(user.id, task_id).model_dump(mode='json'))
+
+
+@router.post('/{task_id}/retry', summary='显式准备恢复：保留预算，仅改为待执行')
+def retry(task_id: str, body: RunRequest, user: User = Depends(get_current_user)):
+    return _handle(lambda: retry_failed(user.id, task_id, expected_revision=body.expected_revision).model_dump(mode='json'))

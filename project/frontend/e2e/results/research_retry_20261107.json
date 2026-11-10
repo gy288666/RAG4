@@ -1,0 +1,32 @@
+{
+  "milestone": "R45",
+  "date": "2026-11-07",
+  "backend": {
+    "command": "python -m pytest tests/test_research_explicit_retry.py tests/test_research_agent.py tests/test_research_run_revision.py tests/test_research_runtime.py tests/test_partial_artifact_api.py tests/test_research_verification_batches.py tests/test_research_checkpoint_recovery.py tests/test_failed_partial_export.py -o addopts='' -q --tb=short",
+    "passed": 121, "elapsed_seconds": 174.46, "new_tests": 20, "full_suite_run": false
+  },
+  "frontend": {
+    "execution_command": "node e2e/research-run.mjs", "execution_scenarios_passed": 15, "new_execution_scenarios": 7,
+    "reading_command": "node e2e/research.mjs", "reading_scenarios_passed": 13,
+    "creation_command": "node e2e/research-create.mjs", "creation_scenarios_passed": 9,
+    "typecheck": "passed", "production_build": "passed",
+    "fixture_mode": "intercepted API contracts; independent final reruns passed",
+    "screenshots_inspected": ["desktop prepared recovery history", "mobile recovery confirmation", "real HTTP prepared recovery"]
+  },
+  "live_http": {
+    "command": "node e2e/research-live.mjs", "groups_passed": 8, "api_interception": false,
+    "data": "isolated SQLite and LocalVectorStore with synthetic TXT and local MockTransport",
+    "failed_revision_before_preparation": 18, "pending_revision_after_preparation": 19,
+    "tool_calls_before_and_after": 9, "simulated_model_calls_before_and_after": 6,
+    "retained_reports": 2, "retry_events": 1, "failed_step_snapshot_preserved": true,
+    "automatic_run_after_preparation": false, "baseline_vectors_active_unchanged": true, "external_provider_calls": 0
+  },
+  "real_checkpoint_admission_only": {
+    "r44": { "revision": 4, "eligible": true, "remaining_tools": 11, "required_tools": 10, "remaining_model_calls": 8, "required_model_calls": 6, "sources_validated": false },
+    "r37": { "revision": 24, "eligible": false, "reason": "unaccounted_history", "remaining_tools": 2, "required_tools": 3, "remaining_model_calls": 0, "required_model_calls": 1, "sources_validated": false },
+    "real_task_or_sql_modified": false
+  },
+  "observed_validation_limitations": ["initial browser navigation/element waits timed out and one harness stalled; only verified owned test processes stopped", "failure diagnostics and a filtered scenario were added; independent final reruns passed without increasing timeouts", "stable root cause not determined; no login/Chrome fix claimed"],
+  "new_dependencies": [], "online_model_requests_this_round": 0, "quality_gate_passed": false,
+  "limitations": ["only finished network failures with fully accounted checkpoint history", "legacy control history and running/paused tasks refused", "local termination does not guarantee provider computation has stopped", "no automatic retry or budget reset"]
+}

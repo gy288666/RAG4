@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-10",
+  "scope": "paired_chunking_answer_generation",
+  "quality_gate_passed": false,
+  "public_summary_sha256": "6c1c5510740d89a9039552958fdedcfe6c416ea35f92f73862cc363e404d51ee",
+  "manifest_sha256": "9f46615aa3413971a6cfa2a872c81c71ffd12aa77b6ec34316acd08d8f9abb81",
+  "report_sha256": "800320b837d7eaae03d75d78f831222f54983add5aa1b2f02f736ff66854cad8",
+  "input_and_executed_source_hashes_unchanged": true,
+  "provider_attempts": 40,
+  "usable_answers": 39,
+  "new_embedding_calls": 0,
+  "retries": 0,
+  "known_usage_total_tokens": 82336,
+  "unknown_usage_slots": [
+    37
+  ],
+  "tests": {
+    "command": "python -m pytest tests/test_literature_answers.py tests/test_literature_acceptance.py tests/test_literature_pilot.py -o addopts='' -q --tb=short",
+    "passed": 66,
+    "duration_seconds": 12.16,
+    "full_suite": false
+  },
+  "export_and_test_sha256": {
+    "scripts/export_literature_answer_review.py": "763a355e925ad3a63c04d905821cb788f619fc8ea5b4cfd8e54a0a7996dd754b",
+    "tests/test_literature_answers.py": "dd463b1f2ea2091eff71e5c910ae23ac4bb233cbc5aec18736903ff030bcac3f"
+  },
+  "developer_observations_not_gold": [
+    {
+      "question_id": "q09",
+      "variants": [
+        "rag3",
+        "rag4"
+      ],
+      "issue": "Both outputs call DPR input question/passage concatenation; RAG4 assigns a FiD source to DPR. Requires source/subject review."
+    },
+    {
+      "question_id": "q12",
+      "variants": [
+        "rag3",
+        "rag4"
+      ],
+      "issue": "DPR index lifecycle claims exceed supplied evidence; fixed-index assertions require review. No independent judgment."
+    },
+    {
+      "question_id": "q20",
+      "variants": [
+        "rag3"
+      ],
+      "issue": "Acknowledges no Qwen3 evidence but substitutes DPR NQ 41.5 result. Possible gap-answer failure, not independently graded."
+    }
+  ],
+  "next_experiment_failure_cases_registered_now": [
+    "q09",
+    "q12"
+  ],
+  "independent_human_reviewed": 0,
+  "annotation_status": "pending"
+}

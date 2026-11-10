@@ -8,6 +8,7 @@ import {
   LibraryIcon,
   LogoutIcon,
   MenuIcon,
+  ResearchIcon,
   SealMark,
   SlidersIcon,
   UsersIcon,
@@ -16,6 +17,7 @@ import {
 const NAV_ITEMS = [
   { to: '/chat', label: '智能问答', icon: ChatIcon, adminOnly: false },
   { to: '/knowledge', label: '我的知识库', icon: LibraryIcon, adminOnly: false },
+  { to: '/research', label: '研究阅读台', icon: ResearchIcon, adminOnly: false },
   { to: '/admin/users', label: '用户管理', icon: UsersIcon, adminOnly: true },
   { to: '/admin/configs', label: '系统配置', icon: SlidersIcon, adminOnly: true },
   { to: '/admin/stats', label: '运行监控', icon: ChartIcon, adminOnly: true },

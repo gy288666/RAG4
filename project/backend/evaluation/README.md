@@ -6,6 +6,10 @@
 
 ## 实际范围
 
+2026-11-10 R56 [真实双组逐题答案](../../docs/research_paired_answers.md)：`evaluate_literature_answers.py` 先验证缓存/实际来源再按冻结预算生成，`export_literature_answer_review.py` 导出真实正文/来源/待标注包。40次请求39份正文，1次失败保留，未重试；人工判断仍缺，只比较切分策略，不是完整ResearchAgent或线上RAG3验收。现有RAG提示不改，不向模型发送开发答案/锚点，详见公开 `results/literature_answers_20261110.json`。
+
+2026-11-10 R55 新增独立离线 [20题冻结审阅与评分](../../../project/docs/research_literature_acceptance.md)：`python scripts/evaluate_literature_acceptance.py --help`。验证原PDF、题目/解析/代码摘要，支持逐题真实答案及人工声明核验；缺答/待审不通过。当前仅完成真实来源核对，20题答案与独立人工审阅仍缺，未通过产品质量验收，也不改变下述历史实验口径。
+
 2026-10-12 的首轮只比较现有 `split_blocks` 与 `ChunkingEngine` 的纯证据检索。复用同一 PDF 解析输出、Embedding 模型、问题向量和 LocalVectorStore 余弦检索；字符预算 600，旧重叠 60，新父片预算 1800，新子片不重叠。策略包含重叠差异，不能把结果变化归因于单独的父片效果。PDF 当前按页扁平解析，没有伪造标题、表格或版式结构；首轮没有 Reranker、LLM 回答、父片展开或 Graph/Agent。2026-10-13 新增的独立实验见下文，不改写首轮结果。
 
 主要指标是 `anchor_span_recall`：Top-K 所有命中的原文区间合并后，完整覆盖了多少标注锚点。按文档、页及字符范围比较，避免不同 chunk ID 造成不可比；重复命中不增加覆盖，跨页同词不算命中。另记录满足全部所需锚点的题数。短锚点覆盖不能证明引用支持结论，不报回答正确率或 nDCG。4 道证据不足题保留检索结果，但排除正例覆盖指标，拒答能力标为未评测。

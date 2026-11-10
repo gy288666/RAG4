@@ -6,6 +6,8 @@ import RegisterPage from '@/pages/RegisterPage';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import ChatPage from '@/pages/ChatPage';
 import KnowledgePage from '@/pages/KnowledgePage';
+import ResearchPage from '@/pages/ResearchPage';
+import ResearchCreatePage from '@/pages/ResearchCreatePage';
 import ProfilePage from '@/pages/ProfilePage';
 import AdminUsersPage from '@/pages/admin/AdminUsersPage';
 import AdminConfigsPage from '@/pages/admin/AdminConfigsPage';
@@ -27,6 +29,9 @@ export default function App() {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/chat/:sessionId" element={<ChatPage />} />
           <Route path="/knowledge" element={<KnowledgePage />} />
+          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/research/new" element={<ResearchCreatePage />} />
+          <Route path="/research/:taskId" element={<ResearchPage />} />
           <Route path="/profile" element={<ProfilePage />} />
 
           {/* 需管理员角色 */}

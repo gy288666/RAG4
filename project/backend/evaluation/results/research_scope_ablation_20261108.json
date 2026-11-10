@@ -1,0 +1,429 @@
+{
+  "date": "2026-11-08",
+  "annotation_status": "primary_agent_source_review_draft",
+  "quality_gate_passed": false,
+  "source_task_sha256": "d7a8c66148929a7f7d27724f4c2c60ad70e84f4497d88af2ce33384851b4e4fe",
+  "model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "max_requests": 8,
+  "automatic_retries": 0,
+  "policies": [
+    "preceding-children-v1",
+    "cited-support-v2"
+  ],
+  "money_cost": "unknown",
+  "status": "completed",
+  "summary": {
+    "preceding-children-v1": {
+      "completed": 4,
+      "exact_status_matches": 3,
+      "false_accepts_against_agent_draft": 1,
+      "false_rejects_against_agent_draft": 0
+    },
+    "cited-support-v2": {
+      "completed": 4,
+      "exact_status_matches": 2,
+      "false_accepts_against_agent_draft": 2,
+      "false_rejects_against_agent_draft": 0
+    }
+  },
+  "requests": [
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2916,
+        "completion_tokens": 447,
+        "total_tokens": 3363
+      },
+      "http_status": 200,
+      "elapsed_ms": 10024
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2089,
+        "completion_tokens": 440,
+        "total_tokens": 2529
+      },
+      "http_status": 200,
+      "elapsed_ms": 11577
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2476,
+        "completion_tokens": 590,
+        "total_tokens": 3066
+      },
+      "http_status": 200,
+      "elapsed_ms": 21841
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1646,
+        "completion_tokens": 461,
+        "total_tokens": 2107
+      },
+      "http_status": 200,
+      "elapsed_ms": 11617
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 2870,
+        "completion_tokens": 560,
+        "total_tokens": 3430
+      },
+      "http_status": 200,
+      "elapsed_ms": 15692
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1938,
+        "completion_tokens": 388,
+        "total_tokens": 2326
+      },
+      "http_status": 200,
+      "elapsed_ms": 6914
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1742,
+        "completion_tokens": 190,
+        "total_tokens": 1932
+      },
+      "http_status": 200,
+      "elapsed_ms": 6214
+    },
+    {
+      "path": "/v1/chat/completions",
+      "status": "succeeded",
+      "usage": {
+        "prompt_tokens": 1195,
+        "completion_tokens": 404,
+        "total_tokens": 1599
+      },
+      "http_status": 200,
+      "elapsed_ms": 9866
+    }
+  ],
+  "original_task_unchanged": true,
+  "original_database_unchanged": true,
+  "original_vectors_unchanged": true,
+  "local_report_sha256": "3c73c020fe0231b1bb5cfc40b6be9fc21312ca0ef3ee2433ed0172533d949ef3",
+  "reported_total_tokens": 20352,
+  "provider_elapsed_ms": 93745,
+  "decision": "not_promoted; retain preceding context; exact-citation mode is diagnostic only",
+  "limitations": [
+    "Four development cases, one call per policy/case; primary-agent labels, not independent human gold.",
+    "Per-claim replay differs from R46 document batches; DPR improvement cannot be attributed to context selection.",
+    "REALM limitation and recall gaps were not retested."
+  ],
+  "rows": [
+    {
+      "case": "realm_method_negative",
+      "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+      "expected_status": "insufficient",
+      "policy": "preceding-children-v1",
+      "verdict": {
+        "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "9dab4e9557c6d2ebe420dc2a653644c5328c1d8f383703d26b6d567becd46768",
+        "payload_chars": 7965,
+        "context_chars": 2510,
+        "source_chars": 1394
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2916,
+            "completion_tokens": 447,
+            "total_tokens": 3363
+          },
+          "verification_context_policy": "preceding-children-v1",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 10026
+        }
+      ]
+    },
+    {
+      "case": "realm_method_negative",
+      "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+      "expected_status": "insufficient",
+      "policy": "cited-support-v2",
+      "verdict": {
+        "claim_id": "claim_aae2786c1e5ab0bebed4bd6cf7a43b6bfdb9a18884d7bf0b32fa29c17400c563",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "96538546ed7346891a2ce6f6da1d3efd801801e64f0ac61ef881a11d58e2bd05",
+        "payload_chars": 5353,
+        "context_chars": 1394,
+        "source_chars": 1394
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2089,
+            "completion_tokens": 440,
+            "total_tokens": 2529
+          },
+          "verification_context_policy": "cited-support-v2",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 11577
+        }
+      ]
+    },
+    {
+      "case": "realm_method_positive",
+      "claim_id": "claim_f8a9b5c2d4eabbe6a4f3f1ce5fcb8d800f3200589571166e56aa1ab7f74a6f50",
+      "expected_status": "supported",
+      "policy": "preceding-children-v1",
+      "verdict": {
+        "claim_id": "claim_f8a9b5c2d4eabbe6a4f3f1ce5fcb8d800f3200589571166e56aa1ab7f74a6f50",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "2ce3046b597cd2022f6e7380d8d8c5467052259e67a21c44fbbc73a790db9467",
+        "payload_chars": 7589,
+        "context_chars": 2485,
+        "source_chars": 1081
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2476,
+            "completion_tokens": 590,
+            "total_tokens": 3066
+          },
+          "verification_context_policy": "preceding-children-v1",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 21842
+        }
+      ]
+    },
+    {
+      "case": "realm_method_positive",
+      "claim_id": "claim_f8a9b5c2d4eabbe6a4f3f1ce5fcb8d800f3200589571166e56aa1ab7f74a6f50",
+      "expected_status": "supported",
+      "policy": "cited-support-v2",
+      "verdict": {
+        "claim_id": "claim_f8a9b5c2d4eabbe6a4f3f1ce5fcb8d800f3200589571166e56aa1ab7f74a6f50",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "60a15d56aa499eaf44bce86c92912644a90ecfff4f3aec3518adc5d985897b32",
+        "payload_chars": 4389,
+        "context_chars": 1081,
+        "source_chars": 1081
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 1646,
+            "completion_tokens": 461,
+            "total_tokens": 2107
+          },
+          "verification_context_policy": "cited-support-v2",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 11617
+        }
+      ]
+    },
+    {
+      "case": "dpr_dataset_positive",
+      "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+      "expected_status": "supported",
+      "policy": "preceding-children-v1",
+      "verdict": {
+        "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "88a0193e0d71809eae5babc524fa232e00777fce2412474ffba1e364f89f0d59",
+        "payload_chars": 7411,
+        "context_chars": 2380,
+        "source_chars": 1029
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 2870,
+            "completion_tokens": 560,
+            "total_tokens": 3430
+          },
+          "verification_context_policy": "preceding-children-v1",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 15692
+        }
+      ]
+    },
+    {
+      "case": "dpr_dataset_positive",
+      "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+      "expected_status": "supported",
+      "policy": "cited-support-v2",
+      "verdict": {
+        "claim_id": "claim_91f51b95653b444a29c6bf4bcc7b825cf3bc62da420034f231b5a45690294404",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "87fbd6b431bdc92d64839009fcebb3c651aff0923728589a8d7c1507dbd6f4e9",
+        "payload_chars": 4305,
+        "context_chars": 1029,
+        "source_chars": 1029
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 1938,
+            "completion_tokens": 388,
+            "total_tokens": 2326
+          },
+          "verification_context_policy": "cited-support-v2",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 6915
+        }
+      ]
+    },
+    {
+      "case": "fid_attribution_negative",
+      "claim_id": "claim_0f90f7e5838352df458c2a697db51a9a1d205b5433cba2c71c6dd3922937e142",
+      "expected_status": "insufficient",
+      "policy": "preceding-children-v1",
+      "verdict": {
+        "claim_id": "claim_0f90f7e5838352df458c2a697db51a9a1d205b5433cba2c71c6dd3922937e142",
+        "status": "insufficient",
+        "reason": "attribution:no_support_selected: 未提供具体方法或模型的详细信息; conditions:no_support_selected: 未明确指出该方法的具体条件; entailment:no_support_selected: 未提供支持该结论的具体证据"
+      },
+      "input": {
+        "payload_sha256": "d6dc4c84a2a479d18d38cf06e25c1d3fd2bd83aa71e9fd3881e6efe808806174",
+        "payload_chars": 4407,
+        "context_chars": 1241,
+        "source_chars": 549
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 1742,
+            "completion_tokens": 190,
+            "total_tokens": 1932
+          },
+          "verification_context_policy": "preceding-children-v1",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 6215
+        }
+      ]
+    },
+    {
+      "case": "fid_attribution_negative",
+      "claim_id": "claim_0f90f7e5838352df458c2a697db51a9a1d205b5433cba2c71c6dd3922937e142",
+      "expected_status": "insufficient",
+      "policy": "cited-support-v2",
+      "verdict": {
+        "claim_id": "claim_0f90f7e5838352df458c2a697db51a9a1d205b5433cba2c71c6dd3922937e142",
+        "status": "supported",
+        "reason": "all_source_checks_supported"
+      },
+      "input": {
+        "payload_sha256": "04d1dcbd3b94fbee2cf064c58afbfddfb211335bae0cfb1f52b6952f7f4cd229",
+        "payload_chars": 2651,
+        "context_chars": 549,
+        "source_chars": 549
+      },
+      "calls": [
+        {
+          "operation": "verify_facets",
+          "model_id": "Qwen/Qwen2.5-7B-Instruct",
+          "version": "research-operator-v1",
+          "extraction_protocol": "source-handles-v2",
+          "response_format": "text",
+          "verification_protocol": "facet-handles-v5",
+          "status": "succeeded",
+          "usage": {
+            "prompt_tokens": 1195,
+            "completion_tokens": 404,
+            "total_tokens": 1599
+          },
+          "verification_context_policy": "cited-support-v2",
+          "result_condition_policy": "explicit-row-v1",
+          "prompt_sha256": "bc6ff0dcfc8d609a6979be214d910d88ac5f2b54b8023291f999f73aeece65d6",
+          "elapsed_ms": 9867
+        }
+      ]
+    }
+  ]
+}
